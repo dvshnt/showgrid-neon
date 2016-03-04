@@ -1,7 +1,3 @@
-# QUEER fix: http://stackoverflow.com/a/26215548/1440197
-import django
-django.setup()
-
 # Admins for bug reports
 ADMINS = ( 
     ('Davis Hunt', 'info@showgrid.com'),
@@ -128,10 +124,10 @@ INSTALLED_APPS = (
     'corsheaders',
  
     'colorful',
-    'haystack',
+    #'haystack',
 
     'app',
-    'calendar',
+    'cal',
     'magazine',
     'newsletter',
     'show',
@@ -142,7 +138,7 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
 
     'rest_auth',
-    'tinymce',
+    'meta',
 )
 
 
@@ -169,7 +165,7 @@ REST_FRAMEWORK = {
 }
 
 
-import os
+# import os
 # HAYSTACK_CONNECTIONS = {
 #     'default': {
 #         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',

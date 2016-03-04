@@ -1,0 +1,138 @@
+#header_calendar {
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-align-items: center;
+			align-items: center;
+
+	background:#ffffff;
+	border-bottom:1px solid #e8e8e8;
+
+	#back-to-today {
+		position:absolute;
+		top:108px; right:0px;
+
+		height:0px;
+
+		padding:0px;
+
+	    background:#222222;
+	    border:none;
+
+		color:#ffffff;
+		font-family:'Helvetica', sans-serif;
+		font-size:12px;
+		text-transform:uppercase;
+
+		cursor:pointer;
+
+		overflow:hidden;
+	}
+
+	#back-to-today.visible {
+		height:auto;
+
+		padding:7px 30px 7px 30px;
+	}
+
+	#back-to-today div {
+		display:inline-block;
+
+		position:relative;
+		top:0px; left:-10px;
+
+		width:0px; height:0px !important;
+
+		padding:0;
+
+		border:5px solid transparent;
+		border-right:7px solid #ffffff;
+
+		opacity:0;
+	}
+
+	#back-to-today:hover div {
+		left:-15px;
+
+		opacity:1;
+	}
+
+	#datepicker {
+		-webkit-flex:0 0 12.6em;
+				flex:0 0 12.6em;
+		
+		padding-left: 0.2em;
+		padding-right: 0.2em;
+
+		height:100%;
+
+		text-align:center;
+		font-family:'Helvetica', sans-serif;
+	}
+
+	#datepicker:hover {
+		background:rgba(0,0,0,0.05);
+		cursor:pointer;
+	}
+
+	#datepicker:after {
+		clear:both;
+	    display:inline;
+	    position:relative;
+	    top:10px;
+	    left:10px;
+	    content: "";
+	    height:0;
+	    width:0;
+	    margin:-8px;
+	    border:5px solid transparent;
+	    border-top-color:rgba(0,0,0,0.9);
+	}
+
+	#datepicker span {
+		position:relative;
+		left:-0.5em;
+		color:rgba(0,0,0,1);
+		font-size:112.5%;
+		line-height:40px;
+		text-transform:uppercase;
+		font-weight:300;
+	}
+
+	#datepicker span.small-screen {
+		display:none;
+	}
+
+	#datepicker.wide {
+		-webkit-flex:0 0 100%;
+				flex:0 0 100%;
+
+		span {
+			font-size:125%;
+		}
+	}
+}
+
+@media screen and (max-width: 740px ) {
+	#header_calendar {
+		#back-to-today {
+			display:none;
+		}
+
+		#datepicker {
+			-webkit-flex:0 0 100%;
+					flex:0 0 100%;
+		}
+
+		#datepicker span.small-screen {
+			display:inline;
+		}
+
+		#datepicker span.large-screen {
+			display:none;
+		}
+	}
+}
+
+@import "datepicker";
+@import "subheader_calendar_day";

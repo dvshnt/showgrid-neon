@@ -1,0 +1,103 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<style>
+
+	h1{
+		margin: 0 0 20px;
+		font-weight: 300;
+		font-size: 20px;
+		color: #666;
+		padding-bottom: 5px;
+	}
+
+
+	.counter{
+		background: #D3EBF1;
+		padding: 5px;
+		border: 1px solid #C9DFE7;
+		border-radius: 2px;
+		width: auto;
+		font-weight: 200;
+		
+	}
+
+	.butt{
+		font-weight: 500;
+	}
+
+
+
+	table{
+		margin-top: 20px;
+		border: 1px solid #eee;
+		width: 100%;
+	}
+	.done{
+		background: rgba(215, 255, 236, 0.56);
+	}
+
+	.field-done_all{
+		width: 70%;
+	}
+
+	#pullstatus_refresh{
+		cursor: pointer;
+	}
+	
+</style>
+<div id="content-main">
+	<h1>
+		{% if not done %}
+			Extracting Artists...
+		{% else %}
+			Done
+		{% endif %}
+	</h2>
+
+	
+		<span class='counter'>{{count}}</span>
+	{% if done %}
+		<a href='/admin/show/show/' ><span class='counter butt'> return </span></a>
+	{% else %}
+		<span id='pullstatus_refresh' class='counter butt'> refresh </span>
+	{% endif %}
+
+
+	<table>
+		<thead scope="col" {{ header.class_attrib }}>
+		<tr>
+			<th>Show</th>
+			<th>Done</th>
+			<th>Artists</th>
+		</tr>
+		</thead>
+		
+			<tbody>
+			{% for show in shows %}
+				<tr class="{% if artist.done_all %}done{% endif %} {% cycle 'row1' 'row2' %}">
+					<td class='field-name'>
+						<b>{{show.name}}</b>
+					</td>
+					<td class='field-done_all'>
+						{% if show.done_all %}<img src="/static/admin/img/icon-yes.svg" alt='True'>	
+						{% else %}<img src="/static/admin/img/icon-no.svg" alt='False'>{% endif %}	
+					</td>
+					<td class='field-done_spotify'>
+						{{show.artist_count}}
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+	</table>
+
+	<script>
+		document.getElementById('pullstatus_refresh').addEventListener('click',function(){
+			window.location.replace(window.location.href);
+		})
+	</script>
+
+</div>
+
+
+
+{% endblock %}

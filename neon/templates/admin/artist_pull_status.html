@@ -1,0 +1,117 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<style>
+
+	h1{
+		margin: 0 0 20px;
+		font-weight: 300;
+		font-size: 20px;
+		color: #666;
+		padding-bottom: 5px;
+	}
+
+
+	.counter{
+		background: #D3EBF1;
+		padding: 5px;
+		border: 1px solid #C9DFE7;
+		border-radius: 2px;
+		width: auto;
+		font-weight: 200;
+		margin-right: 5px;
+	}
+
+	.butt{
+		font-weight: 500;
+	}
+
+
+
+	table{
+		margin-top: 20px;
+		border: 1px solid #eee;
+		width: 100%;
+	}
+	.done{
+		background: rgba(215, 255, 236, 0.56);
+	}
+
+	.field-done_all{
+		width: 70%;
+	}
+
+	#pullstatus_refresh{
+		cursor: pointer;
+	}
+
+	.field-name > a{
+		
+		font-weight: bold;
+		
+	}
+
+
+	
+</style>
+<div id="content-main">
+	<h1>
+		{% if not done %}
+			Fetching data...
+		{% else %}
+			Done
+		{% endif %}
+	</h2>
+
+	
+		<span class='counter'>{{count}}</span>
+	{% if done %}
+		<a href='/admin/show/artist/' ><span class='counter butt'> return </span></a>
+	{% else %}
+		<span id='pullstatus_refresh' class='counter butt'> refresh </span>
+	{% endif %}
+
+
+
+	<table>
+		<thead scope="col" {{ header.class_attrib }}>
+		<tr>
+			<th>Name</th>
+			<th>Done</th>
+			<th>Spotify</th>
+			<th>Echonest</th>
+		</tr>
+			
+		</thead>
+		
+			<tbody>
+			{% for artist in artists %}
+				<tr class="{% if artist.done_all %}done{% endif %} {% cycle 'row1' 'row2' %}">
+					<td class='field-name'>
+						<a href='/admin/server/artist/{{artist.id}}/change/'<b>{{artist.name}}</b></a>
+					</td>
+					<td class='field-done_all'>
+						{% if artist.done_all %}<img src="/static/admin/img/icon-yes.svg" alt='True'>	
+						{% else %}<img src="/static/admin/img/icon-no.svg" alt='False'>{% endif %}	
+					</td>
+					<td class='field-done_spotify'>
+						{% if artist.done_spotify %} <img src="/static/admin/img/icon-yes.svg" alt='True'> {% else %} <img src="/static/admin/img/icon-no.svg" alt='False'> {% endif %}	
+					</td>	
+					<td class='field-done_echonest'>
+						{% if artist.done_echonest %} <img src="/static/admin/img/icon-yes.svg" alt='True'> {% else %} <img src="/static/admin/img/icon-no.svg" alt='False'> {% endif %}		
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+	</table>
+
+
+	<script>
+	document.getElementById('pullstatus_refresh').addEventListener('click',function(){
+		window.location.replace(window.location.href);
+	})
+	</script>
+</div>
+
+
+
+{% endblock %}

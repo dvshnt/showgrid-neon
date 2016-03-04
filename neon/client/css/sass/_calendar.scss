@@ -1,0 +1,23 @@
+#calendar {
+	position:absolute;
+	top:69px; left:0; right:0; bottom:0;
+
+	overflow:hidden;
+
+    z-index:100;
+}
+
+#calendar-content {
+	position:absolute;
+	top:41px; right:0; bottom:0; left:0;
+
+	overflow:scroll;
+}
+
+@media screen and (max-width: 740px) {
+	#calendar {
+		top:60px; bottom:61px;
+	}
+}
+
+@import "calendar_row";

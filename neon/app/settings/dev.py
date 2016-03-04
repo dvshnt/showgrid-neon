@@ -1,9 +1,9 @@
 import os
+from base import *
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'nl_tg!$q)=7^x*9fr2+gfg9$=z=$#l3yxnu2_xt(lun+i=ne&t'
-
-from base import *
 
 
 DEBUG=True
@@ -12,7 +12,7 @@ DEBUG=True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sgdb',                      # Or path to database file if using sqlite3.
+        'NAME': 'sgdb_v2',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'showgrid',
@@ -22,21 +22,41 @@ DATABASES = {
 }
 
 
-MEDIA_ROOT = ''
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/media/'
 
 
-STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
-
 STATICFILES_DIRS = ( os.path.join('static'), )
+STATIC_ROOT = '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/temp/'
 
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    '/Users/vdh3/Documents/Shwgrid/nashvilleneon/neon/templates/',
-    #os.path.join(BASE_DIR, 'client', 'views')
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/cal/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/magazine/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/newsletter/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/show/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/user/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/venue/templates/',
+        ],
+        'OPTIONS': { 
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+            'debug': True,
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]

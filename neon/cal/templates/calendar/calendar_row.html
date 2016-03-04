@@ -1,0 +1,12 @@
+{% load if_show_today %}
+
+<div class="calendar__row">				
+	{% include "calendar/calendar_row_venue.html" with venue=venue %}
+	{% for day in days %}
+	<div class="day">
+		{% for show in venue.shows %}
+		{{ show|if_show_today:day }}
+		{% endfor %}
+	</div>
+	{% endfor %}
+</div>

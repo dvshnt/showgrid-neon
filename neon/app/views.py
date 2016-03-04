@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
@@ -10,4 +10,4 @@ class Index(APIView):
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):
-		return HttpResponse("index")
+		return render(request, "base.html")

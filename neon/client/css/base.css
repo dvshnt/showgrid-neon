@@ -1,0 +1,1897 @@
+@charset "UTF-8";
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS and IE text size adjust after device orientation change,
+ *    without disabling user zoom.
+ */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+body {
+  margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+audio,
+canvas,
+progress,
+video {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/10/11, Safari, and Firefox < 22.
+ */
+[hidden],
+template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/**
+ * Improve readability of focused elements when they are also in an
+ * active/hover state.
+ */
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  color: inherit;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome.
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  box-sizing: content-box;
+  /* 2 */
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica', sans-serif;
+  background: #fafafa;
+  overflow-x: hidden;
+}
+
+#container {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+#container:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.015;
+  z-index: -1;
+  background: url("/static/showgrid/img/sg-pattern.png");
+}
+
+#head {
+  position: relative;
+  width: 100%;
+  height: 70px;
+  background: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+  z-index: 99;
+}
+#head h1 {
+  float: left;
+  margin: 0 30px 0 20px;
+}
+#head h1 a {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 70px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+#head h1 a img {
+  margin: 22.5px 0 0;
+  height: 25px;
+}
+#head h1 a span {
+  margin-left: 15px;
+  line-height: 70px;
+  font-family: 'Helvetica', sans-serif;
+  vertical-align: top;
+}
+#head menu {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+#head menu ul li {
+  height: 100%;
+  padding: 0 40px;
+  border-left: 1px solid #e8e8e8;
+}
+#head menu ul li a {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 70px;
+}
+#head aside {
+  float: right;
+}
+#head ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#head ul li {
+  display: inline;
+}
+#head ul li a {
+  color: #000000;
+  font-size: 10px;
+  text-decoration: none;
+}
+#head aside.actions ul li a svg {
+  width: 22.5px;
+  height: 22.5px;
+  margin: 25px 17.5px 0;
+}
+#head aside.social {
+  margin-right: 30px;
+}
+#head aside.social ul li {
+  margin: 0 7.5px;
+}
+#head aside.social ul li svg {
+  width: 17.5px;
+  height: 17.5px;
+  margin: 27.5px 0;
+}
+#head aside.social ul li svg.icon-instagram {
+  fill: #343434;
+}
+#head aside.social ul li svg.icon-facebook {
+  fill: #3B5998;
+}
+#head aside.social ul li svg.icon-twitter {
+  fill: #55acee;
+}
+
+#mobile-menu {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  #head h1 a span {
+    display: none;
+  }
+
+  #head aside.actions ul li a svg {
+    width: 25px;
+    height: 25px;
+    margin: 22.5px 12.5px 0;
+  }
+
+  #head menu ul li a {
+    font-size: 12px;
+  }
+
+  #head menu ul li {
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 740px) {
+  #head {
+    height: 60px;
+  }
+  #head aside.social {
+    display: none;
+  }
+  #head menu {
+    display: none;
+  }
+  #head h1 a img {
+    margin: 22.5px 0 0;
+    height: 20px;
+  }
+  #head aside.actions ul li a svg {
+    margin: 18.75px 17.5px 0;
+  }
+
+  #mobile-menu {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    background: #ffffff;
+    border-top: 1px solid #e8e8e8;
+    z-index: 5000001;
+  }
+  #mobile-menu ul {
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  #mobile-menu ul li {
+    -webkit-flex: 0 0 25%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+    height: 60px;
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  #mobile-menu ul li a {
+    display: block;
+    margin: 0;
+    color: #3b3b3b;
+    text-align: center;
+    text-decoration: none;
+  }
+  #mobile-menu ul li a svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 2px auto;
+  }
+  #mobile-menu ul li a span {
+    font-size: 9px;
+    font-family: 'Roboto Slab', serif;
+    text-decoration: none;
+  }
+}
+#subhead {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 41px;
+  background: #ffffff;
+  -webkit-transition: 0.15s all ease-in-out;
+  transition: 0.15s all ease-in-out;
+  z-index: 1;
+  border-bottom: 1px solid #e8e8e8;
+  text-align: center;
+  line-height: 41px;
+}
+#subhead.active {
+  top: 69px;
+  z-index: 101;
+}
+#subhead.active.calendar {
+  top: 109px;
+}
+
+@media screen and (max-width: 740px) {
+  #subhead.active {
+    top: 59px;
+  }
+  #subhead.active.calendar {
+    top: 99px;
+  }
+}
+#header_calendar {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+}
+#header_calendar #back-to-today {
+  position: absolute;
+  top: 108px;
+  right: 0px;
+  height: 0px;
+  padding: 0px;
+  background: #222222;
+  border: none;
+  color: #ffffff;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+}
+#header_calendar #back-to-today.visible {
+  height: auto;
+  padding: 7px 30px 7px 30px;
+}
+#header_calendar #back-to-today div {
+  display: inline-block;
+  position: relative;
+  top: 0px;
+  left: -10px;
+  width: 0px;
+  height: 0px !important;
+  padding: 0;
+  border: 5px solid transparent;
+  border-right: 7px solid #ffffff;
+  opacity: 0;
+}
+#header_calendar #back-to-today:hover div {
+  left: -15px;
+  opacity: 1;
+}
+#header_calendar #datepicker {
+  -webkit-flex: 0 0 12.6em;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 12.6em;
+          flex: 0 0 12.6em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  height: 100%;
+  text-align: center;
+  font-family: 'Helvetica', sans-serif;
+}
+#header_calendar #datepicker:hover {
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
+#header_calendar #datepicker:after {
+  clear: both;
+  display: inline;
+  position: relative;
+  top: 10px;
+  left: 10px;
+  content: "";
+  height: 0;
+  width: 0;
+  margin: -8px;
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+}
+#header_calendar #datepicker span {
+  position: relative;
+  left: -0.5em;
+  color: black;
+  font-size: 112.5%;
+  line-height: 40px;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+#header_calendar #datepicker span.small-screen {
+  display: none;
+}
+#header_calendar #datepicker.wide {
+  -webkit-flex: 0 0 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+}
+#header_calendar #datepicker.wide span {
+  font-size: 125%;
+}
+
+@media screen and (max-width: 740px) {
+  #header_calendar #back-to-today {
+    display: none;
+  }
+  #header_calendar #datepicker {
+    -webkit-flex: 0 0 100%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+  }
+  #header_calendar #datepicker span.small-screen {
+    display: inline;
+  }
+  #header_calendar #datepicker span.large-screen {
+    display: none;
+  }
+}
+/*!
+ * Pikaday
+ * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
+ */
+.pika-single {
+  height: 0px;
+  margin: 0;
+  z-index: 102;
+  display: block;
+  position: relative;
+  color: #333;
+  background: #ffffff;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/*
+clear child float (pika-lendar), using the famous micro clearfix hack
+http://nicolasgallagher.com/micro-clearfix-hack/
+*/
+.pika-single:before,
+.pika-single:after {
+  content: " ";
+  display: table;
+}
+
+.pika-single:after {
+  clear: both;
+}
+
+.pika-single {
+  *zoom: 1;
+}
+
+.pika-single.is-hidden {
+  display: none;
+}
+
+.pika-single.is-bound {
+  position: fixed;
+  height: auto;
+}
+
+.pika-lendar {
+  float: left;
+  width: auto;
+  margin: 8px;
+}
+
+.pika-title {
+  position: relative;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.pika-label {
+  display: inline-block;
+  *display: inline;
+  position: relative;
+  z-index: 9999;
+  overflow: hidden;
+  margin: 0;
+  padding: 5px 10px;
+  color: #000000;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+}
+
+.pika-title select {
+  cursor: pointer;
+  position: absolute;
+  z-index: 9998;
+  margin: 0;
+  left: 0;
+  top: 5px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.pika-prev,
+.pika-next {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  border: 0;
+  padding: 0;
+  width: 20px;
+  height: 30px;
+  /* hide text using text-indent trick, using width value (it's enough) */
+  text-indent: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 75% 75%;
+  opacity: .5;
+  *position: absolute;
+  *top: 0;
+}
+
+.pika-prev:hover,
+.pika-next:hover {
+  opacity: 1;
+}
+
+.pika-prev,
+.is-rtl .pika-next {
+  float: left;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==");
+  *left: 0;
+}
+
+.pika-next,
+.is-rtl .pika-prev {
+  float: right;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=");
+  *right: 0;
+}
+
+.pika-prev.is-disabled,
+.pika-next.is-disabled {
+  cursor: default;
+  opacity: .2;
+}
+
+.pika-select {
+  display: inline-block;
+  *display: inline;
+}
+
+.pika-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0;
+}
+
+.pika-table th,
+.pika-table td {
+  width: 14.285714285714286%;
+  padding: 0;
+}
+
+.pika-table th {
+  color: #666666;
+  font-size: 11px;
+  line-height: 25px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pika-button {
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  padding: 8px 10px;
+  color: #000000;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pika-week {
+  font-size: 11px;
+  color: #999;
+}
+
+.is-today .pika-button {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.is-selected .pika-button {
+  color: #ffffff;
+  font-weight: bold;
+  background: #00de90;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 1px;
+}
+
+.is-disabled .pika-button {
+  pointer-events: none;
+  cursor: default;
+  color: #000000;
+  opacity: .3;
+}
+
+.pika-button:hover {
+  color: #000000 !important;
+  background: #ffde74 !important;
+  box-shadow: none !important;
+  border-radius: 1px !important;
+}
+
+/* styling for abbr */
+.pika-table abbr {
+  border-bottom: none;
+  cursor: help;
+}
+
+@media screen and (max-width: 740px) {
+  .pika-single {
+    display: block;
+    position: relative;
+    height: 0px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+    color: #333;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    background: #ffffff;
+    border: none;
+    z-index: 102;
+  }
+
+  /*
+  clear child float (pika-lendar), using the famous micro clearfix hack
+  http://nicolasgallagher.com/micro-clearfix-hack/
+  */
+  .pika-single:before,
+  .pika-single:after {
+    content: " ";
+    display: table;
+  }
+
+  .pika-single:after {
+    clear: both;
+  }
+
+  .pika-single {
+    *zoom: 1;
+  }
+
+  .pika-single.is-hidden {
+    display: none;
+  }
+
+  .pika-single.is-bound {
+    position: fixed;
+    height: auto;
+  }
+
+  .pika-lendar {
+    width: 95%;
+    margin: 8px;
+  }
+
+  .pika-title {
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .pika-label {
+    display: inline-block;
+    *display: inline;
+    position: relative;
+    z-index: 9999;
+    overflow: hidden;
+    margin: 0;
+    padding: 5px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+  }
+
+  .pika-title select {
+    cursor: pointer;
+    position: absolute;
+    z-index: 9998;
+    margin: 0;
+    left: 0;
+    top: 5px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+  }
+
+  .pika-prev,
+  .pika-next {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    border: 0;
+    padding: 0;
+    width: 20px;
+    height: 30px;
+    /* hide text using text-indent trick, using width value (it's enough) */
+    text-indent: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75% 75%;
+    opacity: .5;
+    *position: absolute;
+    *top: 0;
+  }
+
+  .pika-prev:hover,
+  .pika-next:hover {
+    opacity: 1;
+  }
+
+  .pika-prev,
+  .is-rtl .pika-next {
+    float: left;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==");
+    *left: 0;
+  }
+
+  .pika-next,
+  .is-rtl .pika-prev {
+    float: right;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=");
+    *right: 0;
+  }
+
+  .pika-prev.is-disabled,
+  .pika-next.is-disabled {
+    cursor: default;
+    opacity: .2;
+  }
+
+  .pika-select {
+    display: inline-block;
+    *display: inline;
+  }
+
+  .pika-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+  }
+
+  .pika-table th,
+  .pika-table td {
+    width: 14.285714285714286%;
+    padding: 0;
+  }
+
+  .pika-table th {
+    color: #666666;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .pika-button {
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    border: 0;
+    margin: 0;
+    width: 100%;
+    padding: 5px;
+    color: #000000;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .pika-week {
+    font-size: 11px;
+    color: #999;
+  }
+
+  .is-today .pika-button {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .is-selected .pika-button {
+    color: #ffffff;
+    font-weight: bold;
+    background: #00de90;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+  }
+
+  .is-disabled .pika-button {
+    pointer-events: none;
+    cursor: default;
+    color: #000000;
+    opacity: .3;
+  }
+
+  .pika-button:hover {
+    color: #000000 !important;
+    background: #ffde74 !important;
+    box-shadow: none !important;
+    border-radius: 1px !important;
+  }
+
+  /* styling for abbr */
+  .pika-table abbr {
+    border-bottom: none;
+    cursor: help;
+  }
+}
+#header_calendar .day {
+  -webkit-flex: 1 0 170px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 170px;
+          flex: 1 0 170px;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: 'Helvetica', sans-serif;
+  text-align: center;
+}
+#header_calendar .day span {
+  font-size: 87.5%;
+  font-weight: 300;
+}
+
+footer {
+  background: red;
+}
+
+#calendar {
+  position: absolute;
+  top: 69px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 100;
+}
+
+#calendar-content {
+  position: absolute;
+  top: 41px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: scroll;
+}
+
+@media screen and (max-width: 740px) {
+  #calendar {
+    top: 60px;
+    bottom: 61px;
+  }
+}
+.calendar__row {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  min-height: 200px;
+  margin: 15px 0;
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.calendar__row.mini {
+  min-height: 80px;
+}
+
+.calendar__row.mini > div {
+  padding: 10px 0;
+}
+
+@media screen and (max-width: 740px) {
+  .calendar__row {
+    border-bottom: none;
+  }
+
+  .calendar__row:nth-child(even) {
+    background-color: #fcfcfc;
+  }
+}
+.calendar__row .venue {
+  position: relative;
+  font-size: 16px;
+  -webkit-flex: 0 0 13em;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 13em;
+          flex: 0 0 13em;
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  -webkit-justify-content: stretch;
+  -webkit-box-pack: stretch;
+      -ms-flex-pack: stretch;
+          justify-content: stretch;
+  padding: 10px 0;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+}
+.calendar__row .venue:hover .image {
+  opacity: 0.6;
+}
+.calendar__row .venue .image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.4;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+}
+.calendar__row .venue .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.calendar__row .venue .overlay .name {
+  width: 100%;
+  height: 35%;
+  margin: 10px 0;
+  font-size: 18px;
+  text-align: center;
+}
+.calendar__row .venue .overlay .name a {
+  color: #555;
+  font-weight: 500;
+  text-decoration: none;
+}
+.calendar__row .venue .overlay .name a:hover {
+  text-decoration: underline;
+}
+.calendar__row .venue .overlay .icon-wrapper {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  /* padding: 20px; */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
+.calendar__row .venue .overlay .icon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translate(20%, -50%);
+          transform: translate(20%, -50%);
+  font-size: 30px;
+  color: white;
+}
+.calendar__row .venue .overlay .address {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 10px 0;
+  padding-top: 30%;
+  text-align: center;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 12px;
+  font-weight: 200;
+  color: #f2f2f2;
+}
+
+.calendar__row.mini .venue {
+  padding: 10px 0;
+  text-align: center;
+}
+.calendar__row.mini .image {
+  display: none;
+}
+.calendar__row.mini .overlay {
+  position: relative;
+  height: auto;
+  margin: auto;
+}
+.calendar__row.mini .overlay .name {
+  margin: 5px 0;
+  font-size: 14px;
+}
+.calendar__row.mini .overlay .name a {
+  color: #666666;
+}
+.calendar__row.mini .overlay .address {
+  position: relative;
+  margin: 5px 0;
+  padding-top: 0;
+  font-size: 10px;
+  color: #f2f2f2;
+}
+
+@media screen and (max-width: 740px) {
+  .calendar__row .venue {
+    -webkit-flex: 0 0 42.5%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 42.5%;
+            flex: 0 0 42.5%;
+  }
+  .calendar__row .venue .overlay .name {
+    font-size: 16px;
+  }
+  .calendar__row .venue .overlay .address {
+    font-size: 8px;
+  }
+
+  .calendar__row.mini .venue .overlay .name {
+    font-size: 14px;
+  }
+}
+.calendar__row .day {
+  -webkit-flex: 1 0 10.625em;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 10.625em;
+          flex: 1 0 10.625em;
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: baseline;
+  -webkit-box-pack: baseline;
+      -ms-flex-pack: baseline;
+          justify-content: baseline;
+}
+.calendar__row .day:nth-child(odd) {
+  background-color: #fcfcfc;
+}
+
+@media screen and (max-width: 740px) {
+  .day:nth-child(even) {
+    background-color: transparent !important;
+  }
+}
+.calendar__row .day a.show {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  padding-bottom: 30px;
+  text-decoration: none;
+  background: transparent;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+.calendar__row .day a.show:hover {
+  background: rgba(0, 0, 0, 0.025);
+  cursor: pointer;
+}
+.calendar__row .day a.show .info {
+  padding: 8px 8px 0;
+}
+.calendar__row .day a.show .info .time {
+  font-size: 12px;
+  color: #aaaaaa;
+  font-family: 'Helvetica', sans-serif;
+}
+.calendar__row .day a.show .titles {
+  padding: 0 8px 8px;
+  font-family: 'Helvetica', sans-serif;
+}
+.calendar__row .day a.show .titles .title {
+  margin: 5px 0 0 0;
+  color: #666666;
+  font-size: 12px;
+  font-weight: 300;
+}
+.calendar__row .day a.show .titles .main {
+  margin: 8px 0 4px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 500;
+}
+.calendar__row .day a.show .titles .extra {
+  margin: 0;
+  color: #898989;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16px;
+}
+
+@media screen and (max-width: 740px) {
+  .calendar__row .day .show .titles .main {
+    font-size: 18px;
+  }
+}
+/*!
+ * Pikaday
+ * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
+ */
+.pika-single {
+  height: 0px;
+  margin: 0;
+  z-index: 102;
+  display: block;
+  position: relative;
+  color: #333;
+  background: #ffffff;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/*
+clear child float (pika-lendar), using the famous micro clearfix hack
+http://nicolasgallagher.com/micro-clearfix-hack/
+*/
+.pika-single:before,
+.pika-single:after {
+  content: " ";
+  display: table;
+}
+
+.pika-single:after {
+  clear: both;
+}
+
+.pika-single {
+  *zoom: 1;
+}
+
+.pika-single.is-hidden {
+  display: none;
+}
+
+.pika-single.is-bound {
+  position: fixed;
+  height: auto;
+}
+
+.pika-lendar {
+  float: left;
+  width: auto;
+  margin: 8px;
+}
+
+.pika-title {
+  position: relative;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.pika-label {
+  display: inline-block;
+  *display: inline;
+  position: relative;
+  z-index: 9999;
+  overflow: hidden;
+  margin: 0;
+  padding: 5px 10px;
+  color: #000000;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+}
+
+.pika-title select {
+  cursor: pointer;
+  position: absolute;
+  z-index: 9998;
+  margin: 0;
+  left: 0;
+  top: 5px;
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+
+.pika-prev,
+.pika-next {
+  display: block;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  border: 0;
+  padding: 0;
+  width: 20px;
+  height: 30px;
+  /* hide text using text-indent trick, using width value (it's enough) */
+  text-indent: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: transparent;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 75% 75%;
+  opacity: .5;
+  *position: absolute;
+  *top: 0;
+}
+
+.pika-prev:hover,
+.pika-next:hover {
+  opacity: 1;
+}
+
+.pika-prev,
+.is-rtl .pika-next {
+  float: left;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==");
+  *left: 0;
+}
+
+.pika-next,
+.is-rtl .pika-prev {
+  float: right;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=");
+  *right: 0;
+}
+
+.pika-prev.is-disabled,
+.pika-next.is-disabled {
+  cursor: default;
+  opacity: .2;
+}
+
+.pika-select {
+  display: inline-block;
+  *display: inline;
+}
+
+.pika-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0;
+}
+
+.pika-table th,
+.pika-table td {
+  width: 14.285714285714286%;
+  padding: 0;
+}
+
+.pika-table th {
+  color: #666666;
+  font-size: 11px;
+  line-height: 25px;
+  font-weight: 400;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.pika-button {
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  border: 0;
+  margin: 0;
+  width: 100%;
+  padding: 8px 10px;
+  color: #000000;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pika-week {
+  font-size: 11px;
+  color: #999;
+}
+
+.is-today .pika-button {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.is-selected .pika-button {
+  color: #ffffff;
+  font-weight: bold;
+  background: #00de90;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 1px;
+}
+
+.is-disabled .pika-button {
+  pointer-events: none;
+  cursor: default;
+  color: #000000;
+  opacity: .3;
+}
+
+.pika-button:hover {
+  color: #000000 !important;
+  background: #ffde74 !important;
+  box-shadow: none !important;
+  border-radius: 1px !important;
+}
+
+/* styling for abbr */
+.pika-table abbr {
+  border-bottom: none;
+  cursor: help;
+}
+
+@media screen and (max-width: 740px) {
+  .pika-single {
+    display: block;
+    position: relative;
+    height: 0px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+    color: #333;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    background: #ffffff;
+    border: none;
+    z-index: 102;
+  }
+
+  /*
+  clear child float (pika-lendar), using the famous micro clearfix hack
+  http://nicolasgallagher.com/micro-clearfix-hack/
+  */
+  .pika-single:before,
+  .pika-single:after {
+    content: " ";
+    display: table;
+  }
+
+  .pika-single:after {
+    clear: both;
+  }
+
+  .pika-single {
+    *zoom: 1;
+  }
+
+  .pika-single.is-hidden {
+    display: none;
+  }
+
+  .pika-single.is-bound {
+    position: fixed;
+    height: auto;
+  }
+
+  .pika-lendar {
+    width: 95%;
+    margin: 8px;
+  }
+
+  .pika-title {
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .pika-label {
+    display: inline-block;
+    *display: inline;
+    position: relative;
+    z-index: 9999;
+    overflow: hidden;
+    margin: 0;
+    padding: 5px 8px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    font-weight: 400;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+  }
+
+  .pika-title select {
+    cursor: pointer;
+    position: absolute;
+    z-index: 9998;
+    margin: 0;
+    left: 0;
+    top: 5px;
+    filter: alpha(opacity=0);
+    opacity: 0;
+  }
+
+  .pika-prev,
+  .pika-next {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    border: 0;
+    padding: 0;
+    width: 20px;
+    height: 30px;
+    /* hide text using text-indent trick, using width value (it's enough) */
+    text-indent: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: transparent;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 75% 75%;
+    opacity: .5;
+    *position: absolute;
+    *top: 0;
+  }
+
+  .pika-prev:hover,
+  .pika-next:hover {
+    opacity: 1;
+  }
+
+  .pika-prev,
+  .is-rtl .pika-next {
+    float: left;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==");
+    *left: 0;
+  }
+
+  .pika-next,
+  .is-rtl .pika-prev {
+    float: right;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=");
+    *right: 0;
+  }
+
+  .pika-prev.is-disabled,
+  .pika-next.is-disabled {
+    cursor: default;
+    opacity: .2;
+  }
+
+  .pika-select {
+    display: inline-block;
+    *display: inline;
+  }
+
+  .pika-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+  }
+
+  .pika-table th,
+  .pika-table td {
+    width: 14.285714285714286%;
+    padding: 0;
+  }
+
+  .pika-table th {
+    color: #666666;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 400;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .pika-button {
+    cursor: pointer;
+    display: block;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    border: 0;
+    margin: 0;
+    width: 100%;
+    padding: 5px;
+    color: #000000;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .pika-week {
+    font-size: 11px;
+    color: #999;
+  }
+
+  .is-today .pika-button {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .is-selected .pika-button {
+    color: #ffffff;
+    font-weight: bold;
+    background: #00de90;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+  }
+
+  .is-disabled .pika-button {
+    pointer-events: none;
+    cursor: default;
+    color: #000000;
+    opacity: .3;
+  }
+
+  .pika-button:hover {
+    color: #000000 !important;
+    background: #ffde74 !important;
+    box-shadow: none !important;
+    border-radius: 1px !important;
+  }
+
+  /* styling for abbr */
+  .pika-table abbr {
+    border-bottom: none;
+    cursor: help;
+  }
+}

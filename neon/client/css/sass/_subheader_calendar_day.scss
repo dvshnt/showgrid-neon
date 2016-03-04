@@ -1,0 +1,16 @@
+#header_calendar {
+	.day {
+		-webkit-flex:1 0 170px;
+				flex:1 0 170px;
+
+		color:rgba(0,0,0,0.9);
+		font-family:'Helvetica', sans-serif;
+		text-align:center;
+	}
+
+	.day span {
+		font-size:87.5%;
+		font-weight:300;
+	}
+
+}

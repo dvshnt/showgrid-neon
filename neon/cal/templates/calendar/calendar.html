@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load jsonify %}
+
+{% block content %}
+	<section id="calendar">
+	</section>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}
+
+{% block scripts %}
+	<script>
+		var venues = {{ venues|jsonify }};
+		var days = {{ days|jsonify }};
+	</script>
+{% endblock scripts %}

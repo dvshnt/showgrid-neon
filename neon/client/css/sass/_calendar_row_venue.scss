@@ -1,0 +1,182 @@
+.calendar__row {
+	.venue {
+		position:relative;
+
+		font-size:16px;
+
+		-webkit-flex:0 0 13em;
+				flex:0 0 13em;
+
+		display:-webkit-flex;
+		display:  		flex;
+
+		-webkit-align-items:stretch;
+				align-items:stretch;
+
+		-webkit-justify-content:stretch;
+				justify-content:stretch;
+
+		padding:10px 0;
+
+		overflow:hidden;
+
+		text-align:center;
+
+		cursor:pointer;
+
+
+		&:hover {
+			.image {
+				opacity:0.6;
+			}
+		}
+
+		.image{
+			position:absolute;
+			top:0; right:0; bottom:0; left:0;
+
+			opacity:0.4;
+
+			background-size:cover;
+		    background-repeat: no-repeat;
+		    background-position: 50% 50%;
+
+			-webkit-filter:grayscale(1);
+		    		filter:grayscale(1);
+		}
+			
+
+		.overlay {
+			position:absolute;
+			top:0; right:0; bottom:0; left:0;
+
+			.name {
+				width:100%; height:35%;
+
+				margin:10px 0;
+
+				font-size:18px;
+				text-align:center;
+			} 
+
+			.name a {
+				color:#555;
+				font-weight:500;
+				text-decoration:none;
+			}
+
+			.name a:hover {
+				text-decoration:underline;
+			}
+
+			.icon-wrapper {
+				height: 100px;
+				width: 100px;
+				position: absolute;
+				left: 100%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				/* padding: 20px; */
+				background: rgba(0, 0, 0, 0.5);
+				border-radius: 50%;
+			}
+
+			.icon {
+				position: absolute;
+				top: 50%;
+				left: 0;
+				transform: translate(20%,-50%);
+				font-size: 30px;
+				color: white;
+			}
+
+			.address {
+				position:absolute;
+				bottom:0; left:0;
+
+				width:100%;
+
+				margin:10px 0;
+				padding-top:30%;
+
+				text-align:center;
+				font-family:'Helvetica', sans-serif;
+				font-size:12px;
+				font-weight:200;
+				color:#f2f2f2;
+			}
+		}
+
+	}
+}
+
+.calendar__row.mini {
+	.venue {
+		padding:10px 0;
+
+		text-align:center;
+	}
+
+	.image {
+		display:none;
+	}
+
+
+
+	.overlay {
+		position:relative;
+		height:auto;
+
+		margin:auto;
+
+		.name {
+			margin:5px 0;
+
+			font-size:14px;
+		}
+
+		.name a {
+			color:#666666;
+		}
+
+		.address {
+			position:relative;
+
+			margin:5px 0;
+			padding-top:0;
+
+			font-size:10px;
+			color:#f2f2f2;
+		}
+	}
+	
+} 
+
+@media screen and (max-width: 740px ) {
+	.calendar__row {
+		.venue {
+			-webkit-flex:0 0 42.5%;
+					flex:0 0 42.5%;
+
+			.overlay {
+				.name {
+					font-size:16px;
+				}
+
+				.address {
+					font-size:8px;
+				}
+			}
+		}
+	}
+
+	.calendar__row.mini {
+		.venue {
+			.overlay {
+				.name {
+					font-size:14px;
+				}
+			}
+		}
+	}
+}

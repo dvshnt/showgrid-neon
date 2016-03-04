@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from calendar import views
+from cal import views
 
 
 urlpatterns = [

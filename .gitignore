@@ -3,3 +3,10 @@
 venv/**
 neon/temp/**
 neon/media/**
+
+neon/client/node_modules
+
+neon/client/.sass-cache
+
+neon/static/css/*.css
+neon/static/js/*.css

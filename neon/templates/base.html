@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		{% load static %}
+
+		<title>Showgrid | Nashville's Live Music Source {% block title %}{% endblock %}</title>
+
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+		<meta name="description" content="Showgrid is Nashville's premiere place to learn about live music in town.">
+		<meta name="robots" content="index,follow">
+
+
+		<!-- Start Favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="{% static 'showgrid/img/favicon/apple-icon-57x57.png' %}">
+		<link rel="apple-touch-icon" sizes="60x60" href="{% static 'showgrid/img/favicon/apple-icon-60x60.png' %}">
+		<link rel="apple-touch-icon" sizes="72x72" href="{% static 'showgrid/img/favicon/apple-icon-72x72.png' %}">
+		<link rel="apple-touch-icon" sizes="76x76" href="{% static 'showgrid/img/favicon/apple-icon-76x76.png' %}">
+		<link rel="apple-touch-icon" sizes="114x114" href="{% static 'showgrid/img/favicon/apple-icon-114x114.png' %}">
+		<link rel="apple-touch-icon" sizes="120x120" href="{% static 'showgrid/img/favicon/apple-icon-120x120.png' %}">
+		<link rel="apple-touch-icon" sizes="144x144" href="{% static 'showgrid/img/favicon/apple-icon-144x144.png' %}">
+		<link rel="apple-touch-icon" sizes="152x152" href="{% static 'showgrid/img/favicon/apple-icon-152x152.png' %}">
+		<link rel="apple-touch-icon" sizes="180x180" href="{% static 'showgrid/img/favicon/apple-icon-180x180.png' %}">
+		<link rel="icon" type="image/png" sizes="192x192"  href="{% static 'showgrid/img/favicon/android-icon-192x192.png' %}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{% static 'showgrid/img/favicon/favicon-32x32.png' %}">
+		<link rel="icon" type="image/png" sizes="96x96" href="{% static 'showgrid/img/favicon/favicon-96x96.png' %}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{% static 'showgrid/img/favicon/favicon-16x16.png' %}">
+		<link rel="manifest" href="{% static 'showgrid/img/favicon/manifest.json' %}">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="{% static 'showgrid/img/favicon/ms-icon-144x144.png' %}">
+		<meta name="theme-color" content="#ffffff">
+		<!-- End Favicon -->
+		
+
+		{% block og %}
+		<!-- Start Facebook Open Graph -->
+		<meta property="og:title" content="Showgrid {% block ogtitle %}| Nashville's Live Music Source{% endblock %}"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:image" content="{% block ogimg %}http://showgrid.com/{% static 'showgrid/img/facebook-ogimg.jpg' %}{% endblock %}"/>
+		<meta property="og:url" content="http://showgrid.com"/>
+		<meta property="og:description" content="{% block ogdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}"/>
+		<!-- End Facebook Open Graph -->
+		{% endblock %}
+
+
+		{% block twitter %}
+		<!-- Start Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:site" content="@showgrid">
+		<meta name="twitter:creator" content="@dvshnt">
+		<meta name="twitter:title" content="Showgrid {% block twittertitle %}| Nashville's Live Music Source{% endblock %}">
+		<meta name="twitter:description" content="{% block twitterdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}">
+		<meta name="twitter:image" content="{% block twitterimg %}http://showgrid.com/{% static 'showgrid/img/sg--fb.jpg' %}{% endblock %}">
+		<!-- End Twitter Card -->
+		{% endblock %}
+
+
+		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
+		<link href="{% static 'showgrid/css/base.css' %}" rel="stylesheet" type="text/css">
+		
+
+		{% block style %}{% endblock style %}
+	</head>
+	<body>
+		{% block svg %}
+			{% include "svg_icons.html" %}
+		{% endblock svg %}
+
+		<div id="container">
+			{% block head %}
+			<header id="head">
+				<h1>
+					<a href="/">
+						<img src="{% static 'showgrid/img/wordmark-black.png' %}" alt="Showgrid Nashville"/>
+						<span>Nashville</span>
+					</a>
+				</h1>
+
+				<menu>
+					<ul>
+						<li>
+							<a href="/calendar">
+								<span>Calendar</span>
+							</a>
+						</li>
+						<li>
+							<a href="/mag/articles">
+								<span>Articles</span>
+							</a>
+						</li>
+						<li>
+							<a href="/mag/playlists">
+								<span>Playlists</span>
+							</a>
+						</li>
+						<li>
+							<a href="/issue">
+								<span>Newsletter</span>
+							</a>
+						</li>
+					</ul>
+				</menu>
+
+				<aside class="actions">
+					<ul>
+						<li>
+							<a href="/user">
+								<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
+							</a>
+						</li>
+						<li>
+							<a id="search-toggle" href="#">
+								<svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg>
+							</a>
+						</li>
+					</ul>
+				</aside>
+
+				<aside class="social">
+					<ul>
+						<li class="social">
+							<a id="search-toggle" href="#">
+								<svg class="icon icon-instagram"><use xlink:href="#icon-instagram"></use></svg>
+							</a>
+						</li>
+						<li class="social">
+							<a href="/user">
+								<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+							</a>
+						</li>
+						<li class="social">
+							<a id="search-toggle" href="#">
+								<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+							</a>
+						</li>
+					</ul>
+				</aside>
+			</header>
+			{% endblock head %}
+
+			{% block subhead %}
+			<header id="subhead">
+				<form>
+					<input type="text" placeholder="Search"/>
+					<input type="submit" value="Go"/>
+				</form>
+			</header>
+			{% endblock subhead %}
+
+			{% block content %}{% endblock content %}
+
+			<menu id="mobile-menu">
+				<ul>
+					{% block mobilemenu %}
+					<li>
+						<a href="/calendar">
+							<svg class="icon icon-calendar"><use xlink:href="#icon-calendar"></use></svg>
+							<span>Calendar</span>
+						</a>
+					</li>
+					<li>
+						<a href="/mag/articles">
+							<svg class="icon icon-articles"><use xlink:href="#icon-article"></use></svg>
+							<span>Articles</span>
+						</a>
+					</li>
+					<li>
+						<a href="/mag/playlists">
+							<svg class="icon icon-playlist"><use xlink:href="#icon-playlist"></use></svg>
+							<span>Playlists</span>
+						</a>
+					</li>
+					<li>
+						<a href="/issue">
+							<svg class="icon icon-letter"><use xlink:href="#icon-letter"></use></svg>
+							<span>Newsletter</span>
+						</a>
+					</li>
+					{% endblock mobilemenu %}
+				</ul>
+			</menu>
+
+			{% block footer %}
+			<!-- <footer>
+				<span>&copy;MMXVI Showgrid, Nashville, TN</span>
+				<span>
+					<a href="mailto:info@showgrid.com">Contact</a>
+				</span>
+			</footer> -->
+			{% endblock %}
+		</div>
+	</body>
+ 
+	{% block scripts %}{% endblock %}
+ 	<script src="{% static 'showgrid/js/bundle.js' %}"></script>
+  	<script>
+	// 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	// 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	// 	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	// 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	// 	ga('create', 'UA-70992003-1', 'auto');
+	// 	ga('send', 'pageview');
+	</script>
+</html>
