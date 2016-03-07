@@ -400,28 +400,36 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Helvetica', sans-serif;
-  background: #fafafa;
-  overflow-x: hidden;
+  background: #f2f2f2;
+  overflow: hidden;
 }
 
-#container {
-  position: relative;
-  width: 100vw;
-  min-height: 100vh;
-}
-
-#container:after {
+body:after {
   content: "";
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  opacity: 0.015;
+  opacity: 0.025;
   z-index: -1;
   background: url("/static/showgrid/img/sg-pattern.png");
 }
 
+#container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: scroll;
+}
+
+@media screen and (max-width: 740px) {
+  #container {
+    bottom: 61px;
+  }
+}
 #head {
   position: relative;
   width: 100%;
@@ -509,6 +517,13 @@ body {
   fill: #55acee;
 }
 
+#container.venue #head {
+  -webkit-flex: 0 0 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+}
+
 #mobile-menu {
   display: none;
 }
@@ -536,6 +551,9 @@ body {
   #head {
     height: 60px;
   }
+  #head.venue {
+    display: none;
+  }
   #head aside.social {
     display: none;
   }
@@ -547,7 +565,7 @@ body {
     height: 20px;
   }
   #head aside.actions ul li a svg {
-    margin: 18.75px 17.5px 0;
+    margin: 18.75px 20px 0 0;
   }
 
   #mobile-menu {
@@ -562,7 +580,7 @@ body {
     text-align: center;
     background: #ffffff;
     border-top: 1px solid #e8e8e8;
-    z-index: 5000001;
+    z-index: 101;
   }
   #mobile-menu ul {
     display: -webkit-flex;
@@ -1193,10 +1211,202 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   font-weight: 300;
 }
 
+#venue-head {
+  width: 400px;
+  margin: 20px auto 0;
+}
+#venue-head a {
+  display: none;
+}
+#venue-head .title {
+  padding: 8px 0;
+}
+#venue-head .title h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-family: 'Roboto Slab', serif;
+  text-align: center;
+}
+
+@media screen and (max-width: 740px) {
+  #venue-head {
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border-bottom: none;
+    margin: 0;
+    width: auto;
+  }
+  #venue-head a {
+    display: inline;
+    -webkit-flex: 0 0 60px;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 60px;
+            flex: 0 0 60px;
+    height: 60px;
+  }
+  #venue-head a .icon-back,
+  #venue-head a .icon-more {
+    fill: #ffffff;
+    width: 30px;
+    height: 30px;
+    margin: 15px;
+  }
+  #venue-head .title {
+    -webkit-flex: 1 1 200px;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 200px;
+            flex: 1 1 200px;
+  }
+  #venue-head .title h2 {
+    font-size: 18px;
+  }
+}
 footer {
   background: red;
 }
 
+#venue-script {
+  width: 360px;
+  padding: 20px;
+  margin: 16px auto 8px;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.42;
+  background: #ffffff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+#venue-script h4 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+}
+
+#venue-banner {
+  position: relative;
+  width: 400px;
+  height: 352px;
+  margin: 0 auto;
+}
+#venue-banner .image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.4;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
+  z-index: 9;
+}
+#venue-banner .overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+#venue-banner .overlay .info {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  padding: 10px 15px;
+}
+#venue-banner .overlay .info .address {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  text-align: left;
+}
+#venue-banner .overlay .info .social {
+  position: absolute;
+  right: 15px;
+  display: inline-block;
+}
+#venue-banner .overlay .info .social a {
+  margin: 0 5px;
+  text-decoration: none;
+}
+#venue-banner .overlay .info .social svg {
+  fill: rgba(255, 255, 255, 0.7);
+  width: 20px;
+  height: 20px;
+}
+
+@media screen and (max-width: 740px) {
+  #venue {
+    width: 100%;
+  }
+
+  #venue-banner {
+    position: relative;
+    width: 100%;
+    height: 220px;
+  }
+  #venue-banner .image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.4;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+    z-index: 9;
+  }
+  #venue-banner .overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+  }
+  #venue-banner .overlay .info {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    padding: 10px 15px;
+  }
+  #venue-banner .overlay .info .address {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    text-align: left;
+  }
+  #venue-banner .overlay .info .social {
+    position: absolute;
+    right: 15px;
+    display: inline-block;
+  }
+  #venue-banner .overlay .info .social a {
+    margin: 0 5px;
+    text-decoration: none;
+  }
+  #venue-banner .overlay .info .social svg {
+    fill: rgba(255, 255, 255, 0.7);
+    width: 20px;
+    height: 20px;
+  }
+}
 #calendar {
   position: absolute;
   top: 69px;
@@ -1219,7 +1429,7 @@ footer {
 @media screen and (max-width: 740px) {
   #calendar {
     top: 60px;
-    bottom: 61px;
+    bottom: 0;
   }
 }
 .calendar__row {
@@ -1251,7 +1461,7 @@ footer {
     background-color: #fcfcfc;
   }
 }
-.calendar__row .venue {
+.calendar__row a.venue {
   position: relative;
   font-size: 16px;
   -webkit-flex: 0 0 13em;
@@ -1275,10 +1485,10 @@ footer {
   text-align: center;
   cursor: pointer;
 }
-.calendar__row .venue:hover .image {
+.calendar__row a.venue:hover .image {
   opacity: 0.6;
 }
-.calendar__row .venue .image {
+.calendar__row a.venue .image {
   position: absolute;
   top: 0;
   right: 0;
@@ -1291,29 +1501,29 @@ footer {
   -webkit-filter: grayscale(1);
   filter: grayscale(1);
 }
-.calendar__row .venue .overlay {
+.calendar__row a.venue .overlay {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.calendar__row .venue .overlay .name {
+.calendar__row a.venue .overlay .name {
   width: 100%;
   height: 35%;
   margin: 10px 0;
   font-size: 18px;
   text-align: center;
 }
-.calendar__row .venue .overlay .name a {
+.calendar__row a.venue .overlay .name a {
   color: #555;
   font-weight: 500;
   text-decoration: none;
 }
-.calendar__row .venue .overlay .name a:hover {
+.calendar__row a.venue .overlay .name a:hover {
   text-decoration: underline;
 }
-.calendar__row .venue .overlay .icon-wrapper {
+.calendar__row a.venue .overlay .icon-wrapper {
   height: 100px;
   width: 100px;
   position: absolute;
@@ -1325,7 +1535,7 @@ footer {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
 }
-.calendar__row .venue .overlay .icon {
+.calendar__row a.venue .overlay .icon {
   position: absolute;
   top: 50%;
   left: 0;
@@ -1334,7 +1544,7 @@ footer {
   font-size: 30px;
   color: white;
 }
-.calendar__row .venue .overlay .address {
+.calendar__row a.venue .overlay .address {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1348,7 +1558,7 @@ footer {
   color: #f2f2f2;
 }
 
-.calendar__row.mini .venue {
+.calendar__row.mini a.venue {
   padding: 10px 0;
   text-align: center;
 }
@@ -1376,16 +1586,16 @@ footer {
 }
 
 @media screen and (max-width: 740px) {
-  .calendar__row .venue {
+  .calendar__row a.venue {
     -webkit-flex: 0 0 42.5%;
     -webkit-box-flex: 0;
         -ms-flex: 0 0 42.5%;
             flex: 0 0 42.5%;
   }
-  .calendar__row .venue .overlay .name {
+  .calendar__row a.venue .overlay .name {
     font-size: 16px;
   }
-  .calendar__row .venue .overlay .address {
+  .calendar__row a.venue .overlay .address {
     font-size: 8px;
   }
 
@@ -1893,5 +2103,364 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   .pika-table abbr {
     border-bottom: none;
     cursor: help;
+  }
+}
+.list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@media screen and (max-width: 740px) {
+  .list .heading {
+    display: block;
+    width: 95%;
+    margin: 35px auto 8px;
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 18px;
+    font-weight: 300;
+    text-transform: uppercase;
+  }
+  .list .show.large {
+    position: relative;
+    width: 95%;
+    margin: 10px auto;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE/Edge */
+    user-select: none;
+    /* non-prefixed version, currently */
+    -webkit-transform: translateZ(0px);
+  }
+  .list .show.large header {
+    position: relative;
+    height: 25px;
+    padding: 0;
+    color: #ffffff;
+    line-height: 25px;
+  }
+  .list .show.large header a {
+    margin-left: 12px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+  .list .show.large header a:hover {
+    text-decoration: underline;
+    -moz-text-decoration-color: #ffffff;
+    -webkit-text-decoration-color: #ffffff;
+            text-decoration-color: #ffffff;
+  }
+  .list .show.large header a h4 {
+    display: inline;
+    font-size: 12px;
+    font-weight: 400;
+  }
+  .list .show.large header .age {
+    float: right;
+    width: 36px;
+    font-size: 12px;
+    line-height: 30px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .list .show.large .compact-header {
+    padding: 5px;
+    float: right;
+  }
+  .list .show.large div.info {
+    position: relative;
+    width: calc(100% - 30px);
+    min-height: 150px;
+    padding: 0px 15px 10px;
+    cursor: pointer;
+  }
+  .list .show.large div.info a {
+    text-decoration: none;
+  }
+  .list .show.large div.info a:hover h3,
+  .list .show.large div.info a:hover h4,
+  .list .show.large div.info a:hover h5 {
+    text-decoration: none;
+  }
+  .list .show.large div.info .date {
+    height: 34px;
+    float: left;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 34px;
+  }
+  .list .show.large div.info .featured {
+    height: 34px;
+    float: right;
+    color: #FBBF00;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 34px;
+    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.25);
+  }
+  .list .show.large div.info .featured b {
+    font-size: 20px;
+  }
+  .list .show.large div.info .artists {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    width: 100%;
+  }
+  .list .show.large div.info .artists h3, .list .show.large div.info .artists h4, .list .show.large div.info .artists h5 {
+    margin: 5px 0;
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .list .show.large div.info .artists h3 {
+    margin: 4px 0;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .list .show.large div.info .artists h4 {
+    font-size: 12px;
+  }
+  .list .show.large div.info .artists h5 {
+    font-size: 14px;
+  }
+  .list .show.large div.info .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    opacity: 0.5;
+  }
+  .list .show.large div.info .overlay .bg-img {
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: 50% 15%;
+  }
+  .list .show.large div.info:hover .overlay {
+    -webkit-transform: scale(1.015);
+    transform: scale(1.015);
+    opacity: 0.8;
+  }
+  .list .show.large footer {
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    width: 100%;
+    height: 36px;
+    background: #ffffff;
+    z-index: 10;
+  }
+  .list .show.large footer .col-3 {
+    position: relative;
+    height: 100%;
+    -webkit-flex: 0 0 25%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+    color: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    line-height: 40px;
+  }
+  .list .show.large footer .col-3:hover {
+    cursor: pointer;
+  }
+  .list .show.large footer .col-3 span {
+    position: relative;
+    top: -4px;
+    font-size: 11px;
+    line-height: 40px;
+  }
+  .list .show.large footer .col-3 svg {
+    width: 16px;
+    height: 16px;
+    margin: 10px 0px 0 5px;
+    fill: rgba(0, 0, 0, 0.3);
+    padding-right: 8px;
+  }
+  .list .show.large footer .col-3 svg.icon-ticket {
+    fill: #00de90;
+  }
+  .list .show.large footer .col-3 .favorite.active .icon-heart,
+  .list .show.large footer .col-3 .favorite.active .text {
+    color: #fc3030;
+  }
+  .list .show.large footer .col-3 .alert.active .icon-alert,
+  .list .show.large footer .col-3 .alert.active .alert-info {
+    color: #ff9929;
+  }
+  .list .show.large footer .col-3 .alert.active .icon-alert .option,
+  .list .show.large footer .col-3 .alert.active .alert-info .option {
+    border-bottom: 1px dotted #ff9929;
+    text-decoration: none;
+  }
+  .list .show.large footer .col-3 .alert.sale .icon-alert,
+  .list .show.large footer .col-3 .alert.sale .alert-info {
+    color: #00de90;
+  }
+  .list .show.large footer .col-3 .alert.sale .icon-alert .option,
+  .list .show.large footer .col-3 .alert.sale .alert-info .option {
+    border-bottom: 1px dotted #00de90;
+    text-decoration: none;
+  }
+  .list .show.large footer .col-3 b.icon-share {
+    font-size: 24px;
+  }
+  .list .show.large footer .col-3 .share-button span {
+    position: relative;
+    top: -3px;
+  }
+  .list .show.large footer .col-3 .ticket {
+    color: #76e6b5;
+    text-decoration: none;
+  }
+  .list .show.large footer .col-3 .ticket:hover {
+    text-decoration: underline;
+  }
+  .list .show.large footer .col-3 .ticket .ticket-price .number {
+    font-weight: 700;
+  }
+  .list .show.large footer .col-3 .soldout {
+    position: absolute;
+    right: 4px;
+    height: 24px;
+    width: 120px;
+    margin: 4px 0;
+    color: #ea6e6f;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #ff6363;
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .list .show.large footer .col-3 .onsale {
+    position: absolute;
+    right: 4px;
+    height: 24px;
+    width: 170px;
+    margin: 4px 0;
+    color: #76e6b5;
+    font-size: 10px;
+    font-weight: 300;
+    line-height: 24px;
+    text-align: center;
+    border: 2px solid #76e6b5;
+    background: transparent;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .list .show.large footer .col-3 .onsale span:first-of-type {
+    margin-right: 5px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .list .show.large footer .col-3 .onsale .date {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+#venue-recent {
+  width: 400px;
+  margin: -6px auto 20px;
+  padding: 15px 0;
+}
+#venue-recent .list {
+  padding: 15px 0;
+  background: #ffffff;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+#venue-recent .list h3 {
+  display: block;
+  width: 92.5%;
+  margin: 0 auto;
+  font-size: 16px;
+}
+#venue-recent .list .show.small {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 17.5px 0;
+}
+#venue-recent .list .show.small .date {
+  -webkit-flex: 0 0 50px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 50px;
+          flex: 0 0 50px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+}
+#venue-recent .list .show.small .artists {
+  -webkit-flex: 1 1 200px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 200px;
+          flex: 1 1 200px;
+  padding: 0 8px;
+}
+#venue-recent .list .show.small .artists a {
+  color: #000000;
+  text-decoration: none;
+}
+#venue-recent .list .show.small .artists a:hover {
+  text-decoration: underline;
+}
+#venue-recent .list .show.small .artists h4 {
+  margin: 3px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+#venue-recent .list .show.small .artists h5 {
+  margin: 3px 0;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+@media screen and (max-width: 740px) {
+  #venue-recent {
+    width: 95%;
   }
 }

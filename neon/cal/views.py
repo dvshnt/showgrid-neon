@@ -4,7 +4,7 @@ from operator import attrgetter
 
 from venue.models import Venue
 
-from serializer import VenueSerializer
+from serializer import VenueListSerializer
 
 from django.shortcuts import render
 
@@ -31,7 +31,7 @@ class Calendar(APIView):
 
 		venues = Venue.objects.filter(opened=True)
 		venues = sorted(venues, key=attrgetter('alphabetical_title'), reverse=False)
-		serializer = VenueSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
+		serializer = VenueListSerializer(venues, many=True, context={ 'start': d1, 'end': d2 })
 
 		days = [d1 + datetime.timedelta(days=x) for x in range(0, calRange)]
 		days = [day.isoformat() for day in days]

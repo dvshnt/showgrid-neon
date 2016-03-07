@@ -57,14 +57,11 @@ export default class CalendarRowVenue extends Component {
 		var link = '/venue/'+this.props.venue.id;
 
 		return (
-			<div className="venue" style={ primaryColor }>
+			<a href={ link } className="venue" style={ primaryColor }>
 				<div className="image" style={ image }></div>
 				<div className="overlay" style={ this.gradient() }>
 					
-					<h3 className="name">
-						<a style={ titleColor } href={ link } target="_blank">{ this.props.venue.name }</a>
-					</h3>
-
+					<h3 className="name" style={ titleColor }>{ this.props.venue.name }</h3>
 
 					<div  className="address">
 				    	<div>
@@ -75,7 +72,7 @@ export default class CalendarRowVenue extends Component {
 				    	</div>
 			    	</div>
 		    	</div>
-			</div>
+			</a>
 		)
 	}
 };

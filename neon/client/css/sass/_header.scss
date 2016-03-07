@@ -109,6 +109,13 @@
 	}
 }
 
+#container.venue {
+	#head {
+		-webkit-flex:0 0 100%;
+				flex:0 0 100%;
+	}
+}
+
 #mobile-menu {
 	display:none;
 }
@@ -140,6 +147,10 @@
 	#head {
 		height:60px;
 
+		&.venue {
+			display:none;
+		}
+
 		aside.social {
 			display:none;
 		}
@@ -155,7 +166,7 @@
 
 		aside.actions ul li a svg {
 
-			margin:18.75px 17.5px 0;
+			margin:18.75px 20px 0 0;
 		}
 	}
 
@@ -174,7 +185,7 @@
 		background:#ffffff;
 		border-top:1px solid #e8e8e8;
 
-		z-index: 5000001;
+		z-index: 101;
 
 		ul {
 			display:-webkit-flex;
@@ -230,3 +241,4 @@
 
 
 @import "subheader";
+@import "header_venue";

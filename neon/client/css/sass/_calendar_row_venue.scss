@@ -1,5 +1,5 @@
 .calendar__row {
-	.venue {
+	a.venue {
 		position:relative;
 
 		font-size:16px;
@@ -111,7 +111,7 @@
 }
 
 .calendar__row.mini {
-	.venue {
+	a.venue {
 		padding:10px 0;
 
 		text-align:center;
@@ -154,7 +154,7 @@
 
 @media screen and (max-width: 740px ) {
 	.calendar__row {
-		.venue {
+		a.venue {
 			-webkit-flex:0 0 42.5%;
 					flex:0 0 42.5%;
 

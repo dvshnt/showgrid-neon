@@ -3,6 +3,6 @@ from venue import views
 
 
 urlpatterns = [
-    url(r'^$', views.Venue.as_view(), name='venue list'),
-    url(r'^(?P<id>[0-9]+)/$', views.Venue.as_view(), name='venue detail'),
+    url(r'^$', views.VenueView.as_view(), name='venue list'),
+    url(r'^(?P<id>[0-9]+)/$', views.VenueView.as_view(), name='venue detail'),
 ]

@@ -1,0 +1,68 @@
+#venue-head {
+	width:400px;
+
+	margin:20px auto 0;
+
+
+	a {
+		display:none;
+	}
+
+	.title {
+		padding:8px 0;
+
+		h2 {
+			margin:0;
+
+			color:#ffffff;
+			font-size:24px;
+			font-family:'Roboto Slab', serif;
+			text-align:center;
+		}
+	}
+}
+
+@media screen and (max-width: 740px) {
+	#venue-head {
+		display:-webkit-flex;
+		display:		flex;
+
+		-webkit-justify-content:center;
+				justify-content:center;
+
+		-webkit-align-items:center;
+				align-items:center;
+
+		border-bottom:none;
+
+		margin:0;
+		width:auto;
+
+		a {
+			display:inline;
+
+			-webkit-flex:0 0 60px;
+					flex:0 0 60px;
+
+			height:60px;
+
+			.icon-back,
+			.icon-more {
+				fill:#ffffff;
+
+				width:30px; height:30px;
+
+				margin:15px;
+			}
+		}
+
+		.title {
+			-webkit-flex:1 1 200px;
+					flex:1 1 200px;
+
+			h2 {
+				font-size:18px;
+			}
+		}
+	}
+}

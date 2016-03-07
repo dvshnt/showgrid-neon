@@ -1,0 +1,155 @@
+#venue-script {
+	width:360px;
+
+	padding:20px;
+	margin:16px auto 8px;
+
+	font-size:12px;
+	font-weight:300;
+	line-height:1.42;
+
+	background:#ffffff;
+	-webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);
+			box-shadow:0 2px 3px rgba(0,0,0,0.1);
+
+
+	h4 {
+		margin:0 0 8px 0;
+
+		font-size:16px;
+	}
+}
+
+#venue-banner {
+	position:relative;
+	width:400px; height:352px;
+
+	margin:0 auto;
+
+	.image{
+		position:absolute;
+		top:0; right:0; bottom:0; left:0;
+
+		opacity:0.4;
+
+		background-size:cover;
+	    background-repeat: no-repeat;
+	    background-position:50% 50%;
+
+		-webkit-filter:grayscale(1);
+	    		filter:grayscale(1);
+
+		z-index:9;
+	}
+	
+
+	.overlay {
+		position:absolute;
+		top:0; right:0; bottom:0; left:0;
+
+		z-index:10;
+
+		.info {
+			position:absolute;
+			bottom:5px; left:0; right:0;
+
+			padding:10px 15px;
+			
+			.address {
+				display:inline-block;
+
+				color:rgba(255,255,255,0.7);
+				font-size:12px;
+				text-align:left;
+			}
+
+			.social {
+				position:absolute;
+				right:15px;
+
+				display:inline-block;
+
+				a {
+					margin:0 5px;
+					text-decoration:none;
+				}
+
+				svg {
+					fill:rgba(255,255,255,0.7);
+
+					width:20px; height:20px;
+				}
+			}
+		}
+	}
+}
+
+
+@media screen and (max-width: 740px) {
+	#venue {
+		width:100%;
+	}
+
+	#venue-banner {
+		position:relative;
+		width:100%; height:220px;
+
+
+		.image{
+			position:absolute;
+			top:0; right:0; bottom:0; left:0;
+
+			opacity:0.4;
+
+			background-size:cover;
+		    background-repeat: no-repeat;
+		    background-position:50% 50%;
+
+			-webkit-filter:grayscale(1);
+		    		filter:grayscale(1);
+
+			z-index:9;
+		}
+		
+
+		.overlay {
+			position:absolute;
+			top:0; right:0; bottom:0; left:0;
+
+			z-index:10;
+
+			.info {
+				position:absolute;
+				bottom:5px; left:0; right:0;
+
+				padding:10px 15px;
+				
+				.address {
+					display:inline-block;
+
+					color:rgba(255,255,255,0.7);
+					font-size:12px;
+					text-align:left;
+				}
+
+				.social {
+					position:absolute;
+					right:15px;
+
+					display:inline-block;
+
+					a {
+						margin:0 5px;
+						text-decoration:none;
+					}
+
+					svg {
+						fill:rgba(255,255,255,0.7);
+
+						width:20px; height:20px;
+					}
+				}
+			}
+		}
+	}	
+}
