@@ -10,7 +10,7 @@ import ListItemLg from './components/ListItemLg';
 import ListItemSm from './components/ListItemSm';
 
 
-var calendar = document.getElementById("calendar")
+var calendar = document.getElementById("calendar");
 if (!!calendar) {
 	console.log("START - Calendar Render");
 	React.render(<Showgrid days={ days } venues={ venues } />, calendar);

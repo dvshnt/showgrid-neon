@@ -517,13 +517,6 @@ body:after {
   fill: #55acee;
 }
 
-#container.venue #head {
-  -webkit-flex: 0 0 100%;
-  -webkit-box-flex: 0;
-      -ms-flex: 0 0 100%;
-          flex: 0 0 100%;
-}
-
 #mobile-menu {
   display: none;
 }
@@ -551,7 +544,7 @@ body:after {
   #head {
     height: 60px;
   }
-  #head.venue {
+  #head.hide-mobile {
     display: none;
   }
   #head aside.social {
@@ -1212,7 +1205,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 #venue-head {
-  width: 400px;
+  width: 350px;
   margin: 20px auto 0;
 }
 #venue-head a {
@@ -1276,8 +1269,43 @@ footer {
   background: red;
 }
 
+#venue {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-flex-flow: row wrap;
+  -ms-flex-flow: row wrap;
+      flex-flow: row wrap;
+  width: 80%;
+  margin: 0 auto;
+}
+
+#venue-sidebar {
+  -webkit-flex: 0 0 350px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 350px;
+          flex: 0 0 350px;
+  margin-right: 15px;
+}
+
+#venue-main {
+  -webkit-flex: 1 1 500px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 500px;
+          flex: 1 1 500px;
+}
+
 #venue-script {
-  width: 360px;
+  width: 310px;
   padding: 20px;
   margin: 16px auto 8px;
   font-size: 12px;
@@ -1293,8 +1321,8 @@ footer {
 
 #venue-banner {
   position: relative;
-  width: 400px;
-  height: 352px;
+  width: 350px;
+  height: 302px;
   margin: 0 auto;
 }
 #venue-banner .image {
@@ -1349,7 +1377,29 @@ footer {
 
 @media screen and (max-width: 740px) {
   #venue {
+    position: absolute;
     width: 100%;
+    z-index: 100000;
+  }
+
+  #venue-sidebar {
+    -webkit-flex: 0 0 100%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+    margin-right: 0;
+  }
+
+  #venue-main {
+    -webkit-flex: 0 0 100%;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+    margin-left: 0;
+  }
+
+  #venue-script {
+    width: calc(95% - 40px);
   }
 
   #venue-banner {
@@ -1483,6 +1533,7 @@ footer {
   padding: 10px 0;
   overflow: hidden;
   text-align: center;
+  text-decoration: none;
   cursor: pointer;
 }
 .calendar__row a.venue:hover .image {
@@ -1518,7 +1569,6 @@ footer {
 .calendar__row a.venue .overlay .name a {
   color: #555;
   font-weight: 500;
-  text-decoration: none;
 }
 .calendar__row a.venue .overlay .name a:hover {
   text-decoration: underline;
@@ -1562,22 +1612,22 @@ footer {
   padding: 10px 0;
   text-align: center;
 }
-.calendar__row.mini .image {
+.calendar__row.mini a.venue .image {
   display: none;
 }
-.calendar__row.mini .overlay {
+.calendar__row.mini a.venue .overlay {
   position: relative;
   height: auto;
   margin: auto;
 }
-.calendar__row.mini .overlay .name {
+.calendar__row.mini a.venue .overlay .name {
   margin: 5px 0;
   font-size: 14px;
 }
-.calendar__row.mini .overlay .name a {
+.calendar__row.mini a.venue .overlay .name a {
   color: #666666;
 }
-.calendar__row.mini .overlay .address {
+.calendar__row.mini a.venue .overlay .address {
   position: relative;
   margin: 5px 0;
   padding-top: 0;
@@ -2111,122 +2161,305 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   list-style: none;
 }
 
+.list .heading {
+  display: block;
+  width: 100%;
+  margin: 20px 0 8px;
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 18px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+.list .list-item:not(:first-of-type) .heading {
+  margin-top: 45px;
+}
+.list .show.large {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -khtml-user-select: none;
+  /* Konqueror */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE/Edge */
+  user-select: none;
+  /* non-prefixed version, currently */
+  -webkit-transform: translateZ(0px);
+}
+.list .show.large header {
+  position: relative;
+  height: 25px;
+  padding: 0;
+  color: #ffffff;
+  line-height: 25px;
+}
+.list .show.large header a {
+  margin-left: 12px;
+  color: #ffffff;
+  text-decoration: none;
+}
+.list .show.large header a:hover {
+  text-decoration: underline;
+  -moz-text-decoration-color: #ffffff;
+  -webkit-text-decoration-color: #ffffff;
+          text-decoration-color: #ffffff;
+}
+.list .show.large header a h4 {
+  display: inline;
+  font-size: 12px;
+  font-weight: 400;
+}
+.list .show.large header .age {
+  float: right;
+  width: 36px;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+.list .show.large .compact-header {
+  padding: 5px;
+  float: right;
+}
+.list .show.large div.info {
+  position: relative;
+  width: calc(100% - 30px);
+  min-height: 220px;
+  padding: 0px 15px 10px;
+  cursor: pointer;
+}
+.list .show.large div.info a {
+  text-decoration: none;
+}
+.list .show.large div.info a:hover h3,
+.list .show.large div.info a:hover h4,
+.list .show.large div.info a:hover h5 {
+  text-decoration: none;
+}
+.list .show.large div.info .date {
+  height: 34px;
+  float: left;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 34px;
+}
+.list .show.large div.info .featured {
+  height: 34px;
+  float: right;
+  color: #FBBF00;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 34px;
+  text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.25);
+}
+.list .show.large div.info .featured b {
+  font-size: 20px;
+}
+.list .show.large div.info .artists {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+  width: 100%;
+}
+.list .show.large div.info .artists h3, .list .show.large div.info .artists h4, .list .show.large div.info .artists h5 {
+  margin: 5px 0;
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+}
+.list .show.large div.info .artists h3 {
+  margin: 4px 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+.list .show.large div.info .artists h4 {
+  font-size: 14px;
+}
+.list .show.large div.info .artists h5 {
+  font-size: 16px;
+}
+.list .show.large div.info .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  opacity: 0.5;
+}
+.list .show.large div.info .overlay .bg-img {
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 50% 15%;
+}
+.list .show.large div.info:hover .overlay {
+  -webkit-transform: scale(1.015);
+  transform: scale(1.015);
+  opacity: 0.8;
+}
+.list .show.large footer {
+  display: -webkit-flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row nowrap;
+  -ms-flex-flow: row nowrap;
+      flex-flow: row nowrap;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 40px;
+  background: #ffffff;
+  z-index: 10;
+}
+.list .show.large footer .col-3 {
+  position: relative;
+  height: 100%;
+  -webkit-flex: 0 0 25%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 25%;
+          flex: 0 0 25%;
+  color: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  line-height: 40px;
+}
+.list .show.large footer .col-3:hover {
+  cursor: pointer;
+}
+.list .show.large footer .col-3 span {
+  position: relative;
+  top: -5px;
+  font-size: 14px;
+  line-height: 40px;
+}
+.list .show.large footer .col-3 svg {
+  width: 20px;
+  height: 20px;
+  margin: 10px 5px 0 5px;
+  fill: rgba(0, 0, 0, 0.3);
+  padding-right: 8px;
+}
+.list .show.large footer .col-3 svg.icon-ticket {
+  fill: #00de90;
+}
+.list .show.large footer .col-3 .favorite.active .icon-heart,
+.list .show.large footer .col-3 .favorite.active .text {
+  color: #fc3030;
+}
+.list .show.large footer .col-3 .alert.active .icon-alert,
+.list .show.large footer .col-3 .alert.active .alert-info {
+  color: #ff9929;
+}
+.list .show.large footer .col-3 .alert.active .icon-alert .option,
+.list .show.large footer .col-3 .alert.active .alert-info .option {
+  border-bottom: 1px dotted #ff9929;
+  text-decoration: none;
+}
+.list .show.large footer .col-3 .alert.sale .icon-alert,
+.list .show.large footer .col-3 .alert.sale .alert-info {
+  color: #00de90;
+}
+.list .show.large footer .col-3 .alert.sale .icon-alert .option,
+.list .show.large footer .col-3 .alert.sale .alert-info .option {
+  border-bottom: 1px dotted #00de90;
+  text-decoration: none;
+}
+.list .show.large footer .col-3 b.icon-share {
+  font-size: 24px;
+}
+.list .show.large footer .col-3 .share-button span {
+  position: relative;
+  top: -3px;
+}
+.list .show.large footer .col-3 .ticket {
+  color: #76e6b5;
+  text-decoration: none;
+}
+.list .show.large footer .col-3 .ticket:hover {
+  text-decoration: underline;
+}
+.list .show.large footer .col-3 .ticket .ticket-price .number {
+  font-weight: 700;
+}
+.list .show.large footer .col-3 .soldout {
+  position: absolute;
+  right: 4px;
+  height: 24px;
+  width: auto;
+  margin: 4px 0;
+  padding: 0 8px;
+  color: #ea6e6f;
+  font-size: 10px;
+  line-height: 24px;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #ff6363;
+  background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.list .show.large footer .col-3 .onsale {
+  position: absolute;
+  right: 4px;
+  height: 24px;
+  width: 170px;
+  margin: 4px 0;
+  color: #76e6b5;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 24px;
+  text-align: center;
+  border: 2px solid #76e6b5;
+  background: transparent;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.list .show.large footer .col-3 .onsale span:first-of-type {
+  margin-right: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.list .show.large footer .col-3 .onsale .date {
+  font-size: 14px;
+  font-weight: 400;
+}
+
 @media screen and (max-width: 740px) {
   .list .heading {
-    display: block;
     width: 95%;
-    margin: 35px auto 8px;
-    color: rgba(0, 0, 0, 0.75);
-    font-size: 18px;
-    font-weight: 300;
-    text-transform: uppercase;
+    margin: 45px auto 8px;
   }
   .list .show.large {
-    position: relative;
     width: 95%;
     margin: 10px auto;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Chrome/Safari/Opera */
-    -khtml-user-select: none;
-    /* Konqueror */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* IE/Edge */
-    user-select: none;
-    /* non-prefixed version, currently */
-    -webkit-transform: translateZ(0px);
-  }
-  .list .show.large header {
-    position: relative;
-    height: 25px;
-    padding: 0;
-    color: #ffffff;
-    line-height: 25px;
-  }
-  .list .show.large header a {
-    margin-left: 12px;
-    color: #ffffff;
-    text-decoration: none;
-  }
-  .list .show.large header a:hover {
-    text-decoration: underline;
-    -moz-text-decoration-color: #ffffff;
-    -webkit-text-decoration-color: #ffffff;
-            text-decoration-color: #ffffff;
-  }
-  .list .show.large header a h4 {
-    display: inline;
-    font-size: 12px;
-    font-weight: 400;
-  }
-  .list .show.large header .age {
-    float: right;
-    width: 36px;
-    font-size: 12px;
-    line-height: 30px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.1);
-  }
-  .list .show.large .compact-header {
-    padding: 5px;
-    float: right;
   }
   .list .show.large div.info {
-    position: relative;
-    width: calc(100% - 30px);
     min-height: 150px;
-    padding: 0px 15px 10px;
-    cursor: pointer;
-  }
-  .list .show.large div.info a {
-    text-decoration: none;
-  }
-  .list .show.large div.info a:hover h3,
-  .list .show.large div.info a:hover h4,
-  .list .show.large div.info a:hover h5 {
-    text-decoration: none;
-  }
-  .list .show.large div.info .date {
-    height: 34px;
-    float: left;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 34px;
-  }
-  .list .show.large div.info .featured {
-    height: 34px;
-    float: right;
-    color: #FBBF00;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 34px;
-    text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.25);
-  }
-  .list .show.large div.info .featured b {
-    font-size: 20px;
-  }
-  .list .show.large div.info .artists {
-    position: absolute;
-    bottom: 10px;
-    left: 15px;
-    width: 100%;
-  }
-  .list .show.large div.info .artists h3, .list .show.large div.info .artists h4, .list .show.large div.info .artists h5 {
-    margin: 5px 0;
-    color: #ffffff;
-    font-weight: 500;
-    text-decoration: none;
   }
   .list .show.large div.info .artists h3 {
-    margin: 4px 0;
     font-size: 18px;
-    font-weight: 700;
   }
   .list .show.large div.info .artists h4 {
     font-size: 12px;
@@ -2234,167 +2467,21 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   .list .show.large div.info .artists h5 {
     font-size: 14px;
   }
-  .list .show.large div.info .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transition: all 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-    opacity: 0.5;
-  }
-  .list .show.large div.info .overlay .bg-img {
-    width: 100%;
-    height: 100%;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: 50% 15%;
-  }
-  .list .show.large div.info:hover .overlay {
-    -webkit-transform: scale(1.015);
-    transform: scale(1.015);
-    opacity: 0.8;
-  }
   .list .show.large footer {
-    display: -webkit-flex;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-flex-flow: row nowrap;
-    -ms-flex-flow: row nowrap;
-        flex-flow: row nowrap;
-    -webkit-align-items: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    -webkit-justify-content: center;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    width: 100%;
     height: 36px;
-    background: #ffffff;
-    z-index: 10;
-  }
-  .list .show.large footer .col-3 {
-    position: relative;
-    height: 100%;
-    -webkit-flex: 0 0 25%;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 25%;
-            flex: 0 0 25%;
-    color: rgba(0, 0, 0, 0.3);
-    text-align: center;
-    line-height: 40px;
-  }
-  .list .show.large footer .col-3:hover {
-    cursor: pointer;
   }
   .list .show.large footer .col-3 span {
-    position: relative;
     top: -4px;
     font-size: 11px;
-    line-height: 40px;
   }
   .list .show.large footer .col-3 svg {
     width: 16px;
     height: 16px;
     margin: 10px 0px 0 5px;
-    fill: rgba(0, 0, 0, 0.3);
-    padding-right: 8px;
-  }
-  .list .show.large footer .col-3 svg.icon-ticket {
-    fill: #00de90;
-  }
-  .list .show.large footer .col-3 .favorite.active .icon-heart,
-  .list .show.large footer .col-3 .favorite.active .text {
-    color: #fc3030;
-  }
-  .list .show.large footer .col-3 .alert.active .icon-alert,
-  .list .show.large footer .col-3 .alert.active .alert-info {
-    color: #ff9929;
-  }
-  .list .show.large footer .col-3 .alert.active .icon-alert .option,
-  .list .show.large footer .col-3 .alert.active .alert-info .option {
-    border-bottom: 1px dotted #ff9929;
-    text-decoration: none;
-  }
-  .list .show.large footer .col-3 .alert.sale .icon-alert,
-  .list .show.large footer .col-3 .alert.sale .alert-info {
-    color: #00de90;
-  }
-  .list .show.large footer .col-3 .alert.sale .icon-alert .option,
-  .list .show.large footer .col-3 .alert.sale .alert-info .option {
-    border-bottom: 1px dotted #00de90;
-    text-decoration: none;
-  }
-  .list .show.large footer .col-3 b.icon-share {
-    font-size: 24px;
-  }
-  .list .show.large footer .col-3 .share-button span {
-    position: relative;
-    top: -3px;
-  }
-  .list .show.large footer .col-3 .ticket {
-    color: #76e6b5;
-    text-decoration: none;
-  }
-  .list .show.large footer .col-3 .ticket:hover {
-    text-decoration: underline;
-  }
-  .list .show.large footer .col-3 .ticket .ticket-price .number {
-    font-weight: 700;
-  }
-  .list .show.large footer .col-3 .soldout {
-    position: absolute;
-    right: 4px;
-    height: 24px;
-    width: 120px;
-    margin: 4px 0;
-    color: #ea6e6f;
-    font-size: 14px;
-    line-height: 24px;
-    font-weight: bold;
-    text-align: center;
-    border: 2px solid #ff6363;
-    background: transparent;
-    border-radius: 2px;
-    cursor: pointer;
-  }
-  .list .show.large footer .col-3 .onsale {
-    position: absolute;
-    right: 4px;
-    height: 24px;
-    width: 170px;
-    margin: 4px 0;
-    color: #76e6b5;
-    font-size: 10px;
-    font-weight: 300;
-    line-height: 24px;
-    text-align: center;
-    border: 2px solid #76e6b5;
-    background: transparent;
-    border-radius: 2px;
-    cursor: pointer;
-  }
-  .list .show.large footer .col-3 .onsale span:first-of-type {
-    margin-right: 5px;
-    font-size: 12px;
-    font-weight: bold;
-  }
-  .list .show.large footer .col-3 .onsale .date {
-    font-size: 14px;
-    font-weight: 400;
   }
 }
 #venue-recent {
-  width: 400px;
+  width: 350px;
   margin: -6px auto 20px;
   padding: 15px 0;
 }
@@ -2406,7 +2493,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 #venue-recent .list h3 {
   display: block;
   width: 92.5%;
-  margin: 0 auto;
+  margin: 0 auto 4px;
   font-size: 16px;
 }
 #venue-recent .list .show.small {
@@ -2422,13 +2509,18 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin: 17.5px 0;
+  padding: 12.5px 0;
+}
+#venue-recent .list .show.small:hover {
+  background: rgba(0, 0, 0, 0.025);
+  border-left: 3px solid #000000;
+  cursor: pointer;
 }
 #venue-recent .list .show.small .date {
-  -webkit-flex: 0 0 50px;
+  -webkit-flex: 0 0 70px;
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 50px;
-          flex: 0 0 50px;
+      -ms-flex: 0 0 70px;
+          flex: 0 0 70px;
   color: #000000;
   font-size: 16px;
   font-weight: 300;
@@ -2446,7 +2538,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   text-decoration: none;
 }
 #venue-recent .list .show.small .artists a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 #venue-recent .list .show.small .artists h4 {
   margin: 3px 0;
