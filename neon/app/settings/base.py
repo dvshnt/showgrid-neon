@@ -139,6 +139,7 @@ INSTALLED_APPS = (
 
     'rest_auth',
     'meta',
+    'tinymce',
 )
 
 

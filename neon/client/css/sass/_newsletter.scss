@@ -1,0 +1,148 @@
+#newsletter-archive {
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-align-items:flex-start;
+			align-items:flex-start;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+	-webkit-flex-flow:row wrap;
+			flex-flow:row wrap;
+
+	width:80%;
+
+	margin:20px auto;
+}
+
+.newsletter-sidebar {
+	-webkit-flex:0 0 350px;
+			flex:0 0 350px;
+
+	margin:0 15px;
+
+	section {
+		min-height:160px;
+
+		padding:20px 0;
+
+		text-align:center;
+
+		background:#ffffff;
+		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+
+		p {
+			width:85%;
+		
+			margin:0px auto 15px;
+		
+			font-size:16px;
+			font-weight:200;
+			line-height:1.5;
+			text-align:justify;
+		}
+
+		.form {
+			margin:30px auto 0px;
+		}
+
+		.form input[type=email] {
+			width:180px; height:30px;
+
+			padding:3px 10px ; margin:0;
+
+			font-size:16px;
+			line-height:30px;
+
+			border:1px solid #e8e8e8;
+		}
+
+		.form input[type=submit] {
+			position:relative;
+			top:-1px;
+
+			width:80px; height:38px;
+
+			padding:0; margin:0 0 0 5px;
+
+			color:#ffffff;
+			font-size:14px;
+			line-height:30px;
+
+			background:#55d390;
+			border:1px solid #2dae6a;
+
+			-webkit-appearance: none;
+
+			cursor:pointer;
+		}
+
+		.form.success input[type=email] {
+			left:0;
+
+			width:0;
+
+			padding:0;
+
+			border:none;
+		}
+
+		.form.success input[type=submit] {
+			left:0;
+
+			width:400px;
+		}
+
+		.form .msg {
+			width:404px;
+
+			margin:2px auto;
+			padding:5px 0;
+
+			color:#ffffff;
+			font-size:12px;
+
+			opacity:0;
+
+			border:1px solid rgba(0,0,0,0);
+		}
+
+		.form.error .msg {
+			background:#ea6e6f;
+			border:1px solid #e44143;
+
+			opacity:1;
+		}
+	}
+}
+
+#newsletter-main {
+	-webkit-flex:1 1 500px;
+}
+
+@media screen and (max-width: 740px) {
+	#newsletter-archive {
+		width:100%;
+	}
+
+	.newsletter-sidebar {
+		-webkit-flex:0 0 95%;
+				flex:0 0 95%;
+
+		margin-bottom:25px;
+
+		section {
+			width:100%;
+		}
+	}
+
+	#newsletter-main {
+		-webkit-flex:0 0 100%;
+				flex:0 0 100%;
+	}
+}
+
+	
+
+@import "newsletter-archive";

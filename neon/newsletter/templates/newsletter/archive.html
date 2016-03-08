@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load jsonify %}
+
+{% block content %}
+<div id="newsletter-archive">
+	<aside class="newsletter-sidebar">
+		<section>
+			<h4>Sign Up for Newsletter</h4>
+			<p>
+				Sign up to receive the Showgrid Weekly Digest in your inbox each week. 
+			</p>
+			<p>
+				 Enter the Galactic ticket contest <a href='/contest/1'>here</a>.
+			</p>
+
+			<form class="form" method="post" action="/v1/signup">
+				
+				<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
+				<div class="msg">
+					There is something here that once wasn't.
+				</div>
+			</form>
+		</section>
+	</aside>
+	<section id="newsletter-main">
+		{% for issue in issues %}
+		<a class="issue" href="http://showgrid.com/issue/{{ issue.id }}">
+			<section class="issue list" style="background-image:url('/media/{{ issue.banner }}');">
+				<h4>Weekly Digest | {{ issue.tag }}</h4>
+				<span>
+					Week of {{ issue.start_date|date:"F jS" }}
+				</span>
+			</section>
+		</a>
+		{% endfor %}
+	</section>
+</div>
+{% endblock content %}
+
+{% block footer %}{% endblock footer %}

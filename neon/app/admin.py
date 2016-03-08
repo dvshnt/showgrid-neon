@@ -3,6 +3,7 @@ import requests
 
 from show.models import *
 from venue.models import *
+from newsletter.models import *
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -214,6 +215,58 @@ class ImageAdmin(admin.ModelAdmin):
 	actions = [download_image_action]
 
 
+def mail_issues(queryset,test):
+	issues = list(queryset)
+	for issue in issues:
+		if issue.sent == True:
+			print prRed('issue already mailed, override sent field manually :'+str(issue.id))
+		else:
+			issue.mail(test)
+		
+def mail_issues_action(modeladmin, request, queryset):
+	tr = Thread(target=mail_issues,args=(queryset,False,))
+	tr.start()
+mail_issues_action.short_description = "Mail Issues To All"
+
+
+def mail_issues_action_test(modeladmin, request, queryset):
+	tr = Thread(target=mail_issues,args=(queryset,True,))
+	tr.start()
+mail_issues_action_test.short_description = "Mail Issues To Testers"
+
+def make_issue_active(modeladmin, request, queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.active = True
+		issue.save()
+make_issue_active.short_description = "Make Issues Active"
+
+def make_issue_inactive(modeladmin, request, queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.active = False
+		issue.save()
+make_issue_inactive.short_description = "Make Issues Inactive"
+
+def sync_issue_shows(queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.sync_shows()
+
+def sync_issue_shows_action(modeladmin, request, queryset):
+	tr = Thread(target=sync_issue_shows,args=(queryset,))
+	tr.start()
+sync_issue_shows_action.short_description = "Sync Shows to Issue"
+
+class NewsletterAdmin(admin.ModelAdmin):
+	list_display = ['id','tag','shows_count','sent','active','start_date','end_date']
+	ordering = ['sent','start_date','end_date']
+	fields = ('timezone','banner','spotify_embed','spotify_url','tag','start_date','end_date','intro','sent','active')
+	list_filter =  ('sent',)
+	actions = [mail_issues_action,sync_issue_shows_action,make_issue_active,make_issue_inactive,mail_issues_action_test]
+
+
+
 admin.site.register(Address)
 admin.site.register(Venue)
 admin.site.register(Show, ShowAdmin)
@@ -223,3 +276,4 @@ admin.site.register(Biography,BioAdmin)
 admin.site.register(Track)
 admin.site.register(Genre)
 admin.site.register(Image,ImageAdmin)
+admin.site.register(Newsletter,NewsletterAdmin)
