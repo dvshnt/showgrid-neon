@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'corsheaders',
  
     'colorful',
-    #'haystack',
+    'haystack',
 
     'app',
     'cal',
@@ -166,13 +166,13 @@ REST_FRAMEWORK = {
 }
 
 
-# import os
-# HAYSTACK_CONNECTIONS = {
-#     'default': {
-#         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
-#         'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
-#     },
-# }
+import os
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
 
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

@@ -18,3 +18,4 @@ requests==2.9.1
 django-meta==0.3.2
 simplejson==3.8.2
 django-tinymce==2.2.0
+whoosh==2.7.2

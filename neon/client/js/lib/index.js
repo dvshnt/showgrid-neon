@@ -17,6 +17,17 @@ if (!!calendar) {
 	console.log("END - Calendar Render");
 }
 
+
+var search = document.getElementById("search-results");
+if (!!search) {
+	var extra = {};
+
+	console.log("START - Search Results Render");
+	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, search);
+	console.log("END - Search Results Render");
+}
+
+
 var venueShows = document.getElementById("venue-shows");
 if (!!venueShows) {
 	var url = '/api/v1/shows?orderby=date&venue=' + venue.id;
@@ -61,7 +72,7 @@ if (!!venueRecent) {
 $("#search-toggle").click(function(e) {
 	var searchBar = $("#subhead");
 
-	if (!!calendar) searchBar.addClass("calendar");
+	// if (!!calendar) searchBar.addClass("calendar");
 
 	if (searchBar.hasClass("active")) {
 		searchBar.removeClass("active");
