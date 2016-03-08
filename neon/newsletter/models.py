@@ -2,12 +2,11 @@ import pytz
 
 from django.db import models
 
-from show.models import Venue
-
 from tinymce.models import HTMLField
 
 from app.util.color_log import *
 
+HOST = 'localhost:8000'
 
 class Newsletter(models.Model):
 	def __unicode__ (self):
@@ -34,6 +33,8 @@ class Newsletter(models.Model):
 	
 
 	def sync_shows(self):
+		from show.models import Show
+		
 		existing_shows = Show.objects.filter(issue=self)
 		for show in existing_shows:
 			show.issue = None
@@ -48,6 +49,8 @@ class Newsletter(models.Model):
 
 
 	def render(self,template,sub):
+		from show.models import Show
+		
 		issue_shows = []
 		shows = Show.objects.filter(issue=self).order_by('date')
 

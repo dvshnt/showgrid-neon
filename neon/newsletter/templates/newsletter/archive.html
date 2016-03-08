@@ -25,7 +25,7 @@
 	</aside>
 	<section id="newsletter-main">
 		{% for issue in issues %}
-		<a class="issue" href="http://showgrid.com/issue/{{ issue.id }}">
+		<a class="issue" href="/newsletter/{{ issue.id }}">
 			<section class="issue list" style="background-image:url('/media/{{ issue.banner }}');">
 				<h4>Weekly Digest | {{ issue.tag }}</h4>
 				<span>

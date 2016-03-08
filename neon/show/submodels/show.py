@@ -10,6 +10,7 @@ from django.conf import settings
 
 from artist import Artist
 from venue.models import Venue
+from newsletter.models import Newsletter
 
 from app.util.color_log import *
 
@@ -49,7 +50,7 @@ class Show(models.Model):
 	soldout = models.BooleanField(default=False)
 	onsale = models.DateTimeField(auto_now=True, blank=True)
 
-	#issue = models.ForeignKey('Issue', null=True, blank=True)
+	issue = models.ForeignKey(Newsletter, null=True, blank=True)
 
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
