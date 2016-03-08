@@ -3,7 +3,17 @@
 
 	margin:75px auto 10px;
 
-	h5 {
+	h5.search-query {
 		font-weight:400;
+	}
+}
+
+@media screen and (max-width: 740px) {
+	#search {
+		h5.search-query {
+			width:95%;
+
+			margin:10px auto 17px;
+		}
 	}
 }

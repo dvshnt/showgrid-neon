@@ -11,6 +11,10 @@ var DateManager = {
 
 		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('h A');
 	},
+
+	getFormattedShowTime(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('ddd MMM D, h:mm A');
+	},
  
 	getShowsOnDate(day, shows) {
 		var result = [];
@@ -107,7 +111,7 @@ var DateManager = {
 			return currentDate.format("dddd").toUpperCase();
 		}
 		else {
-			return currentDate.format("dddd, MMM Do").toUpperCase();
+			return currentDate.format("dddd, MMM Do").toUpperCase(getF);
 		}
 	},
 

@@ -20,7 +20,10 @@ if (!!calendar) {
 
 var search = document.getElementById("search-results");
 if (!!search) {
-	var extra = {};
+	var extra = {
+		showStar: true,
+		showDate: true
+	};
 
 	console.log("START - Search Results Render");
 	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, search);
@@ -38,7 +41,8 @@ if (!!venueShows) {
 		}).then(function(body) {
 			var extra = {
 				hideHeader: true,
-				date_heading: true
+				date_heading: true,
+				showStar: true
 			};
 
 			console.log("START - Venue Shows Render");

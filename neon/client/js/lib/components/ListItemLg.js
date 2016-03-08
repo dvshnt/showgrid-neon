@@ -57,13 +57,17 @@ export default class ListItemLg extends Component {
 	   	};
 
 
-		if (show.star && this.props.showStar) {
-			star = <div className="featured"><b className="icon-star"></b>&nbsp;Featured Show</div>;
+		if (show.featured && this.props.extra.showStar) {
+			star = <div className="featured"><svg className="icon icon-star" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-star"/>' }} />&nbsp;<span>Featured Show</span></div>;
 		}
 
 
 		if (show.review && show.review !== "") {
 			review = <article dangerouslySetInnerHTML={{__html: show.review}}></article>;
+		}
+
+		if (show.star && this.props.showStar) {
+			star = <b className="rec icon-star"></b>;
 		}
 
 
@@ -75,13 +79,13 @@ export default class ListItemLg extends Component {
 
 
 		// Info --> Datetime 
-		if (this.props.showDate) {
+		if (this.props.extra.showDate) {
 			date = (
-				<div className="date">{ DateManager.getFormattedShowTime(show.date) }</div>
+				<span className="date">{ DateManager.getFormattedShowTime(show.date) }</span>
 			);
 		}
 
-		if(this.props.showTime){
+		if(this.props.extra.showTime){
 			date = (
 				<div className="date">{ DateManager.formatShowTime(show.date) }</div>
 			);		
@@ -141,10 +145,10 @@ export default class ListItemLg extends Component {
 					<a href={ '/venue/' + venue.id }>
 						<h4 style={{ cursor:'pointer' }}>{ venue.name }</h4>
 					</a>
-					{ age }
+					{ date }
 				</header>
 				<div className="info" style={ gradient }>
-					{ date }{ star }
+					{ star }
 					<div className="artists">
 						<a href={ website } target="_blank">
 						{ title }
