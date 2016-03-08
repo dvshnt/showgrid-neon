@@ -430,6 +430,15 @@ body:after {
     bottom: 61px;
   }
 }
+.nav-user-status {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px;
+  font-size: 9px;
+  color: #444444;
+}
+
 #head {
   position: relative;
   width: 100%;

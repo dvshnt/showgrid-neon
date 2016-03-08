@@ -22,20 +22,17 @@ if (!!venueShows) {
 	var url = '/api/v1/shows?orderby=date&venue=' + venue.id;
 
 	window.fetch(url)
-		.then(function(response) {
-			return response.json();
-		}).then(function(body) {
-			var extra = {
-				hideHeader: true,
-				date_heading: true
-			};
-
-			console.log("START - Venue Shows Render");
-			React.render(<List items={ body } itemType={ ListItemLg } extra={ extra }/>, venueShows);
-			console.log("END - Venue Shows Render");
-
-		});
-
+	.then(function(response){
+		return response.json();
+	}).then(function(body) {
+		var extra = {
+			hideHeader: true,
+			date_heading: true
+		};
+		console.log("START - Venue Shows Render");
+		React.render(<List items={ body } itemType={ ListItemLg } extra={ extra }/>, venueShows);
+		console.log("END - Venue Shows Render");
+	});
 }
 
 var venueRecent = document.getElementById("venue-recent");
@@ -43,9 +40,9 @@ if (!!venueRecent) {
 	var url = '/api/v1/shows?orderby=created_at&limit=10&venue=' + venue.id;
 
 	window.fetch(url)
-		.then(function(response) {
+		.then(function(response){
 			return response.json();
-		}).then(function(body) {
+		}).then(function(body){
 			var extra = {
 				header: true
 			};
