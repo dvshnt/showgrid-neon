@@ -2,15 +2,10 @@
 
 {% load jsonify %}
 
-{% block subhead %}
-	{% include 'subheader-search.html' with search_page="true" query=query %}
-{% endblock subhead %}
-
 {% block content %}
-<section id="search">
-	{% if query %}
-	<h5 class="search-query"><i>Showing search results for</i>: <b>{{ query }}</b></h5>
-	{% endif %}
+<section id="featured">
+	<h3 class="featured-day">{{ day }}</h5>
+
 	{% if shows %}
 	{% else %}
 	<div class="no-results">
@@ -18,7 +13,7 @@
 		<p>For the best results, search by artist or venue.</p>
 	</div>
 	{% endif %}
-	<section id="search-results">
+	<section id="featured-shows">
 	</section>
 </section>
 {% endblock content %}

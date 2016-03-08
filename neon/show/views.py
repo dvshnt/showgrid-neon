@@ -26,4 +26,18 @@ class ShowShortcut(APIView):
 	permission_classes = (AllowAny,)
 
 	def get(self, request, shortcut=None):
+		if shortcut == "featured":
+			
+
+			venues = Show.objects.filter(featured=True)
+			venues = sorted(venues, key=attrgetter('alphabetical_title'), reverse=False)
+
+			data = {
+				'days': days,
+				'venues': serializer.data
+			}
+
+			return render(request, "show/featured.html", data)
+
 		return HttpResponse("Show shortcut")
+

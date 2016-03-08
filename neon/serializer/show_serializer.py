@@ -22,7 +22,7 @@ class ShowListSerializer(serializers.ModelSerializer):
 		# ADD BACK CANCELLED
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
-			'featured', 'review', 'date', 'ticket', 'price', 'soldout', 
+			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
 			'onsale', 'venue', 'banner'
 		)
 
@@ -48,7 +48,7 @@ class ShowSerializer(serializers.ModelSerializer):
 		# ADD BACK CANCELLED
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
-			'featured', 'review', 'date', 'ticket', 'price', 'soldout', 
+			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
 			'onsale', 'venue', 'banner'
 		)
 

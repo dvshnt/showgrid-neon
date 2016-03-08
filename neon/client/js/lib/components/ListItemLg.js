@@ -57,7 +57,7 @@ export default class ListItemLg extends Component {
 	   	};
 
 
-		if (show.featured && this.props.extra.showStar) {
+		if (show.star && this.props.extra.showStar) {
 			star = <div className="featured"><svg className="icon icon-star" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-star"/>' }} />&nbsp;<span>Featured Show</span></div>;
 		}
 
