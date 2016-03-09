@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
+		
 		{% load static %}
 
 		<title>Showgrid | Nashville's Live Music Source {% block title %}{% endblock %}</title>
@@ -105,12 +106,25 @@
 
 				<aside class="actions">
 					<span class="nav-user-status">
-						{{ user.name|default:"not logged" }}
+						{% if user == None %}
+							<script>window.user_authenticated = false</script>
+						{% else %}
+							<script>
+								window.user_authenticated = true;
+								window.user = {
+									email: "{{user.email}}",
+									phone: "{{user.phone}}", 
+									name: "{{user.name}}",
+								}
+							</script>
+							<a href = '/user/logout'>logout</a>
+						{% endif %}
+						{{ user.email|default:"not logged" }}
 					</span>
 				
 					<ul>
 						<li>
-							<a href="/user">
+							<a id = "profile-button" href="#">
 								<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
 							</a>
 						</li>
@@ -195,6 +209,8 @@
 			</footer> -->
 			{% endblock %}
 		</div>
+		<div id='overlay-wrapper'></div>
+
 	</body>
  
 	{% block scripts %}{% endblock %}

@@ -148,6 +148,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 # AUTH_USER_MODEL = 'app.ShowgridUser'
+AUTHENTICATION_BACKENDS = ( 'user.models.AuthBackend', )
 
 
 # REST_AUTH_SERIALIZERS = {
@@ -156,13 +157,16 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
+
+
 
 
 # import os
@@ -177,4 +181,3 @@ REST_FRAMEWORK = {
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 
 
-LOGGING_CONFIG = None

@@ -1,13 +1,58 @@
+@mixin background-size($size) {
+	-webkit-background-size: $size;
+	   -moz-background-size: $size;
+		 -o-background-size: $size;
+			background-size: $size;
+}
+
+@mixin transition($trans) {
+	-webkit-transition: $trans;
+	   -moz-transition: $trans;
+	     -o-transition: $trans;
+			transition: $trans;
+}
+
+@mixin transform($trans) {
+	-webkit-transform: $trans;
+	   -moz-transform: $trans;
+		-ms-transform: $trans;
+		 -o-transform: $trans;
+			transform: $trans;
+}
+
+@mixin transition--transform($trans) {
+	-webkit-transition: -webkit-transform $trans;
+	   -moz-transition:    -moz-transform $trans;
+	     -o-transition:      -o-transform $trans;
+			transition:			transform $trans;
+
+}
+
+@mixin sharpen--text {
+	-webkit-font-smoothing: antialiased;
+	   -moz-font-smoothing: antialiased;
+			font-smoothing: antialiased;
+
+	text-rendering: optimizeLegibility;
+
+	font-smooth: always;
+
+	-moz-osx-font-smoothing: grayscale;
+}
+
 @import "generic.normalize";
 @import "constants";
 
 @import "page";
 @import "header";
 @import "footer";
-
+ 
 
 @import "venue";
 @import "calendar";
 @import "datepicker";
-
 @import "list";
+
+
+//user profile/modal styles
+@import  "user"

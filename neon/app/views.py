@@ -5,17 +5,18 @@ from rest_framework.permissions import AllowAny
 from rest_framework.authentication import TokenAuthentication
 
 #authentication
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,logout
 
 
 class Index(APIView):
-	authentication_class = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):
 
+		
 		user = None
-		if request.user.is_authenticated(): 
+		if request.user.is_authenticated():
+			print 'LOGGED IN '+request.user.username
 			user = request.user
 
 		return render(request, "base.html",{

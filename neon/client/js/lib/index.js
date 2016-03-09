@@ -8,6 +8,8 @@ import Showgrid from './components/Showgrid';
 import List from './components/List';
 import ListItemLg from './components/ListItemLg';
 import ListItemSm from './components/ListItemSm';
+import AuthModal from './components/AuthModal';
+import UserProfile from './components/UserProfile';
 
 
 var calendar = document.getElementById("calendar")
@@ -34,6 +36,10 @@ if (!!venueShows) {
 		console.log("END - Venue Shows Render");
 	});
 }
+
+
+
+
 
 var venueRecent = document.getElementById("venue-recent");
 if (!!venueRecent) {
@@ -66,4 +72,47 @@ $("#search-toggle").click(function(e) {
 	}
 	searchBar.addClass("active");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* AUTHENTICATION */
+var profileButton = $("#profile-button");
+if(!window.user_authenticated){
+	profileButton.on('click',function(e){
+		React.render(<AuthModal visible={true} />,$('#overlay-wrapper')[0])
+		$('#overlay').on('click',function(e){
+			if (e.target.id === "overlay") {
+				React.render(<AuthModal visible={false} />,$('#overlay-wrapper')[0])
+			}
+		})
+	})
+}else{
+	profileButton.on('click',function(e){
+		window.location.href = '/user/profile'
+	})
+}
+/* AUTHENTICATION END */
+
+
+
+
+/* USER PROFILE */
+if(document.getElementById('profile') != null){
+	React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
+	
+}
+/* USER PROFILE END*/
+
 

@@ -11,3 +11,5 @@ neon/client/.sass-cache
 
 neon/static/css/*.css
 neon/static/js/*.css
+neon/client/css/*.css
+neon/client/css/*.css.map
