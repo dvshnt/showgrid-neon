@@ -33,6 +33,18 @@ export default class ListItemSm extends Component {
 						{ opener }
 					</a>
 				</div>
+				<div className="col-3">
+					<svg className="icon icon-heart" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
+					<span>Favorite</span>
+				</div>
+				<div className="col-3">
+					<svg className="icon icon-alert" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+					<span>Set Alert</span>
+				</div>
+				<div className="col-3">
+					<svg className="icon icon-share" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-share"/>' }} />
+					<span>Share</span>
+				</div>
 			</div>
 		);
 	}

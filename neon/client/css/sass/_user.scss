@@ -256,7 +256,7 @@
   			animation: animation 800ms linear both;
 }
 
-@media screen and (max-width: 500px ) { 
+@media screen and (max-width: 800px ) { 
   #modal {
     -webkit-flex:0 0 100%;
             flex:0 0 100%;
@@ -437,7 +437,7 @@
   }
 }
 
-@media screen and (max-width: 500px ) {
+@media screen and (max-width: 800px ) {
   .user--profile {
     width:100%;
 
@@ -582,7 +582,7 @@
   }
 }
 
-@media screen and (max-width: 500px ) {
+@media screen and (max-width: 800px ) {
   .user--actions {
     width:100%;
 
@@ -712,7 +712,7 @@
   }
 }
 
-@media screen and (max-width: 500px ) {
+@media screen and (max-width: 800px ) {
   .user--actions {
     .actions {
       .alert-block {

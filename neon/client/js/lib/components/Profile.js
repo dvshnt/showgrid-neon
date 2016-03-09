@@ -27,29 +27,55 @@ function unfavoriteShow(fav){
 	})
 }
 
-function changeAlert(alert){
-		// var _this = this;
-
-		// var show = this.props.alert.show;
-
-		// var options = e.target.options;
-		// var value = "";
+function changeAlert(e,alert,component){
+	var alertDate = DateManager.getAlertDate(alert.show_date, value);
 
 
-		// for (var i = 0, l = options.length; i < l; i++) {
-		// 	if (options[i].selected) {
-		// 		value = JSON.parse(options[i].getAttribute('data-value'));
-		// 	}
-		// }
 
-		// var alertDate = DateManager.getAlertDate(show.date, value);
-		
-		// //this.props.changeAlert(this.props.alert.id, alertDate.format(), value.id);
-		// changeAlert(this.props.alert.id, alertDate.format(), value.id)
+	var show = this.props.alert.show;
+
+	var options = e.target.options;
+	var value = "";
+
+
+	for (var i = 0, l = options.length; i < l; i++) {
+		if (options[i].selected) {
+			value = JSON.parse(options[i].getAttribute('data-value'));
+		}
+	}
+
+	var alertDate = DateManager.getAlertDate(alert.show_date, value);
+
+
+	$.ajax({
+		data: JSON.stringify(),
+		dataType: 'json',
+		success: function(data){
+			alert.show_date = data.show_date
+			component.forceUpdate()
+		},
+		error: function(e){
+			throw e;
+		}
+	})
 }
 
-function removeAlert(alert){
 
+function removeAlert(alert,component){
+	console.log("REMOVE ALERT",alert,window.user.alerts.indexOf(alert))
+	// $.ajax({
+	// 	data: JSON.stringify(),
+	// 	dataType: 'json',
+	// 	type:'DELETE',
+	// 	url:'user/rest/alert/',
+	// 	success: function(data){
+			
+	// 		React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
+	// 	},
+	// 	error: function(e){
+	// 		throw e;
+	// 	}
+	// })
 }
 
 
@@ -196,39 +222,25 @@ class UserActions extends Component {
 		this.selectTab = this.selectTab.bind(this);
 
 		this.state = {
-			alertTab: false,
-			favoriteTab: true
+			tab: 'alert',
+		
 		};
 	}
 
 	selectTab(e) {
-		if (e.target.className.indexOf("alerts") !== -1) {
-			this.setState({
-				alertTab: true,
-				favoriteTab: false
-			});
-
-			return false;
-		}
-
-		if (e.target.className.indexOf("favorites") !== -1) {
-			this.setState({
-				alertTab: false,
-				favoriteTab: true
-			});
-
-			return false;
-		}
+		this.setState({
+			tab: e.target.className.indexOf("alerts") !== -1 ? 'alert' : 'fav'
+		});
 
 		return false;
 	}
 
 	render() {
-		var alertTabClass = (this.state.alertTab) ? "tab alerts selected" : "tab alerts";
-		var favoritesTabClass = (this.state.favoriteTab) ? "tab favorites selected" : "tab favorites";
+		var alertTabClass = (this.state.tab == 'alert') ? "tab alerts selected" : "tab alerts";
+		var favoritesTabClass = (this.state.tab == 'fav') ? "tab favorites selected" : "tab favorites";
 
 		var items = [];
-		if (this.state.alertTab) {
+		if (this.state.tab == 'alert') {
 			for (var i=0; i < this.props.alerts.length; i++) {
 				items.push(<UserAlert alert={ this.props.alerts[i] }/>);
 			}
@@ -241,9 +253,7 @@ class UserActions extends Component {
 					</div>
 				);
 			}
-		}
-
-		if (this.state.favoriteTab) {
+		}else if(this.state.tab == 'fav'){
 			for (var i=0; i < this.props.favorites.length; i++) {
 				items.push(<UserFavorite show={ this.props.favorites[i] }/>);
 			}
@@ -294,9 +304,9 @@ class UserAlert extends Component {
 		super(props);
 	}
 
-	componentWillUpdate(nextProps, nextState) {
+	// componentWillUpdate(nextProps, nextState) {
 
-	}
+	// }
 
 
 
@@ -404,7 +414,7 @@ class UserAlert extends Component {
 				</div>
 				<div className="alert">
 					{ options }
-					<a onClick={ removeAlert.bind(null,this.props.alert) } href="javaScript:void(0);">Remove</a>
+					<a onClick={ removeAlert.bind(this,this.props.alert) } href="#">Remove</a>
 				</div>
 			</div>
 		)

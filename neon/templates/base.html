@@ -115,12 +115,12 @@
 						{% else %}
 							<script>
 								window.user = {
-									authenticated:true;
+									authenticated: true,
 									email: "{{user.email}}",
 									phone: "{{user.phone}}", 
 									name: "{{user.name}}",
-									favorites: JSON.parse("{{user.favorites}}"),
-									alerts: JSON.parse("{{user.alerts}}")
+									favorites: JSON.parse("{{favorites}}"),
+									alerts: JSON.parse("{{alerts}}")
 								}
 							</script>
 							<a href = '/user/logout'>logout</a>

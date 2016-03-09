@@ -24,6 +24,7 @@ def Profile(request):
 		alerts_q = Alert.objects.filter(user=request.user)
 		for alert in alerts_q:
 			alerts.append({
+				"id": alert.id,
 				"show_date": 		alert.show.date,
 				"show_headliners": 	alert.show.headliners,
 				"show_openers" : 	alert.show.openers,
@@ -40,10 +41,13 @@ def Profile(request):
 				"show_venue_name": fav.show.venue.name
 			})
 
+		print json.dumps(alerts)
+		print json.dumps(faves)
+
 		return render(request, "profile.html",{
 			"user": request.user,
-			"alerts": alerts,
-			"favorites": faves
+			"alerts": json.dumps(alerts),
+			"favorites": json.dumps(faves)
 		})
 
 
