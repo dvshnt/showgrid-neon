@@ -115,10 +115,27 @@ def pull_artist_data_action(modeladmin, request, queryset):
 pull_artist_data_action.short_description = "Pull artist data"
 
 
+def star_shows(modeladmin, request, queryset):
+	shows = list(queryset)
+	for show in shows:
+		show.star = True
+		show.save()
+pull_artist_data_action.short_description = "Star Shows"
+
+
+def unstar_shows(modeladmin, request, queryset):
+	shows = list(queryset)
+	for show in shows:
+		show.star = False
+		show.save()
+pull_artist_data_action.short_description = "Unstar Shows"
+
+
+
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners', 'openers', 'title']
-	list_display = ('date', 'headliners', 'openers', 'venue')
-	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate]
+	list_display = ('date', 'headliners', 'openers','star','venue')
+	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate,star_shows,unstar_shows]
 	list_filter =  ('venue',)
 
 
@@ -209,10 +226,13 @@ class ArtistAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-	list_display = ['name','local','url','downloaded','downloading','valid']
+	list_display = ['artist_name','local','downloaded','downloading','valid']
 	ordering = ['downloaded','name']
 	fields = ('downloaded','url','local')
 	actions = [download_image_action]
+
+	def artist_name(self, obj):
+		return Artist.objects.filter(images__id=obj.id)[0].name
 
 
 def mail_issues(queryset,test):
@@ -267,13 +287,20 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 
 
+class TrackAdmin(admin.ModelAdmin):
+	list_display = ['name','artist_name','source']
+
+	def artist_name(self, obj):
+		return Artist.objects.filter(tracks__id=obj.id)[0].name
+
+
 admin.site.register(Address)
 admin.site.register(Venue)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Biography,BioAdmin)
-admin.site.register(Track)
+admin.site.register(Track,TrackAdmin)
 admin.site.register(Genre)
 admin.site.register(Image,ImageAdmin)
 admin.site.register(Newsletter,NewsletterAdmin)

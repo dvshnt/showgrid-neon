@@ -3,23 +3,14 @@
 {% load jsonify %}
 
 {% block content %}
+<h4 id="featured-header">Featured Shows</h4>
 <section id="featured">
-	<h3 class="featured-day">{{ day }}</h5>
-
-	{% if shows %}
-	{% else %}
-	<div class="no-results">
-		<h3>Couldn't find anything that matched your query.</h3>
-		<p>For the best results, search by artist or venue.</p>
-	</div>
-	{% endif %}
-	<section id="featured-shows">
-	</section>
 </section>
 {% endblock content %}
 
 {% block scripts %}
 <script>
+	var day = '{{ day }}';
 	var shows = {{ shows|jsonify }};
 </script>
 {% endblock scripts %}

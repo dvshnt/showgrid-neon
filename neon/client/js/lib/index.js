@@ -18,6 +18,19 @@ if (!!calendar) {
 }
 
 
+var featured = document.getElementById("featured");
+if (!!featured) {
+	var extra = {
+		date_heading: true,
+		showStar: true
+	};
+
+	console.log("START - Featured Render");
+	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, featured);
+	console.log("END - Featured Render");
+}
+
+
 var search = document.getElementById("search-results");
 if (!!search) {
 	var extra = {
