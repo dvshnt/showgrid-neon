@@ -13,3 +13,8 @@ neon/static/css/*.css
 neon/static/js/*.css
 neon/client/css/*.css
 neon/client/css/*.css.map
+
+neon/client/js/bundle.js
+neon/static/showgrid/css/base.css
+neon/static/showgrid/css/base.css.map
+neon/static/showgrid/js/bundle.js
