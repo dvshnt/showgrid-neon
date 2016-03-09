@@ -311,6 +311,23 @@ class TrackAdmin(admin.ModelAdmin):
 
 class VenueAdmin(admin.ModelAdmin):
 	list_display = ['name','active_shows','opened']
+	fieldsets = (
+		('Basic Info', {
+			'fields': ('name', 'address')
+		}),
+		('Visial Info', {
+			'fields': ('description', 'image')
+		}),
+		('Contact Info', {
+			'fields': ('phone', ('website','twitter_url', 'facebook_url'))
+		}),
+		('Colors', {
+			'fields': (('primary_color', 'secondary_color', 'accent_color'),)
+		}),
+		('Secondary Info', {
+			'fields': (('age', 'autofill'),)
+		}),
+	)
 
 	def active_shows(self, obj):
 		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
