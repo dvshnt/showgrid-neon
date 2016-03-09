@@ -18,11 +18,12 @@ if (!!calendar) {
 }
 
 
-var featured = document.getElementById("featured");
+var featured = document.getElementById("featured-shows");
 if (!!featured) {
 	var extra = {
 		date_heading: true,
-		showStar: true
+		showStar: true,
+		showGradient: true
 	};
 
 	console.log("START - Featured Render");
@@ -35,7 +36,8 @@ var search = document.getElementById("search-results");
 if (!!search) {
 	var extra = {
 		showStar: true,
-		showDate: true
+		showDate: true,
+		showGradient: true
 	};
 
 	console.log("START - Search Results Render");
@@ -55,7 +57,8 @@ if (!!venueShows) {
 			var extra = {
 				hideHeader: true,
 				date_heading: true,
-				showStar: true
+				showStar: true,
+				showGradient: true
 			};
 
 			console.log("START - Venue Shows Render");

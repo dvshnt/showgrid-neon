@@ -1,0 +1,272 @@
+#show-actions {
+	height:60px;
+
+	background:#ffffff;
+	border-bottom:1px solid #e8e8e8;
+
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-flex-flow:row nowrap;
+			flex-flow:row nowrap;
+
+	-webkit-align-items:center;
+			align-items:center;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+	width:100%;
+
+	z-index:10;
+
+
+	.col-3 {
+		position:relative;
+
+		height:100%;
+
+		-webkit-flex:0 0 25%;
+				flex:0 0 25%;
+
+		color:rgba(0,0,0,1);
+		text-align:center;
+
+		&:hover {
+			cursor:pointer;
+		}
+
+		span {
+			position:relative;
+			top:-5px;
+
+			font-size:14px;
+		}
+
+		svg {
+			width:24px; height:24px;
+
+			margin:0 auto;
+
+			fill:rgba(0,0,0,1);
+		}
+
+		svg.icon-ticket {
+			fill:rgb(0,222,144);
+		}
+
+
+		.favorite.active .icon-heart,
+		.favorite.active .text {
+			color:#fc3030;
+		}
+
+		.alert.active .icon-alert,
+		.alert.active .alert-info {
+			color:#ff9929;
+
+			.option {
+			    border-bottom: 1px dotted #ff9929;
+			    text-decoration: none;
+			}
+		}
+
+		.alert.sale .icon-alert,
+		.alert.sale .alert-info, {
+			color:rgb(0,222,144);
+
+			.option {
+			    border-bottom: 1px dotted rgb(0,222,144);
+			    text-decoration: none;
+			}
+		}
+
+		b.icon-share {
+			font-size:24px;
+		}
+
+		.share-button span {
+			position:relative;
+			top:-3px;
+		}
+
+		.ticket {
+			color:#76e6b5;
+			text-decoration:none;
+
+			&:hover {
+				text-decoration:underline;
+			}
+
+			.ticket-price {
+				.number {
+					font-weight:700;
+				}
+			}
+		}
+
+		.soldout {
+			position:absolute;
+			right:4px;
+
+			height:24px; width:auto;
+
+			margin:4px 0;
+			padding:0 8px;
+
+			color:#ea6e6f;
+			font-size:10px;
+			line-height:24px;
+			font-weight:bold;
+
+			text-align:center;
+
+			border:1px solid rgb(255,99,99);
+			background:transparent;
+			border-radius:2px;
+
+			cursor:pointer;
+		}
+
+		.onsale {
+			position:absolute;
+			right:4px;
+
+			height:24px; width:170px;
+
+			margin:4px 0;
+
+			color:#76e6b5;
+			font-size:10px;
+			font-weight:300;
+			line-height:24px;
+
+			text-align:center;
+
+			border:2px solid #76e6b5;
+			background:transparent;
+			border-radius:2px;
+
+			cursor:pointer;
+		}
+
+		.onsale {
+			span:first-of-type {
+				margin-right:5px;
+
+				font-size:12px;
+				font-weight:bold;
+			}
+
+			.date {
+				font-size:14px;
+				font-weight:400;
+			}
+		}
+	}
+}
+
+#show-artists {
+	width:calc(95% - 30px);
+
+	margin:10px auto;
+	padding:10px 15px;
+
+	background:#ffffff;
+	-webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);
+			box-shadow:0 2px 3px rgba(0,0,0,0.1);
+
+	h4 {
+		margin:10px 0 5px;
+	}
+
+	ul {
+		list-style:none;
+		margin:0; padding:0;
+
+		li {
+			display:-webkit-flex;
+			display:		flex;
+
+			-webkit-flex-flow:row nowrap;
+					flex-flow:row nowrap;
+
+			-webkit-align-items:center;
+					align-items:center;
+
+			margin:0; padding:0;
+
+			height:40px;
+
+			margin:20px 0;
+
+			.pic {
+				-webkit-flex:0 0 35px;
+						flex:0 0 35px;
+
+				height:35px;
+				background:gold;
+
+				margin-right:10px;
+			}
+
+			.name {
+				-webkit-flex:1 1 100px;
+						flex:1 1 100px;
+
+				font-family:'Roboto Slab', serif;
+			}
+
+			.social {
+				-webkit-flex:0 0 80px;
+						flex:0 0 80px;
+
+				text-align:right;
+
+				a {
+					text-decoration:none;
+				}
+
+				svg {
+					fill:rgba(0,0,0,0.3);
+
+					width:18px; height:18px;
+					margin:12px 2px;
+				}
+			}
+		}
+	}
+}
+
+
+@media screen and (max-width: 740px) {
+	#show-actions  {
+		.col-3 {
+			span {
+				top:-4px;
+
+				font-size:10px;
+			}
+
+			svg {
+				width:21px; height:21px;
+
+				margin:12px 0 2px 0;
+			}
+
+			.ticket {
+				svg {
+					width:25px; height:25px;
+
+					margin-top:16px;
+					margin-right:5px;
+				}
+
+				.ticket-price span.number {
+					font-size:18px;
+					font-weight:500;
+				}
+			}
+		}
+	}
+}

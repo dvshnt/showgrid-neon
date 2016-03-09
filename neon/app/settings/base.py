@@ -133,6 +133,7 @@ INSTALLED_APPS = (
     'show',
     'user',
     'venue',
+    'contest',
 
     'rest_framework',
     'rest_framework.authtoken',

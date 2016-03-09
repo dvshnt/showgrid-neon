@@ -22,9 +22,9 @@ export default class ListItemLg extends Component {
 	    if(!r) r = 0
 
 	    return {
-	   		"background": "-webkit-linear-gradient(top, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* Chrome10-25,Safari5.1-6 */
-	   		"background": "-moz-linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* FF3.6-15 */
-	   		"background": "linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	   		"background": "-webkit-linear-gradient(top, rgba("+r+","+g+","+b+",0.2) 0%,rgba("+r+","+g+","+b+",0.1) 10%,rgba("+r+","+g+","+b+",0.5) 100%), rgba("+r+","+g+","+b+",0.4)", /* Chrome10-25,Safari5.1-6 */
+	   		"background": "-moz-linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.2) 0%,rgba("+r+","+g+","+b+",0.1) 10%,rgba("+r+","+g+","+b+",0.5) 100%), rgba("+r+","+g+","+b+",0.4)", /* FF3.6-15 */
+	   		"background": "linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.2) 0%,rgba("+r+","+g+","+b+",0.1) 10%,rgba("+r+","+g+","+b+",0.5) 100%), rgba("+r+","+g+","+b+",0.4)", /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	   	}
 	}
 
@@ -136,7 +136,7 @@ export default class ListItemLg extends Component {
 		if(this.props.ticket_price) price = null;
 
 
-		var gradient = (this.props.showGradient) ? this.convertHex(venue.primary_color) : { "background": "rgba(0,0,0,0.2)" };
+		var gradient = (extra.showGradient) ? this.convertHex(venue.primary_color) : { "background": "rgba(0,0,0,0.2)" };
 
 
 		return (

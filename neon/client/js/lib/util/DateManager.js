@@ -111,7 +111,7 @@ var DateManager = {
 			return currentDate.format("dddd").toUpperCase();
 		}
 		else {
-			return currentDate.format("dddd, MMM Do").toUpperCase(getF);
+			return currentDate.format("dddd, MMM Do").toUpperCase();
 		}
 	},
 

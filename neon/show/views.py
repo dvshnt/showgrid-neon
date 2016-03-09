@@ -2,9 +2,10 @@ from datetime import date
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.core.exceptions import ObjectDoesNotExist
 
 from show.models import Show
-from serializer import ShowListSerializer
+from serializer import ShowListSerializer, ShowDetailSerializer
 
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
@@ -16,7 +17,15 @@ class ShowView(APIView):
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):
-		return HttpResponse("Show")
+		if id != None:
+			try:
+				show = Show.objects.get(id=id)
+				serializer = ShowDetailSerializer(show, many=False)
+			except ObjectDoesNotExist: 
+				raise Http404("Show does not exist")
+			return render(request, "show/show.html", { 'show': serializer.data })
+		else:
+			return render(request, "show/show.html", {})
 
 
 class ShowList(APIView):
@@ -39,7 +48,6 @@ class ShowShortcut(APIView):
 			serializer = ShowListSerializer(shows, many=True)
 
 			data = {
-				'day': 'Today',
 				'shows': serializer.data
 			}
 
