@@ -135,10 +135,30 @@ pull_artist_data_action.short_description = "Unstar Shows"
 
 
 class ShowAdmin(admin.ModelAdmin):
-	search_fields = ['headliners', 'openers', 'title']
+	search_fields = ['headliners','openers','title']
 	list_display = ('date', 'headliners', 'openers','star','venue')
 	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate,star_shows,unstar_shows]
 	list_filter =  ('venue',)
+	fieldsets = (
+		('Artist Info', {
+			'fields': ('title', 'headliners','openers','artists','website')
+		}),
+		('Time and Place', {
+			'fields': ('date','venue')
+		}),
+		('Featured Info', {
+			'fields': ('star','review','issue')
+		}),
+		('Banner', {
+			'fields': ('banner',)
+		}),
+		('Ticket Info', {
+			'fields': (('ticket','price'))
+		}),
+		('Show Status', {
+			'fields': ('cancelled','soldout',)
+		}),
+	)
 
 
 	def get_urls(self):
