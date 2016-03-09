@@ -22,9 +22,11 @@ urlpatterns = [
     url(r'^$', views.Index.as_view(), name='index'),
 
     url(r'^api/v1/', include('api.urls'), name='api'),
+    
+    url(r'^search/', views.Search.as_view(), name='search'),
 
     url(r'^calendar/', include('cal.urls'), name='calendar'),
-    url(r'^issue/', include('newsletter.urls'), name='newsletter'),
+    url(r'^newsletter/', include('newsletter.urls'), name='newsletter'),
     url(r'^venue/', include('venue.urls'), name='venue'),
     url(r'^show/', include('show.urls'), name='show'),
     url(r'^user/', include('user.urls'), name='user'),

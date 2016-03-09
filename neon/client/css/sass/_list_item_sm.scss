@@ -1,5 +1,5 @@
 #venue-recent {
-	width:400px;
+	width:350px;
 
 	margin:-6px auto 20px;
 
@@ -16,7 +16,7 @@
 			display:block;
 			width:92.5%;
 
-			margin:0 auto;
+			margin:0 auto 4px;
 
 			font-size:16px;
 		}
@@ -31,11 +31,18 @@
 			-webkit-align-items:center;
 					align-items:center;
 
-			margin:17.5px 0;
+			padding:12.5px 0;
+
+			&:hover {
+				background:rgba(0,0,0,0.025);
+				border-left:3px solid #000000;
+
+				cursor:pointer;
+			}
 
 			.date {
-				-webkit-flex:0 0 50px;
-						flex:0 0 50px;
+				-webkit-flex:0 0 70px;
+						flex:0 0 70px;
 
 				color:#000000;
 				font-size:16px;
@@ -54,7 +61,8 @@
 					text-decoration:none;
 
 					&:hover {
-						text-decoration:underline;
+
+						text-decoration:none;
 					}
 				}
 

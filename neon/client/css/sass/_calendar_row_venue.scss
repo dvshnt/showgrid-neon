@@ -21,6 +21,7 @@
 		overflow:hidden;
 
 		text-align:center;
+		text-decoration:none;
 
 		cursor:pointer;
 
@@ -62,7 +63,6 @@
 			.name a {
 				color:#555;
 				font-weight:500;
-				text-decoration:none;
 			}
 
 			.name a:hover {
@@ -115,41 +115,38 @@
 		padding:10px 0;
 
 		text-align:center;
-	}
 
-	.image {
-		display:none;
-	}
-
-
-
-	.overlay {
-		position:relative;
-		height:auto;
-
-		margin:auto;
-
-		.name {
-			margin:5px 0;
-
-			font-size:14px;
+		.image {
+			display:none;
 		}
 
-		.name a {
-			color:#666666;
-		}
-
-		.address {
+		.overlay {
 			position:relative;
+			height:auto;
 
-			margin:5px 0;
-			padding-top:0;
+			margin:auto;
 
-			font-size:10px;
-			color:#f2f2f2;
+			.name {
+				margin:5px 0;
+
+				font-size:14px;
+			}
+
+			.name a {
+				color:#666666;
+			}
+
+			.address {
+				position:relative;
+
+				margin:5px 0;
+				padding-top:0;
+
+				font-size:10px;
+				color:#f2f2f2;
+			}
 		}
 	}
-	
 } 
 
 @media screen and (max-width: 740px ) {

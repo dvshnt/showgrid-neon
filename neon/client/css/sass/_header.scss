@@ -118,13 +118,6 @@
 	}
 }
 
-#container.venue {
-	#head {
-		-webkit-flex:0 0 100%;
-				flex:0 0 100%;
-	}
-}
-
 #mobile-menu {
 	display:none;
 }
@@ -156,7 +149,7 @@
 	#head {
 		height:60px;
 
-		&.venue {
+		&.hide-mobile {
 			display:none;
 		}
 

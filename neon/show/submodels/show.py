@@ -10,6 +10,7 @@ from django.conf import settings
 
 from artist import Artist
 from venue.models import Venue
+from newsletter.models import Newsletter
 
 from app.util.color_log import *
 
@@ -34,7 +35,7 @@ class Show(models.Model):
 	venue = models.ForeignKey(Venue, related_name='shows')
 
 	## Is show featured?
-	featured = models.BooleanField(default=False)
+	star = models.BooleanField(default=False)
 
 	## Image banner to use at top of list page and in list item (rec: 1200px x 640px)
 	banner = models.ImageField(upload_to='showgrid/banners/', default='', blank=True)
@@ -49,7 +50,7 @@ class Show(models.Model):
 	soldout = models.BooleanField(default=False)
 	onsale = models.DateTimeField(auto_now=True, blank=True)
 
-	#issue = models.ForeignKey('Issue', null=True, blank=True)
+	issue = models.ForeignKey(Newsletter, null=True, blank=True)
 
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)

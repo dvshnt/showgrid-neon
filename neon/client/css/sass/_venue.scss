@@ -1,5 +1,35 @@
+#venue {
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-align-items:flex-start;
+			align-items:flex-start;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+	-webkit-flex-flow:row wrap;
+			flex-flow:row wrap;
+
+	width:80%;
+
+	margin:0 auto;
+}
+
+#venue-sidebar {
+	-webkit-flex:0 0 350px;
+			flex:0 0 350px;
+
+	margin-right:15px;
+}
+
+#venue-main {
+	-webkit-flex:1 1 500px;
+			flex:1 1 500px;
+}
+
 #venue-script {
-	width:360px;
+	width:310px;
 
 	padding:20px;
 	margin:16px auto 8px;
@@ -22,7 +52,7 @@
 
 #venue-banner {
 	position:relative;
-	width:400px; height:352px;
+	width:350px; height:302px;
 
 	margin:0 auto;
 
@@ -87,7 +117,29 @@
 
 @media screen and (max-width: 740px) {
 	#venue {
+		position:absolute;
+
 		width:100%;
+
+		z-index:100000;
+	}
+
+	#venue-sidebar {
+		-webkit-flex:0 0 100%;
+				flex:0 0 100%;
+
+		margin-right:0;
+	}
+
+	#venue-main {
+		-webkit-flex:0 0 100%;
+				flex:0 0 100%;
+
+		margin-left:0;
+	}
+
+	#venue-script {
+		width:calc(95% - 40px);
 	}
 
 	#venue-banner {

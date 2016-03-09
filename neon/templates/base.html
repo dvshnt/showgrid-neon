@@ -57,7 +57,6 @@
 		<!-- End Twitter Card -->
 		{% endblock %}
 
-
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
 		<link href="{% static 'showgrid/css/base.css' %}" rel="stylesheet" type="text/css">
 		
@@ -71,6 +70,7 @@
 
 		<div id="container">
 			{% block head %}
+<<<<<<< HEAD
 			<header id="head">
 				<h1>
 					<a href="/">
@@ -162,17 +162,16 @@
 					</ul>
 				</aside>
 			</header>
+=======
+				{% include 'header.html' %}
+>>>>>>> b9c552756167cc1ac984d7de2a2e7d9e56f8da7a
 			{% endblock head %}
 
 			{% block subhead %}
-			<header id="subhead">
-				<form>
-					<input type="text" placeholder="Search"/>
-					<input type="submit" value="Go"/>
-				</form>
-			</header>
+				{% include 'subheader-search.html' %}
 			{% endblock subhead %}
 
+			{% block sidebar %}{% endblock sidebar %}
 			{% block content %}{% endblock content %}
 
 			<menu id="mobile-menu">
@@ -185,19 +184,19 @@
 						</a>
 					</li>
 					<li>
-						<a href="/mag/articles">
-							<svg class="icon icon-articles"><use xlink:href="#icon-article"></use></svg>
-							<span>Articles</span>
+						<a href="/show/featured">
+							<svg class="icon icon-star"><use xlink:href="#icon-star"></use></svg>
+							<span>Featured</span>
 						</a>
 					</li>
 					<li>
-						<a href="/mag/playlists">
-							<svg class="icon icon-playlist"><use xlink:href="#icon-playlist"></use></svg>
-							<span>Playlists</span>
+						<a href="/contest">
+							<svg class="icon icon-contest"><use xlink:href="#icon-contest"></use></svg>
+							<span>Contests</span>
 						</a>
 					</li>
 					<li>
-						<a href="/issue">
+						<a href="/newsletter">
 							<svg class="icon icon-letter"><use xlink:href="#icon-letter"></use></svg>
 							<span>Newsletter</span>
 						</a>

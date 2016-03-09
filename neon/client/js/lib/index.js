@@ -12,12 +12,39 @@ import AuthModal from './components/AuthModal';
 import UserProfile from './components/Profile';
 
 
-var calendar = document.getElementById("calendar")
+var calendar = document.getElementById("calendar");
 if (!!calendar) {
 	console.log("START - Calendar Render");
 	React.render(<Showgrid days={ days } venues={ venues } />, calendar);
 	console.log("END - Calendar Render");
 }
+
+
+var featured = document.getElementById("featured");
+if (!!featured) {
+	var extra = {
+		date_heading: true,
+		showStar: true
+	};
+
+	console.log("START - Featured Render");
+	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, featured);
+	console.log("END - Featured Render");
+}
+
+
+var search = document.getElementById("search-results");
+if (!!search) {
+	var extra = {
+		showStar: true,
+		showDate: true
+	};
+
+	console.log("START - Search Results Render");
+	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, search);
+	console.log("END - Search Results Render");
+}
+
 
 var venueShows = document.getElementById("venue-shows");
 if (!!venueShows) {
@@ -36,7 +63,6 @@ if (!!venueShows) {
 		console.log("END - Venue Shows Render");
 	});
 }
-
 
 
 
@@ -64,7 +90,7 @@ if (!!venueRecent) {
 $("#search-toggle").click(function(e) {
 	var searchBar = $("#subhead");
 
-	if (!!calendar) searchBar.addClass("calendar");
+	// if (!!calendar) searchBar.addClass("calendar");
 
 	if (searchBar.hasClass("active")) {
 		searchBar.removeClass("active");

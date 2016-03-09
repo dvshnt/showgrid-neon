@@ -1,0 +1,33 @@
+#search {
+	max-width:700px;
+
+	margin:75px auto 10px;
+
+	h5.search-query {
+		font-weight:400;
+	}
+
+	.no-results {
+		width:100%;
+
+		margin:50px auto 0;
+
+		text-align:center;
+	}
+}
+
+@media screen and (max-width: 740px) {
+	#search {
+		h5.search-query {
+			width:95%;
+
+			margin:10px auto 17px;
+		}
+
+		.no-results {
+			width:90%;
+
+			margin:50px auto 0;
+		}
+	}
+}

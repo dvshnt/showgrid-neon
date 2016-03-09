@@ -1,0 +1,10 @@
+{% if search_page %}
+<header id="subhead" class="search active">
+{% else %}
+<header id="subhead" class="search">
+{% endif %}
+	<form id="search-form" action="/search/" method="post">
+		<input type="text" name="query" placeholder="Search by venue or artist" value="{{ query }}"/>
+		<input type="submit" value="Search"/>
+	</form>
+</header>

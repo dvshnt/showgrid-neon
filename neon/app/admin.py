@@ -1,8 +1,11 @@
 import random
 import requests
 
+from datetime import date
+
 from show.models import *
 from venue.models import *
+from newsletter.models import *
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -114,11 +117,48 @@ def pull_artist_data_action(modeladmin, request, queryset):
 pull_artist_data_action.short_description = "Pull artist data"
 
 
+def star_shows(modeladmin, request, queryset):
+	shows = list(queryset)
+	for show in shows:
+		show.star = True
+		show.save()
+pull_artist_data_action.short_description = "Star Shows"
+
+
+def unstar_shows(modeladmin, request, queryset):
+	shows = list(queryset)
+	for show in shows:
+		show.star = False
+		show.save()
+pull_artist_data_action.short_description = "Unstar Shows"
+
+
+
 class ShowAdmin(admin.ModelAdmin):
-	search_fields = ['headliners', 'openers', 'title']
-	list_display = ('date', 'headliners', 'openers', 'venue')
-	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate]
+	search_fields = ['headliners','openers','title']
+	list_display = ('date', 'headliners', 'openers','star','venue')
+	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate,star_shows,unstar_shows]
 	list_filter =  ('venue',)
+	fieldsets = (
+		('Artist Info', {
+			'fields': ('title', 'headliners','openers','artists','website')
+		}),
+		('Time and Place', {
+			'fields': ('date','venue')
+		}),
+		('Featured Info', {
+			'fields': ('star','review','issue')
+		}),
+		('Banner', {
+			'fields': ('banner',)
+		}),
+		('Ticket Info', {
+			'fields': (('ticket','price'))
+		}),
+		('Show Status', {
+			'fields': ('cancelled','soldout',)
+		}),
+	)
 
 
 	def get_urls(self):
@@ -160,13 +200,25 @@ class ShowAdmin(admin.ModelAdmin):
 		return TemplateResponse(request, "admin/show_extract_status.html", context)
 
 class BioAdmin(admin.ModelAdmin):
-	list_display = ['url', 'source']
+	list_display = ['artist_name','text','source']
 	search_fields = ['source']
+
+	def artist_name(self, obj):
+		try:
+			return Artist.objects.filter(bios__id=obj.id)[0].name
+		except:
+			obj.delete()
 
 
 class ArticleAdmin(admin.ModelAdmin):
-	list_display = ['title', 'published_date','external_url']
+	list_display = ['title','artist_name','published_date','external_url']
 	search_fields = ['title','external_url']
+
+	def artist_name(self, obj):
+		try:
+			return Artist.objects.filter(articles__id=obj.id)[0].name
+		except:
+			obj.delete()
 
 
 class ArtistAdmin(admin.ModelAdmin):
@@ -208,18 +260,106 @@ class ArtistAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-	list_display = ['name','local','url','downloaded','downloading','valid']
+	list_display = ['artist_name','local','downloaded','downloading','valid']
 	ordering = ['downloaded','name']
 	fields = ('downloaded','url','local')
 	actions = [download_image_action]
 
+	def artist_name(self, obj):
+		return Artist.objects.filter(images__id=obj.id)[0].name
+
+
+def mail_issues(queryset,test):
+	issues = list(queryset)
+	for issue in issues:
+		if issue.sent == True:
+			print prRed('issue already mailed, override sent field manually :'+str(issue.id))
+		else:
+			issue.mail(test)
+		
+def mail_issues_action(modeladmin, request, queryset):
+	tr = Thread(target=mail_issues,args=(queryset,False,))
+	tr.start()
+mail_issues_action.short_description = "Mail Issues To All"
+
+
+def mail_issues_action_test(modeladmin, request, queryset):
+	tr = Thread(target=mail_issues,args=(queryset,True,))
+	tr.start()
+mail_issues_action_test.short_description = "Mail Issues To Testers"
+
+def make_issue_active(modeladmin, request, queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.active = True
+		issue.save()
+make_issue_active.short_description = "Make Issues Active"
+
+def make_issue_inactive(modeladmin, request, queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.active = False
+		issue.save()
+make_issue_inactive.short_description = "Make Issues Inactive"
+
+def sync_issue_shows(queryset):
+	issues = list(queryset)
+	for issue in issues:
+		issue.sync_shows()
+
+def sync_issue_shows_action(modeladmin, request, queryset):
+	tr = Thread(target=sync_issue_shows,args=(queryset,))
+	tr.start()
+sync_issue_shows_action.short_description = "Sync Shows to Issue"
+
+class NewsletterAdmin(admin.ModelAdmin):
+	list_display = ['id','tag','shows_count','sent','active','start_date','end_date']
+	ordering = ['sent','start_date','end_date']
+	fields = ('timezone','banner','spotify_embed','spotify_url','tag','start_date','end_date','intro','sent','active')
+	list_filter =  ('sent',)
+	actions = [mail_issues_action,sync_issue_shows_action,make_issue_active,make_issue_inactive,mail_issues_action_test]
+
+
+
+class TrackAdmin(admin.ModelAdmin):
+	list_display = ['name','artist_name','source']
+
+	def artist_name(self, obj):
+		return Artist.objects.filter(tracks__id=obj.id)[0].name
+
+
+
+class VenueAdmin(admin.ModelAdmin):
+	list_display = ['name','active_shows','opened']
+	fieldsets = (
+		('Basic Info', {
+			'fields': ('name', 'address')
+		}),
+		('Visial Info', {
+			'fields': ('description', 'image')
+		}),
+		('Contact Info', {
+			'fields': ('phone', ('website','twitter_url', 'facebook_url'))
+		}),
+		('Colors', {
+			'fields': (('primary_color', 'secondary_color', 'accent_color'),)
+		}),
+		('Secondary Info', {
+			'fields': (('age', 'autofill'),)
+		}),
+	)
+
+	def active_shows(self, obj):
+		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
+
 
 admin.site.register(Address)
-admin.site.register(Venue)
+admin.site.register(Venue, VenueAdmin)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Biography,BioAdmin)
-admin.site.register(Track)
+admin.site.register(Track,TrackAdmin)
 admin.site.register(Genre)
 admin.site.register(Image,ImageAdmin)
+admin.site.register(Newsletter,NewsletterAdmin)

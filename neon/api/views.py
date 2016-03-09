@@ -81,12 +81,12 @@ class ShowAPI(APIView):
 		end = request.GET.get('end', None)
 
 
-		# # Search has a different branch as it utilizes Haystack
-		# if query != None:
-		# 	querySet = SearchQuerySet().filter(text=query).order_by('date')
-		# 	shows = [ Show.objects.get(id=show.pk) for show in querySet ]
-		# 	serializer = ShowListSerializer(shows, many=True)
-		# 	return Response(serializer.data)
+		# Search has a different branch as it utilizes Haystack
+		if query != None:
+			querySet = SearchQuerySet().filter(text=query).order_by('date')
+			shows = [ Show.objects.get(id=show.pk) for show in querySet ]
+			serializer = ShowListSerializer(shows, many=True)
+			return Response(serializer.data)
 
 
 

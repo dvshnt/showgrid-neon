@@ -3,10 +3,8 @@ from newsletter import views
 
 
 urlpatterns = [
-	url(r'^$', views.Newsletter.as_view(), name='newsletter archive'),
+    url(r'^$', views.NewsletterView.as_view(), name='issues'),
+    url(r'^(?P<id>[0-9]+)$', views.NewsletterView.as_view(), name='issues'),
 
-    url(r'^current/$', views.Newsletter.as_view(), name='newsletter current'),
-    url(r'^unsubscribe/$', views.Newsletter.as_view(), name='newsletter unsubscribe'),
-    
-    url(r'^(?P<id>[0-9]+)/$', views.Newsletter.as_view(), name='newsletter detail'),
+    # url(r'^unsubscribe/(?P<hash>\w+)$', views.IssueUnsubscribe, name='issue unsubscribe'),
 ]

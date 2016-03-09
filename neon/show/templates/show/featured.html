@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% load jsonify %}
+
+{% block content %}
+<h4 id="featured-header">Featured Shows</h4>
+<section id="featured">
+</section>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+	var day = '{{ day }}';
+	var shows = {{ shows|jsonify }};
+</script>
+{% endblock scripts %}
+
+{% block footer %}{% endblock footer %}

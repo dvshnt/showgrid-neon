@@ -4,124 +4,56 @@
 {% load static %}
 
 
-{% block container_class %}venue{% endblock container_class %}
-
-
 {% block head %}
-<header id="head" class="venue">
-	<h1>
-		<a href="/">
-			<img src="{% static 'showgrid/img/wordmark-black.png' %}" alt="Showgrid Nashville"/>
-			<span>Nashville</span>
-		</a>
-	</h1>
-
-	<menu>
-		<ul>
-			<li>
-				<a href="/calendar">
-					<span>Calendar</span>
-				</a>
-			</li>
-			<li>
-				<a href="/mag/articles">
-					<span>Articles</span>
-				</a>
-			</li>
-			<li>
-				<a href="/mag/playlists">
-					<span>Playlists</span>
-				</a>
-			</li>
-			<li>
-				<a href="/issue">
-					<span>Newsletter</span>
-				</a>
-			</li>
-		</ul>
-	</menu>
-
-	<aside class="actions">
-		<ul>
-			<li>
-				<a href="/user">
-					<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
-				</a>
-			</li>
-			<li>
-				<a id="search-toggle" href="#">
-					<svg class="icon icon-search"><use xlink:href="#icon-search"></use></svg>
-				</a>
-			</li>
-		</ul>
-	</aside>
-
-	<aside class="social">
-		<ul>
-			<li class="social">
-				<a id="search-toggle" href="#">
-					<svg class="icon icon-instagram"><use xlink:href="#icon-instagram"></use></svg>
-				</a>
-			</li>
-			<li class="social">
-				<a href="/user">
-					<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
-				</a>
-			</li>
-			<li class="social">
-				<a id="search-toggle" href="#">
-					<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
-				</a>
-			</li>
-		</ul>
-	</aside>
-</header>
+	{% include 'header.html' with hide_mobile="true" %}
 {% endblock head %}
 
 
-{% block subhead %}
-<header id="venue-head" style="background:{{ venue.primary_color }};">
-	<a class="back" href="javascript: history.go(-1)">
-		<svg class="icon icon-back"><use xlink:href="#icon-back"></use></svg>
-	</a>
-	<div class="title">
-		<h2 style="color:{{ venue.secondary_color }};">{{ venue.name }}</h2>
-	</div>
-	<a class="more" href="#">
-		<svg class="icon icon-more"><use xlink:href="#icon-more"></use></svg>
-	</a>
-</header>
-<div id="venue-banner" style="background:{{ venue.primary_color }};">
-	<div class="overlay" style="{{ venue.gradient }}">
-		<div class="info">
-			<div class="address">
-				{{ venue.address.street }}, {{ venue.address.city }} {{ venue.address.state }}, {{ venue.address.zip_code }}
-			</div>
-			<div class="social">
-				<a href="{{ venue.facebook_url }}" target="_blank">
-					<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
-				</a>
-				<a href="{{ venue.twitter_url }}" target="_blank">
-					<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
-				</a>
-				<a href="tel:{{ venue.phone }}">
-					<svg class="icon icon-phone"><use xlink:href="#icon-phone"></use></svg>
-				</a>
-			</div>
-		</div>
-	</div>
-	<div class="image" style="background-image:url('{{ venue.image }}')"></div>
-</div>
-<div id="venue-script">
-	<h4>Info</h4>
-	{{ venue.description|safe }}
-</div>
-<div id="venue-recent"></div>
-{% endblock subhead %}
-
-
 {% block content %}
-<div id="venue-shows"></div>
+<div id="venue">
+	<aside id="venue-sidebar">
+		<header id="venue-head" style="background:{{ venue.primary_color }};">
+			<a class="back" href="javascript: history.go(-1)">
+				<svg class="icon icon-back"><use xlink:href="#icon-back"></use></svg>
+			</a>
+			<div class="title">
+				<h2 style="color:{{ venue.secondary_color }};">{{ venue.name }}</h2>
+			</div>
+			<a class="more" href="#">
+				<svg class="icon icon-more"><use xlink:href="#icon-more"></use></svg>
+			</a>
+		</header>
+		<div id="venue-banner" style="background:{{ venue.primary_color }};">
+			<div class="overlay" style="{{ venue.gradient }}">
+				<div class="info">
+					<div class="address">
+						{{ venue.address.street }}, {{ venue.address.city }} {{ venue.address.state }}, {{ venue.address.zip_code }}
+					</div>
+					<div class="social">
+						<a href="{{ venue.facebook_url }}" target="_blank">
+							<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+						</a>
+						<a href="{{ venue.twitter_url }}" target="_blank">
+							<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+						</a>
+						<a href="tel:{{ venue.phone }}">
+							<svg class="icon icon-phone"><use xlink:href="#icon-phone"></use></svg>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="image" style="background-image:url('{{ venue.image }}')"></div>
+		</div>
+		<div id="venue-script">
+			<h4>Info</h4>
+			{{ venue.description|safe }}
+		</div>
+		<div id="venue-recent"></div>
+	</aside>
+	<section id="venue-main">
+		<div id="venue-shows"></div>
+	</section>
+</div>
 {% endblock content %}
 
 
