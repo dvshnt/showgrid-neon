@@ -107,14 +107,20 @@
 				<aside class="actions">
 					<span class="nav-user-status">
 						{% if user == None %}
-							<script>window.user_authenticated = false</script>
+							<script>
+								window.user = {
+									authenticated: false
+								}
+							</script>
 						{% else %}
 							<script>
-								window.user_authenticated = true;
 								window.user = {
+									authenticated:true;
 									email: "{{user.email}}",
 									phone: "{{user.phone}}", 
 									name: "{{user.name}}",
+									favorites: JSON.parse("{{user.favorites}}"),
+									alerts: JSON.parse("{{user.alerts}}")
 								}
 							</script>
 							<a href = '/user/logout'>logout</a>

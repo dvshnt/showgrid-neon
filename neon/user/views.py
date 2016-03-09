@@ -13,15 +13,37 @@ from models import *
 import inspect, itertools, json
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-
+from show.models import Show
 
 @api_view(['GET'])
 def Profile(request):
 	if request.user.is_authenticated() == False:
 		return redirect('/')
 	else:
+		alerts = []
+		alerts_q = Alert.objects.filter(user=request.user)
+		for alert in alerts_q:
+			alerts.append({
+				"show_date": 		alert.show.date,
+				"show_headliners": 	alert.show.headliners,
+				"show_openers" : 	alert.show.openers,
+				"show_venue_name": alert.show.venue.name
+			})
+		faves_q = request.user.favorites.all()
+		faves = []
+		for fav in faves_q:
+			faves.append({
+				"show_id": fav.show.id,
+				"show_date": 		alert.show.date,
+				"show_headliners": 	fav.show.headliners,
+				"show_openers" : 	fav.show.openers,
+				"show_venue_name": fav.show.venue.name
+			})
+
 		return render(request, "profile.html",{
-			"user": request.user
+			"user": request.user,
+			"alerts": alerts,
+			"favorites": faves
 		})
 
 
@@ -150,9 +172,7 @@ class UserActions(APIView):
 		if action == 'favorite':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
-			show = body['show']
-
-			show = self.get_show(int(show))
+			show = self.get_show(body['show'])
 			if show != None:
 				if show in user.favorites.all():
 					user.favorites.remove(show)

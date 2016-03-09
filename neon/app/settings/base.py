@@ -45,6 +45,7 @@ TIME_ZONE = 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 
 
+
 SITE_ID = 1
 
 
@@ -147,8 +148,8 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 
-# AUTH_USER_MODEL = 'app.ShowgridUser'
-AUTHENTICATION_BACKENDS = ( 'user.models.AuthBackend', )
+AUTH_USER_MODEL = 'user.NeonUser'
+# AUTHENTICATION_BACKENDS = ( 'user.models.AuthBackend', )
 
 
 # REST_AUTH_SERIALIZERS = {

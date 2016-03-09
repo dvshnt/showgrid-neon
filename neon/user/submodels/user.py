@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.template.loader import get_template
 from django.db.models.signals import post_save, post_delete, pre_save, pre_delete
 from django.utils.translation import ugettext as _
-from django.conf import settings
+# from django.conf import settings
 from show.models import Show
 from django.core.validators import RegexValidator
 from django.contrib.auth.backends import ModelBackend 
@@ -13,6 +13,8 @@ import hashlib
 
 from twiliohandle import MessageClient
 Sender = MessageClient()
+
+# from alert import Alert
 
 
 class AuthBackend(ModelBackend):

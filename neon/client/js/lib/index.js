@@ -9,7 +9,7 @@ import List from './components/List';
 import ListItemLg from './components/ListItemLg';
 import ListItemSm from './components/ListItemSm';
 import AuthModal from './components/AuthModal';
-import UserProfile from './components/UserProfile';
+import UserProfile from './components/Profile';
 
 
 var calendar = document.getElementById("calendar")
@@ -89,7 +89,7 @@ $("#search-toggle").click(function(e) {
 
 /* AUTHENTICATION */
 var profileButton = $("#profile-button");
-if(!window.user_authenticated){
+if(!window.user.authenticated){
 	profileButton.on('click',function(e){
 		React.render(<AuthModal visible={true} />,$('#overlay-wrapper')[0])
 		$('#overlay').on('click',function(e){
@@ -111,7 +111,6 @@ if(!window.user_authenticated){
 /* USER PROFILE */
 if(document.getElementById('profile') != null){
 	React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
-	
 }
 /* USER PROFILE END*/
 
