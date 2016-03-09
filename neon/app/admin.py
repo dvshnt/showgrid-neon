@@ -1,6 +1,8 @@
 import random
 import requests
 
+from datetime import date
+
 from show.models import *
 from venue.models import *
 from newsletter.models import *
@@ -306,8 +308,16 @@ class TrackAdmin(admin.ModelAdmin):
 		return Artist.objects.filter(tracks__id=obj.id)[0].name
 
 
+
+class VenueAdmin(admin.ModelAdmin):
+	list_display = ['name','active_shows','opened']
+
+	def active_shows(self, obj):
+		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
+
+
 admin.site.register(Address)
-admin.site.register(Venue)
+admin.site.register(Venue, VenueAdmin)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Article, ArticleAdmin)
