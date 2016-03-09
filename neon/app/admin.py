@@ -178,13 +178,25 @@ class ShowAdmin(admin.ModelAdmin):
 		return TemplateResponse(request, "admin/show_extract_status.html", context)
 
 class BioAdmin(admin.ModelAdmin):
-	list_display = ['url', 'source']
+	list_display = ['artist_name','text','source']
 	search_fields = ['source']
+
+	def artist_name(self, obj):
+		try:
+			return Artist.objects.filter(bios__id=obj.id)[0].name
+		except:
+			obj.delete()
 
 
 class ArticleAdmin(admin.ModelAdmin):
-	list_display = ['title', 'published_date','external_url']
+	list_display = ['title','artist_name','published_date','external_url']
 	search_fields = ['title','external_url']
+
+	def artist_name(self, obj):
+		try:
+			return Artist.objects.filter(articles__id=obj.id)[0].name
+		except:
+			obj.delete()
 
 
 class ArtistAdmin(admin.ModelAdmin):
