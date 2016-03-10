@@ -154,7 +154,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('banner',)
 		}),
 		('Ticket Info', {
-			'fields': (('ticket','price'))
+			'fields': (('ticket','price'),'onsale')
 		}),
 		('Show Status', {
 			'fields': ('cancelled','soldout',)

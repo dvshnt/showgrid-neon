@@ -15,8 +15,11 @@ export default class List extends React.Component {
             );
         });
 
-        if (extra.header) {
+        if (extra.header_recent) {
             markupItems.unshift(<h3>Recently Added</h3>);
+        }
+        else if (extra.header_onsale) {
+            markupItems.unshift(<h3>On Sale Soon</h3>);
         }
 
         return markupItems;
@@ -28,7 +31,14 @@ export default class List extends React.Component {
 
         var markupItems = items.map((item) => {
             if (!last_date || !last_date.isSame(item.date, 'days')) {
-                date_header = <h3 className="heading">{ DateManager.getUpcomingShowDate(moment(item.date)) }</h3>;
+
+                if (extra.date_heading){
+                    date_header = <h3 className="heading">{ DateManager.getUpcomingShowDate(moment(item.date)) }</h3>;
+                }
+                else if (extra.date_heading_front) {
+                    date_header = <h3 className="heading">Shows Featured { DateManager.getUpcomingShowDate(moment(item.date)) }</h3>;
+                }
+
                 last_date = moment(item.date);
             }
             else {
@@ -52,7 +62,7 @@ export default class List extends React.Component {
         const extra = this.props.extra || {};
         
 
-        if (extra.date_heading) {
+        if (extra.date_heading || extra.date_heading_front) {
             var markupItems = this.createItemsMarkupWithHeading(items, extra, ItemType);
         }
         else {

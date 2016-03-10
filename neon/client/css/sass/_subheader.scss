@@ -6,11 +6,11 @@
 
 	background:#ffffff;
 
-	-webkit-transition:0.15s all ease-in-out;
-	   -moz-transition:0.15s all ease-in-out;
-		-ms-transition:0.15s all ease-in-out;
-		 -o-transition:0.15s all ease-in-out;
-			transition:0.15s all ease-in-out;
+	-webkit-transition:0.25s all ease-in-out;
+	   -moz-transition:0.25s all ease-in-out;
+		-ms-transition:0.25s all ease-in-out;
+		 -o-transition:0.25s all ease-in-out;
+			transition:0.25s all ease-in-out;
 
 	z-index:1;
 
@@ -18,7 +18,13 @@
 
 	text-align:center;
 	line-height:41px;
-	
+
+	&.front {
+		top:-60px;
+
+		background:none;
+		border-bottom:none;
+	}
 
 	&.active {
 		top:59px;

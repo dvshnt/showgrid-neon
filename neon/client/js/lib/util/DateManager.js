@@ -3,6 +3,9 @@ import React from 'react';
 
 
 var DateManager = {
+	formatTicketSaleDate(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('ddd[,] M/D [at] h:mm A');
+	},
 
 	formatShowTime(date) {
 		if (moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('mm') !== '00') {

@@ -1,6 +1,10 @@
+from datetime import date, timedelta, datetime
+
+from django.db.models import Q
 from django.shortcuts import render
 
 from show.models import Show
+from newsletter.models import Newsletter
 
 from serializer import ShowListSerializer
 
@@ -16,7 +20,28 @@ class Index(APIView):
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):
-		return render(request, "base.html")
+		shows = Show.objects.filter(date__gte=date.today())
+		shows = shows.filter(venue__opened=True)
+
+		featured = shows.filter(star=True)
+		featured = featured.filter(date__range=[ date.today(), date.today() + timedelta(days=1) ])
+		featured = featured.order_by('date')
+		featured = ShowListSerializer(featured, many=True)
+
+		today = datetime.today()
+		newsletter = Newsletter.objects.filter(active=True)
+		newsletter = newsletter.filter(Q(start_date__lte=today) & Q(end_date__gte=today))
+
+		playlist = newsletter[0].spotify_embed
+
+		print playlist
+
+		data = {
+			'featured': featured.data,
+			'playlist': playlist
+		}
+
+		return render(request, "base.html", data)
 
 
 class Search(APIView):

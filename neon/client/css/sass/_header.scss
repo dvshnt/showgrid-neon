@@ -125,30 +125,21 @@
 		margin:20px 17.5px 0;
 	}
 
-	aside.social {
-		margin-right:30px;
-	}
+	&.front {
+		background:none;
+		border-bottom:none;
 
-	aside.social ul li {
-		margin:0 7.5px;
-	}
+		h1 a span {
+			color:#ffffff;
+		}
 
-	aside.social ul li svg {
-		width:17.5px; height:17.5px;
+		ul li a {
+			color:#ffffff;
+		}
 
-		margin:27.5px 0;
-	}
-
-	aside.social ul li svg.icon-instagram {
-		fill:#343434;
-	}
-
-	aside.social ul li svg.icon-facebook {
-		fill:#3B5998;
-	}
-
-	aside.social ul li svg.icon-twitter {
-		fill:#55acee;
+		aside.actions ul li a svg {
+			fill:#ffffff;
+		}
 	}
 }
 
@@ -235,7 +226,7 @@
 			-webkit-flex:0 0 25%;
 					flex:0 0 25%;
 
-			height:58px;
+			height:60px;
 			
 			display:-webkit-flex;
 			display:		flex;
@@ -249,22 +240,6 @@
 
 		ul li.selected {
 			height:54px;
-		}
-
-		ul li.calendar {
-			border-bottom:2px solid rgb(0,222,144);
-		}
-
-		ul li.featured {
-			border-bottom:2px solid #FBBF00;
-		}
-
-		ul li.contest {
-			border-bottom:2px solid #EA6E6F;
-		}
-
-		ul li.newsletter {
-			border-bottom:2px solid #4272f2;
 		}
 
 		ul li.calendar.selected {
@@ -330,7 +305,7 @@
 
 			width:20px; height:20px;
 
-			margin:2px auto;
+			margin:1px auto;
 		}
 
 		ul li.selected a svg {
