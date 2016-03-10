@@ -38,7 +38,7 @@ def contest_signup(request,id):
 @api_view(['GET'])
 def contest_view(request, id=None):
 	if id == None:
-		contests = Contest.objects.all()
+		contests = Contest.objects.filter(active=True)
 		return render(request, 'contest/contest_archive.html', { 'contests': contests })
 
 	try:

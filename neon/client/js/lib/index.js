@@ -22,6 +22,7 @@ var featured = document.getElementById("featured-shows");
 if (!!featured) {
 	var extra = {
 		date_heading: true,
+		showDate: true,
 		showStar: true,
 		showGradient: true
 	};

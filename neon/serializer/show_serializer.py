@@ -1,3 +1,5 @@
+import pytz
+
 from show.models import Show, Artist
 from venue.models import Venue
 
@@ -85,7 +87,17 @@ class ShowDetailSerializer(serializers.ModelSerializer):
 	def get_show_date_format(self, obj):
 		from datetime import datetime
 
-		return obj.date.strftime("%A, %B %-d")
+		central = pytz.timezone('America/Chicago')
+		offset = obj.date.replace(tzinfo=central).utcoffset()
+		date = obj.date + offset
+
+		def suffix(d):
+		    return 'th' if 11<=d<=13 else {1:'st',2:'nd',3:'rd'}.get(d%10, 'th')
+
+		def custom_strftime(format, t):
+		    return t.strftime(format).replace('{S}', str(t.day) + suffix(t.day))
+
+		return custom_strftime('%A, %B {S} at %-I %p', date)
 
 	def get_shows_review(self, obj):
 		if obj.review:

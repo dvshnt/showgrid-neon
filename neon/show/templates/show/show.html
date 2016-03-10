@@ -10,74 +10,91 @@
 
 
 {% block content %}
-<div id="venue">
-	<aside id="venue-sidebar">
-		<header id="venue-head" style="background:{{ show.venue.primary_color }};">
-			<a class="back" href="javascript: history.go(-1)">
-				<svg class="icon icon-back"><use xlink:href="#icon-back"></use></svg>
-			</a>
-			<div class="title">
-				<h2 style="color:{{ venue.secondary_color }};">{{ show.date }}</h2>
-			</div>
-			<a class="more" href="#">
-				<svg class="icon icon-more"><use xlink:href="#icon-more"></use></svg>
-			</a>
-		</header>
-		<div id="venue-banner" class="show" style="background:{{ show.venue.primary_color }};">
-			<div class="overlay" style="{{ show.venue.gradient }}">
-				<!-- <div class="info">
-					<div class="social" style="bottom:5px;">
-						<a href="{{ show.facebook_url }}" target="_blank">
-							<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
-						</a>
-						<a href="{{ show.twitter_url }}" target="_blank">
-							<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
-						</a>
-						<a href="{{ show.spotify_link }}">
-							<svg class="icon icon-spotify"><use xlink:href="#icon-spotify"></use></svg>
-						</a>
-					</div>
-				</div> -->
-				<div class="show-info">
-					<h4 class="title" style="color:{{ show.venue.secondary_color }};">{{ show.title }}</h4>
-					<h2 class="headliners" style="color:{{ show.venue.secondary_color }};">{{ show.headliners }}</h2>
-					<h3 class="openers" style="color:{{ show.venue.accent_color }};">{{ show.openers }}</h3>
-				</div>
-			</div>
-			<div class="image" style="background-image:url('{{ show.banner }}')"></div>
+<div id="show">
+	<header id="show-head" style="background:{{ show.venue.primary_color }};">
+		<a class="back" href="javascript: history.go(-1)">
+			<svg class="icon icon-back"><use xlink:href="#icon-back"></use></svg>
+		</a>
+		<div class="title">
+			<h2 style="color:{{ show.venue.secondary_color }};"><a href="/venue/{{ show.venue.id }}">{{ show.venue.name }}</a></h2>
 		</div>
-		<section id="show-artists">
-			<h4>Artists</h4>
-			<ul>
-				{% for artist in show.artists %}
-				<li>
-					<div class="pic"></div>
-					<div class="name">{{ artist.name }}</div>
-					<div class="social">
-						{% if artist.facebook_url %}
-						<a href="{{ artist.facebook_url }}" target="_blank">
-							<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
-						</a>
-						{% endif %}
+		<a class="more" href="#">
+			<svg class="icon icon-more"><use xlink:href="#icon-more"></use></svg>
+		</a>
+		<div class="date">
+			<span>{{ show.date }}</span>
+		</div>
+	</header>
+	<div id="show-banner" class="show" style="background:{{ show.venue.primary_color }};">
+		<div class="overlay" style="{{ show.venue.gradient }}">
 
-						{% if artist.twitter_url %}
-						<a href="{{ artist.twitter_url }}" target="_blank">
-							<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
-						</a>
-						{% endif %}
+			{% if show.star %}
+			<div class="featured">
+				<svg class="icon icon-star"><use xlink:href="#icon-star"></use></svg>
+				<span>Featured Show</span>
+			</div>
+			{% endif %}
 
-						{% if artist.spotify_link %}
-						<a href="{{ artist.spotify_link }}">
-							<svg class="icon icon-spotify"><use xlink:href="#icon-spotify"></use></svg>
-						</a>
-						{% endif %}
-					</div>
-				</li>
-				{% endfor %}
-			</ul>
-		</section>
-	</aside>
-	<section id="venue-main">
+			<div class="show-info">
+				<h4 class="title" style="color:{{ show.venue.secondary_color }};">{{ show.title }}</h4>
+				<h2 class="headliners" style="color:{{ show.venue.secondary_color }};">{{ show.headliners }}</h2>
+				<h3 class="openers" style="color:{{ show.venue.accent_color }};">{{ show.openers }}</h3>
+			</div>
+		</div>
+		<div class="image" style="background-image:url('{{ show.banner }}')"></div>
+	</div>
+	<section class="mobile-date">
+		<span>{{ show.date }}</span>
+	</section>
+	<section id="show-artists">
+		<h4>Artists</h4>
+		<ul>
+			{% for artist in show.artists %}
+			<li>
+				<div class="pic"></div>
+				<div class="name">{{ artist.name }}</div>
+				<div class="social">
+					{% if artist.facebook_url %}
+					<a href="{{ artist.facebook_url }}" target="_blank">
+						<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+					</a>
+					{% endif %}
+
+					{% if artist.twitter_url %}
+					<a href="{{ artist.twitter_url }}" target="_blank">
+						<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+					</a>
+					{% endif %}
+
+					{% if artist.spotify_link %}
+					<a href="{{ artist.spotify_link }}">
+						<svg class="icon icon-spotify"><use xlink:href="#icon-spotify"></use></svg>
+					</a>
+					{% endif %}
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</section>
+	<section id="show-actions-wide">
+		<div class="col-3">
+			<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg><br>
+			<span>Favorite</span>
+		</div>
+		<div class="col-3">
+			<svg class="icon icon-alert"><use xlink:href="#icon-alert"></use></svg><br>
+			<span>Set Alert</span>
+		</div>
+		<div class="col-3">
+			<svg class="icon icon-share"><use xlink:href="#icon-share"></use></svg><br>
+			<span>Share</span>
+		</div>
+		<div class="col-3">
+			<a class="ticket" href="{{ show.ticket }}"  target="_blank">
+				<svg class="icon icon-ticket"><use xlink:href="#icon-ticket"></use></svg>
+				<span class="ticket-price"> <span class="number">${{ show.price }}</span></span>
+			</a>
+		</div>
 	</section>
 </div>
 {% endblock content %}
