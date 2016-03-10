@@ -12,6 +12,7 @@
 			flex-flow:row wrap;
 
 	width:80%;
+	max-width:1200px;
 
 	margin:20px auto;
 }
@@ -23,7 +24,7 @@
 
 #show-banner {
 	position:relative;
-	width:100%; height:302px;
+	width:100%; height:350px;
 
 	margin:0 auto;
 
@@ -568,7 +569,7 @@
 
 	#show-banner {
 		position:relative;
-		width:100%; height:220px;
+		width:100%; height:240px;
 
 
 		.image{
