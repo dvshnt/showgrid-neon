@@ -13,14 +13,14 @@
 
 	width:80%;
 
-	margin:20px auto;
+	margin:30px auto;
 }
 
 .newsletter-sidebar {
 	-webkit-flex:0 0 350px;
 			flex:0 0 350px;
 
-	margin:0 15px;
+	margin:0 15px 0 0;
 
 	section {
 		min-height:160px;
@@ -130,10 +130,14 @@
 		-webkit-flex:0 0 95%;
 				flex:0 0 95%;
 
+		margin:0;
 		margin-bottom:25px;
 
 		section {
 			width:100%;
+
+			margin:0;
+			padding:10px 0;
 
 			p {
 				font-size:14px;

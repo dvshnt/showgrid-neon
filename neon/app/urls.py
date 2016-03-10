@@ -27,10 +27,11 @@ urlpatterns = [
 
     url(r'^calendar/', include('cal.urls'), name='calendar'),
     url(r'^newsletter/', include('newsletter.urls'), name='newsletter'),
+    url(r'^contest/', include('contest.urls'), name='newsletter'),
     url(r'^venue/', include('venue.urls'), name='venue'),
     url(r'^show/', include('show.urls'), name='show'),
     url(r'^user/', include('user.urls'), name='user'),
-    url(r'^mag/', include('magazine.urls'), name='magazine'),
+    # url(r'^mag/', include('magazine.urls'), name='magazine'),
 
     url(r'^media/(?P<path>.*)$', static.serve,
         {'document_root': settings.MEDIA_ROOT, 'show_indexes': True }

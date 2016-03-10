@@ -9,7 +9,7 @@
 
 #head {
 	position:relative;
-	width:100%; height:70px;
+	width:100%; height:60px;
 
 	background:#ffffff;
 	border-bottom:1px solid #e8e8e8;
@@ -32,14 +32,14 @@
 	}
 
 	h1 a img {
-		margin:22.5px 0 0;
-		height:25px;
+		margin:18.75px 0 0;
+		height:22.5px;
 	}
 
 	h1 a span {
 		margin-left:15px;
 
-		line-height:70px;
+		line-height:60px;
 		font-family:'Helvetica', sans-serif;
 		vertical-align:top;
 	}
@@ -51,18 +51,61 @@
 	}
 
 	menu ul li {
-		height:100%;
+		height:60px;
 
 		padding:0 40px;
+	}
 
-		border-left:1px solid #e8e8e8;
+	menu ul li.selected {
+		height:56px;
+	}
+
+	menu ul li.calendar.selected {
+		border-top:4px solid rgb(0,222,144);
+
+		a {
+			color:rgb(0,222,144);
+		}
+	}
+
+	menu ul li.featured.selected {
+		border-top:4px solid #FBBF00;
+
+		a {
+			color:#FBBF00;
+		}
+	}
+
+	menu ul li.contest.selected {
+		border-top:4px solid #EA6E6F;
+
+		a {
+			color:#EA6E6F;
+		}
+	}
+
+	menu ul li.newsletter.selected {
+		border-top:4px solid #4272f2;
+
+		a {
+			color:#4272f2;
+		}
 	}
 
 	menu ul li a {
 		font-size:14px;
-		// font-family:'Roboto Slab', serif;
+		font-family:'Roboto Slab', serif;
 		font-weight:400;
-		line-height:70px;
+		line-height:60px;
+	}
+
+	menu ul li a svg {
+		position:relative;
+		top:6px;
+
+		width:22.5px; height:22.5px;
+
+		margin:0 8px 0 0;
 	}
 
 	aside {
@@ -76,7 +119,7 @@
 	}
 
 	ul li {
-		display:inline;
+		display:inline-block;
 	}
 
 	ul li a {
@@ -88,33 +131,24 @@
 	aside.actions ul li a svg {
 		width:22.5px; height:22.5px;
 
-		margin:25px 17.5px 0;
+		margin:20px 17.5px 0;
 	}
 
-	aside.social {
-		margin-right:30px;
-	}
+	&.front {
+		background:none;
+		border-bottom:none;
 
-	aside.social ul li {
-		margin:0 7.5px;
-	}
+		h1 a span {
+			color:#ffffff;
+		}
 
-	aside.social ul li svg {
-		width:17.5px; height:17.5px;
+		ul li a {
+			color:#ffffff;
+		}
 
-		margin:27.5px 0;
-	}
-
-	aside.social ul li svg.icon-instagram {
-		fill:#343434;
-	}
-
-	aside.social ul li svg.icon-facebook {
-		fill:#3B5998;
-	}
-
-	aside.social ul li svg.icon-twitter {
-		fill:#55acee;
+		aside.actions ul li a svg {
+			fill:#ffffff;
+		}
 	}
 }
 
@@ -147,8 +181,6 @@
 @media screen and (max-width: 740px) {
 
 	#head {
-		height:60px;
-
 		&.hide-mobile {
 			display:none;
 		}
@@ -215,6 +247,58 @@
 					justify-content:center;
 		}
 
+		ul li.selected {
+			height:54px;
+		}
+
+		ul li.calendar.selected {
+			border-bottom:6px solid rgb(0,222,144);
+
+			a {
+				color:rgb(0,222,144);
+			}
+
+			svg {
+				fill:rgb(0,222,144);
+			}
+		}
+
+		ul li.featured.selected {
+			border-bottom:6px solid #FBBF00;
+
+			a {
+				color:#FBBF00;
+			}
+
+			svg {
+				fill:#FBBF00;
+			}
+		}
+
+		ul li.contest.selected {
+			border-bottom:6px solid #EA6E6F;
+
+			a {
+				color:#EA6E6F;
+			}
+
+			svg {
+				fill:#EA6E6F;
+			}
+		}
+
+		ul li.newsletter.selected {
+			border-bottom:6px solid #4272f2;
+
+			a {
+				color:#4272f2;
+			}
+
+			svg {
+				fill:#4272f2;
+			}
+		}
+
 		ul li a {
 			display:block;
 
@@ -230,7 +314,11 @@
 
 			width:20px; height:20px;
 
-			margin:2px auto;
+			margin:1px auto;
+		}
+
+		ul li.selected a svg {
+			margin-top:6px;
 		}
 
 		ul li a span {

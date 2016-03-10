@@ -5,6 +5,7 @@ from datetime import date
 
 from show.models import *
 from venue.models import *
+from contest.models import *
 from newsletter.models import *
 
 from django.contrib import admin
@@ -153,7 +154,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('banner',)
 		}),
 		('Ticket Info', {
-			'fields': (('ticket','price'))
+			'fields': (('ticket','price'),'onsale')
 		}),
 		('Show Status', {
 			'fields': ('cancelled','soldout',)
@@ -353,8 +354,33 @@ class VenueAdmin(admin.ModelAdmin):
 		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
 
 
+class ContestAdmin(admin.ModelAdmin):
+	list_display = ['title','active']
+	fieldsets = (
+		('Basic Info', {
+			'fields': (('title', 'short_title'), 'description', 'banner',)
+		}),
+		('Signup Email', {
+			'fields': ('signup_subject', 'signup_body',)
+		}),
+		('Share Email', {
+			'fields': ('share_email_subject', 'share_email_body', 'share_text_body',)
+		}),
+		('Ended Contest Email', {
+			'fields': ('ended_subject',)
+		}),
+		('Status', {
+			'fields': ('active',)
+		}),
+	)
+
+	def participants(self, obj):
+		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
+
+
 admin.site.register(Address)
 admin.site.register(Venue, VenueAdmin)
+admin.site.register(Contest, ContestAdmin)
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Article, ArticleAdmin)

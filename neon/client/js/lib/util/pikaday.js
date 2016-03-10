@@ -917,7 +917,7 @@
 
             if (window.innerWidth < 740) {
                 left = 0;
-                top = 100;
+                top = 120;
             }
             else {
                 top = 109;

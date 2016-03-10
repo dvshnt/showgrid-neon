@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'show',
     'user',
     'venue',
+    'contest',
 
     'rest_framework',
 

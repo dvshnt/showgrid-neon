@@ -2,6 +2,16 @@
 
 {% load jsonify %}
 
+{% block head %}
+	{% include 'header.html' with page="calendar" %}
+{% endblock head %}
+
+
+{% block mobilemenu %}
+	{% include 'mobile_menu.html' with page="calendar" %}
+{% endblock mobilemenu %}
+
+
 {% block content %}
 	<section id="calendar">
 	</section>

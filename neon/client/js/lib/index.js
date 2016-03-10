@@ -20,11 +20,13 @@ if (!!calendar) {
 }
 
 
-var featured = document.getElementById("featured");
+var featured = document.getElementById("featured-shows");
 if (!!featured) {
 	var extra = {
 		date_heading: true,
-		showStar: true
+		showDate: true,
+		showStar: true,
+		showGradient: true
 	};
 
 	console.log("START - Featured Render");
@@ -33,11 +35,27 @@ if (!!featured) {
 }
 
 
+var frontFeatured = document.getElementById("front-featured");
+if (!!frontFeatured) {
+	var extra = {
+		date_heading_front: true,
+		showDate: true,
+		showStar: true,
+		showGradient: true
+	};
+
+	console.log("START - Featured Front Render");
+	React.render(<List items={ featuredShows } itemType={ ListItemLg } extra={ extra }/>, frontFeatured);
+	console.log("END - Featured Front Render");
+}
+
+
 var search = document.getElementById("search-results");
 if (!!search) {
 	var extra = {
 		showStar: true,
-		showDate: true
+		showDate: true,
+		showGradient: true
 	};
 
 	console.log("START - Search Results Render");
@@ -51,20 +69,15 @@ if (!!venueShows) {
 	var url = '/api/v1/shows?orderby=date&venue=' + venue.id;
 
 	window.fetch(url)
-	.then(function(response){
+	.then(function(response) {
 		return response.json();
 	}).then(function(body) {
 		var extra = {
 			hideHeader: true,
-			date_heading: true
+			date_heading: true,
+			showStar: true,
+			showGradient: true
 		};
-		console.log("START - Venue Shows Render");
-		React.render(<List items={ body } itemType={ ListItemLg } extra={ extra }/>, venueShows);
-		console.log("END - Venue Shows Render");
-	});
-}
-
-
 
 
 var venueRecent = document.getElementById("venue-recent");
@@ -76,7 +89,7 @@ if (!!venueRecent) {
 			return response.json();
 		}).then(function(body){
 			var extra = {
-				header: true
+				header_recent: true
 			};
 
 			console.log("START - Venue Recent Render");
@@ -92,6 +105,47 @@ if(!!userProfile){
 }
 
 
+
+
+var frontOnsale = document.getElementById("front-onsale");
+if (!!frontOnsale) {
+	var url = '/api/v1/shows?orderby=onsale&limit=10&onsale=true';
+
+	window.fetch(url)
+		.then(function(response) {
+			return response.json();
+		}).then(function(body) {
+			var extra = {
+				header_onsale: true,
+				onsale_info: true
+			};
+
+			console.log("START - Venue Recent Render");
+			React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, frontOnsale);
+			console.log("END - Venue Recent Render");
+
+		});
+}
+
+
+var frontRecent = document.getElementById("front-recent");
+if (!!frontRecent) {
+	var url = '/api/v1/shows?orderby=created_at&limit=10';
+
+	window.fetch(url)
+		.then(function(response) {
+			return response.json();
+		}).then(function(body) {
+			var extra = {
+				header_recent: true
+			};
+
+			console.log("START - Venue Recent Render");
+			React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, frontRecent);
+			console.log("END - Venue Recent Render");
+
+		});
+}
 
 
 $("#search-toggle").click(function(e) {

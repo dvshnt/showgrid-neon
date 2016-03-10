@@ -47,7 +47,8 @@
 @import "page";
 @import "header";
 @import "footer";
- 
+
+@import "show";
 
 @import "venue";
 @import "calendar";
@@ -59,10 +60,14 @@
 //user profile/modal styles
 @import "user";
 @import "list";
+@import "front";
 @import "newsletter";
 
 @import "search";
 @import "featured";
 
 @import "set-alert";
+
+
+@import "contest";
 

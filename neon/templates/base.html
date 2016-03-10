@@ -4,6 +4,8 @@
 		
 		{% load static %}
 
+		{% load jsonify %}
+
 		<title>Showgrid | Nashville's Live Music Source {% block title %}{% endblock %}</title>
 
 
@@ -74,36 +76,13 @@
 				{% include 'subheader-search.html' %}
 			{% endblock subhead %}
 
-			{% block sidebar %}{% endblock sidebar %}
-			{% block content %}{% endblock content %}
+			{% block content %}
+			{% endblock content %}
 
 			<menu id="mobile-menu">
 				<ul>
 					{% block mobilemenu %}
-					<li>
-						<a href="/calendar">
-							<svg class="icon icon-calendar"><use xlink:href="#icon-calendar"></use></svg>
-							<span>Calendar</span>
-						</a>
-					</li>
-					<li>
-						<a href="/show/featured">
-							<svg class="icon icon-star"><use xlink:href="#icon-star"></use></svg>
-							<span>Featured</span>
-						</a>
-					</li>
-					<li>
-						<a href="/contest">
-							<svg class="icon icon-contest"><use xlink:href="#icon-contest"></use></svg>
-							<span>Contests</span>
-						</a>
-					</li>
-					<li>
-						<a href="/newsletter">
-							<svg class="icon icon-letter"><use xlink:href="#icon-letter"></use></svg>
-							<span>Newsletter</span>
-						</a>
-					</li>
+						{% include 'mobile_menu.html' %}
 					{% endblock mobilemenu %}
 				</ul>
 			</menu>
@@ -121,7 +100,8 @@
 
 	</body>
  
-	{% block scripts %}{% endblock %}
+	{% block scripts %}
+	{% endblock %}
  	<script src="{% static 'showgrid/js/bundle.js' %}"></script>
   	<script>
 	// 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

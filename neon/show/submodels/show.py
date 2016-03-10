@@ -1,5 +1,6 @@
 import re
 import requests
+from datetime import datetime
 
 from os import path
 
@@ -13,7 +14,6 @@ from venue.models import Venue
 from newsletter.models import Newsletter
 
 from app.util.color_log import *
-
 
 
 class Show(models.Model):
@@ -48,7 +48,7 @@ class Show(models.Model):
 
 	cancelled = models.BooleanField(default=False)
 	soldout = models.BooleanField(default=False)
-	onsale = models.DateTimeField(auto_now=True, blank=True)
+	onsale = models.DateTimeField(default=datetime.now,blank=True)
 
 	issue = models.ForeignKey(Newsletter, null=True, blank=True)
 
