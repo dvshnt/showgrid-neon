@@ -25,9 +25,7 @@ class Index(APIView):
 			print 'LOGGED IN '+request.user.username
 			user = request.user
 
-		return render(request, "base.html",{
-			"user": user
-		})
+		return render(request, "base.html")
 
 
 class Search(APIView):

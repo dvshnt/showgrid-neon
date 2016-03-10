@@ -4,78 +4,39 @@ import PhoneModal from './PhoneModal'
 import $ from 'jquery';
 import '../util/csrf'
 import DateManager from '../util/DateManager'
+import moment from 'moment'
 
 var GridEngine = require('../util/GridEngine');
 
 
 
 
-function unfavoriteShow(fav){
+function unfavoriteShow(fav,cb){
 	$.ajax({
 		type: 'DELETE',
-		url: 'user/rest/favorite',
+		url: '/user/rest/favorite',
 		data: JSON.stringify({show:fav.show_id}),
-		success: function(){
-			var i = window.user.favorites.indexOf(fav)
-			console.log("UNFAVORITE SHOW INDEX",i)
-			window.user.favorites.splice(i,1)
-			React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
-		},
+		success: cb,
 		error: function(e){
 			throw e
 		}
 	})
 }
 
-function changeAlert(e,alert,component){
-	var alertDate = DateManager.getAlertDate(alert.show_date, value);
 
 
-
-	var show = this.props.alert.show;
-
-	var options = e.target.options;
-	var value = "";
-
-
-	for (var i = 0, l = options.length; i < l; i++) {
-		if (options[i].selected) {
-			value = JSON.parse(options[i].getAttribute('data-value'));
-		}
-	}
-
-	var alertDate = DateManager.getAlertDate(alert.show_date, value);
-
-
+function removeAlert(alert,cb){
+	var index  = window.user.alerts.indexOf(alert)
 	$.ajax({
-		data: JSON.stringify(),
+		data: JSON.stringify({alert:alert.id}),
 		dataType: 'json',
-		success: function(data){
-			alert.show_date = data.show_date
-			component.forceUpdate()
-		},
+		type:'DELETE',
+		url:'/user/rest/alert',
+		success: cb,
 		error: function(e){
 			throw e;
 		}
 	})
-}
-
-
-function removeAlert(alert,component){
-	console.log("REMOVE ALERT",alert,window.user.alerts.indexOf(alert))
-	// $.ajax({
-	// 	data: JSON.stringify(),
-	// 	dataType: 'json',
-	// 	type:'DELETE',
-	// 	url:'user/rest/alert/',
-	// 	success: function(data){
-			
-	// 		React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
-	// 	},
-	// 	error: function(e){
-	// 		throw e;
-	// 	}
-	// })
 }
 
 
@@ -171,7 +132,7 @@ class UserProfile extends Component {
 			number = this.props.profile.phone;
 			name = this.props.profile.name;
 		}
-		console.log(name)
+
 
 		if(number == "None"){
 			var phone_button = <input ref="phone" className = "error" type="submit" value={"Register Phone"} onClick={this.showPhoneModal}/>
@@ -232,20 +193,25 @@ class UserActions extends Component {
 			tab: e.target.className.indexOf("alerts") !== -1 ? 'alert' : 'fav'
 		});
 
-		return false;
+		e.preventDefault()
 	}
 
 	render() {
+		
 		var alertTabClass = (this.state.tab == 'alert') ? "tab alerts selected" : "tab alerts";
 		var favoritesTabClass = (this.state.tab == 'fav') ? "tab favorites selected" : "tab favorites";
 
-		var items = [];
+		
+
+
+	
+		var items = []
 		if (this.state.tab == 'alert') {
 			for (var i=0; i < this.props.alerts.length; i++) {
-				items.push(<UserAlert alert={ this.props.alerts[i] }/>);
+				items.push(<UserAlert  key= {'user_alert_'+i} alert={ this.props.alerts[i] }/>);
 			}
 
-			if (items.length === 0) {
+			if (items.length == 0) {
 				items = (
 					<div className="info-text">
 						<h2>No Alerts Set</h2>
@@ -255,7 +221,7 @@ class UserActions extends Component {
 			}
 		}else if(this.state.tab == 'fav'){
 			for (var i=0; i < this.props.favorites.length; i++) {
-				items.push(<UserFavorite show={ this.props.favorites[i] }/>);
+				items.push(<UserFavorite key= {'user_fav_'+i} favorite={ this.props.favorites[i] }/>);
 			}
 
 			if (items.length === 0) {
@@ -304,23 +270,48 @@ class UserAlert extends Component {
 		super(props);
 	}
 
-	// componentWillUpdate(nextProps, nextState) {
+	removeAlert(e){
+		removeAlert(this.props.alert,function(data){
+			console.log('GOT SUCC',data)
+			window.user.alerts.splice(index,1)
+			React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
+		})
+	}
 
-	// }
+	/* change alert ajax request */
+	changeAlert(e){
+		var which = e.target.value 
+		var value = e.target.options[which].getAttribute('data-value')
+		console.log(value)
+		var date = DateManager.getAlertDate(this.props.alert.show_date, JSON.parse(value));
+		var show = this.props.alert.show;
+		
+		$.ajax({
+			data: JSON.stringify({ alert: this.props.alert.id, date: date, which: which }),
+			dataType: 'json',
+			type: 'PUT',
+			url:'/user/rest/alert',
+			success: function(data){
+				console.log('edit alert got succ',data)
+			},
+			error: function(e){ console.log(e) }
+		})
+	}
+
+
 
 
 
 	getEligibleAlertTimes() {
 		var alert = this.props.alert;
-		var show = alert.show;
-
+	
 		var now = moment();
-		var date = moment(show.date, 'YYYY-MM-DD HH:mm:ssZZ');
+		var date = moment(alert.show_date, 'YYYY-MM-DD HH:mm:ssZZ');
 
 		var options = [];
 		
-		if(show.onsale){
-			var sale_date = moment(show.onsale, 'YYYY-MM-DD HH:mm:ssZZ');
+		if(alert.show_onsale != null && aler.show_onsale != ""){
+			var sale_date = moment(alert.show_onsale, 'YYYY-MM-DD HH:mm:ssZZ');
 			if (now.isBefore(sale_date)) {
 				options.push(<option value="7"  data-value='{"sale":true, "id":7, "unit":"days","num":0}' selected={ alert.which === 7 }>when ticket sale starts</option>);
 			}
@@ -368,7 +359,7 @@ class UserAlert extends Component {
 			options.push(<option value="6" data-value='{"id":6, "unit":"days","num":7}' selected={ alert.which === 6 }>1 Week before show</option>);
 		}
 		/* ???? */
-		return <select onBlur={this.createAlert} onChange={ this.createAlert }>{ options }</select>;
+		return <select  onChange={this.changeAlert.bind(this)}>{ options }</select>;
 	}
 
 	render() {
@@ -393,11 +384,11 @@ class UserAlert extends Component {
 		var headliner = "";
 		var opener = "";
 
-		if (alert.show.headliners !== '') {
+		if (alert.show_headliners !== '') {
 			headliner = <h3>{ alert.show_headliners }</h3>;
 		}
 
-		if (alert.show.openers !== '') {
+		if (alert.show_openers !== '') {
 			opener =  <h5>{ alert.show_openers }</h5>;
 		}
 
@@ -414,7 +405,7 @@ class UserAlert extends Component {
 				</div>
 				<div className="alert">
 					{ options }
-					<a onClick={ removeAlert.bind(this,this.props.alert) } href="#">Remove</a>
+					<a onClick={ this.removeAlert.bind(this) } href="#">Remove</a>
 				</div>
 			</div>
 		)
@@ -447,42 +438,38 @@ class UserFavorite extends Component {
 		super(props);
 	}
 
+
+	unFavorite(){
+	
+		unfavoriteShow(this.props.favorite,function(){
+			var i = window.user.favorites.indexOf(this.props.favorite)
+			window.user.favorites.splice(i,1)
+			React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));				
+		}.bind(this))
+		
+	}
+
+
 	render() {
 
-		var date = (
-			<div className="date">
-				<div>{ DateManager.getMonthFromDate(this.props.fav.show_date) }</div>
-				<div>{ DateManager.getDayFromDate(this.props.fav.show_date) }</div>
-			</div>
-		);
-
-
-
-		var venue = <h4>{ this.props.fav.show_venue_name }</h4>;
-
 		var headliners,openers = null;
-
-
-		if (this.props.fav.show_headliners !== '') {
-			headliners = <h3>{ this.props.fav.show_headliners }</h3>;
-		}
-
-		if (this.props.fav.show_openers !== '') {
-			openers =  <h5>{ this.props.fav.show_openers }</h5>;
-		}
-
-
+		if (this.props.favorite.show_headliners !== '') headliners = <h3>{ this.props.favorite.show_headliners }</h3>;
+		if (this.props.favorite.show_openers !== '') openers =  <h5>{ this.props.favorite.show_openers }</h5>;
+		
 
 		return (
 			<div className="alert-block">
-				{ date }
+				<div className="date">
+					<div>{ DateManager.getMonthFromDate(this.props.favorite.show_date) }</div>
+					<div>{ DateManager.getDayFromDate(this.props.favorite.show_date) }</div>
+				</div>
 				<div className="info">
-					{ venue }
+					 <h4>{ this.props.favorite.show_venue_name }</h4>
 					{ headliners }
 					{ openers }
 				</div>
 				<div className="favorite">
-					<a onClick={ unfavoriteShow.bind(null,this.props.fav) } href="javaScript:void(0);">Remove</a>
+					<a onClick={ this.unFavorite.bind(this) } href="#">Remove</a>
 				</div>
 			</div>
 		)

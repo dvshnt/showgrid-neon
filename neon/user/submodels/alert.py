@@ -4,7 +4,7 @@ from django.conf import settings
 import os
 import logging
 import json
-
+from rest_framework import serializers
 
 from show.models import Show
 
@@ -98,5 +98,13 @@ class Alert(models.Model):
 			return True
 		return False
 
+
+
+class AlertSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Alert
+		fields = (
+			'id', 'date', 'sent', 'user', 'show', 'sale', 'which'
+		)
 
 

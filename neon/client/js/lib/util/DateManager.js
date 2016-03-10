@@ -54,43 +54,43 @@ var DateManager = {
 		return date;
 	},
 
-	// getDaysArray(start, offset) {
-	// 	var result = [];
+	getDaysArray(start, offset) {
+		var result = [];
 
-	// 	var day = start;
-	// 	for (var i = 0; i < offset; i++) {
-	// 		result.push({
-	// 			"id": i,
-	// 			"date": day.format('MMMM Do YYYY')
-	// 		});
+		var day = start;
+		for (var i = 0; i < offset; i++) {
+			result.push({
+				"id": i,
+				"date": day.format('MMMM Do YYYY')
+			});
 
-	// 		day.add(1, 'days');
-	// 	}
+			day.add(1, 'days');
+		}
 
-	// 	return result;
-	// },
+		return result;
+	},
 
-	// getStartOfNextPage(end) {
-	// 	var day = moment(end, 'MMMM Do YYYY'),
-	// 		day = day.add(1, 'days');
+	getStartOfNextPage(end) {
+		var day = moment(end, 'MMMM Do YYYY'),
+			day = day.add(1, 'days');
 
-	// 	return day;
-	// },
+		return day;
+	},
 
-	// getStartOfPreviousPage(previousStart, offset) {
-	// 	var day = moment(previousStart, 'MMMM Do YYYY'),
-	// 		day = day.subtract(offset, 'days');
+	getStartOfPreviousPage(previousStart, offset) {
+		var day = moment(previousStart, 'MMMM Do YYYY'),
+			day = day.subtract(offset, 'days');
 
-	// 	return day;
-	// },
+		return day;
+	},
 
-	// getMonthFromDate(date) {
-	// 	return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMM');
-	// },
+	getMonthFromDate(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('MMM');
+	},
 
-	// getDayFromDate(date) {
-	// 	return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('D');
-	// },
+	getDayFromDate(date) {
+		return moment(date, 'YYYY-MM-DD HH:mm:ssZZ').format('D');
+	},
 
 	getMobileDate(date) {
 		var currentDate = date;
@@ -159,76 +159,76 @@ var DateManager = {
 		}
 	},
 
-	// getRecentShowsDate(date) {
+	getRecentShowsDate(date) {
 		
-	// 	var currentDate = moment(date, 'YYYY-MM-DD');
-	// 	var today = moment().hour(0).minute(0).second(0);
+		var currentDate = moment(date, 'YYYY-MM-DD');
+		var today = moment().hour(0).minute(0).second(0);
 
-	// 	var diff = Math.round(currentDate.diff(today, 'days', true));
+		var diff = Math.round(currentDate.diff(today, 'days', true));
 
-	// 	if (diff === 0) {
-	// 		return "Added Today";
-	// 	}
-	// 	else if (diff === -1 ) {
-	// 		return "Added Yesterday";
-	// 	}
-	// 	else {
-	// 		return "Added " + currentDate.format("dddd, MMMM Do");
-	// 	}
-	// },
+		if (diff === 0) {
+			return "Added Today";
+		}
+		else if (diff === -1 ) {
+			return "Added Yesterday";
+		}
+		else {
+			return "Added " + currentDate.format("dddd, MMMM Do");
+		}
+	},
 
-	// generateRecentBadge(show) {
-	// 	var created = moment(show.created_at.split('T')[0], 'YYYY-MM-DD');
-	// 	var today = moment().hour(0).minute(0).second(0);
+	generateRecentBadge(show) {
+		var created = moment(show.created_at.split('T')[0], 'YYYY-MM-DD');
+		var today = moment().hour(0).minute(0).second(0);
 
-	// 	var diff = Math.round(created.diff(today, 'days', true));
+		var diff = Math.round(created.diff(today, 'days', true));
 
-	// 	if (diff === 0) {
-	// 		return <b title="Added Today" className="icon-recent"></b>;
-	// 	}
-	// 	else if (diff === -1 ) {
-	// 		return <b title="Added Yesterday" className="icon-recent one"></b>;
-	// 	}
-	// 	else if (diff === -2 ) {
-	// 		return <b title="Added Two Days Ago" className="icon-recent two"></b>;
-	// 	}
-	// 	else  {
-	// 		return "";
-	// 	}
-	// },
+		if (diff === 0) {
+			return <b title="Added Today" className="icon-recent"></b>;
+		}
+		else if (diff === -1 ) {
+			return <b title="Added Yesterday" className="icon-recent one"></b>;
+		}
+		else if (diff === -2 ) {
+			return <b title="Added Two Days Ago" className="icon-recent two"></b>;
+		}
+		else  {
+			return "";
+		}
+	},
 
-	// getAlertDate(date, offset) {
-	// 	return moment(date).subtract(offset.num, offset.unit);
-	// },
+	getAlertDate(date, offset) {
+		return moment(date).subtract(offset.num, offset.unit);
+	},
 
-	// convertAlertDate(dateId) {
-	// 	switch(dateId) {
-	// 	case 0:
-	// 		return "At time of show";
-	// 	case 1:
-	// 		return "30 Minutes before show";
-	// 	case 2:
-	// 		return "1 Hour before show";
-	// 	case 3:
-	// 		return "2 Hours before show";
-	// 	case 4:
-	// 		return "1 Day before show";
-	// 	case 5:
-	// 		return "2 Days before show";
-	// 	case 6:
-	// 		return "1 week before show";
-	// 	case 7:
-	// 		return "When tickets go on sale";
-	// 	case 8:
-	// 		return "30 Minutes before tickets go on sale";
-	// 	case 9:
-	// 		return "1 Hours before tickets go on sale";
-	// 	case 10:
-	// 		return "2 Hours before tickets go on sale";
-	// 	default:
-	// 		return "Sometime before the show";
-	// 	}
-	// },
+	convertAlertDate(dateId) {
+		switch(dateId) {
+		case 0:
+			return "At time of show";
+		case 1:
+			return "30 Minutes before show";
+		case 2:
+			return "1 Hour before show";
+		case 3:
+			return "2 Hours before show";
+		case 4:
+			return "1 Day before show";
+		case 5:
+			return "2 Days before show";
+		case 6:
+			return "1 week before show";
+		case 7:
+			return "When tickets go on sale";
+		case 8:
+			return "30 Minutes before tickets go on sale";
+		case 9:
+			return "1 Hours before tickets go on sale";
+		case 10:
+			return "2 Hours before tickets go on sale";
+		default:
+			return "Sometime before the show";
+		}
+	},
 };
 
 

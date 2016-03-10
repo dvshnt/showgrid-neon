@@ -1,3 +1,4 @@
+
 .list {
 	.heading {
 		display:block;
@@ -28,7 +29,7 @@
 		-webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);
 				box-shadow:0 2px 3px rgba(0,0,0,0.1);
 
-		overflow:hidden;
+		overflow:visible;
 
 		-webkit-touch-callout: none; /* iOS Safari */
 		  -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -223,6 +224,13 @@
 		}
 
 		footer {
+
+			.icon-alert.active{
+				svg{
+					fill:#ff9929 !important;
+				}
+			}
+
 			display:-webkit-flex;
 			display:		flex;
 
@@ -276,19 +284,24 @@
 					padding-right:8px;
 				}
 
+				.icon-heart.active{
+					fill: #fc3030;
+				}
+
 				svg.icon-ticket {
 					fill:rgb(0,222,144);
 				}
-
-
+			
 				.favorite.active .icon-heart,
-				.favorite.active .text {
+				.favorite.active .text {	
 					color:#fc3030;
+					fill:#fc3030;
 				}
 
 				.alert.active .icon-alert,
 				.alert.active .alert-info {
 					color:#ff9929;
+					fill:#ff9929;
 
 					.option {
 					    border-bottom: 1px dotted #ff9929;

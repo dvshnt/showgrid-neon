@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import SetFavorite from './setFavorite';
+import SetAlert from './setAlert';
 var DateManager = require('../util/DateManager');
 
 
@@ -27,6 +28,18 @@ export default class ListItemLg extends Component {
 	   		"background": "linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.5) 0%,rgba("+r+","+g+","+b+",0.5) 10%,rgba("+r+","+g+","+b+",0.9) 100%), rgba("+r+","+g+","+b+",0.3)", /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	   	}
 	}
+
+
+
+
+
+	setShare(){
+		// $.ajax({
+		// 	type: 'post'
+		// })
+	}
+
+
 
 	render() {
 		var show = this.props.data;
@@ -161,15 +174,9 @@ export default class ListItemLg extends Component {
 					</div>
 				</div>
 				<footer>
-					<div className="col-3">
-						<svg className="icon icon-heart" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
-						<span>Favorite</span>
-					</div>
-					<div className="col-3">
-						<svg className="icon icon-alert" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-						<span>Set Alert</span>
-					</div>
-					<div className="col-3">
+					<SetAlert show={ show }  />
+					<SetFavorite show={ show } />
+					<div className="col-3" onClick = {this.setShare} >
 						<svg className="icon icon-share" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-share"/>' }} />
 						<span>Share</span>
 					</div>

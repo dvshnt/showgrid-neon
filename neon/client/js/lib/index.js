@@ -86,6 +86,13 @@ if (!!venueRecent) {
 		});
 }
 
+var userProfile = document.getElementById('profile')
+if(!!userProfile){
+	React.render(<UserProfile profile={window.user} />,userProfile);
+}
+
+
+
 
 $("#search-toggle").click(function(e) {
 	var searchBar = $("#subhead");
@@ -98,15 +105,6 @@ $("#search-toggle").click(function(e) {
 	}
 	searchBar.addClass("active");
 });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -135,9 +133,7 @@ if(!window.user.authenticated){
 
 
 /* USER PROFILE */
-if(document.getElementById('profile') != null){
-	React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
-}
+
 /* USER PROFILE END*/
 
 

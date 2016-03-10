@@ -15,40 +15,23 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from show.models import Show
 
+
+import dateutil
+import dateutil.parser
+
+
+
+
+
+
+
+
 @api_view(['GET'])
 def Profile(request):
 	if request.user.is_authenticated() == False:
 		return redirect('/')
 	else:
-		alerts = []
-		alerts_q = Alert.objects.filter(user=request.user)
-		for alert in alerts_q:
-			alerts.append({
-				"id": alert.id,
-				"show_date": 		alert.show.date,
-				"show_headliners": 	alert.show.headliners,
-				"show_openers" : 	alert.show.openers,
-				"show_venue_name": alert.show.venue.name
-			})
-		faves_q = request.user.favorites.all()
-		faves = []
-		for fav in faves_q:
-			faves.append({
-				"show_id": fav.show.id,
-				"show_date": 		alert.show.date,
-				"show_headliners": 	fav.show.headliners,
-				"show_openers" : 	fav.show.openers,
-				"show_venue_name": fav.show.venue.name
-			})
-
-		print json.dumps(alerts)
-		print json.dumps(faves)
-
-		return render(request, "profile.html",{
-			"user": request.user,
-			"alerts": json.dumps(alerts),
-			"favorites": json.dumps(faves)
-		})
+		return render(request, "profile.html")
 
 
 @api_view(['GET'])
@@ -69,6 +52,8 @@ def Login(request):
 			print 'LOGGING IN '+user.email
 			login(request,user)
 			return Response({"status":"good"},status=status.HTTP_200_OK)
+		else:
+			return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	except:
 		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -141,8 +126,8 @@ class UserActions(APIView):
 
 		# Edit alert
 		elif action == 'alert':
-			body_unicode = request.body.decode('utf-8')
-			body = json.loads(body_unicode)
+			
+			body = json.loads(request.body.decode('utf-8'))
 			alert = body['alert']
 			date = body['date']
 			which = body['which']
@@ -188,7 +173,7 @@ class UserActions(APIView):
 			return Response({ 'status': "failure", 'show': show.id })
 
 
-		#clear all user alerts
+		#clear user alert
 		if action == 'alert':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
@@ -337,13 +322,11 @@ class UserActions(APIView):
 				if date == None:
 					return  Response({ 'status': 'bad date' })
 				
-				date = dateutil.parser.parse(date)
 
+				date = dateutil.parser.parse(date)
 				alert = Alert(is_active=True, show=show, date=date,user=user,which=which,sale=sale)
 				alert.save()
-
 				data = AlertSerializer(alert)
-
 				return  Response( data.data )
 
 

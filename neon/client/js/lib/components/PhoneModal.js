@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import FormButton from './FormButton';
 import windowScroll from '../util/windowScroll';
-import '../util/csrf'
+
 
 
 
@@ -40,42 +40,21 @@ class PhoneModal extends Component {
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
 			windowScroll.disable();
-
-			window.addEventListener("click", this.closeOnClick, false);
-			window.addEventListener("keydown", this.handleKeydown, false);
-
 			return;
 		}
 		
 		windowScroll.enable();
-		
-		
-		window.removeEventListener("click", this.closeOnClick);
-		window.removeEventListener("keydown", this.handleKeydown);
 	}
 
-	componentWillUnmount() {
-		window.removeEventListener("click", this.closeOnClick);
-		window.removeEventListener("keydown", this.handleKeydown);
-	}
 
-	hide(){
-		React.render(<PhoneModal visible={false} />,document.getElementById('overlay-wrapper'))
-	}
 
-	componentDidMount() {
-		document.getElementById('overlay-wrapper').addEventListener('click',this.hide)
-	}
 
-	componentWillUnmount(){
-		document.getElementById('overlay-wrapper').removeEventListener('click',this.hide)
-	}
 
 	closeOnClick(e) {
 		if (e.target.id === "overlay") {
 			this.hidePhoneModal();
 		}
-		return false;
+		e.preventDefault()
 	}
 
 	handleKeydown(e) {
@@ -88,8 +67,31 @@ class PhoneModal extends Component {
 
 	userSubmitPin(e) {
 		
-		
-		var pin = React.findDOMNode(this.refs.pinOne).value;
+		// $.ajaxSetup({ 
+		// 	beforeSend: function(xhr, settings) {
+		// 	function getCookie(name) {
+		// 	var cookieValue = null;
+		// 	if (document.cookie && document.cookie != '') {
+		// 	var cookies = document.cookie.split(';');
+		// 	for (var i = 0; i < cookies.length; i++) {
+		// 	var cookie = $.trim(cookies[i]);
+		// 	// Does this cookie string begin with the name we want?
+		// 	if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		// 	cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		// 	break;
+		// 	}
+		// 	}
+		// 	}
+		// 	return cookieValue;
+		// 	}
+		// 	if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+		// 	// Only send the token to relative URLs i.e. locally.
+		// 	xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+		// 	}
+		// 	} 
+		// });
+
+				var pin = React.findDOMNode(this.refs.pinOne).value;
 		pin += React.findDOMNode(this.refs.pinTwo).value;
 		pin += React.findDOMNode(this.refs.pinThree).value;
 		pin += React.findDOMNode(this.refs.pinFour).value;
@@ -111,17 +113,21 @@ class PhoneModal extends Component {
 		// 		}
 		// 	});
 
+		console.log("SUBMIT PIN",pin)
 		$.ajax({
 			url: '/user/rest/pin_check',
 			type: 'POST',
-			data: JSON.stringifiy({pin:pin}),
+			data: JSON.stringify({pin:pin}),
 			dataType: 'json',
-			success: function(data){
-				console.log(data)
-				// _this.setState({
-				// 	verify: true,
-				// 	error: false
-				// });
+			success: function(e){
+				if(e.status == 'pin_verified'){
+					React.render(<PhoneModal visible={false} />,document.getElementById('overlay-wrapper'));
+				}else{
+					_this.setState({
+						verify: true,
+						error: true
+					});
+				}
 			},
 			error: function(){
 				_this.setState({
@@ -129,8 +135,8 @@ class PhoneModal extends Component {
 				})
 			}
 		})
-
 		e.preventDefault();
+		return false
 	}
 
 	goToNextPinInput(e) {
@@ -163,7 +169,8 @@ class PhoneModal extends Component {
 	}
 
 	userSubmitPhone(e) {
-		e.preventDefault();
+		console.log("TEST")
+	
 		
 		var phonenumber = React.findDOMNode(this.refs.phonenumber).value;
 
@@ -174,53 +181,60 @@ class PhoneModal extends Component {
 			type: 'POST',
 			data: JSON.stringify({phone:phonenumber}),
 			dataType: 'json',
-			success: function(){
+			success: function(e){
+				console.log("PHONE SET",e)
 				_this.setState({
 					verify: true,
 					error: false
 				});
 			},
-			error: function(){
+			error: function(e){
 				_this.setState({
 					error: true
 				})
 			}
 		})
+
+		// e.preventDefault();
 	}
 
 	render() {
+		window.modal = this
+		console.log("RENDER",this.props.visible)
 		var active = (this.props.visible) ? "active" : "";
-		var form = (
-			<div>
-				<h3>Sign Up to Receive Text Alerts</h3>
+		var form = null
+
+		
+		form = (
+			<div key = 'pin-form'>
+				<h3>Confirm your phone number</h3>
 				<p>
-					To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
+					Enter the 4-digit PIN you receive to start getting alerts.
 				</p>
-				<p>
-					Text alerts will include a link to buy tickets as well as information about the show.
-				</p>
-				<form action="" onSubmit={ this.userSubmitPhone }>
-					<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 10 Digit Phone #" title="" onChange={ this.resetState }/></span>
+				<form action="" >
+					<input maxLength="1" className="pin pin-1" type="text" ref="pinOne" size="1" onChange={ this.goToNextPinInput }/>
+					<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
+					<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
+					<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
 					<br></br>
-					<FormButton error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
+					<FormButton onClick={this.userSubmitPin} error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" />
 				</form>
 			</div>
 		);
-
-		if (this.state.verify) {
+		if (!this.state.verify) {
 			form = (
 				<div>
-					<h3>Confirm your phone number</h3>
+					<h3>Sign Up to Receive Text Alerts</h3>
 					<p>
-						Enter the 4-digit PIN you receive to start getting alerts.
+						To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
 					</p>
-					<form action="" onSubmit={ this.userSubmitPin }>
-						<input maxLength="1" className="pin pin-1" type="text" ref="pinOne" size="1" onChange={ this.goToNextPinInput }/>
-						<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
-						<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
-						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
+					<p>
+						Text alerts will include a link to buy tickets as well as information about the show.
+					</p>
+					<form action="" >
+						<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 10 Digit Phone #" title="" onChange={ this.resetState }/></span>
 						<br></br>
-						<FormButton error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" focus={ this.state.focusButton }/>
+						<FormButton onClick={this.userSubmitPhone} error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 					</form>
 				</div>
 			);
@@ -242,7 +256,7 @@ class PhoneModal extends Component {
 		}
 
 		return (
-			<div id="overlay" className={ active } style = {{top: window.scrollY+'px'}}>
+			<div id="overlay" onClick={this.closeOnClick} className={ active } style = {{top: window.scrollY+'px'}}>
 				<div id="modal"><b id="close" className="icon-close" onClick={ this.hidePhoneModal }></b>{ form }</div>
 			</div>
 		)

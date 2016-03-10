@@ -10,11 +10,10 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.backends import ModelBackend 
 from random import randint
 import hashlib
-
+import inspect, itertools, json
 from twiliohandle import MessageClient
 Sender = MessageClient()
-
-# from alert import Alert
+from alert import Alert
 
 
 class AuthBackend(ModelBackend):
@@ -84,6 +83,37 @@ class NeonUser(AbstractBaseUser):
 
 	# Favorites
 	favorites = models.ManyToManyField(Show, related_name='show_set', blank=True)
+
+	def getAlerts(self):
+		alerts = []
+		alerts_q = Alert.objects.filter(user=self)
+		for alert in alerts_q:
+			alerts.append({
+				"id": 				alert.id,
+				"show_id": 			alert.show.id,
+				"sale": 			alert.sale,
+				"which": 			alert.which,
+				"show_date": 		alert.show.date.isoformat(),
+				"show_headliners": 	alert.show.headliners,
+				"show_openers" : 	alert.show.openers,
+				"show_venue_name": 	alert.show.venue.name
+			})
+		return json.dumps(alerts)
+
+		
+	def getFaves(self):
+		faves_q = self.favorites.all()
+		faves = []
+		for fav in faves_q:
+			faves.append({
+				"show_id": 			fav.id,
+				"show_date": 		fav.date.isoformat(),
+				"show_headliners": 	fav.headliners,
+				"show_openers" : 	fav.openers,
+				"show_venue_name":	fav.venue.name
+			})
+
+		return json.dumps(faves)
 
 
 
