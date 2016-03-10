@@ -273,9 +273,9 @@ class UserAlert extends Component {
 	removeAlert(e){
 		removeAlert(this.props.alert,function(data){
 			console.log('GOT SUCC',data)
-			window.user.alerts.splice(index,1)
+			window.user.alerts.splice(window.user.alerts.indexOf(this.props.alert),1);
 			React.render(<UserProfile profile={window.user} />,document.getElementById('profile'));
-		})
+		}.bind(this))
 	}
 
 	/* change alert ajax request */

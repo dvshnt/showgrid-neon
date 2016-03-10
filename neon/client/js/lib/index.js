@@ -74,11 +74,13 @@ if (!!venueShows) {
 	}).then(function(body) {
 		var extra = {
 			hideHeader: true,
-			date_heading: true,
-			showStar: true,
-			showGradient: true
+			date_heading: true
 		};
-
+		console.log("START - Venue Shows Render");
+		React.render(<List items={ body } itemType={ ListItemLg } extra={ extra }/>, venueShows);
+		console.log("END - Venue Shows Render");
+	});
+}
 
 var venueRecent = document.getElementById("venue-recent");
 if (!!venueRecent) {
@@ -132,19 +134,17 @@ var frontRecent = document.getElementById("front-recent");
 if (!!frontRecent) {
 	var url = '/api/v1/shows?orderby=created_at&limit=10';
 
-	window.fetch(url)
-		.then(function(response) {
-			return response.json();
-		}).then(function(body) {
-			var extra = {
-				header_recent: true
-			};
+	window.fetch(url).then(function(response) {
+		return response.json();
+	}).then(function(body) {
+		var extra = {
+			header_recent: true
+		};
 
-			console.log("START - Venue Recent Render");
-			React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, frontRecent);
-			console.log("END - Venue Recent Render");
-
-		});
+		console.log("START - Venue Recent Render");
+		React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, frontRecent);
+		console.log("END - Venue Recent Render");
+	});
 }
 
 
@@ -181,13 +181,7 @@ if(!window.user.authenticated){
 		window.location.href = '/user/profile'
 	})
 }
-/* AUTHENTICATION END */
 
 
-
-
-/* USER PROFILE */
-
-/* USER PROFILE END*/
 
 
