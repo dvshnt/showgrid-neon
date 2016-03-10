@@ -53,18 +53,34 @@
 
 	menu ul li.calendar.selected {
 		border-top:4px solid rgb(0,222,144);
+
+		a {
+			color:rgb(0,222,144);
+		}
 	}
 
 	menu ul li.featured.selected {
 		border-top:4px solid #FBBF00;
+
+		a {
+			color:#FBBF00;
+		}
 	}
 
 	menu ul li.contest.selected {
 		border-top:4px solid #EA6E6F;
+
+		a {
+			color:#EA6E6F;
+		}
 	}
 
 	menu ul li.newsletter.selected {
-		border-top:4px solid #000000;
+		border-top:4px solid #4272f2;
+
+		a {
+			color:#4272f2;
+		}
 	}
 
 	menu ul li a {
@@ -272,7 +288,15 @@
 		}
 
 		ul li.newsletter.selected {
-			border-bottom:4px solid #000000;
+			border-bottom:4px solid #4272f2;
+
+			a {
+				color:#4272f2;
+			}
+
+			svg {
+				fill:#4272f2;
+			}
 		}
 
 		ul li a {
