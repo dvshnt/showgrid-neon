@@ -115,6 +115,8 @@
 
 @media screen and (max-width: 740px ) {
 	#header_calendar {
+		height:60px;
+
 		#back-to-today {
 			display:none;
 		}
@@ -122,6 +124,10 @@
 		#datepicker {
 			-webkit-flex:0 0 100%;
 					flex:0 0 100%;
+
+			font-size:16px;
+			font-weight:200;
+			line-height:60px;
 		}
 
 		#datepicker span.small-screen {

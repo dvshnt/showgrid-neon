@@ -2,6 +2,16 @@
 
 {% load jsonify %}
 
+{% block head %}
+	{% include 'header.html' with page="contest" %}
+{% endblock head %}
+
+
+{% block mobilemenu %}
+	{% include 'mobile_menu.html' with page="contest" %}
+{% endblock mobilemenu %}
+
+
 {% block content %}
 <div id="newsletter-archive">
 	<aside class="newsletter-sidebar">

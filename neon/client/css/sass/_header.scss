@@ -1,6 +1,6 @@
 #head {
 	position:relative;
-	width:100%; height:70px;
+	width:100%; height:60px;
 
 	background:#ffffff;
 	border-bottom:1px solid #e8e8e8;
@@ -23,14 +23,14 @@
 	}
 
 	h1 a img {
-		margin:22.5px 0 0;
-		height:25px;
+		margin:18.75px 0 0;
+		height:22.5px;
 	}
 
 	h1 a span {
 		margin-left:15px;
 
-		line-height:70px;
+		line-height:60px;
 		font-family:'Helvetica', sans-serif;
 		vertical-align:top;
 	}
@@ -42,18 +42,36 @@
 	}
 
 	menu ul li {
-		height:100%;
+		height:60px;
 
 		padding:0 40px;
+	}
 
-		border-left:1px solid #e8e8e8;
+	menu ul li.selected {
+		height:56px;
+	}
+
+	menu ul li.calendar.selected {
+		border-top:4px solid rgb(0,222,144);
+	}
+
+	menu ul li.featured.selected {
+		border-top:4px solid #FBBF00;
+	}
+
+	menu ul li.contest.selected {
+		border-top:4px solid #EA6E6F;
+	}
+
+	menu ul li.newsletter.selected {
+		border-top:4px solid #000000;
 	}
 
 	menu ul li a {
 		font-size:14px;
-		// font-family:'Roboto Slab', serif;
+		font-family:'Roboto Slab', serif;
 		font-weight:400;
-		line-height:70px;
+		line-height:60px;
 	}
 
 	menu ul li a svg {
@@ -76,7 +94,7 @@
 	}
 
 	ul li {
-		display:inline;
+		display:inline-block;
 	}
 
 	ul li a {
@@ -88,7 +106,7 @@
 	aside.actions ul li a svg {
 		width:22.5px; height:22.5px;
 
-		margin:25px 17.5px 0;
+		margin:20px 17.5px 0;
 	}
 
 	aside.social {
@@ -147,8 +165,6 @@
 @media screen and (max-width: 740px) {
 
 	#head {
-		height:60px;
-
 		&.hide-mobile {
 			display:none;
 		}
@@ -213,6 +229,50 @@
 
 			-webkit-justify-content:center;
 					justify-content:center;
+		}
+
+		ul li.selected {
+			height:56px;
+		}
+
+		ul li.calendar.selected {
+			border-bottom:4px solid rgb(0,222,144);
+
+			a {
+				color:rgb(0,222,144);
+			}
+
+			svg {
+				fill:rgb(0,222,144);
+			}
+		}
+
+		ul li.featured.selected {
+			border-bottom:4px solid #FBBF00;
+
+			a {
+				color:#FBBF00;
+			}
+
+			svg {
+				fill:#FBBF00;
+			}
+		}
+
+		ul li.contest.selected {
+			border-bottom:4px solid #EA6E6F;
+
+			a {
+				color:#EA6E6F;
+			}
+
+			svg {
+				fill:#EA6E6F;
+			}
+		}
+
+		ul li.newsletter.selected {
+			border-bottom:4px solid #000000;
 		}
 
 		ul li a {

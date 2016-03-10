@@ -94,9 +94,9 @@ export default class ListItemLg extends Component {
 
 
 		// Info --> Artists
-		if (show.title !== '') {
-			title = <h4>{ show.title }</h4>;
-		}
+		// if (show.title !== '') {
+		// 	title = <h4>{ show.title }</h4>;
+		// }
 
 		if (show.headliners !== '') {
 			headliner = <h3>{ show.headliners }</h3>;
@@ -147,19 +147,19 @@ export default class ListItemLg extends Component {
 					</a>
 					{ date }
 				</header>
-				<div className="info" style={ gradient }>
-					{ star }
-					<div className="artists">
-						<a href={ website } target="_blank">
-						{ title }
-						{ headliner }
-						{ opener }
-						</a>
+				<a href={ "/show/" + show.id }>
+					<div className="info" style={ gradient }>
+							{ star }
+							<div className="artists">
+								{ headliner }
+								{ opener }
+							</div>
+							<div className="overlay">
+								<div className="bg-img" style={ backgroundImage }></div>
+							</div>
+						
 					</div>
-					<div className="overlay">
-						<div className="bg-img" style={ backgroundImage }></div>
-					</div>
-				</div>
+				</a>
 				<footer>
 					<div className="col-3">
 						<svg className="icon icon-heart" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />

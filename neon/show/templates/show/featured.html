@@ -2,6 +2,17 @@
 
 {% load jsonify %}
 
+
+{% block head %}
+	{% include 'header.html' with page="featured" %}
+{% endblock head %}
+
+
+{% block mobilemenu %}
+	{% include 'mobile_menu.html' with page="featured" %}
+{% endblock mobilemenu %}
+
+
 {% block content %}
 <div id="venue">
 	<aside id="venue-sidebar">

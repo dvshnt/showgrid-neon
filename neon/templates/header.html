@@ -14,28 +14,23 @@
 
 	<menu>
 		<ul>
-
-			<li>
+			<li class="calendar {% if page == 'calendar' %}selected{% endif %}">
 				<a href="/calendar">
-					<svg class="icon icon-calendar"><use xlink:href="#icon-calendar"></use></svg>
 					<span>Calendar</span>
 				</a>
 			</li>
-			<li>
+			<li class="featured {% if page == 'featured' %}selected{% endif %}">
 				<a href="/show/featured">
-					<svg class="icon icon-star"><use xlink:href="#icon-star"></use></svg>
 					<span>Featured Shows</span>
 				</a>
 			</li>
-			<li>
-				<a href="/contest">
-					<svg class="icon icon-contest"><use xlink:href="#icon-contest"></use></svg>
+			<li class="contest {% if page == 'contest' %}selected{% endif %}">
+				<a href="/contest/">
 					<span>Contests</span>
 				</a>
 			</li>
-			<li>
+			<li class="newsletter {% if page == 'newsletter' %}selected{% endif %}">
 				<a href="/newsletter">
-					<svg class="icon icon-letter"><use xlink:href="#icon-letter"></use></svg>
 					<span>Newsletter</span>
 				</a>
 			</li>

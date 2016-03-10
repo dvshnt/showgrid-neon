@@ -1,6 +1,6 @@
 #calendar {
 	position:absolute;
-	top:69px; left:0; right:0; bottom:0;
+	top:59px; left:0; right:0; bottom:0;
 
 	overflow:hidden;
 
@@ -17,6 +17,10 @@
 @media screen and (max-width: 740px) {
 	#calendar {
 		top:60px; bottom:0;
+	}
+
+	#calendar-content {
+		top:61px;
 	}
 }
 
