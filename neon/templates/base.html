@@ -71,55 +71,14 @@
 
 		<div id="container">
 			{% block head %}
-				{% include 'header.html' with page="front"%}
+				{% include 'header.html' %}
 			{% endblock head %}
 
 			{% block subhead %}
-				{% include 'subheader-search.html' with page="front" %}
+				{% include 'subheader-search.html' %}
 			{% endblock subhead %}
 
 			{% block content %}
-			<div id="front">
-				<div id="front-banner">
-				</div>
-				<div id="front-blurb">
-					<h2>Welcome to the New Showgrid!</h2>
-					<p>
-						We're back with a better calendar, better design and a flash of divine inspiration. You will notice the newsletter that we send out every Sunday. This has been included in the new site, emphasizing the playlist that is included in the newsletter.
-					</p>
-					<p>
-						Other interesting updates include a more readable calendar, a compact list of shows recently added to the calendar, and a list of shows with tickets going on sale soon. These are visible from the front page.
-					</p>
-					<p>
-						Returning is the ability to favorite and set alerts on shows. You'll find the site easier to navigate through and better optimized for your phone.
-					</p>
-					<p>
-						Until then, tell all of your friends. Every single one. And... Enjoy the site!
-					</p>
-					<p>
-						<br>
-						<i>Thanks, Davis.</i>
-					</p>
-				</div>
-				<section id="front-block">
-					<div id="front-info">
-						<div id="front-playlist">
-							<h3>This Weeks Playlist</h3>
-							<p>Every Sunday, we pull together tracks from all of the best artists playing in town for the week and put them in a playlist. What you see below is this playlist.</p>
-							<iframe class="playlist" src="https://embed.spotify.com/?uri={{ playlist }}&theme=white" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>
-						</div>
-						<div id="front-recent">
-
-						</div>
-						<div id="front-onsale">
-
-						</div>
-					</div>
-					<div id="front-featured">
-
-					</div>
-				</section>
-			</div>
 			{% endblock content %}
 
 			<menu id="mobile-menu">
@@ -142,9 +101,6 @@
 	</body>
  
 	{% block scripts %}
-	<script>
-		var featuredShows = {{ featured|jsonify }};
-	</script>
 	{% endblock %}
  	<script src="{% static 'showgrid/js/bundle.js' %}"></script>
   	<script>

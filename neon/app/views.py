@@ -41,7 +41,7 @@ class Index(APIView):
 			'playlist': playlist
 		}
 
-		return render(request, "base.html", data)
+		return render(request, "index.html", data)
 
 
 class Search(APIView):
