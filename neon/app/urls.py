@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^contest/', include('contest.urls'), name='newsletter'),
     url(r'^venue/', include('venue.urls'), name='venue'),
     url(r'^show/', include('show.urls'), name='show'),
-    url(r'^user/', include('user.urls'), name='user'),
+    # url(r'^user/', include('user.urls'), name='user'),
     # url(r'^mag/', include('magazine.urls'), name='magazine'),
 
     url(r'^media/(?P<path>.*)$', static.serve,

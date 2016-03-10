@@ -15,7 +15,7 @@ class NewsletterView(APIView):
 	def get(self, request, id=None):
 		if id == None:
 			archive = get_template('newsletter/archive.html')
-			issues = Newsletter.objects.filter(active=True).order_by('-id')
+			issues = Newsletter.objects.filter(active=True).order_by('-end_date')
 			issues = { 'issues': issues }
 
 			return HttpResponse(archive.render(issues, request))

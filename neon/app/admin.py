@@ -348,6 +348,9 @@ class VenueAdmin(admin.ModelAdmin):
 		('Secondary Info', {
 			'fields': (('age', 'autofill'),)
 		}),
+		('Status', {
+			'fields': ('opened',)
+		}),
 	)
 
 	def active_shows(self, obj):
@@ -358,7 +361,7 @@ class ContestAdmin(admin.ModelAdmin):
 	list_display = ['title','active']
 	fieldsets = (
 		('Basic Info', {
-			'fields': (('title', 'short_title'), 'description', 'banner',)
+			'fields': (('title', 'short_title'), 'description', ('banner','ogimage'),)
 		}),
 		('Signup Email', {
 			'fields': ('signup_subject', 'signup_body',)

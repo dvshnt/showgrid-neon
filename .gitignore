@@ -1,5 +1,8 @@
 .DS_STORE
 
+neon/app/wsgi.py
+neon/app/settings/prod.py
+
 *.pyc
 
 venv/**
