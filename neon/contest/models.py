@@ -14,6 +14,7 @@ class Contest(models.Model):
 		return self.title
 
 	banner = models.ImageField(upload_to='showgrid/img/contest/',blank=True)
+	ogimage = models.ImageField(upload_to='showgrid/img/contest/',blank=True)
 	
 	description = HTMLField(default="")
 

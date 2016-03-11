@@ -1,5 +1,8 @@
 .DS_STORE
 
+neon/app/wsgi.py
+neon/app/settings/prod.py
+
 *.pyc
 
 .DS_Store
@@ -22,6 +25,7 @@ neon/contest/migrations/**
 
 
 
+
 neon/static/css/*.css
 neon/static/js/*.css
 neon/client/css/*.css
@@ -32,4 +36,5 @@ neon/static/showgrid/css/base.css
 neon/static/showgrid/css/base.css.map
 neon/static/showgrid/js/bundle.js
 neon/app/settings/whoosh_index/**
+
 

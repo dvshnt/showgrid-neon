@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import $ from 'jQuery';
+import $ from 'jquery';
 
 import fetch from 'whatwg-fetch';
 
@@ -84,7 +84,7 @@ if (!!venueShows) {
 
 var venueRecent = document.getElementById("venue-recent");
 if (!!venueRecent) {
-	var url = '/api/v1/shows?orderby=created_at&limit=10&venue=' + venue.id;
+	var url = '/api/v1/shows?orderby=created_at&limit=5&venue=' + venue.id;
 
 	window.fetch(url)
 		.then(function(response){
@@ -111,7 +111,7 @@ if(!!userProfile){
 
 var frontOnsale = document.getElementById("front-onsale");
 if (!!frontOnsale) {
-	var url = '/api/v1/shows?orderby=onsale&limit=10&onsale=true';
+	var url = '/api/v1/shows?orderby=onsale&limit=5&onsale=true';
 
 	window.fetch(url)
 		.then(function(response) {
@@ -132,7 +132,7 @@ if (!!frontOnsale) {
 
 var frontRecent = document.getElementById("front-recent");
 if (!!frontRecent) {
-	var url = '/api/v1/shows?orderby=created_at&limit=10';
+	var url = '/api/v1/shows?orderby=created_at&limit=5';
 
 	window.fetch(url).then(function(response) {
 		return response.json();

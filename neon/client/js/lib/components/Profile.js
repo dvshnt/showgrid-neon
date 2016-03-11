@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FormButton from './FormButton';
 import PhoneModal from './PhoneModal'
 import $ from 'jquery';
-import '../util/csrf'
 import DateManager from '../util/DateManager'
 import moment from 'moment'
 import {SetAlert} from './ShowActions'

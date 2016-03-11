@@ -1,6 +1,6 @@
 {% load static %}
 
-
+{% csrf_token %}
 
 <header id="head" class="{% if hide_mobile %}hide-mobile{% endif %} {% if page == 'front' %}front{% endif %}">
 	<h1>

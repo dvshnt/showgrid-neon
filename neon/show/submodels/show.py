@@ -50,6 +50,8 @@ class Show(models.Model):
 	soldout = models.BooleanField(default=False)
 	onsale = models.DateTimeField(default=datetime.now,blank=True)
 
+	age = models.PositiveSmallIntegerField(default=0, blank=True)
+
 	issue = models.ForeignKey(Newsletter, null=True, blank=True)
 
 	#extract metadata
