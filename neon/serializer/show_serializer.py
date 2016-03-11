@@ -50,14 +50,16 @@ class ShowListSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'venue', 'banner'
+			'onsale', 'venue', 'banner', 'raw_date'
 		)
 
-
+	raw_date = serializers.SerializerMethodField('get_show_date')
 	venue = serializers.SerializerMethodField('get_shows_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
-
-
+	
+	def get_show_date(self,obj):
+		return obj.date.isoformat()
+	
 	def get_shows_venue(self, obj):
 		serializer = VenueListSerializer(obj.venue)
 		return serializer.data
@@ -74,7 +76,7 @@ class ShowDetailSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'venue', 'banner', 'cancelled', 'artists'
+			'onsale', 'venue', 'banner', 'cancelled', 'artists', 'raw_date'
 		)
 
 
@@ -82,7 +84,10 @@ class ShowDetailSerializer(serializers.ModelSerializer):
 	artists = serializers.SerializerMethodField('get_show_artists')
 	venue = serializers.SerializerMethodField('get_show_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
+	raw_date = serializers.SerializerMethodField('get_show_date')
 
+	def get_show_date(self,obj):
+		return obj.date.isoformat()
 
 	def get_show_date_format(self, obj):
 		from datetime import datetime
@@ -134,13 +139,16 @@ class ShowSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'star', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'venue', 'banner', 'cancelled'
+			'onsale', 'venue', 'banner', 'cancelled','raw_date'
 		)
 
 
 	venue = serializers.SerializerMethodField('get_show_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
+	raw_date = serializers.SerializerMethodField('get_show_date')
 
+	def get_show_date(self,obj):
+		return obj.date.isoformat()
 
 	def get_shows_review(self, obj):
 		if obj.review:

@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import DateManager from '../util/DateManager';
 import moment from 'moment';
-import PhoneModal from './PhoneModal'
-var GridEngine = require('../util/GridEngine');
-var DateManager = require('../util/DateManager');
-
+import AuthModal from './AuthModal';
 
 class SetAlert extends Component {
 	constructor(props) {
@@ -13,21 +11,17 @@ class SetAlert extends Component {
 		this.createAlert = this.createAlert.bind(this);
 		this.toggleAlert = this.toggleAlert.bind(this);
 
+		if(window.user.alerts){
+			var match = window.user.alerts.filter(function(alert){
+				return alert.show.id == this.props.show.id
+			}.bind(this))
 
-
-
+		}else{
+			var match = []
+		}
 		
-		
-	
-
-		var match = window.user.alerts.filter(function(alert){
-			return alert.show_id == this.props.show.id
-		}.bind(this))
-
-
 		var sale = (match.length) ? match[0].sale  : false;
 		
-
 		this.state = {
 			open: false,
 			active: match[0],
@@ -35,25 +29,14 @@ class SetAlert extends Component {
 		};
 	}
 
-	// checkIfAlertSet(alerts, show) {
-	// 	var alrt = null
-
-	// 	for (var i = 0, len = alerts.length; i < len; i++) {
-	// 	    if (alerts[i].show === show || alerts[i].show.id === show) {
-	// 	    	alrt =  alerts[i];
-	// 	    }
-	// 	}
-
-	// 	return alrt;
-	// }
 
 	createAlert(e) {
-		console.log("CREATE ALERT",this.state.open)
+		
 		if(this.state.open == false) return
 		var _this = this;
 
 		var show = this.props.show;
-		var date = show.date;
+		var date = show.raw_date;
 
 		var options = e.target.options;
 		var value = "";
@@ -107,6 +90,7 @@ class SetAlert extends Component {
 					});
 					React.render(<PhoneModal visible={true} />,document.getElementById('overlay-wrapper'));							
 				}else{
+					window.user.alerts.push(data)
 					_this.setState({
 						active: data,
 						sale: value.sale,
@@ -118,11 +102,14 @@ class SetAlert extends Component {
 	}
 
 	cancelAlert() {
+		console.log("CANCEL ALERT")
 		var _this = this
 
 		if(this.state.active == null){
 			throw 'cannot cancel alert because none exists for current show.'
 		}
+
+		var id = this.state.active.id 
 
 		$.ajax({
 			type: 'delete',
@@ -134,11 +121,11 @@ class SetAlert extends Component {
 				throw data	
 			},
 			success: function(data){
-
+				window.user.alerts.splice(window.user.alerts.findIndex(function(a){ return a.id == id}),1)
 				_this.setState({
 					active: null,
 					open: false
-				});
+				});	
 			}
 		})
 
@@ -150,8 +137,14 @@ class SetAlert extends Component {
 	}
 
 	toggleAlert(e) {
-		console.log('TOGGLE ALERT')
-		if (e.target.localName === "select") return false;
+		if(window.user.is_authenticated == false){
+			return React.render(React.render(<AuthModal visible={true} />,document.getElementById('overlay-wrapper')))
+		}
+	
+		if (e.target.localName === "select"){
+			e.preventDefault()
+			return
+		}
 
 		if (this.state.active) {
 			this.cancelAlert();
@@ -168,7 +161,9 @@ class SetAlert extends Component {
 		var show = this.props.show;
 
 		var now = moment();
-		var date = moment(show.date, 'YYYY-MM-DD HH:mm:ssZZ');
+
+		var date = moment(show.raw_date, 'YYYY-MM-DD HH:mm:ssZZ');
+		
 
 		var options = [];
 		
@@ -236,7 +231,7 @@ class SetAlert extends Component {
 
 		var artistInfo = (
 			<div className="artist-info">
-				<span>{ moment(this.props.show.date).format("ddd MMM Mo, h A") }</span>
+				<span>{ moment(this.props.show.raw_date).format("ddd MMM Mo, h A") }</span>
 				<h4>{ this.props.show.headliners }</h4>
 				<h5>{ this.props.show.openers }</h5>
 			</div>	
@@ -249,7 +244,13 @@ class SetAlert extends Component {
 			className += (this.state.sale) ? " sale" : "";
 
 		var options = this.getEligibleAlertTimes();
-
+		if( !options.props.children.length){
+			return (
+				<div className={className} >
+					<svg className="icon icon-alert" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />		
+				</div>
+			)			
+		}
 
 		return (
 			<div className={className} onClick={ this.toggleAlert }>
@@ -269,6 +270,137 @@ class SetAlert extends Component {
 	}
 };
 
-export default SetAlert
+
+
+
+
+
+
+
+
+
+
+
+class SetFavorite extends Component {	
+	constructor(props) {
+		super(props);
+		
+		if( window.user.is_authenticated == true){
+			var match = window.user.favorites.filter(function(fav){
+				return fav.id == this.props.show.id
+			}.bind(this))
+		}else{
+			var match = []		
+		}
+		
+		this.state = {
+			favorited: match.length
+		};
+	}
+
+	setShowAsFavorite(e) {
+		if(window.user.is_authenticated == false){
+			return React.render(React.render(<AuthModal visible={true} />,document.getElementById('overlay-wrapper')))
+		}
+		$.ajax({
+			type : this.state.favorited ? 'delete' : 'post',
+			url  : '/user/rest/favorite',
+			data: JSON.stringify({'show':this.props.show.id}),
+			error: function(e){
+				this.setState({
+					favorited: this.state.favorited ? false : true
+				});	
+				throw e
+			}.bind(this),
+			success: function(e){
+				console.log("SET FAVORITE",e)
+			}
+		})
+		this.setState({
+			favorited: !this.state.favorited
+		})
+	}
+
+	render() {
+		return (
+			<div className="col-3" onClick={ this.setShowAsFavorite.bind(this) } >
+				<svg className={this.state.favorited ? "icon icon-heart active" : "icon icon-heart"} dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-heart"/>' }} />
+			</div>
+		)
+	}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class ShowActions extends Component {
+	constructor(props) {
+		super(props)
+	}
+
+	render(){
+		var show = this.props.show
+
+
+		var onsale = DateManager.areTicketsOnSale(show.onsale);
+		var ticket
+		if (!onsale) {
+			var saleDate = 
+			ticket = (
+				<div className="onsale">
+					On Sale 
+					<span className="date">
+						{ DateManager.formatSaleDate(show.onsale) }
+					</span>
+				</div>
+			)
+		}else if (show.ticket !== '') {
+			if(this.props.show.ticket){
+				ticket = (
+					<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
+						<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
+						<span className="ticket-price"> <span className="number">${show.price}</span></span>
+					</a>
+				);
+			}else{
+				ticket = (
+					<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
+						<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />Tickets
+					</a>
+				);
+			}
+		}
+
+		if (show.soldout) {
+			ticket = <div className="soldout">Sold Out</div>;
+		}
+
+		return (
+			<div className = 'show-actions-wrapper'>
+				<SetFavorite show={ show } />
+				<SetAlert show={ show }  />
+				<div className="col-3" onClick = {this.setShare} >
+					<svg className="icon icon-share" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-share"/>' }} />
+					<span>Share</span>
+				</div>
+				<div className="col-3">
+					{ ticket }
+				</div>
+			</div>
+		)
+	}
+}
+
+export {SetAlert, ShowActions};
 
 

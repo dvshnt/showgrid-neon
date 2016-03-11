@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import SetFavorite from './setFavorite';
-import SetAlert from './setAlert';
+import ShowActions from './ShowActions';
 var DateManager = require('../util/DateManager');
 
 
@@ -51,12 +50,11 @@ export default class ListItemLg extends Component {
 
 		var boxStyle = (extra.hideHeader) ? {'display': 'none'} : {'background': venue.primary_color || '#000000'};
 
-		var onsale = DateManager.areTicketsOnSale(show.onsale);
+	
 
 		var	title,
 			headliner,
 			opener,
-			ticket,
 			price,
 			date,
 			star,
@@ -120,31 +118,6 @@ export default class ListItemLg extends Component {
 		}
 
 		// Actions
-		if (!onsale) {
-			var saleDate = <span className="date">{ DateManager.formatSaleDate(show.onsale) }</span>;
-			ticket = <div className="onsale">On Sale { saleDate }</div>;
-		}
-		else if (show.ticket !== '') {
-			if(this.props.ticket_price){
-				ticket = (
-					<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
-						<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
-						<span className="ticket-price"> <span className="number">${show.price}</span></span>
-					</a>
-				);
-			} else{
-				ticket = (
-					<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
-						<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />Tickets
-					</a>
-				);
-			}
-			
-		}
-
-		if (show.soldout) {
-			ticket = <div className="soldout">Sold Out</div>;
-		}
 
 		if(this.props.ticket_price) price = null;
 
@@ -162,27 +135,18 @@ export default class ListItemLg extends Component {
 				</header>
 				<a href={ "/show/" + show.id }>
 					<div className="info" style={ gradient }>
-							{ star }
-							<div className="artists">
-								{ headliner }
-								{ opener }
-							</div>
-							<div className="overlay">
-								<div className="bg-img" style={ backgroundImage }></div>
-							</div>
-						
+						{ star }
+						<div className="artists">
+							{ headliner }
+							{ opener }
+						</div>
+						<div className="overlay">
+							<div className="bg-img" style={ backgroundImage }></div>
+						</div>
 					</div>
 				</a>
 				<footer>
-					<SetAlert show={ show }  />
-					<SetFavorite show={ show } />
-					<div className="col-3" onClick = {this.setShare} >
-						<svg className="icon icon-share" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-share"/>' }} />
-						<span>Share</span>
-					</div>
-					<div className="col-3">
-						{ ticket }
-					</div>
+					<ShowActions show={show} />
 				</footer>
 			</div>
 		);

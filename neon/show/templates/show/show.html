@@ -77,24 +77,6 @@
 		</ul>
 	</section>
 	<section id="show-actions-wide">
-		<div class="col-3">
-			<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg><br>
-			<span>Favorite</span>
-		</div>
-		<div class="col-3">
-			<svg class="icon icon-alert"><use xlink:href="#icon-alert"></use></svg><br>
-			<span>Set Alert</span>
-		</div>
-		<div class="col-3">
-			<svg class="icon icon-share"><use xlink:href="#icon-share"></use></svg><br>
-			<span>Share</span>
-		</div>
-		<div class="col-3">
-			<a class="ticket" href="{{ show.ticket }}"  target="_blank">
-				<svg class="icon icon-ticket"><use xlink:href="#icon-ticket"></use></svg>
-				<span class="ticket-price"> <span class="number">${{ show.price }}</span></span>
-			</a>
-		</div>
 	</section>
 </div>
 {% endblock content %}
@@ -102,24 +84,6 @@
 
 {% block mobilemenu %}
 <div id="show-actions">
-	<div class="col-3">
-		<svg class="icon icon-heart"><use xlink:href="#icon-heart"></use></svg><br>
-		<span>Favorite</span>
-	</div>
-	<div class="col-3">
-		<svg class="icon icon-alert"><use xlink:href="#icon-alert"></use></svg><br>
-		<span>Set Alert</span>
-	</div>
-	<div class="col-3">
-		<svg class="icon icon-share"><use xlink:href="#icon-share"></use></svg><br>
-		<span>Share</span>
-	</div>
-	<div class="col-3">
-		<a class="ticket" href="{{ show.ticket }}"  target="_blank">
-			<svg class="icon icon-ticket"><use xlink:href="#icon-ticket"></use></svg>
-			<span class="ticket-price"> <span class="number">${{ show.price }}</span></span>
-		</a>
-	</div>
 </div>
 {% endblock %}
 

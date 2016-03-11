@@ -21,6 +21,7 @@ class AuthModal extends Component {
 		this.toggleScreen = this.toggleScreen.bind(this);
 
 		this.state = {
+			hidden:false,
 			token: null,
 			error: false,
 			isSignUp: false,
@@ -71,14 +72,13 @@ class AuthModal extends Component {
 			error: false,
 			isSignUp: !this.state.isSignUp
 		});
-		return false;
+		e.preventDefault()
 	}
 
-	closeModal() {
-		// this.setState({
-		// 	error: false,
-		// 	display: false
-		// })
+	closeModal(e) {
+		if(e.target.id != 'overlay') return
+		React.render(<AuthModal visible={false} />,document.getElementById('overlay-wrapper'))
+		e.preventDefault()
 	}
 
 
@@ -92,10 +92,15 @@ class AuthModal extends Component {
 	}
 
 	isGood(err){
+		
 		if(err == false){
 			window.location.reload()
 		}else{
-			return this.setState({error: true});
+		
+			return this.setState({
+				error: true
+
+			});
 		}
 	}
 
@@ -114,7 +119,7 @@ class AuthModal extends Component {
 			data: JSON.stringify({email:email,password:password}),
 			dataType: 'json',
 			success: this.isGood.bind(this,false),
-			fail: this.isGood.bind(this,true)
+			error: this.isGood.bind(this,true)
 		})
 	}
 
@@ -139,7 +144,7 @@ class AuthModal extends Component {
 		//console.log("RENDER AUTH",this.state)
 
 		var active = classNames({
-			"active": this.props.visible,
+			"active": this.props.visible || this.state.visible,
 			"animate" : true
 		})
 
@@ -152,7 +157,7 @@ class AuthModal extends Component {
 		//window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
 
 		return (
-			<div id="overlay" className={ active } style={{top: this.state.scrollTop,left: this.state.scrollLeft}}>
+			<div id="overlay" onClick={this.closeModal.bind(this)} className={ active } style={{top: this.state.scrollTop,left: this.state.scrollLeft}}>
 				<div id="modal">
 					<b id="close" className="icon-close" onClick={ this.closeModal }></b>
 					<div className="banner"></div>

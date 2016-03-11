@@ -38,8 +38,11 @@ class Index(APIView):
 		newsletter = Newsletter.objects.filter(active=True)
 		newsletter = newsletter.filter(Q(start_date__lte=today) & Q(end_date__gte=today))
 
-		playlist = newsletter[0].spotify_embed
-
+		if len(newsletter) != 0:
+			playlist = newsletter[0].spotify_embed
+		else:
+			playlist = None
+		
 		print playlist
 
 		data = {

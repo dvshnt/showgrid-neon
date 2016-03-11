@@ -21,7 +21,7 @@ import dateutil.parser
 
 
 
-
+from serializer import UserSerializer, AlertSerializer
 
 
 
@@ -47,7 +47,6 @@ def Login(request):
 		email = body['email']
 		password = body['password']
 		user = authenticate(email=email, password=password)
-		print user
 		if user is not None:
 			print 'LOGGING IN '+user.email
 			login(request,user)
@@ -100,7 +99,6 @@ class UserActions(APIView):
 
 
 	def put(self, request, action=None):
-		print "PUT"
 		user = request.user
 
 		# Update users profile

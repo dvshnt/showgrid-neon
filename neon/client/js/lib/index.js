@@ -10,7 +10,7 @@ import ListItemLg from './components/ListItemLg';
 import ListItemSm from './components/ListItemSm';
 import AuthModal from './components/AuthModal';
 import UserProfile from './components/Profile';
-
+import {ShowActions} from './components/ShowActions';
 
 var calendar = document.getElementById("calendar");
 if (!!calendar) {
@@ -103,7 +103,7 @@ if (!!venueRecent) {
 
 var userProfile = document.getElementById('profile')
 if(!!userProfile){
-	React.render(<UserProfile profile={window.user} />,userProfile);
+	React.render(<UserProfile tab = 'alert' profile={window.user} />,userProfile);
 }
 
 
@@ -148,6 +148,17 @@ if (!!frontRecent) {
 }
 
 
+
+var showActions = document.getElementById('show-actions') || document.getElementById('show-actions-wide')
+console.log(showActions)
+if (!!showActions) {
+	React.render(<ShowActions show={window.show} />,document.getElementById('show-actions'));
+	React.render(<ShowActions show={window.show} />,document.getElementById('show-actions-wide'));
+}
+
+
+
+
 $("#search-toggle").click(function(e) {
 	var searchBar = $("#subhead");
 
@@ -167,14 +178,9 @@ $("#search-toggle").click(function(e) {
 
 /* AUTHENTICATION */
 var profileButton = $("#profile-button");
-if(!window.user.authenticated){
+if(!window.user.is_authenticated){
 	profileButton.on('click',function(e){
-		React.render(<AuthModal visible={true} />,$('#overlay-wrapper')[0])
-		$('#overlay').on('click',function(e){
-			if (e.target.id === "overlay") {
-				React.render(<AuthModal visible={false} />,$('#overlay-wrapper')[0])
-			}
-		})
+		React.render(<AuthModal visible={true} />,document.getElementById('overlay-wrapper'))
 	})
 }else{
 	profileButton.on('click',function(e){

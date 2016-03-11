@@ -1,6 +1,7 @@
 {% load static %}
 
 
+
 <header id="head" class="{% if hide_mobile %}hide-mobile{% endif %} {% if page == 'front' %}front{% endif %}">
 	<h1>
 		<a href="/">
@@ -40,29 +41,10 @@
 
 	<aside class="actions">
 		<span class="nav-user-status">
-			{% if user.is_authenticated == False %}
-				<script>
-					window.user = {
-						authenticated: false
-					}
-				</script>
-			{% else %}
-				<script>
-					window.user = {
-						authenticated: true,
-						email: "{{user.email}}",
-						phone: "{{user.phone}}", 
-						name: "{{user.name}}",
-						favorites: eval("{{user.json_favorites}}".replace(/&quot;/g,"'")),
-						alerts: eval("{{user.json_alerts}}".replace(/&quot;/g,"'")),
-						phone_verified: {% if user.phone_verified == True %} true {% else %} false {% endif %}
-					}
-				</script>
+			{% if user.is_authenticated == True %}
 				<a href = '/user/logout'>logout</a>
 			{% endif %}
-			{{ user.email|default:"not logged" }}
 		</span>
-	
 		<ul>
 			<li>
 				<a id = "profile-button" href="#">
@@ -77,3 +59,5 @@
 		</ul>
 	</aside>
 </header>
+
+

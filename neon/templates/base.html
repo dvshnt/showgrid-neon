@@ -102,6 +102,11 @@
  
 	{% block scripts %}
 	{% endblock %}
+	<script>
+		window.user = {{ user.user_json|jsonify }}
+		window.user = window.user == "" ? {} : window.user 
+		window.user.is_authenticated = {% if user.is_authenticated == False %} false {% else %} true {% endif %}
+	</script>
  	<script src="{% static 'showgrid/js/bundle.js' %}"></script>
   	<script>
 	// 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
