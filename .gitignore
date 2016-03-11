@@ -2,6 +2,7 @@
 
 neon/app/wsgi.py
 neon/app/settings/prod.py
+neon/app/settings/dev.py
 
 *.pyc
 
