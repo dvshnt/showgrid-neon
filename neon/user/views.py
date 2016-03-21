@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseServerError
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -115,11 +115,14 @@ class UserActions(APIView):
 				user.name = body['name']
 
 			# Change password
-			if(body['pass'] != "None" and body['pass'] != "" and body['pass'] != None):
-				user.set_password(body['pass'])
+			if(body['old_pass'] != 'None' and body['pass'] != "None" and body['pass'] != "" and body['pass'] != None):
+				if user.check_password(body['old_pass']) == True :
+					user.set_password(body['pass'])
+				else:
+					return HttpResponseServerError()
 
 			user.save()
-			return Response({'status':'good'})
+			return Response(UserSerializer(user).data)
 
 
 		# Edit alert

@@ -11,6 +11,7 @@ import ListItemSm from './components/ListItemSm';
 import AuthModal from './components/AuthModal';
 import UserProfile from './components/Profile';
 import {ShowActions} from './components/ShowActions';
+import r from './render';
 
 var calendar = document.getElementById("calendar");
 if (!!calendar) {
@@ -101,10 +102,14 @@ if (!!venueRecent) {
 		});
 }
 
-var userProfile = document.getElementById('profile')
-if(!!userProfile){
-	React.render(<UserProfile tab = 'alert' profile={window.user} />,userProfile);
-}
+
+
+
+/* render profile */
+r.renderProfile({tab:'fav'})
+
+
+
 
 
 

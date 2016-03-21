@@ -5,11 +5,10 @@ import $ from 'jquery';
 import DateManager from '../util/DateManager'
 import moment from 'moment'
 import {SetAlert} from './ShowActions'
-
+import r from '../render';
 var GridEngine = require('../util/GridEngine');
 
-
-
+import '../util/csrf'
 
 function unfavoriteShow(fav,cb){
 	$.ajax({
@@ -69,6 +68,7 @@ class UserProfile extends Component {
 	updateProfile() {
 		var name = React.findDOMNode(this.refs.name).value;
 		var email = React.findDOMNode(this.refs.email).value;
+		var pass0 = React.findDOMNode(this.refs.pass0).value;
 		var pass1 = React.findDOMNode(this.refs.pass1).value;
 		var pass2 = React.findDOMNode(this.refs.pass2).value;
 
@@ -89,16 +89,19 @@ class UserProfile extends Component {
 		}
 
 		$.ajax({
-			success: function(){
+			success: function(profile){
 				console.log('updated')
 				this.setState({
 					update_msg: 'changes saved!'
 				})
+				window.user = profile;
+				r.renderProfile()
 			}.bind(this),
 			error: function(){
 				console.log('failed')
 				this.setState({
-					error_msg: 'something went wrong!'
+					update_error_msg: 'oops, something went wrong!',
+					update_error: true
 				})
 			}.bind(this),
 			url: '/user/rest/profile',
@@ -107,14 +110,12 @@ class UserProfile extends Component {
 			data: JSON.stringify({
 				name: name,
 				email: email,
+				old_pass: pass0,
 				pass: pass1,
 			})
 		})
 	}
 
-	showPhoneModal(){
-		React.render(<PhoneModal visible={true} />,document.getElementById('overlay-wrapper'));
-	}
 
 	logout() {
 		if (localStorage.getItem("token") !== null) {
@@ -133,11 +134,10 @@ class UserProfile extends Component {
 			name = this.props.profile.name;
 		}
 
-
 		if(number == "None" || number == "" || number == null){
-			var phone_button = <input ref="phone" className = "error" type="submit" value={"Register Phone"} onClick={this.showPhoneModal}/>
+			var phone_button = <input ref="phone" className = "error" type="submit" value={"Register Phone"} onClick={r.renderPhoneModal.bind(this,true)}/>
 		}else{
-			var phone_button = <input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={this.showPhoneModal}/>
+			var phone_button = <input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={r.renderPhoneModal.bind(this,true)}/>
 		}
 			
 
@@ -154,7 +154,8 @@ class UserProfile extends Component {
 					</div>
 					<div className="section fields">
 						<label>Change Password</label>
-						<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"Change Your Password" } />
+						<input onChange = {this.resetState} ref="pass0" type="password" placeholder= {"Old Password" } />
+						<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"New Password" } />
 						<input onChange = {this.resetState} ref="pass2" type="password" placeholder= {"Confirm New Password" } />
 					</div>
 					<div className="section buttons">
@@ -189,7 +190,7 @@ class UserActions extends Component {
 	}
 
 	selectTab(e) {
-		React.render(<UserProfile tab = {e.target.className.indexOf("alerts") !== -1 ? 'alert' : 'fav'} profile={window.user} />,document.getElementById('profile'));
+		r.renderProfile({tab:e.target.className.indexOf("alerts") !== -1 ? 'alert' : 'fav'})
 		e.preventDefault()
 	}
 
@@ -205,7 +206,7 @@ class UserActions extends Component {
 		var items = []
 		if (this.props.tab == 'alert') {
 			for (var i=0; i < this.props.alerts.length; i++) {
-				items.push(<UserAlert  key= {'user_alert_'+i} alert={ this.props.alerts[i] }/>);
+				items.push(<UserAlert key= {'user_alert_'+i} alert={ this.props.alerts[i] }/>);
 			}
 
 			if (items.length == 0) {
@@ -218,12 +219,12 @@ class UserActions extends Component {
 			}
 		}else if(this.props.tab == 'fav'){
 			for (var i=0; i < this.props.favorites.length; i++) {
-				items.push(<UserFavorite key= {'user_fav_'+i} favorite={ this.props.favorites[i] }/>);
+				items.push(<UserFavorite key={'user_fav_'+i} favorite={ this.props.favorites[i] }/>);
 			}
 
 			if (items.length === 0) {
 				items = (
-					<div className="info-text">
+					<div key = 'no_shows' className="info-text">
 						<h2>No Shows Favorited</h2>
 						<p>Favorite a show by clicking the <b className="icon-heart"></b> icon on any show you might like. Favoriting helps you track shows that you might go to.</p>
 					</div>
@@ -372,7 +373,7 @@ class UserFavorite extends Component {
 		unfavoriteShow(this.props.favorite,function(){
 			var i = window.user.favorites.indexOf(this.props.favorite)
 			window.user.favorites.splice(i,1)
-			React.render(<UserProfile tab = 'fav' profile={window.user} />,document.getElementById('profile'));				
+			r.renderProfile({tab:'fav'})			
 		}.bind(this))
 		
 	}
