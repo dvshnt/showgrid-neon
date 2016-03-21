@@ -6,7 +6,7 @@ import windowScroll from '../util/windowScroll';
 
 
 
-class PhoneModal extends Component {
+export default class PhoneModal extends Component {
 	constructor(props) {
 		super(props);
 
@@ -66,75 +66,40 @@ class PhoneModal extends Component {
 	}
 
 	userSubmitPin(e) {
-		
-		// $.ajaxSetup({ 
-		// 	beforeSend: function(xhr, settings) {
-		// 	function getCookie(name) {
-		// 	var cookieValue = null;
-		// 	if (document.cookie && document.cookie != '') {
-		// 	var cookies = document.cookie.split(';');
-		// 	for (var i = 0; i < cookies.length; i++) {
-		// 	var cookie = $.trim(cookies[i]);
-		// 	// Does this cookie string begin with the name we want?
-		// 	if (cookie.substring(0, name.length + 1) == (name + '=')) {
-		// 	cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		// 	break;
-		// 	}
-		// 	}
-		// 	}
-		// 	return cookieValue;
-		// 	}
-		// 	if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
-		// 	// Only send the token to relative URLs i.e. locally.
-		// 	xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-		// 	}
-		// 	} 
-		// });
-
-				var pin = React.findDOMNode(this.refs.pinOne).value;
-		pin += React.findDOMNode(this.refs.pinTwo).value;
-		pin += React.findDOMNode(this.refs.pinThree).value;
-		pin += React.findDOMNode(this.refs.pinFour).value;
+		var pin = React.findDOMNode(this.refs.pinOne).value;
+			pin += React.findDOMNode(this.refs.pinTwo).value;
+			pin += React.findDOMNode(this.refs.pinThree).value;
+			pin += React.findDOMNode(this.refs.pinFour).value;
 
 		var _this = this;
-		// this.props.submitPhonePin(pin)
-		// 	.then(function(data) {
-		// 		if (data.payload.status === "pin_verified") {
-		// 			_this.setState({
-		// 				verify: false,
-		// 				success: true
-		// 			});
-		// 		}
+		var url = '/user/rest/pin_check';
 
-		// 		else {
-		// 			_this.setState({
-		// 				error: true
-		// 			});
-		// 		}
-		// 	});
-
-		console.log("SUBMIT PIN",pin)
-		$.ajax({
-			url: '/user/rest/pin_check',
-			type: 'POST',
-			data: JSON.stringify({pin:pin}),
-			dataType: 'json',
-			success: function(e){
-				if(e.status == 'pin_verified'){
+		window.fetch(url, {
+				method: 'post',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+				},
+				body: JSON.stringify({
+					pin:pin
+				})
+			})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(body) {
+				if(body.status == 'pin_verified') {
 					React.render(<PhoneModal visible={false} />,document.getElementById('overlay-wrapper'));
-				}else{
+				}
+				else {
 					_this.setState({
 						verify: true,
 						error: true
 					});
 				}
-			},
-			error: function(){
-				_this.setState({
-					error: true
-				})
-			}
-		})
+			});
+
 		e.preventDefault();
 		return false
 	}
@@ -169,31 +134,31 @@ class PhoneModal extends Component {
 	}
 
 	userSubmitPhone(e) {
-		console.log("TEST")
-	
-		
 		var phonenumber = React.findDOMNode(this.refs.phonenumber).value;
 
 		var _this = this;
 
-		$.ajax({
-			url: '/user/rest/phone_set',
-			type: 'POST',
-			data: JSON.stringify({phone:phonenumber}),
-			dataType: 'json',
-			success: function(e){
-				console.log("PHONE SET",e)
+		var url = '/user/rest/phone_set';
+		window.fetch(url, {
+				method: 'post',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+				},
+				body: JSON.stringify({
+					phone:phonenumber
+				})
+			})
+			.then(function(response) {
+				return response.json();
+			})
+			.then(function(body) {
 				_this.setState({
 					verify: true,
 					error: false
 				});
-			},
-			error: function(e){
-				_this.setState({
-					error: true
-				})
-			}
-		})
+			});
 
 		// e.preventDefault();
 	}
@@ -262,9 +227,3 @@ class PhoneModal extends Component {
 		)
 	}
 };
-
-
-
-
-
-export default PhoneModal

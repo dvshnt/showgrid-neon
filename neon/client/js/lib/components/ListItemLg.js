@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import ShowActions from './ShowActions';
+
 var DateManager = require('../util/DateManager');
 
 
@@ -27,19 +29,7 @@ export default class ListItemLg extends Component {
 	   		"background": "linear-gradient(to bottom, rgba("+r+","+g+","+b+",0.2) 0%,rgba("+r+","+g+","+b+",0.1) 10%,rgba("+r+","+g+","+b+",0.5) 100%), rgba("+r+","+g+","+b+",0.4)", /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	   	}
 	}
-
-
-
-
-
-	setShare(){
-		// $.ajax({
-		// 	type: 'post'
-		// })
-	}
-
-
-
+	
 	render() {
 		var show = this.props.data;
 		var venue = show.venue;
@@ -118,15 +108,42 @@ export default class ListItemLg extends Component {
 		}
 
 		// Actions
+		var onsale = DateManager.areTicketsOnSale(show.onsale);
+		var ticket = "";
+
+		if (!onsale) {
+			var saleDate = 
+			ticket = (
+				<div className="onsale">
+					On Sale 
+					<span className="date">
+						{ DateManager.formatSaleDate(show.onsale) }
+					</span>
+				</div>
+			)
+		} else if (show.ticket !== '') {
+			ticket = (
+				<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
+					<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
+					<span>Tickets</span>
+				</a>
+			);
+		}
+
+		if (show.soldout) {
+			ticket = <div className="soldout">Sold Out</div>;
+		}
+
 
 		if(this.props.ticket_price) price = null;
 
 
-		var gradient = (extra.showGradient) ? this.convertHex(venue.primary_color) : { "background": "rgba(0,0,0,0.2)" };
+		var gradient = this.convertHex(venue.primary_color);
+		var background = { 'background': venue.primary_color || '#000000' };
 
 
 		return (
-			<div className="show large" style={{ 'background': venue.primary_color || '#000000' }}>
+			<div className="show large" style={ background }>
 				<header style={ boxStyle }>
 					<a href={ '/venue/' + venue.id }>
 						<h4 style={{ cursor:'pointer' }}>{ venue.name }</h4>
@@ -146,7 +163,7 @@ export default class ListItemLg extends Component {
 					</div>
 				</a>
 				<footer>
-					<ShowActions show={show} />
+					<ShowActions show={ show } />
 				</footer>
 			</div>
 		);

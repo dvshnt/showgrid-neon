@@ -4,7 +4,7 @@ import PhoneModal from './PhoneModal'
 import $ from 'jquery';
 import DateManager from '../util/DateManager'
 import moment from 'moment'
-import {SetAlert} from './ShowActions'
+import {SetAlert} from './SetAlert'
 
 var GridEngine = require('../util/GridEngine');
 

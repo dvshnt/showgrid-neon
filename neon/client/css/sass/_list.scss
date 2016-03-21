@@ -10,5 +10,20 @@
 	}
 }
 
+
+@media screen and (max-width: 740px) {
+	.list {
+		padding:0; margin:0;
+
+		list-style:none;
+
+		.list-item {
+			h3.heading {
+				font-size:14px !important;
+			}
+		}
+	}
+}
+
 @import "list_item_lg";
 @import "list_item_sm";

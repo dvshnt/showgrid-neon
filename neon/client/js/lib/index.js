@@ -5,12 +5,11 @@ import fetch from 'whatwg-fetch';
 
 import Showgrid from './components/Showgrid';
 
-import List from './components/List';
-import ListItemLg from './components/ListItemLg';
-import ListItemSm from './components/ListItemSm';
+import ListLg from './components/ListLg';
+import ListSm from './components/ListSm';
 import AuthModal from './components/AuthModal';
 import UserProfile from './components/Profile';
-import {ShowActions} from './components/ShowActions';
+import ShowActions from './components/ShowActions';
 
 var calendar = document.getElementById("calendar");
 if (!!calendar) {
@@ -30,7 +29,7 @@ if (!!featured) {
 	};
 
 	console.log("START - Featured Render");
-	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, featured);
+	React.render(<ListLg items={ shows } extra={ extra }/>, featured);
 	console.log("END - Featured Render");
 }
 
@@ -45,7 +44,7 @@ if (!!frontFeatured) {
 	};
 
 	console.log("START - Featured Front Render");
-	React.render(<List items={ featuredShows } itemType={ ListItemLg } extra={ extra }/>, frontFeatured);
+	React.render(<ListLg items={ featuredShows } extra={ extra }/>, frontFeatured);
 	console.log("END - Featured Front Render");
 }
 
@@ -59,7 +58,7 @@ if (!!search) {
 	};
 
 	console.log("START - Search Results Render");
-	React.render(<List items={ shows } itemType={ ListItemLg } extra={ extra }/>, search);
+	React.render(<ListLg items={ shows } extra={ extra }/>, search);
 	console.log("END - Search Results Render");
 }
 
@@ -69,25 +68,26 @@ if (!!venueShows) {
 	var url = '/api/v1/shows?orderby=date&venue=' + venue.id;
 
 	window.fetch(url)
-	.then(function(response) {
-		return response.json();
-	}).then(function(body) {
-		var extra = {
-			hideHeader: true,
-			date_heading: true
-		};
-		console.log("START - Venue Shows Render");
-		React.render(<List items={ body } itemType={ ListItemLg } extra={ extra }/>, venueShows);
-		console.log("END - Venue Shows Render");
-	});
+		.then(function(response) {
+			return response.json();
+		}).then(function(body) {
+			var extra = {
+				hideHeader: true,
+				date_heading: true
+			};
+			console.log("START - Venue Shows Render");
+			React.render(<ListLg items={ body } extra={ extra }/>, venueShows);
+			console.log("END - Venue Shows Render");
+		});
 }
+
 
 var venueRecent = document.getElementById("venue-recent");
 if (!!venueRecent) {
 	var url = '/api/v1/shows?orderby=created_at&limit=5&venue=' + venue.id;
 
 	window.fetch(url)
-		.then(function(response){
+		.then(function(response) {
 			return response.json();
 		}).then(function(body){
 			var extra = {
@@ -95,18 +95,16 @@ if (!!venueRecent) {
 			};
 
 			console.log("START - Venue Recent Render");
-			React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, venueRecent);
+			React.render(<ListSm items={ body } extra={ extra } />, venueRecent);
 			console.log("END - Venue Recent Render");
-
 		});
 }
+
 
 var userProfile = document.getElementById('profile')
 if(!!userProfile){
 	React.render(<UserProfile tab = 'alert' profile={window.user} />,userProfile);
 }
-
-
 
 
 var frontOnsale = document.getElementById("front-onsale");
@@ -123,7 +121,7 @@ if (!!frontOnsale) {
 			};
 
 			console.log("START - Venue Recent Render");
-			React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, frontOnsale);
+			React.render(<ListSm items={ body } extra={ extra } />, frontOnsale);
 			console.log("END - Venue Recent Render");
 
 		});
@@ -142,7 +140,7 @@ if (!!frontRecent) {
 		};
 
 		console.log("START - Venue Recent Render");
-		React.render(<List items={ body } itemType={ ListItemSm } extra={ extra } />, frontRecent);
+		React.render(<ListSm items={ body } extra={ extra } />, frontRecent);
 		console.log("END - Venue Recent Render");
 	});
 }
@@ -152,8 +150,8 @@ if (!!frontRecent) {
 var showActions = document.getElementById('show-actions') || document.getElementById('show-actions-wide')
 console.log(showActions)
 if (!!showActions) {
-	React.render(<ShowActions show={window.show} />,document.getElementById('show-actions'));
-	React.render(<ShowActions show={window.show} />,document.getElementById('show-actions-wide'));
+	React.render(<ShowActions show={window.show} />, document.getElementById('show-actions'));
+	React.render(<ShowActions show={window.show} />, document.getElementById('show-actions-wide'));
 }
 
 

@@ -1,31 +1,26 @@
 import React from 'react';
 import moment from 'moment';
 
+import ListItemLg from './ListItemLg';
+
 var DateManager = require('../util/DateManager');
 
 
-export default class List extends React.Component {
-    createItemsMarkup(items, extra, Type) {
+export default class ListLg extends React.Component {
+    createItemsMarkup(items, extra) {
 
         var markupItems = items.map((item) => {  
             return (
                 <li className="list-item" key={ item.id }>
-                    <Type data={ item } extra={ extra }/>
+                    <ListItemLg data={ item } extra={ extra }/>
                 </li>
             );
         });
 
-        if (extra.header_recent) {
-            markupItems.unshift(<h3>Recently Added</h3>);
-        }
-        else if (extra.header_onsale) {
-            markupItems.unshift(<h3>On Sale Soon</h3>);
-        }
-
         return markupItems;
     }
 
-    createItemsMarkupWithHeading(items, extra, Type) {
+    createItemsMarkupWithHeading(items, extra) {
         var last_date = null;
         var date_header = "";
 
@@ -48,7 +43,7 @@ export default class List extends React.Component {
             return (
                 <li className="list-item" key={ item.id }>
                     { date_header }
-                    <Type data={ item } extra={ extra }/>
+                    <ListItemLg data={ item } extra={ extra }/>
                 </li>
             );
         });
@@ -57,16 +52,15 @@ export default class List extends React.Component {
     }
 
     render() {
-        const ItemType = this.props.itemType;
         const items = this.props.items || [];
         const extra = this.props.extra || {};
         
 
         if (extra.date_heading || extra.date_heading_front) {
-            var markupItems = this.createItemsMarkupWithHeading(items, extra, ItemType);
+            var markupItems = this.createItemsMarkupWithHeading(items, extra);
         }
         else {
-            var markupItems = this.createItemsMarkup(items, extra, ItemType);
+            var markupItems = this.createItemsMarkup(items, extra);
         }
         
 

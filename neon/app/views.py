@@ -21,11 +21,6 @@ class Index(APIView):
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):
-
-		
-
-
-
 		shows = Show.objects.filter(date__gte=date.today())
 		shows = shows.filter(venue__opened=True)
 
@@ -54,7 +49,6 @@ class Index(APIView):
 
 
 class Search(APIView):
-	authentication_class = (TokenAuthentication,)
 	permission_classes = (AllowAny,)
 
 	def get(self, request, id=None):

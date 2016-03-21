@@ -255,6 +255,8 @@ class UserActions(APIView):
 				user.save()
 				return Response({'status':'phone_set_alerts_cleared','phone':user.phone})
 
+			return Response({'status':'something_fucked'})
+
 
 		#send pin to user phone
 		if action == 'pin_send':

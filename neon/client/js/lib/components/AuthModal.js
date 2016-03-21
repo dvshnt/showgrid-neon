@@ -14,10 +14,7 @@ class AuthModal extends Component {
 		this.userSignup = this.userSignup.bind(this);
 		this.userLogin = this.userLogin.bind(this);
 		this.resetError = this.resetError.bind(this);
-
-
-
-
+		
 		this.toggleScreen = this.toggleScreen.bind(this);
 
 		this.state = {
@@ -76,7 +73,12 @@ class AuthModal extends Component {
 	}
 
 	closeModal(e) {
-		if(e.target.id != 'overlay') return
+		if(e.target.id != 'overlay') return;
+		React.render(<AuthModal visible={false} />,document.getElementById('overlay-wrapper'))
+		e.preventDefault()
+	}
+
+	closeModalButton(e) {
 		React.render(<AuthModal visible={false} />,document.getElementById('overlay-wrapper'))
 		e.preventDefault()
 	}
@@ -159,7 +161,7 @@ class AuthModal extends Component {
 		return (
 			<div id="overlay" onClick={this.closeModal.bind(this)} className={ active } style={{top: this.state.scrollTop,left: this.state.scrollLeft}}>
 				<div id="modal">
-					<b id="close" className="icon-close" onClick={ this.closeModal }></b>
+					<svg onClick={this.closeModalButton.bind(this)} id="close" className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
 					<div className="banner"></div>
 					<div className = {container_state}>
 						<div className= 'modalScreen' id='LogInModalScreen'>
