@@ -1,140 +1,38 @@
 import React, { Component } from 'react';
+
 import $ from 'jquery';
-import DateManager from '../util/DateManager';
 import moment from 'moment';
+
+import DateManager from '../util/DateManager';
+
+import Share from './Share';
+import Ticket from './Ticket';
+import SetAlert from './SetAlert';
+import SetFavorite from './SetFavorite';
+
 import AuthModal from './AuthModal';
 
-class SetAlert extends Component {
+
+export default class ShowActions extends Component {
 	constructor(props) {
-		super(props);
+		super(props)
 
-		this.createAlert = this.createAlert.bind(this);
-		this.toggleAlert = this.toggleAlert.bind(this);
+		this.selectAlert = this.selectAlert.bind(this);
+		this.toggleShare = this.toggleShare.bind(this);
 
-		if(window.user.alerts){
-			var match = window.user.alerts.filter(function(alert){
-				return alert.show.id == this.props.show.id
-			}.bind(this))
-
-		}else{
-			var match = []
-		}
-		
-		var sale = (match.length) ? match[0].sale  : false;
-		
 		this.state = {
-			open: false,
-			active: match[0],
-			sale: sale
+			selectAlert: false,
+			selectShare: false
 		};
 	}
 
-
-	createAlert(e) {
-		
-		if(this.state.open == false) return
+	selectAlert() {
 		var _this = this;
-
-		var show = this.props.show;
-		var date = show.raw_date;
-
-		var options = e.target.options;
-		var value = "";
-
-		if (!options) {
-			options = this.refs.alertSelect.getDOMNode().options;
-		}
-		// So we don't create the alert when the dialog changes on mobile
-		else if (options && window.innerWidth <= 500) {
-			return;
-		}
-
-
-		for (var i = 0, l = options.length; i < l; i++) {
-			if (options[i].selected) {
-				value = JSON.parse(options[i].getAttribute('data-value'));
-			}
-		}
-
-		var alertDate = DateManager.getAlertDate(date, value);
-
-
-		value.sale = value.sale || false
-
-
-		$.ajax({
-			type: 'post',
-			url: '/user/rest/alert',
-			data: JSON.stringify({
-				date: alertDate.format(),
-				show: show.id,
-				which: value.id,
-				sale: value.sale
-			}),
-			error: function(data){
-				console.log("SET ALERT GOT ERROR STATUS",data)
-				if (data.status === "phone_not_verified") {
-					_this.props.showPhoneModal();
-					
-					_this.setState({
-						open: false
-					});
-				}		
-			},
-			success: function(data){
-				console.log("SET ALERT GOT SUCC STATUS",data)
-				if(data.status === "phone_not_verified"){
-					_this.setState({
-						active: null,
-						open: false
-					});
-					React.render(<PhoneModal visible={true} />,document.getElementById('overlay-wrapper'));							
-				}else{
-					window.user.alerts.push(data)
-					_this.setState({
-						active: data,
-						sale: value.sale,
-						open: false
-					});
-				}
-			}
-		})		
-	}
-
-	cancelAlert() {
-		console.log("CANCEL ALERT")
-		var _this = this
-
-		if(this.state.active == null){
-			throw 'cannot cancel alert because none exists for current show.'
-		}
-
-		var id = this.state.active.id 
-
-		$.ajax({
-			type: 'delete',
-			url: '/user/rest/alert',
-			data: JSON.stringify({
-				alert: this.state.active.id 
-			}),
-			error: function(data){
-				throw data	
-			},
-			success: function(data){
-				window.user.alerts.splice(window.user.alerts.findIndex(function(a){ return a.id == id}),1)
-				_this.setState({
-					active: null,
-					open: false
-				});	
-			}
-		})
-
 		this.setState({
-			active: null,
-			open: false,
-			sale: false
+			selectAlert: !_this.state.selectAlert
 		});
 	}
+
 
 	toggleAlert(e) {
 		if(window.user.is_authenticated == false){
@@ -219,188 +117,32 @@ class SetAlert extends Component {
 		return <select ref="alertSelect" onBlur={this.createAlert} onChange={ this.createAlert }>{ options }</select>;
 	}
 
-	render() {
+
+	toggleShare() {
+
 		var _this = this;
-
-		var alertInfo, alertText = "";
-
-		if (this.state.active) {
-			alertText = DateManager.convertAlertDate(this.state.active.which);
-			alertInfo = <div className="alert-info">{ alertText }</div>;
-		}
-
-		var artistInfo = (
-			<div className="artist-info">
-				<span>{ moment(this.props.show.raw_date).format("ddd MMM Mo, h A") }</span>
-				<h4>{ this.props.show.headliners }</h4>
-				<h5>{ this.props.show.openers }</h5>
-			</div>	
-		);
-
-
-
-		var className = (this.state.open) ? "col-3 icon-alert open" : "col-3 icon-alert";
-			className += (this.state.active) ? " active" : "";
-			className += (this.state.sale) ? " sale" : "";
-
-		var options = this.getEligibleAlertTimes();
-		if( !options.props.children.length){
-			return (
-				<div className={className} >
-					<svg className="icon icon-alert" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />		
-				</div>
-			)			
-		}
-
-		return (
-			<div className={className} onClick={ this.toggleAlert }>
-				<svg className="icon icon-alert" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-				<div className="alert-box">
-					{ artistInfo }
-					Alert me
-					{ options }
-					<div className="mobile-actions">
-						<button className="cancel" onClick={ this.toggleAlert }>Cancel</button>
-						<button className="set" onClick={ this.createAlert }>Set Alert</button>
-					</div>
-				</div>
-				{ alertInfo }				
-			</div>
-		)
-	}
-};
-
-
-
-
-
-
-
-
-
-
-
-
-class SetFavorite extends Component {	
-	constructor(props) {
-		super(props);
-		
-		if( window.user.is_authenticated == true){
-			var match = window.user.favorites.filter(function(fav){
-				return fav.id == this.props.show.id
-			}.bind(this))
-		}else{
-			var match = []		
-		}
-		
-		this.state = {
-			favorited: match.length
-		};
-	}
-
-	setShowAsFavorite(e) {
-		if(window.user.is_authenticated == false){
-			return React.render(React.render(<AuthModal visible={true} />,document.getElementById('overlay-wrapper')))
-		}
-		$.ajax({
-			type : this.state.favorited ? 'delete' : 'post',
-			url  : '/user/rest/favorite',
-			data: JSON.stringify({'show':this.props.show.id}),
-			error: function(e){
-				this.setState({
-					favorited: this.state.favorited ? false : true
-				});	
-				throw e
-			}.bind(this),
-			success: function(e){
-				console.log("SET FAVORITE",e)
-			}
-		})
 		this.setState({
-			favorited: !this.state.favorited
-		})
-	}
-
-	render() {
-		return (
-			<div className="col-3" onClick={ this.setShowAsFavorite.bind(this) } >
-				<svg className={this.state.favorited ? "icon icon-heart active" : "icon icon-heart"} dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-heart"/>' }} />
-			</div>
-		)
-	}
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class ShowActions extends Component {
-	constructor(props) {
-		super(props)
+			selectShare: !_this.state.selectShare
+		});
 	}
 
 	render(){
-		var show = this.props.show
+		var show = this.props.show;
 
+		var mode = this.state.selectAlert ? "dialog-active" : "";
 
-		var onsale = DateManager.areTicketsOnSale(show.onsale);
-		var ticket
-		if (!onsale) {
-			var saleDate = 
-			ticket = (
-				<div className="onsale">
-					On Sale 
-					<span className="date">
-						{ DateManager.formatSaleDate(show.onsale) }
-					</span>
-				</div>
-			)
-		}else if (show.ticket !== '') {
-			if(this.props.show.ticket){
-				ticket = (
-					<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
-						<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
-						<span className="ticket-price"> <span className="number">${show.price}</span></span>
-					</a>
-				);
-			}else{
-				ticket = (
-					<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
-						<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />Tickets
-					</a>
-				);
-			}
+		if (mode === "") {
+			mode = this.state.selectShare ? "share-active" : "";
 		}
-
-		if (show.soldout) {
-			ticket = <div className="soldout">Sold Out</div>;
-		}
+		
 
 		return (
-			<div className = 'show-actions-wrapper'>
+			<div className={ mode }>
 				<SetFavorite show={ show } />
-				<SetAlert show={ show }  />
-				<div className="col-3" onClick = {this.setShare} >
-					<svg className="icon icon-share" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-share"/>' }} />
-					<span>Share</span>
-				</div>
-				<div className="col-3">
-					{ ticket }
-				</div>
+				<SetAlert show={ show } selectAlert={ this.selectAlert }/>
+				<Share show={ show } toggleShare={ this.toggleShare }/>
+				<Ticket show={ show } />
 			</div>
 		)
 	}
-}
-
-export {SetAlert, ShowActions};
-
-
+};

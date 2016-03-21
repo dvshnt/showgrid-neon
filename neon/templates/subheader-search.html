@@ -1,5 +1,6 @@
 <header id="subhead" class="search {% if search_page %}active{% endif %} {% if page == 'front' %}front{% endif %}">
 	<form id="search-form" action="/search/" method="post">
+		{% csrf_token %}
 		<input type="text" name="query" placeholder="Search by venue or artist" value="{{ query }}"/>
 		<input type="submit" value="Search"/>
 	</form>

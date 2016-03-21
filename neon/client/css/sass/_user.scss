@@ -115,9 +115,12 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    font-size: 25px;
     cursor: pointer;
-    padding: 15px 10px
+    padding: 15px;
+
+    width:25px; height:25px;
+
+    fill:#222222;
   }
 
   form {
@@ -224,7 +227,7 @@
     margin-bottom: 20px; 
 
     background-size:200px;
-    background-image:url('../img/logo-update-blue.png');
+    background-image:url('/static/showgrid/img/wordmark-black.png');
     background-repeat:no-repeat;
   }
 
