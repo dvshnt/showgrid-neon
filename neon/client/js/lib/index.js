@@ -152,7 +152,6 @@ if (!!frontRecent) {
 
 
 var showActions = document.getElementById('show-actions') || document.getElementById('show-actions-wide')
-console.log(showActions)
 if (!!showActions) {
 	React.render(<ShowActions show={window.show} />, document.getElementById('show-actions'));
 	React.render(<ShowActions show={window.show} />, document.getElementById('show-actions-wide'));
