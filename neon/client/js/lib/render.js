@@ -1,5 +1,6 @@
 import React from 'react';
 import UserProfile from './components/Profile';
+import PhoneModal from './components/PhoneModal';
 
 module.exports.renderProfile = renderProfile
 function renderProfile(props){
