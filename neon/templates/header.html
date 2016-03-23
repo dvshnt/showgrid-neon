@@ -1,13 +1,9 @@
 {% load static %}
 
-<header id="head" class="{% if hide_mobile %}hide-mobile{% endif %} {% if page == 'front' %}front{% endif %}">
+<header id="head" class="{% if hide_mobile %}hide-mobile{% endif %}">
 	<h1>
 		<a href="/">
-			{% if page == 'front' %}
-			<img src="{% static 'showgrid/img/wordmark-white.png' %}" alt="Showgrid Nashville"/>
-			{% else %}
 			<img src="{% static 'showgrid/img/wordmark-black.png' %}" alt="Showgrid Nashville"/>
-			{% endif %}
 			<span>Nashville</span>
 		</a>
 	</h1>
