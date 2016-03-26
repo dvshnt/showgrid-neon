@@ -15,11 +15,14 @@ from newsletter.models import Newsletter
 
 from app.util.color_log import *
 
+from app.settings.base import IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT
+
+from extra import Image
 
 class Show(models.Model):
 	def __unicode__ (self):
 		return self.headliners
-		
+
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,7 +33,7 @@ class Show(models.Model):
 
 	## Artists playing in show
 	artists = models.ManyToManyField(Artist, related_name='shows_artists', blank=True)
-	
+
 	date = models.DateTimeField(blank=False)
 	venue = models.ForeignKey(Venue, related_name='shows')
 
@@ -38,9 +41,10 @@ class Show(models.Model):
 	star = models.BooleanField(default=False)
 
 	## Image banner to use at top of list page and in list item (rec: 1200px x 640px)
-	banner = models.ImageField(upload_to='showgrid/banners/', default='', blank=True)
+	images = models.ManyToManyField(Image, related_name='show_image', blank=True)
+	banner = models.ForeignKey(Image,blank=True,related_name='show_banner',null=True)
 	review = models.FileField(upload_to='showgrid/reviews/', default='', blank=True)
-	
+
 	website = models.URLField(blank=True)
 
 	ticket = models.URLField(blank=True)
@@ -57,6 +61,14 @@ class Show(models.Model):
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
 	
+
+	# def find_banners(self,update):
+	# 	#headliner banner
+	# 	if self.extract_queued == True or self.artists == None or len(self.artists) == 0:
+	# 		print 'cannot find banners for show, no artists data or an extraction is in queue'
+	# 		return
+	# 	else:
+	# 		artists = self.favorites.all()
 
 	def extract_artists_from_name(self, update):
 		self.extract_queued = True
@@ -86,12 +98,13 @@ class Show(models.Model):
 
 				#if we already have an artist like that.
 				try:
-					self.artists.get(echonest_id=artist['id'])
+					new_artist = self.artists.get(echonest_id=artist['id'])
 				except:
 					#is the artist in the database?
 					try:
-						found_artist = Artist.objects.get(echonest_id=artist['id'])
-						self.artists.add(found_artist)
+						new_artist = Artist.objects.get(echonest_id=artist['id'])
+						self.artists.add(new_artist)
+
 
 					#create new artist and sync later
 					except:
@@ -103,6 +116,16 @@ class Show(models.Model):
 						artists.append(new_artist)
 						self.artists.add(new_artist)
 						self.save()
+
+			# get best images
+
+			artist_images = new_artist.images.all()
+			for image in artist_images:
+				if image.width > IMAGE_MIN_WIDTH and image.height > IMAGE_MIN_HEIGHT:
+					self.images.add(image)
+					# print IMAGE_MIN_WIDTH
+					# print IMAGE_MIN_HEIGHT
+
 
 
 		if update == True:

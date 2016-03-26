@@ -53,9 +53,11 @@ class Image(models.Model):
 	downloaded = models.BooleanField(default=False)
 	valid = models.BooleanField(default=False, blank=True)
 
-	url = models.CharField(max_length=255,blank=False)
-	local = models.ImageField (upload_to='showgrid/img/artists/',blank=True)
+	url = models.CharField(max_length=255,blank=False,default=' ')
+	local = models.ImageField (upload_to='showgrid/img/artists/',blank=True,width_field='width', height_field='height')
 
+	width = models.IntegerField(blank=True,null=True)
+	height = models.IntegerField(blank=True,null=True)
 
 	def download(self):
 		content = urllib.urlretrieve(self.url)

@@ -4,10 +4,16 @@ ADMINS = (
 )
 
 
+#Show image min dimentions
+
+
 # Twilio API keys and number
 TWILIO_ACCOUNT_SID = 'AC537898c0aaf67d677d93716130df421b'
 TWILIO_AUTH_TOKEN = '262857a0147e5f5a85719b47cf1a5edc'
 TWILIO_NUMBER = '+1 931-444-6735'
+
+IMAGE_MIN_WIDTH = 100
+IMAGE_MIN_HEIGHT = 100
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -85,7 +91,7 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'user.middleware.NeonUserMiddleware'
@@ -164,6 +170,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
 }
@@ -182,8 +189,4 @@ HAYSTACK_CONNECTIONS = {
 
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
-
-
-LOGGING_CONFIG = None
 

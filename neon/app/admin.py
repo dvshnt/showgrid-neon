@@ -135,11 +135,108 @@ pull_artist_data_action.short_description = "Unstar Shows"
 
 
 
+
+from django import forms
+
+from django.utils.translation import ugettext as _
+from django.utils.safestring import mark_safe
+from django.utils.encoding import smart_unicode
+from django.forms.util import flatatt
+from django.contrib import admin
+from django.forms import ModelForm
+from django.utils.translation import ugettext_lazy
+from django.contrib.admin.widgets import AdminFileWidget
+from django.forms.widgets import RadioSelect
+
+# class AdminImageWidget(RadioSelect):
+# 	__init__(self,*args,**kwargs):
+# 		super(RadioSelect, self).__init__(*args, **kwargs)
+# 		self
+
+# 	def render(self, name, value, attrs=None, choices=()):
+# 		output = []
+# 		self.choices = []
+# 		images = self.form_instance.instance.images.all()
+# 		for img in images:
+# 			# append image to selection.
+			
+		
+
+			
+# 			if getattr(img,"local",None):
+# 				image_url = img.local.url
+# 				file_name = img.local
+# 				img_info = u'<p><b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % (img.width,img.height,file_name,img.name)
+# 				output.append(u' <div style = "background:#E9E9E9; margin: 5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div>' % \
+# 					(image_url, image_url,img_info))
+# 				output.append(options)
+# 				self.choices.append((img.id,))
+
+# 			else:
+# 				output.append(u'<span>image not downloaded</span>')
+# 		final_attrs = self.build_attrs(attrs, name=name)
+
+
+# 		output.append(u'<select%s>' % flatatt(final_attrs))
+# 		options = self.render_options(choices, [value])
+
+# 		if len(images) == 0:
+# 			output.append(u'<span>show has no images, have you extracted the artists ?</span>')
+		
+# 		return mark_safe(u'\n'.join(output))
+
+
+class ShowForm(ModelForm):
+	def __init__(self, *args, **kwargs):
+		super(ShowForm, self).__init__(*args, **kwargs)
+		# self.fields['banner'].widget.form_instance = self
+		# self.fields['banner'].queryset = self.instance.images
+		choices = []
+		images = self.instance.images.all()
+		for img in images:
+			output = []
+
+			
+			if getattr(img,"local",None):
+				image_url = img.local.url
+				file_name = img.local
+
+				img_info = u'<p><b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % \
+					(img.width,img.height,file_name,img.name)
+
+				output.append(u' <div style = " background:#E9E9E9; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
+					(image_url, image_url,img_info))
+
+			else:
+				output.append(u'<span style = "background: #E94000;color:#fff;">image not downloaded</span>')
+
+			choices.append((img.id,mark_safe(u'\n'.join(output))))
+
+		self.fields['banner'].choices = choices
+
+
+
+	banner = forms.ModelChoiceField(
+		Image.objects,
+		label="Show Banner", 
+        widget = RadioSelect,
+		required=False
+    )
+
+
+
+	class Meta:
+		model = Show
+		fields = ('banner',)
+
+
+
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners','openers','title']
 	list_display = ('date', 'headliners', 'openers','star','venue')
 	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate,star_shows,unstar_shows]
 	list_filter =  ('venue',)
+	form = ShowForm
 	fieldsets = (
 		('Artist Info', {
 			'fields': ('title', 'headliners','openers','artists','website')
@@ -160,6 +257,8 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('cancelled','soldout',)
 		}),
 	)
+	class Media:
+		js = ('/static/showgrid/js/bundle.js',)
 
 
 	def get_urls(self):
@@ -199,6 +298,9 @@ class ShowAdmin(admin.ModelAdmin):
 		)
 
 		return TemplateResponse(request, "admin/show_extract_status.html", context)
+
+
+
 
 class BioAdmin(admin.ModelAdmin):
 	list_display = ['artist_name','text','source']
@@ -261,7 +363,7 @@ class ArtistAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-	list_display = ['artist_name','local','downloaded','downloading','valid']
+	list_display = ['local','downloaded','downloading','valid']
 	ordering = ['downloaded','name']
 	fields = ('downloaded','url','local')
 	actions = [download_image_action]
@@ -379,6 +481,12 @@ class ContestAdmin(admin.ModelAdmin):
 
 	def participants(self, obj):
 		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
+
+
+
+
+
+
 
 
 admin.site.register(Address)
