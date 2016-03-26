@@ -18,6 +18,7 @@ from app.util.color_log import *
 from app.settings.base import IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT
 
 from extra import Image
+from itertools import chain
 
 class Show(models.Model):
 	def __unicode__ (self):
@@ -41,7 +42,7 @@ class Show(models.Model):
 	star = models.BooleanField(default=False)
 
 	## Image banner to use at top of list page and in list item (rec: 1200px x 640px)
-	images = models.ManyToManyField(Image, related_name='show_image', blank=True)
+	# images = models.ManyToManyField(Image, related_name='show_image', blank=True)
 	banner = models.ForeignKey(Image,blank=True,related_name='show_banner',null=True)
 	review = models.FileField(upload_to='showgrid/reviews/', default='', blank=True)
 
@@ -84,6 +85,7 @@ class Show(models.Model):
 			'text': re.sub(' +', ' ', self.headliners) + ' +' + re.sub(' +',' ',self.openers)
 		}
 
+
 		r = requests.get(path.join(settings.ECHONEST_API, 'artist/extract'), params=payload)
 		artist_data = r.json()
 
@@ -109,27 +111,24 @@ class Show(models.Model):
 					#create new artist and sync later
 					except:
 						new_artist = Artist.objects.create(name=artist['name'], echonest_id=artist['id'])
-						if update == True:
-							new_artist.queued=True
+						new_artist.queued=True
 						new_artist.save()
 
 						artists.append(new_artist)
 						self.artists.add(new_artist)
 						self.save()
 
-			# get best images
-
-			artist_images = new_artist.images.all()
-			for image in artist_images:
-				self.images.add(image)
-				# print IMAGE_MIN_WIDTH
-				# print IMAGE_MIN_HEIGHT
 
 
+		# update artists data and link artist images to show images.
+		# artists = self.artists.all()
 
-		if update == True:
-			for a in artists:
-				a.update_all()
+		for a in artists:
+			a.update_all()
+		# 	artist_images = a.images.all()
+		# 	for image in artist_images:
+		# 		print "ARTIST IMAGE"
+		# 		self.images.add(image)
 
 
 		self.extract_queued = False

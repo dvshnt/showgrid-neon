@@ -60,13 +60,13 @@ def download_image_action(modeladmin, request, queryset):
 download_image_action.short_description = "Download"
 
 
-def extract_artists_from_shows_action_noupdate(modeladmin, request, queryset):
-	queryset.update(extract_queued=True)
-	selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)	
-	tr = Thread(target=extract_artists_data,args=(queryset,False))
-	tr.start()
-	return HttpResponseRedirect('/admin/show/show/extractstatus/?ids=%s' % (",".join(selected)) );
-extract_artists_from_shows_action_noupdate.short_description = "Extract artists with IDs only"
+# def extract_artists_from_shows_action_noupdate(modeladmin, request, queryset):
+# 	queryset.update(extract_queued=True)
+# 	selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)	
+# 	tr = Thread(target=extract_artists_data,args=(queryset,False))
+# 	tr.start()
+# 	return HttpResponseRedirect('/admin/show/show/extractstatus/?ids=%s' % (",".join(selected)) );
+# extract_artists_from_shows_action_noupdate.short_description = "Extract artists with IDs only"
 
 
 def extract_artists_from_shows_action(modeladmin, request, queryset):
@@ -75,7 +75,7 @@ def extract_artists_from_shows_action(modeladmin, request, queryset):
 	tr = Thread(target=extract_artists_data,args=(queryset,True))
 	tr.start()
 	return HttpResponseRedirect('/admin/show/show/extractstatus/?ids=%s' % (",".join(selected)) );
-extract_artists_from_shows_action.short_description = "Extract artists with full data"
+extract_artists_from_shows_action.short_description = "UPDATE SHOW DATA"
 
 
 #only update thos
@@ -202,29 +202,47 @@ class ShowForm(ModelForm):
 		# self.fields['banner'].widget.form_instance = self
 		# self.fields['banner'].queryset = self.instance.images
 		choices = []
+		print "SHOW FORM"
 
 		if self.instance.pk is None: 
+			print "BAD INSTANCE PK"
 			self.fields['banner'].choices = []
 			return
 
-		images = self.instance.images.all()
 
+
+		#image query.
+		image_query = None
+		artists = self.instance.artists.all()
+		for artist in artists:
+			if image_query == None:
+				image_query = artist.images
+			else:
+				image_query = image_query | artist.images
+
+		images = image_query.all()
+		print "IMAGES LENGTH ",len(images)
 		for img in images:
 			output = []
 
 			
 			if getattr(img,"local",None):
+				print img.local
 				image_url = img.local.url
 				file_name = img.local
 
 				img_info = u'<p><b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % \
 					(img.width,img.height,file_name,img.name)
 
-				output.append(u' <div style = " background:#E9E9E9; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
+				output.append(u' <div style = " background:#B6E9B5; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
 					(image_url, image_url,img_info))
-
 			else:
-				output.append(u'<p style = "background: #E94000;color:#fff; padding: 15px;">image not downloaded</p>')
+				print "TEST"
+				img_info = u'<p><b>width : </b><span id = "%s"></span><br/> <b>height :</b> <span id = "%s"></span><br/> %s<br/></p>' % \
+					("image_width_"+str(img.id),"image_height_"+str(img.id),'<b>image not downloaded</b>')
+				output.append(u' <div style = " background:#E9E9E9; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a  href="%s" target="_blank"><img class = "%s" data-id="%s" style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
+					(img.url,"show_image",img.id, img.url,img_info))
+				output.append(u'')
 
 			choices.append((img.id,mark_safe(u'\n'.join(output))))
 
@@ -244,12 +262,19 @@ class ShowForm(ModelForm):
 		model = Show
 		fields = ('banner',)
 
+def download_banners(modeladmin, request, queryset):
+	shows = list(queryset)
+	for show in shows:
+		show.banner.download()
+
+download_banners.short_description = "Download Show Banners"
+
 
 
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners','openers','title']
 	list_display = ('date', 'headliners', 'openers','star','venue')
-	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate,star_shows,unstar_shows]
+	actions = [extract_artists_from_shows_action,star_shows,unstar_shows,download_banners]
 	list_filter =  ('venue',)
 	form = ShowForm
 	fieldsets = (
@@ -273,7 +298,7 @@ class ShowAdmin(admin.ModelAdmin):
 		}),
 	)
 	class Media:
-		js = ('/static/showgrid/js/bundle.js',)
+		js = ('/static/showgrid/js/bundle.js','/static/showgrid/js/show_admin.js',)
 
 
 	def get_urls(self):
