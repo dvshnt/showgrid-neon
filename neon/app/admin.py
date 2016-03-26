@@ -3,6 +3,7 @@ import requests
 
 from datetime import date
 
+from user.models import *
 from show.models import *
 from venue.models import *
 from contest.models import *
@@ -380,6 +381,8 @@ class ContestAdmin(admin.ModelAdmin):
 	def participants(self, obj):
 		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
 
+
+admin.site.register(NeonUser)
 
 admin.site.register(Address)
 admin.site.register(Venue, VenueAdmin)

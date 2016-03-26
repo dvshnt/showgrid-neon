@@ -1,7 +1,7 @@
 #search {
-	max-width:700px;
+	max-width:800px;
 
-	margin:75px auto 10px;
+	margin:80px auto 10px;
 
 	h5.search-query {
 		font-weight:400;
@@ -16,6 +16,8 @@
 	}
 	
 	.list {
+		padding-top:0;
+
 		background:none;
 		box-shadow:none;
 	}

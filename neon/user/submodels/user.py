@@ -1,6 +1,7 @@
 from django.contrib.auth.models import *
 from django.db import models
 from django.db.models import Q
+from django.utils.http import urlquote
 from django.template.loader import get_template
 from django.db.models.signals import post_save, post_delete, pre_save, pre_delete
 from django.utils.translation import ugettext as _
@@ -68,6 +69,8 @@ class NeonUser(AbstractBaseUser):
 	pic = models.ImageField(upload_to='user/', blank=True, default='')
 	bio = models.CharField(_('bio'), max_length=200, blank=True, default='')
 
+	newsletter = models.BooleanField(default=False)
+
 	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
 	phone = models.CharField(unique=True,validators=[phone_regex], blank=True, null=True,max_length=200) # validators should be a list
 	phone_verified = models.BooleanField(default=False,blank=False)
@@ -88,6 +91,19 @@ class NeonUser(AbstractBaseUser):
 
 	# Favorites
 	favorites = models.ManyToManyField(Show, related_name='show_set', blank=True)
+
+	def image_url(self):
+		"""
+		Returns the URL of the image associated with this Object.
+		If an image hasn't been uploaded yet, it returns a stock image
+
+		:returns: str -- the image url
+
+		"""
+		if self.pic and hasattr(self.pic, 'url'):
+			return self.pic.url
+		else:
+			return '/static/showgrid/img/profile-default.jpg'
 
 	def getAlerts(self):
 		alerts = []
