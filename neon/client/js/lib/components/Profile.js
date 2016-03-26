@@ -125,13 +125,14 @@ class UserProfile extends Component {
 	}
 
 	render() {
-		var name, email, number = "";
+		var name, email, number, pic = "";
 
 
 		if (this.props.profile) {
 			email = this.props.profile.email;
 			number = this.props.profile.phone;
 			name = this.props.profile.name;
+			pic = this.props.profile.pic;
 		}
 
 		if(number == "None" || number == "" || number == null){
@@ -143,27 +144,52 @@ class UserProfile extends Component {
 
 		return (
 			<div className="user--profile">
-				<a href='/user/logout' id="logout-profile">Logout</a>
-				<div className="info">
-
-					<div className="section fields">
-						<label>Name</label>
-						<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
-						<label>Email</label>
-						<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
-					</div>
-					<div className="section fields">
-						<label>Change Password</label>
-						<input onChange = {this.resetState} ref="pass0" type="password" placeholder= {"Old Password" } />
-						<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"New Password" } />
-						<input onChange = {this.resetState} ref="pass2" type="password" placeholder= {"Confirm New Password" } />
-					</div>
-					<div className="section buttons">
-						{phone_button}
-						<FormButton error = { this.state.update_error } errorMessage={ this.state.update_error_msg } submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
-					</div>
+				<div className="user--profile-side">
+					<section>
+						<img src={ pic }/>
+						<textarea></textarea>
+					</section>
+					<section>
+						<h4>Sign Up for Newsletter</h4>
+						<p>
+							Sign up to receive the Showgrid Weekly Digest in your inbox each week. We send you a summary of shows and a Spotify playlist of all hte acts playing that week.
+						</p>
+						<div className="newsletter-check">
+							<input type="checkbox" ref="newsletter"/>
+							<label>Receive Weekly Newsletter</label>
+						</div>
+					</section>
 				</div>
-				<UserActions tab = {this.props.tab} alerts = {window.user.alerts} favorites = {window.user.favorites} />
+				<div className="user--profile-main">
+					<section>
+						<a href='/user/logout' id="logout-profile">Logout</a>
+						<div className="info">
+							<div className="section fields">
+								<label>Name</label>
+								<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
+								<label>Email</label>
+								<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
+							</div>
+						</div>
+					</section>
+					<section>
+						<div className="info">
+							<div className="section fields">
+								<label>Change Password</label>
+								<input onChange = {this.resetState} ref="pass0" type="password" placeholder= {"Old Password" } />
+								<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"New Password" } />
+								<input onChange = {this.resetState} ref="pass2" type="password" placeholder= {"Confirm New Password" } />
+							</div>
+							<div className="section buttons">
+								{phone_button}
+								<FormButton error = { this.state.update_error } errorMessage={ this.state.update_error_msg } submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
+							</div>
+						</div>
+					</section>
+					<section>
+						<UserActions tab = {this.props.tab} alerts = {window.user.alerts} favorites = {window.user.favorites} />
+					</section>
+				</div>
 			</div>
 		)
 	}

@@ -3,6 +3,7 @@ import requests
 
 from datetime import date
 
+from user.models import *
 from show.models import *
 from venue.models import *
 from contest.models import *
@@ -121,7 +122,7 @@ pull_artist_data_action.short_description = "Pull artist data"
 def star_shows(modeladmin, request, queryset):
 	shows = list(queryset)
 	for show in shows:
-		show.star = True
+		show.featured = True
 		show.save()
 pull_artist_data_action.short_description = "Star Shows"
 
@@ -129,7 +130,7 @@ pull_artist_data_action.short_description = "Star Shows"
 def unstar_shows(modeladmin, request, queryset):
 	shows = list(queryset)
 	for show in shows:
-		show.star = False
+		show.featured = False
 		show.save()
 pull_artist_data_action.short_description = "Unstar Shows"
 
@@ -273,8 +274,10 @@ download_banners.short_description = "Download Show Banners"
 
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners','openers','title']
-	list_display = ('date', 'headliners', 'openers','star','venue')
+
+	list_display = ('date', 'headliners', 'openers','featured','venue')
 	actions = [extract_artists_from_shows_action,star_shows,unstar_shows,download_banners]
+
 	list_filter =  ('venue',)
 	form = ShowForm
 	fieldsets = (
@@ -285,7 +288,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('date','venue')
 		}),
 		('Featured Info', {
-			'fields': ('star','review','issue')
+			'fields': ('featured','review','issue')
 		}),
 		('Banner', {
 			'fields': ('banner',)
@@ -524,11 +527,7 @@ class ContestAdmin(admin.ModelAdmin):
 
 
 
-
-
-
-
-
+admin.site.register(NeonUser)
 admin.site.register(Address)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(Contest, ContestAdmin)
