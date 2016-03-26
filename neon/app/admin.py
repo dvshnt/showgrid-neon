@@ -202,7 +202,13 @@ class ShowForm(ModelForm):
 		# self.fields['banner'].widget.form_instance = self
 		# self.fields['banner'].queryset = self.instance.images
 		choices = []
+
+		if self.instance.pk is None: 
+			self.fields['banner'].choices = []
+			return
+
 		images = self.instance.images.all()
+
 		for img in images:
 			output = []
 
@@ -218,7 +224,7 @@ class ShowForm(ModelForm):
 					(image_url, image_url,img_info))
 
 			else:
-				output.append(u'<span style = "background: #E94000;color:#fff;">image not downloaded</span>')
+				output.append(u'<p style = "background: #E94000;color:#fff; padding: 15px;">image not downloaded</p>')
 
 			choices.append((img.id,mark_safe(u'\n'.join(output))))
 
@@ -226,12 +232,11 @@ class ShowForm(ModelForm):
 
 
 
-	banner = forms.ModelChoiceField(
-		Image.objects,
+	banner = forms.ModelChoiceField(Image.objects,
 		label="Show Banner", 
-        widget = RadioSelect,
+		widget = RadioSelect,
 		required=False
-    )
+	)
 
 
 
@@ -258,7 +263,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('star','review','issue')
 		}),
 		('Banner', {
-			'fields': ('banner',)
+			'fields': ('banner','images')
 		}),
 		('Ticket Info', {
 			'fields': (('ticket','price'),'onsale')

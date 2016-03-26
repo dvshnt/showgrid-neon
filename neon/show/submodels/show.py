@@ -121,10 +121,9 @@ class Show(models.Model):
 
 			artist_images = new_artist.images.all()
 			for image in artist_images:
-				if image.width > IMAGE_MIN_WIDTH and image.height > IMAGE_MIN_HEIGHT:
-					self.images.add(image)
-					# print IMAGE_MIN_WIDTH
-					# print IMAGE_MIN_HEIGHT
+				self.images.add(image)
+				# print IMAGE_MIN_WIDTH
+				# print IMAGE_MIN_HEIGHT
 
 
 
