@@ -35,7 +35,7 @@ class Show(models.Model):
 	venue = models.ForeignKey(Venue, related_name='shows')
 
 	## Is show featured?
-	star = models.BooleanField(default=False)
+	featured = models.BooleanField(default=False)
 
 	## Image banner to use at top of list page and in list item (rec: 1200px x 640px)
 	banner = models.ImageField(upload_to='showgrid/banners/', default='', blank=True)

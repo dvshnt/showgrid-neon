@@ -122,7 +122,7 @@ pull_artist_data_action.short_description = "Pull artist data"
 def star_shows(modeladmin, request, queryset):
 	shows = list(queryset)
 	for show in shows:
-		show.star = True
+		show.featured = True
 		show.save()
 pull_artist_data_action.short_description = "Star Shows"
 
@@ -130,7 +130,7 @@ pull_artist_data_action.short_description = "Star Shows"
 def unstar_shows(modeladmin, request, queryset):
 	shows = list(queryset)
 	for show in shows:
-		show.star = False
+		show.featured = False
 		show.save()
 pull_artist_data_action.short_description = "Unstar Shows"
 
@@ -138,7 +138,7 @@ pull_artist_data_action.short_description = "Unstar Shows"
 
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners','openers','title']
-	list_display = ('date', 'headliners', 'openers','star','venue')
+	list_display = ('date', 'headliners', 'openers','featured','venue')
 	actions = [extract_artists_from_shows_action,extract_artists_from_shows_action_noupdate,star_shows,unstar_shows]
 	list_filter =  ('venue',)
 	fieldsets = (
@@ -149,7 +149,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('date','venue')
 		}),
 		('Featured Info', {
-			'fields': ('star','review','issue')
+			'fields': ('featured','review','issue')
 		}),
 		('Banner', {
 			'fields': ('banner',)

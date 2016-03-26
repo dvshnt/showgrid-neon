@@ -24,7 +24,7 @@ class Index(APIView):
 		shows = Show.objects.filter(date__gte=date.today())
 		shows = shows.filter(venue__opened=True)
 
-		featured = shows.filter(star=True)
+		featured = shows.filter(featured=True)
 		featured = featured.filter(date__range=[ date.today(), date.today() + timedelta(days=1) ])
 		featured = featured.order_by('date')
 		featured = ShowListSerializer(featured, many=True)
