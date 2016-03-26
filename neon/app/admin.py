@@ -263,7 +263,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('star','review','issue')
 		}),
 		('Banner', {
-			'fields': ('banner','images')
+			'fields': ('banner',)
 		}),
 		('Ticket Info', {
 			'fields': (('ticket','price'),'onsale')
