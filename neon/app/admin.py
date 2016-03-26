@@ -3,6 +3,7 @@ import requests
 
 from datetime import date
 
+from user.models import *
 from show.models import *
 from venue.models import *
 from contest.models import *
@@ -499,11 +500,7 @@ class ContestAdmin(admin.ModelAdmin):
 
 
 
-
-
-
-
-
+admin.site.register(NeonUser)
 admin.site.register(Address)
 admin.site.register(Venue, VenueAdmin)
 admin.site.register(Contest, ContestAdmin)
