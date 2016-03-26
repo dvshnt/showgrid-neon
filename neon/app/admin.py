@@ -136,16 +136,26 @@ pull_artist_data_action.short_description = "Unstar Shows"
 
 
 
-from django import forms
 
-from django.utils.translation import ugettext as _
+
+
+
+
+
+
+
+
+
+
+
+from django import forms
+# from django.utils.translation import ugettext as _
 from django.utils.safestring import mark_safe
 from django.utils.encoding import smart_unicode
 from django.forms.util import flatatt
 from django.contrib import admin
 from django.forms import ModelForm
-from django.utils.translation import ugettext_lazy
-from django.contrib.admin.widgets import AdminFileWidget
+# from django.contrib.admin.widgets import AdminFileWidget
 from django.forms.widgets import RadioSelect
 
 # class AdminImageWidget(RadioSelect):
