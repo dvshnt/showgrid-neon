@@ -236,15 +236,18 @@ class ShowForm(ModelForm):
 				image_url = img.local.url
 				file_name = img.local
 
-				img_info = u'<p><b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % \
-					(img.width,img.height,file_name,img.name)
+				artist = Artist.objects.filter(images__id=img.id)[0].name
+
+				img_info = u'<p><b>artist : </b>%s<br/> <b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % \
+					(artist,img.width,img.height,file_name,img.name)
 
 				output.append(u' <div style = " background:#B6E9B5; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
 					(image_url, image_url,img_info))
 			else:
-				print "TEST"
-				img_info = u'<p><b>width : </b><span id = "%s"></span><br/> <b>height :</b> <span id = "%s"></span><br/> %s<br/></p>' % \
-					("image_width_"+str(img.id),"image_height_"+str(img.id),'<b>image not downloaded</b>')
+				artist = Artist.objects.filter(images__id=img.id)[0].name
+				
+				img_info = u'<p><b>artist : </b>%s<br/> <b>width : </b><span id = "%s"></span><br/> <b>height :</b> <span id = "%s"></span><br/> %s<br/></p>' % \
+					(artist, "image_width_"+str(img.id),"image_height_"+str(img.id),'<b>image not downloaded</b>')
 				output.append(u' <div style = " background:#E9E9E9; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a  href="%s" target="_blank"><img class = "%s" data-id="%s" style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
 					(img.url,"show_image",img.id, img.url,img_info))
 				output.append(u'')
