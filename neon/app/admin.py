@@ -221,8 +221,12 @@ class ShowForm(ModelForm):
 			else:
 				image_query = image_query or artist.images
 
-		images = image_query.all()
-		print "IMAGES LENGTH ",len(images)
+		try:
+			images = image_query.all()
+			print "IMAGES LENGTH ",len(images)
+		except:
+			images = []
+
 		for img in images:
 			output = []
 

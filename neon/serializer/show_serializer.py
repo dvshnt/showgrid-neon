@@ -59,7 +59,7 @@ class ShowListSerializer(serializers.ModelSerializer):
 	banner = serializers.SerializerMethodField('get_banner_url')
 
 	def get_banner_url(self,obj):
-		if obj.banner is not None and obj.banner.local is not None:
+		if obj.banner is not None and obj.banner.local:
 			return obj.banner.local.url
 		if obj.banner is not None:
 			return obj.banner.url
@@ -96,7 +96,7 @@ class ShowDetailSerializer(serializers.ModelSerializer):
 	banner = serializers.SerializerMethodField('get_banner_url')
 
 	def get_banner_url(self,obj):
-		if obj.banner is not None and obj.banner.local is not None:
+		if obj.banner is not None and obj.banner.local:
 			return obj.banner.local.url
 		if obj.banner is not None:
 			return obj.banner.url
@@ -165,7 +165,7 @@ class ShowSerializer(serializers.ModelSerializer):
 	banner = serializers.SerializerMethodField('get_banner_url')
 
 	def get_banner_url(self,obj):
-		if obj.banner is not None and obj.banner.local is not None:
+		if obj.banner is not None and obj.banner.local:
 			return obj.banner.local.url
 		if obj.banner is not None:
 			return obj.banner.url
