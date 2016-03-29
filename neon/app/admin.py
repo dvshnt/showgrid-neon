@@ -406,7 +406,7 @@ class ArtistAdmin(admin.ModelAdmin):
 
 
 class ImageAdmin(admin.ModelAdmin):
-	list_display = ['local','downloaded','downloading','valid']
+	list_display = ['artist_name', 'local','downloaded','downloading','valid']
 	ordering = ['downloaded','name']
 	fields = ('downloaded','url','local')
 	actions = [download_image_action]
