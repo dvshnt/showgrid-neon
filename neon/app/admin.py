@@ -316,7 +316,7 @@ class FeaturedShows(SimpleListFilter):
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners','openers','title']
 
-	list_display = ('date', 'headliners', 'openers','artist_data','featured','venue')
+	list_display = ('date', 'headliners', 'openers','has_banner', 'artist_data','featured','venue')
 	actions = [extract_artists_from_shows_action,star_shows,unstar_shows,download_banners]
 
 	list_filter =  ('venue',UpcomingShows,FeaturedShows,)
@@ -344,6 +344,10 @@ class ShowAdmin(admin.ModelAdmin):
 	class Media:
 		js = ('/static/showgrid/js/bundle.js','/static/showgrid/js/show_admin.js',)
 
+
+	def has_banner(self, obj):
+		return obj.banner is not None
+	has_banner.boolean = True
 
 	def artist_data(self, obj):
 		return len(obj.artists.all()) > 0
