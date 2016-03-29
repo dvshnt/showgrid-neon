@@ -100,7 +100,7 @@ export default class ListItemLg extends Component {
 		// }
 
 		if (show.headliners !== '') {
-			headliner = <h3>{ show.headliners }</h3>;
+			headliner = <h3 style={{ 'color': venue.secondary_color }}>{ show.headliners }</h3>;
 		}
 
 		if (show.openers !== '') {
