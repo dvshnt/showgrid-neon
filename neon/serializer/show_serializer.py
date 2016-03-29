@@ -56,6 +56,13 @@ class ShowListSerializer(serializers.ModelSerializer):
 	raw_date = serializers.SerializerMethodField('get_show_date')
 	venue = serializers.SerializerMethodField('get_shows_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
+	banner = serializers.SerializerMethodField('get_banner_url')
+
+	def get_banner_url(self,obj):
+		if obj.banner:
+			return obj.banner.url
+		else:
+			return ""
 	
 	def get_show_date(self,obj):
 		return obj.date.isoformat()
@@ -85,6 +92,13 @@ class ShowDetailSerializer(serializers.ModelSerializer):
 	venue = serializers.SerializerMethodField('get_show_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
 	raw_date = serializers.SerializerMethodField('get_show_date')
+	banner = serializers.SerializerMethodField('get_banner_url')
+
+	def get_banner_url(self,obj):
+		if obj.banner:
+			return obj.banner.url
+		else:
+			return ""
 
 	def get_show_date(self,obj):
 		return obj.date.isoformat()
@@ -146,6 +160,13 @@ class ShowSerializer(serializers.ModelSerializer):
 	venue = serializers.SerializerMethodField('get_show_venue')
 	review = serializers.SerializerMethodField('get_shows_review')
 	raw_date = serializers.SerializerMethodField('get_show_date')
+	banner = serializers.SerializerMethodField('get_banner_url')
+
+	def get_banner_url(self,obj):
+		if obj.banner:
+			return obj.banner.url
+		else:
+			return ""
 
 	def get_show_date(self,obj):
 		return obj.date.isoformat()
