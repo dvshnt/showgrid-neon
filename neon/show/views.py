@@ -42,7 +42,7 @@ class ShowShortcut(APIView):
 
 	def get(self, request, shortcut=None):
 		if shortcut == "featured":
-			shows = Show.objects.filter(star=True)
+			shows = Show.objects.filter(featured=True)
 			shows = shows.filter(date__gte=date.today())
 			shows = shows.order_by('date')
 			serializer = ShowListSerializer(shows, many=True)
