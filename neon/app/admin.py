@@ -219,7 +219,7 @@ class ShowForm(ModelForm):
 			if image_query == None:
 				image_query = artist.images
 			else:
-				image_query = image_query | artist.images
+				image_query = image_query or artist.images
 
 		images = image_query.all()
 		print "IMAGES LENGTH ",len(images)
@@ -267,18 +267,59 @@ def download_banners(modeladmin, request, queryset):
 	shows = list(queryset)
 	for show in shows:
 		show.banner.download()
-
 download_banners.short_description = "Download Show Banners"
 
 
+from django.contrib.admin import SimpleListFilter
+class UpcomingShows(SimpleListFilter):
+	title = _('Show Date')
+	parameter_name = 'show_date'
+
+	# Set the displaying options
+	def lookups(self, request, model_admin):
+		return (
+			('UPCOMING', _('Upcoming')),
+			('PAST', _('Past')),
+			('Today', _('Today')),
+		)
+
+	# Assign a query for each option
+	def queryset(self, request, queryset):
+		if self.value() == 'UPCOMING':
+			return queryset.filter(date__gte=date.today())
+		elif self.value() == 'PAST':
+			return queryset.filter(date__lte=date.today())
+		elif self.value() == 'TODAY':
+			return queryset.filter(date=date.today())
+		return queryset.all()
+
+class FeaturedShows(SimpleListFilter):
+	title = _('Featured')
+	parameter_name = 'featured'
+
+	# Set the displaying options
+	def lookups(self, request, model_admin):
+		return (
+			('YES', _('Yes')),
+			('NO', _('No')),
+		)
+
+	# Assign a query for each option
+	def queryset(self, request, queryset):
+		if self.value() == 'YES':
+			return queryset.filter(featured=True)
+		if self.value() == 'NO':
+			return queryset.exclude(featured=True)
+		return queryset.all()
+            
 
 class ShowAdmin(admin.ModelAdmin):
 	search_fields = ['headliners','openers','title']
 
-	list_display = ('date', 'headliners', 'openers','featured','venue')
+	list_display = ('date', 'headliners', 'openers','artist_data','featured','venue')
 	actions = [extract_artists_from_shows_action,star_shows,unstar_shows,download_banners]
 
-	list_filter =  ('venue',)
+	list_filter =  ('venue',UpcomingShows,FeaturedShows,)
 	form = ShowForm
 	fieldsets = (
 		('Artist Info', {
@@ -303,6 +344,10 @@ class ShowAdmin(admin.ModelAdmin):
 	class Media:
 		js = ('/static/showgrid/js/bundle.js','/static/showgrid/js/show_admin.js',)
 
+
+	def artist_data(self, obj):
+		return len(obj.artists.all()) > 0
+	artist_data.boolean = True
 
 	def get_urls(self):
 		urls = super(ShowAdmin, self).get_urls()
