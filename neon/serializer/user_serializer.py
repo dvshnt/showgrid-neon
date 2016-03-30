@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 		model = NeonUser
 		# ADD BACK ADDRESS INFO LATER
 		fields = (
-			'name', 'email', 'phone', 'alerts','favorites', 'pic'
+			'name', 'email', 'phone', 'alerts','favorites', 'pic', 'bio'
 		)
 
 	alerts = serializers.SerializerMethodField('get_user_alerts')
