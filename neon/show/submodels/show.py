@@ -19,7 +19,7 @@ from app.settings.base import IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT
 
 from extra import Image
 from itertools import chain
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 
@@ -159,9 +159,7 @@ class Show(models.Model):
 
 
 #update banner adding_banner to not display in other queries.
-@receiver(post_save, sender=Show, dispatch_uid="update_show_banner")
+@receiver(pre_save, sender=Show, dispatch_uid="update_show_banner")
 def update_stock(sender, instance, **kwargs):
-	banner_images = Image.objects.filter(is_banner=True)
-	for image in banner_images:
-		if instance.banner != image:
-			instance.banner.adding_banner = False
+	if instance.custom_banner != None and instance.banner != instance.custom_banner:
+		instance.banner = instance.custom_banner

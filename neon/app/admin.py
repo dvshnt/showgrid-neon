@@ -203,7 +203,7 @@ class ShowForm(ModelForm):
 		# self.fields['banner'].widget.form_instance = self
 		# self.fields['banner'].queryset = self.instance.images
 		choices = []
-		print "SHOW FORM"
+		
 
 		if self.instance.pk is None: 
 			print "BAD INSTANCE PK"
@@ -213,21 +213,19 @@ class ShowForm(ModelForm):
 
 
 		#image query.
-		image_query = None
+		image_query = Image.objects.none()
 		artists = self.instance.artists.all()
 		for artist in artists:
-			if image_query == None:
-				image_query = artist.images
-			else:
-				image_query = image_query or artist.images
+			if artist.images != None:
+				image_query = image_query | artist.images.all()
 
-		try:
-			images = image_query.all()
-			print "IMAGES LENGTH ",len(images)
-		except:
-			images = []
+		if self.instance.custom_banner != None:
+			result_list = list(chain(image_query,list((self.instance.custom_banner,))))
+		else:
+			result_list = image_query
+		
 
-		for img in images:
+		for img in result_list:
 			output = []
 
 			
@@ -235,8 +233,10 @@ class ShowForm(ModelForm):
 				print img.local
 				image_url = img.local.url
 				file_name = img.local
-
-				artist = Artist.objects.filter(images__id=img.id)[0].name
+				try:
+					artist = Artist.objects.filter(images__id=img.id)[0].name
+				except:
+					artist = ''
 
 				img_info = u'<p><b>artist : </b>%s<br/> <b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % \
 					(artist,img.width,img.height,file_name,img.name)
@@ -244,8 +244,11 @@ class ShowForm(ModelForm):
 				output.append(u' <div style = " background:#B6E9B5; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
 					(image_url, image_url,img_info))
 			else:
-				artist = Artist.objects.filter(images__id=img.id)[0].name
-				
+				try:
+					artist = Artist.objects.filter(images__id=img.id)[0].name
+				except:
+					artist = ''
+
 				img_info = u'<p><b>artist : </b>%s<br/> <b>width : </b><span id = "%s"></span><br/> <b>height :</b> <span id = "%s"></span><br/> %s<br/></p>' % \
 					(artist, "image_width_"+str(img.id),"image_height_"+str(img.id),'<b>image not downloaded</b>')
 				output.append(u' <div style = " background:#E9E9E9; margin: 5px; margin-bottom: 15px; margin-top:5px;"><a  href="%s" target="_blank"><img class = "%s" data-id="%s" style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div><hr/>' % \
