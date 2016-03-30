@@ -71,10 +71,13 @@ class UserProfile extends Component {
 		var pass0 = React.findDOMNode(this.refs.pass0).value;
 		var pass1 = React.findDOMNode(this.refs.pass1).value;
 		var pass2 = React.findDOMNode(this.refs.pass2).value;
+		var bio = React.findDOMNode(this.refs.bio).value;
+		var pic = React.findDOMNode(this.refs.pic).value;
 
 
 
-		if( name == "" && email == "" && pass1 == "" && pass2 == ""){
+
+		if( name == "" && email == "" && pass1 == "" && pass2 == "" && bio == "" && pic == ""){
 			return this.setState({
 				update_error_msg: "Nothing to save!",
 				update_error: true
@@ -92,7 +95,7 @@ class UserProfile extends Component {
 			success: function(profile){
 				console.log('updated')
 				this.setState({
-					update_msg: 'changes saved!'
+					update_msg: 'Changes Saved!'
 				})
 				window.user = profile;
 				r.renderProfile()
@@ -112,6 +115,8 @@ class UserProfile extends Component {
 				email: email,
 				old_pass: pass0,
 				pass: pass1,
+				pic: pic,
+				bio: bio,
 			})
 		})
 	}
@@ -125,71 +130,76 @@ class UserProfile extends Component {
 	}
 
 	render() {
-		var name, email, number, pic = "";
-
+		var name, email, number, pic, bio = "";
 
 		if (this.props.profile) {
 			email = this.props.profile.email;
 			number = this.props.profile.phone;
 			name = this.props.profile.name;
 			pic = this.props.profile.pic;
+			bio = this.props.profile.bio;
 		}
 
 		if(number == "None" || number == "" || number == null){
-			var phone_button = <input ref="phone" className = "error" type="submit" value={"Register Phone"} onClick={r.renderPhoneModal.bind(this,true)}/>
+			var phone_button = <input ref="phone" className="phone error" type="submit" value={"Register Phone"} onClick={r.renderPhoneModal.bind(this,true)}/>
 		}else{
-			var phone_button = <input ref="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={r.renderPhoneModal.bind(this,true)}/>
+			var phone_button = <input ref="phone" className="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={r.renderPhoneModal.bind(this,true)}/>
 		}
 			
+			// <UserActions tab = {this.props.tab} alerts = {window.user.alerts} favorites = {window.user.favorites} />
 
 		return (
 			<div className="user--profile">
-				<div className="user--profile-side">
-					<section>
-						<img src={ pic }/>
-						<textarea></textarea>
-					</section>
-					<section>
-						<h4>Sign Up for Newsletter</h4>
-						<p>
-							Sign up to receive the Showgrid Weekly Digest in your inbox each week. We send you a summary of shows and a Spotify playlist of all hte acts playing that week.
-						</p>
-						<div className="newsletter-check">
-							<input type="checkbox" ref="newsletter"/>
-							<label>Receive Weekly Newsletter</label>
-						</div>
-					</section>
-				</div>
-				<div className="user--profile-main">
-					<section>
-						<a href='/user/logout' id="logout-profile">Logout</a>
-						<div className="info">
-							<div className="section fields">
+				<div className="user--profile-info">
+					<div className="user--profile-side">
+						<section className="center">
+							<img src={ pic }/>
+							<input type="file" ref="pic" name="pic" accept="image/*" onChange={this.resetState}/>
+						</section>
+						<section>
+							<textarea maxlength="200" ref="bio" onChange={this.resetState} placeholder="Tell us about yourself...">{ bio }</textarea>
+						</section>
+						<section>
+							<p>
+								Sign up to receive the Showgrid Weekly Digest in your inbox each week. We send you a summary of shows and a Spotify playlist of all hte acts playing that week.
+							</p>
+							<div className="newsletter-check">
+								<input type="checkbox" ref="newsletter"/>
+								<label>Receive Weekly Newsletter</label>
+							</div>
+						</section>
+					</div>
+					<div className="user--profile-main">
+						<section className="top">
+							<a href='/user/logout' id="logout-profile">Logout</a>
+						</section>
+						<section>
+							<aside>
 								<label>Name</label>
 								<input onChange = {this.resetState} ref="name" type="text" placeholder= {name || "Your Name" } />
+							</aside>
+							<aside>
 								<label>Email</label>
 								<input onChange = {this.resetState} ref="email" type="text" placeholder={email || "Your Email" } />
-							</div>
-						</div>
-					</section>
-					<section>
-						<div className="info">
-							<div className="section fields">
-								<label>Change Password</label>
-								<input onChange = {this.resetState} ref="pass0" type="password" placeholder= {"Old Password" } />
-								<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"New Password" } />
-								<input onChange = {this.resetState} ref="pass2" type="password" placeholder= {"Confirm New Password" } />
-							</div>
-							<div className="section buttons">
-								{phone_button}
-								<FormButton error = { this.state.update_error } errorMessage={ this.state.update_error_msg } submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
-							</div>
-						</div>
-					</section>
-					<section>
-						<UserActions tab = {this.props.tab} alerts = {window.user.alerts} favorites = {window.user.favorites} />
-					</section>
-				</div>
+							</aside>
+						</section>
+						<section>
+							<label>Change Password</label>
+							<input onChange = {this.resetState} ref="pass0" type="password" placeholder= {"Old Password" } />
+							<input onChange = {this.resetState} ref="pass1" type="password" placeholder= {"New Password" } />
+							<input onChange = {this.resetState} ref="pass2" type="password" placeholder= {"Confirm New Password" } />
+						</section>
+						<section className="center">
+							<p>Your phone number will be used to send you alerts for shows.</p>
+							{phone_button}
+						</section>
+						<section className="center">
+							<FormButton error={ this.state.update_error } errorMessage={ this.state.update_error_msg } submitMessage={this.state.update_msg} onClick={ this.updateProfile } />
+						</section>
+					</div>	
+				</div>	
+				
+
 			</div>
 		)
 	}
