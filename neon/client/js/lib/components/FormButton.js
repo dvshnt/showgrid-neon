@@ -14,7 +14,7 @@ export default class FormButton extends Component {
 	}
 
 	render() {
-		var errorClass = (this.props.error) ? "error" : "";
+		var errorClass = (this.props.error) ? "submit error" : "submit";
 		var buttonText = (this.props.error) ? this.props.errorMessage : this.props.submitMessage;
 
 		return (
