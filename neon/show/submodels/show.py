@@ -19,6 +19,10 @@ from app.settings.base import IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT
 
 from extra import Image
 from itertools import chain
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
 
 class Show(models.Model):
 	def __unicode__ (self):
@@ -44,6 +48,11 @@ class Show(models.Model):
 	## Image banner to use at top of list page and in list item (rec: 1200px x 640px)
 	# images = models.ManyToManyField(Image, related_name='show_image', blank=True)
 	banner = models.ForeignKey(Image,blank=True,related_name='show_banner',null=True)
+	
+	custom_banner = models.ForeignKey(Image,blank=True,related_name='show_banner_custom',null=True)
+	# when this field is set, it will overwrite the banner field when it is set.
+	# banner_override = models.ForeignKey(Image,blank = True,related_name='show_banner_override',null=True)
+
 	review = models.FileField(upload_to='showgrid/reviews/', default='', blank=True)
 
 	website = models.URLField(blank=True)
@@ -63,13 +72,32 @@ class Show(models.Model):
 	extract_queued = models.BooleanField(default=False)
 	
 
-	# def find_banners(self,update):
-	# 	#headliner banner
-	# 	if self.extract_queued == True or self.artists == None or len(self.artists) == 0:
-	# 		print 'cannot find banners for show, no artists data or an extraction is in queue'
-	# 		return
+
+
+	# def __setattr__(self, name, value):
+	# 	if name != "banner_override":
+	# 		object.__setattr__(self, name, value)
 	# 	else:
-	# 		artists = self.favorites.all()
+	# 		if self.banner_override != value:
+	# 			object.__setattr__(self, name, value) # use base class setter
+	# 			# oldstate = self.state
+	# 			# object.__setattr__(self, name, value) # use base class setter
+	# 			# if oldstate == 'S' and value == 'A':
+	# 			# 	self.started = datetime.now()
+	# 			# create units, etc.
+
+
+	# def set_banner_(self, newstate):
+	# 	if self.state != newstate:
+	# 		oldstate = self.state
+	# 		self.state = newstate
+	# 		if oldstate == 'S' and newstate == 'A':
+	# 			self.started = datetime.now()
+
+
+
+
+
 
 	def extract_artists_from_name(self, update):
 		self.extract_queued = True
@@ -121,15 +149,19 @@ class Show(models.Model):
 
 
 		# update artists data and link artist images to show images.
-		# artists = self.artists.all()
-
 		for a in artists:
 			a.update_all()
-		# 	artist_images = a.images.all()
-		# 	for image in artist_images:
-		# 		print "ARTIST IMAGE"
-		# 		self.images.add(image)
-
 
 		self.extract_queued = False
 		self.save()
+
+
+
+
+#update banner adding_banner to not display in other queries.
+@receiver(post_save, sender=Show, dispatch_uid="update_show_banner")
+def update_stock(sender, instance, **kwargs):
+	banner_images = Image.objects.filter(is_banner=True)
+	for image in banner_images:
+		if instance.banner != image:
+			instance.banner.adding_banner = False

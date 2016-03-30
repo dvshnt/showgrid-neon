@@ -49,6 +49,8 @@ class Image(models.Model):
 
 	name = models.CharField(default='image',max_length=255)
 
+	# show = models.ForeignKey('Show', related_name='show_image',blank=True,null=True)
+
 	downloading = models.BooleanField(default=False)
 	downloaded = models.BooleanField(default=False)
 	valid = models.BooleanField(default=False, blank=True)
@@ -58,6 +60,9 @@ class Image(models.Model):
 
 	width = models.IntegerField(blank=True,null=True)
 	height = models.IntegerField(blank=True,null=True)
+
+	is_banner = models.BooleanField(default=False, blank=False)
+
 
 	def download(self):
 		content = urllib.urlretrieve(self.url)

@@ -255,6 +255,7 @@ class ShowForm(ModelForm):
 			choices.append((img.id,mark_safe(u'\n'.join(output))))
 
 		self.fields['banner'].choices = choices
+		self.fields['custom_banner'].queryset = Image.objects.filter(is_banner=True)
 
 
 
@@ -339,7 +340,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('featured','review','issue')
 		}),
 		('Banner', {
-			'fields': ('banner',)
+			'fields': ('banner','custom_banner')
 		}),
 		('Ticket Info', {
 			'fields': (('ticket','price'),'onsale')
@@ -348,6 +349,7 @@ class ShowAdmin(admin.ModelAdmin):
 			'fields': ('cancelled','soldout',)
 		}),
 	)
+
 	class Media:
 		js = ('/static/showgrid/js/bundle.js','/static/showgrid/js/show_admin.js',)
 
@@ -464,7 +466,7 @@ class ArtistAdmin(admin.ModelAdmin):
 class ImageAdmin(admin.ModelAdmin):
 	list_display = ['artist_name', 'local','downloaded','downloading','valid']
 	ordering = ['downloaded','name']
-	fields = ('downloaded','url','local')
+	fields = ('downloaded','url','local','is_banner')
 	actions = [download_image_action]
 
 	def artist_name(self, obj):
