@@ -114,6 +114,14 @@ class UserActions(APIView):
 			if(body['name'] != "None" and body['name'] != "" and body['name'] != None):
 				user.name = body['name']
 
+			# Change bio
+			if(body['bio'] != "None" and body['bio'] != "" and body['bio'] != None):
+				user.bio = body['bio']
+
+			# Change pic
+			if(body['pic'] != "None" and body['pic'] != "" and body['pic'] != None):
+				user.pic = body['pic']
+
 			# Change password
 			if(body['old_pass'] != 'None' and body['pass'] != "None" and body['pass'] != "" and body['pass'] != None):
 				if user.check_password(body['old_pass']) == True :
