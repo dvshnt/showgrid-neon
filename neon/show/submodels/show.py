@@ -70,8 +70,6 @@ class Show(models.Model):
 
 	#extract metadata
 	extract_queued = models.BooleanField(default=False)
-	
-
 
 
 	# def __setattr__(self, name, value):

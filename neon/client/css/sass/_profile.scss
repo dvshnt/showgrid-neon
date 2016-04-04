@@ -20,7 +20,7 @@
 
 		width:100%;
 
-		padding:20px;
+		padding:20px 0;
 
 		background:#ffffff;
 
@@ -32,7 +32,7 @@
 			-webkit-flex:1 1 50px;
 					flex:1 1 50px;
 
-			margin-right:40px;
+			padding:0 20px;
 
 			section {
 				width:100%;
@@ -103,6 +103,7 @@
 			-webkit-flex:1 1 700px;
 					flex:1 1 700px;
 
+			padding:0 20px;
 
 			section {
 				width:calc(100% - 80px);
@@ -192,5 +193,11 @@
 				}
 			}
 		}
+	}
+}
+
+@media screen and (max-width: 800px ) {
+	.user--profile {
+		width:95%;
 	}
 }

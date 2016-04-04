@@ -146,7 +146,7 @@ class UserProfile extends Component {
 			var phone_button = <input ref="phone" className="phone" type="submit" value={"Change Phone: (+1) ("+ String(number).slice(1)+")"} onClick={r.renderPhoneModal.bind(this,true)}/>
 		}
 			
-			// <UserActions tab = {this.props.tab} alerts = {window.user.alerts} favorites = {window.user.favorites} />
+			// 
 
 		return (
 			<div className="user--profile">
@@ -198,8 +198,13 @@ class UserProfile extends Component {
 						</section>
 					</div>	
 				</div>	
-				
-
+				<div id="user--profile-actions">
+					<div className="side">
+					</div>
+					<div className="main">
+						<UserActions tab = {this.props.tab} alerts = {window.user.alerts} favorites = {window.user.favorites} />
+					</div>
+				</div>
 			</div>
 		)
 	}
@@ -270,7 +275,7 @@ class UserActions extends Component {
 
 
 		return (
-			<div className="user--actions">
+			<section>
 				<div className="tabs">
 					<button onClick={ this.selectTab } className={ favoritesTabClass }><span><b className="icon-heart"></b>Favorites</span></button>
 					<button onClick={ this.selectTab } className={ alertTabClass }><span><b className="icon-alert"></b> Alerts</span></button>
@@ -278,7 +283,7 @@ class UserActions extends Component {
 				<div className="actions">
 					{ items }
 				</div>
-			</div>
+			</section>
 		)
 	}
 };

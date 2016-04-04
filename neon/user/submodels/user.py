@@ -91,7 +91,6 @@ class NeonUser(AbstractBaseUser):
 
 	# Favorites
 	favorites = models.ManyToManyField(Show, related_name='show_set', blank=True)
-
 	def image_url(self):
 		"""
 		Returns the URL of the image associated with this Object.
@@ -107,7 +106,7 @@ class NeonUser(AbstractBaseUser):
 
 	def getAlerts(self):
 		alerts = []
-		alerts_q = Alert.objects.filter(user=self)
+		alerts_q = Alert.objects.filter(user=self).order_by('show__date')
 		for alert in alerts_q:
 			alerts.append({
 				"id": 				alert.id,

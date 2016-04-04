@@ -1,319 +1,42 @@
-#overlay {
-	display:none;
+#user--profile-actions {
+  width:100%;
+  max-width:1200px;
 
-	position: absolute;
-	top:0; left:0;
 
-	width:100vw; height:100vh;
+    display:-webkit-flex;
+    display:    flex;
 
-	background:rgba(0,0,0,0);
+    -webkit-flex-flow:row nowrap;
+        flex-flow:row nowrap;
 
-	z-index:999999;
-  @include transition(all 0.3s ease);
-}
+    -webkit-align-items:center;
+        align-items:center;
 
-#overlay.active {
-	display:-webkit-flex;
-	display:		flex;
+    -webkit-justify-content:center;
+        justify-content:center;
 
-	-webkit-justify-content:center;
-			justify-content:center;
 
-	-webkit-align-items:center;
-			align-items:center;
+  section {
+    width:100%;
 
-	background:rgba(0,0,0,0.4);
+    margin:20px auto;
 
-}
+    background:#ffffff;
 
-.modalScreenContainer {
-  align-self: flex-start;
-  width: 200%;
-  height: auto;
-  display:-webkit-flex;
-  display: flex;
-  transition: transform 350ms  cubic-bezier(0.2, 0.71, 0.27, 0.99);
-  transform: translate(0%,0%);
-}
-
-.modalScreenContainer.page2{
-  transform: translate(-50%,0%) !important;
-}
-
-.modalScreen {
-  display:-webkit-flex;
-  display: flex;
-  flex-direction: column;
-  -webkit-justify-content:center;
-  justify-content: center;
-  -webkit-align-items:center;
-  align-items: center;
-  width: 50%;
-  height: 100%;
-  width: 50%;
-  height: 100%;
-}
-
-#modal {
-  // position: fixed;
-  // left:0;
-  // top:0;
-  // height:100vh;
-  position: relative;
-
-  overflow: hidden;
-  display:-webkit-flex;
-  display:    flex;
-
-  -webkit-justify-content:center;
-          justify-content:center;
-
-  -webkit-align-items:center;
-          align-items:center;
-
-  -webkit-flex-flow:column nowrap;
-          flex-flow:column nowrap;
-
-	-webkit-flex:0 0 520px;
-			     flex:0 0 520px;
-
-  .signup-button{
-    margin: 5px;
-    padding: 8px;
-   // max-width: 80%;
-    line-height: 30px;
-    text-decoration: none;
-    background: #01DE90;
-
-    color:#ffffff;
-    font-size:14px;
-    font-weight:bolder;
-    text-transform:uppercase;
-
-    border:none;
-    border-radius:4px;  
+    -webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);
+            box-shadow:0 2px 3px rgba(0,0,0,0.1);
   }
 
-  padding:40px 0;
+  .main {
 
-	background:#ffffff;
-	border-radius:3px;
-
-	box-shadow:0 1px 4px rgba(0,0,0,0.3);
-
-
-  a {
-    font-size: 12px;
-    color: #777777;
-    text-decoration: none;
-    background: #DADADA;
-    padding: 5px;
+  -webkit-flex:1 1 500px;
   }
 
-
-  #close {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    cursor: pointer;
-    padding: 15px;
-
-    width:25px; height:25px;
-
-    fill:#222222;
+  .side {
+   -webkit-flex:0 0 350px;
+      flex:0 0 350px;
   }
-
-  form {
-    display:block;
-
-    width:70%;
-    margin:0px auto;
-
-    text-align:center;
-  }
-
-  span.error {
-    position:relative;
-    top:8px;
-    color:red;
-  }
-
-  label {
-    font-size:12px;
-  }
-
-  input {
-    width:90%;
-    font-weight: normal;
-    //transition: box-shadow 500ms cubic-bezier(0, 0, 0.02, 0.98);
-    margin:5px auto;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0px 1000px rgba(0,255,255,0.2) inset;
-  }
-  
-  input:focus{
-    font-weight: normal;
-    outline: 0;
-    outline: none;
-    box-shadow: inset 0px 0px 20px rgba(155,205,255,0.2);
-  }
-
-  input[type=email],
-  input[type=text],
-  input[type=password],
-  input[type=tel] {
-    margin:0 auto;
-    padding:10px 6px;
-
-    font-size:16px;
-
-    background:#f8f8f8;
-    border:1px solid #e2e2e2;
-    border-radius:2px;
-  }
-
-  input[type=password] {
-    margin-top:5px;
-
-    border-radius:2px;
-  }
-
-  input[type=submit] {
-    margin:16px auto 0;
-    padding:12px;
-    max-width: 80%;
-    min-width: 200px;
-    width: auto;
-    color:#ffffff;
-    font-size:14px;
-    font-weight:normal;
-    // font-style: italic;
-    text-transform:uppercase;
-
-    border:none;
-    background:#01DE90;
-    border-radius:4px;
-  }
-
-  input[type=text].pin {
-    width:10%;
-
-    padding:5px 6px;
-    margin:0 2px;
-
-    font-size:24px;
-    text-align:center;
-
-    border-radius:4px;
-  }
-
-  input[type=tel].phone {
-    width:52.5%; 
-
-    margin-right:10px;
-    border-radius:4px;
-  }
-
-  input[type=submit].error {
-    background: #FF7373;
-  }
-
-  .banner {
-    width:200px; height:50px;
-    margin-bottom: 20px; 
-
-    background-size:200px;
-    background-image:url('/static/showgrid/img/wordmark-black.png');
-    background-repeat:no-repeat;
-  }
-
-  h3 {
-    text-align:center;
-    margin-top:0;
-  }
-
-  p {
-    width:80%;
-    margin:0 auto;
-    margin-bottom: 23px;
-    font-weight: normal;
-    color: rgba(0, 0, 0, 0.42);
-    text-align:center;
-  }
-
-  p.sub {
-    margin-top:30px;
-    margin-bottom:0px;
-
-    font-size:12px;
-    font-weight:500;
-  }
-}
-
-#overlay.active #modal {
-	-webkit-animation: animation 800ms linear both;
-  			animation: animation 800ms linear both;
-}
-
-@media screen and (max-width: 800px ) { 
-  #modal {
-    -webkit-flex:0 0 100%;
-            flex:0 0 100%;
-
-    height:100vh;
-
-    padding:0;
-
-    border-radius:0;
-
-    p {
-      width:90%;
-      font-size:14px;
-      text-align:center;
-    }
-
-    form {
-      width:95%;
-
-      input {
-        width:90%;
-        margin:0 auto;
-      }
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.user--actions {
-
-  margin:0 auto;
+         
 
 
   .info-text {
@@ -393,7 +116,9 @@
   }
 
   .actions {
-    width:100%;
+    width:95%;
+
+    margin:0 auto;
   }
 }
 
@@ -436,10 +161,10 @@
 
 
 
-.user--actions {
+#user--profile-actions {
   .actions {
     .alert-block {
-      width:90%;
+      width:100%;
 
       margin:0 auto;
       padding:30px 0;
@@ -506,6 +231,22 @@
           color:#676767;
           font-size:14px;
           font-weight:300;
+        }
+      }
+
+      .favorite {
+        -webkit-flex:0 0 80px;
+                flex:0 0 80px;
+
+        a {
+          color:#fc3030;
+          font-size:14px;
+          font-weight:700;
+          text-decoration:none;
+
+          &:hover {
+            text-decoration:underline;
+          }
         }
       }
 

@@ -11,11 +11,3 @@
 
 {% block footer %}
 {% endblock footer %}
-
-
-{% block scripts %}
-	<script>
-		var venues = {{ venues|jsonify }};
-		var days = {{ days|jsonify }};
-	</script>
-{% endblock scripts %}

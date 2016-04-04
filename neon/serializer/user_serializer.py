@@ -14,6 +14,7 @@ class AlertSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Alert
 		fields = ( 'id' , 'date' , 'sale' , 'which', 'show')
+
 	show = serializers.SerializerMethodField('get_alert_show') 
 
 	def get_alert_show(self,obj):
@@ -36,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
 	def get_user_alerts(self, obj):
 		def make(a):
 			return AlertSerializer(a).data
-		return map(make,Alert.objects.filter(user=obj))
+		return map(make, Alert.objects.filter(user=obj, show__date__gte=date.today()))
 		
 
 	def get_user_favorites(self,obj):

@@ -46,38 +46,51 @@
 	<section class="mobile-date">
 		<span>{{ show.date }}</span>
 	</section>
-	<section id="show-artists">
-		<h4>Artists</h4>
-		<ul>
-			{% for artist in show.artists %}
-			<li>
-				<div class="pic"></div>
-				<div class="name">{{ artist.name }}</div>
-				<div class="social">
-					{% if artist.facebook_url %}
-					<a href="{{ artist.facebook_url }}" target="_blank">
-						<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
-					</a>
-					{% endif %}
 
-					{% if artist.twitter_url %}
-					<a href="{{ artist.twitter_url }}" target="_blank">
-						<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
-					</a>
-					{% endif %}
+	<div class="sidebar">
+		<section id="show-artists">
+			<h4>Artists</h4>
+			<ul>
+				{% for artist in show.artists %}
+				<li>
+					<div class="pic"></div>
+					<div class="name">{{ artist.name }}</div>
+					<div class="social">
+						{% if artist.facebook_url %}
+						<a href="{{ artist.facebook_url }}" target="_blank">
+							<svg class="icon icon-facebook"><use xlink:href="#icon-facebook"></use></svg>
+						</a>
+						{% endif %}
 
-					{% if artist.spotify_link %}
-					<a href="{{ artist.spotify_link }}">
-						<svg class="icon icon-spotify"><use xlink:href="#icon-spotify"></use></svg>
-					</a>
-					{% endif %}
-				</div>
-			</li>
-			{% endfor %}
-		</ul>
-	</section>
-	<section id="show-actions-wide">
-	</section>
+						{% if artist.twitter_url %}
+						<a href="{{ artist.twitter_url }}" target="_blank">
+							<svg class="icon icon-twitter"><use xlink:href="#icon-twitter"></use></svg>
+						</a>
+						{% endif %}
+
+						{% if artist.spotify_link %}
+						<a href="{{ artist.spotify_link }}">
+							<svg class="icon icon-spotify"><use xlink:href="#icon-spotify"></use></svg>
+						</a>
+						{% endif %}
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</section>
+	</div>
+
+	<div class="main">
+		<section id="show-actions-wide">
+		</section>
+		<section id="show-content">		
+			{% if user.is_authenticated %}
+				<h2>Authenticated</h2>
+			{% else %}
+				<h2 class="unauthenticated">Not Authenticated</h2>
+			{% endif %}
+		</section>
+	</div>
 </div>
 {% endblock content %}
 
