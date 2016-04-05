@@ -43,12 +43,20 @@ def Logout(request):
 @api_view(['POST'])
 def Login(request):
 	try:
+		code = request.GET.get('code',False)
+		if code:
+			request.user.backend = 'django.contrib.auth.backends.ModelBackend'
+			user = NeonUser.objects.find(auth_code=code)
+			login(request.user)
+			return Response({"status":"good"},status=status.HTTP_200_OK)
 		body = json.loads(request.body)
-		email = body['email']
-		password = body['password']
+		email = request.GET.get('email',False) or body['email']
+		password = request.GET.get('password',False) or body['password']
+
+
+
 		user = authenticate(email=email, password=password)
 		if user is not None:
-			print 'LOGGING IN '+user.email
 			login(request,user)
 			return Response({"status":"good"},status=status.HTTP_200_OK)
 		else:

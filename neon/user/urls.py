@@ -7,4 +7,6 @@ urlpatterns = [
 	url(r'^logout$',views.Logout,name='logout'),
 	url(r'^signup$',views.Signup,name='signup'),
 	url(r'^rest/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),
+	url(r'^auth/',include('social.apps.django_app.urls', namespace='social')),
 ]
+

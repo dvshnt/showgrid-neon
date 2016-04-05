@@ -20,3 +20,4 @@ simplejson==3.8.2
 django-tinymce==2.2.0
 whoosh==2.7.2
 django-imagekit==3.3
+python-social-auth==0.2.13

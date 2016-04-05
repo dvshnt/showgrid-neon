@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import FormButton from './FormButton';
-import windowScroll from '../util/windowScroll';
+import FormButton from '/util/FormButton';
+import windowScroll from '/util/windowScroll';
 
 
 
@@ -169,6 +169,8 @@ export default class PhoneModal extends Component {
 		var active = (this.props.visible) ? "active" : "";
 		var form = null
 
+
+
 		
 		form = (
 			<div key = 'pin-form'>
@@ -185,7 +187,8 @@ export default class PhoneModal extends Component {
 					<FormButton onClick={this.userSubmitPin} error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" />
 				</form>
 			</div>
-		);
+		)
+		
 		if (!this.state.verify) {
 			form = (
 				<div>

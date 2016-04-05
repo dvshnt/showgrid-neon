@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import moment from 'moment';
 
-import DateManager from '../util/DateManager';
+import DateManager from '/util/DateManager';
 
 import AuthModal from './AuthModal';
 import PhoneModal from './PhoneModal';

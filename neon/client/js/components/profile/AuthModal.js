@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-var GridEngine = require('../util/GridEngine');
-import FormButton from './FormButton';
-import windowScroll from '../util/windowScroll';
+var GridEngine = require('/util/GridEngine');
+import FormButton from '/components/FormButton';
+import windowScroll from '/util/windowScroll';
 import classNames from 'classnames';
 import $ from 'jquery';
-
+import {Slide} from 'intui';
+import Modal from '/components/Modal';
 
 
 class AuthModal extends Component {
@@ -14,7 +15,6 @@ class AuthModal extends Component {
 		this.userSignup = this.userSignup.bind(this);
 		this.userLogin = this.userLogin.bind(this);
 		this.resetError = this.resetError.bind(this);
-		
 		this.toggleScreen = this.toggleScreen.bind(this);
 
 		this.state = {
@@ -24,7 +24,7 @@ class AuthModal extends Component {
 			isSignUp: false,
 			facebook_login: false,
 			animate: true,
-		};
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -32,8 +32,8 @@ class AuthModal extends Component {
 
 		var top = (window.pageYOffset || window.scrollY)
 		var left = (window.pageXOffset || window.scrollX)
+
 		if(top == null || left == null){
-			//console.log("BAD SCROLL INPUT")
 			window.scrollTo(0,0)
 		}
 
@@ -42,7 +42,6 @@ class AuthModal extends Component {
 		}else{
 			windowScroll.disable();
 		}
-
 
 		var pagemode = this.state.isSignUp
 		if(nextProps.mode == null){
@@ -57,8 +56,6 @@ class AuthModal extends Component {
 			isSignUp: pagemode
 		});
 	}
-
-
 
 	componentDidUpdate(prevProps, prevState) {
 		window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
@@ -83,11 +80,10 @@ class AuthModal extends Component {
 		e.preventDefault()
 	}
 
-
 	resetError(e) {
 		if (this.state.error) {
 			this.setState({
-				error: false,
+				error: null,
 				display: false,
 			});
 		}
@@ -125,7 +121,7 @@ class AuthModal extends Component {
 		})
 	}
 
-	userLogin(e) {
+	userLogin(e){
 		//console.log("SIGNIN")
 		e.preventDefault();
 
@@ -143,62 +139,40 @@ class AuthModal extends Component {
 	}
 
 	render() {
-		//console.log("RENDER AUTH",this.state)
-
-		var active = classNames({
-			"active": this.props.visible || this.state.visible,
-			"animate" : true
-		})
-
-		var container_state= classNames({
-			'modalScreenContainer' : true,
-			'page2': this.state.isSignUp == true ? true : false 
-		})
-
-		//console.log(this.state.scrollLeft,this.state.scrollTop);
-		//window.scrollTo(this.state.scrollLeft,this.state.scrollTop);
 
 		return (
-			<div id="overlay" onClick={this.closeModal.bind(this)} className={ active } style={{top: this.state.scrollTop,left: this.state.scrollLeft}}>
-				<div id="modal">
-					<svg onClick={this.closeModalButton.bind(this)} id="close" className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
-					<div className="banner"></div>
-					<div className = {container_state}>
-						<div className= 'modalScreen' id='LogInModalScreen'>
-							<p>
-							<span><a className="signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span> 
-							</p>
-							<p>
-								Favorite shows, set show alerts, and particpate in all the conversation happening on here!
-							</p>
-							<form id = "signin" action="" onSubmit={ this.userLogin }>
-								<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
-								<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
-								<FormButton error={ this.state.error } errorMessage="Invalid email or Password" submitMessage="Sign In" />
-							</form>
-							<p className="sub">
-								Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a>
-							</p>
-						</div>
-						<div className= 'modalScreen' id='SignUpModalScreen'>
-							<p>
-								Sign up with your email and a password.
-							</p>
-							<form id = "signup" action="" onSubmit={ this.userSignup }>
-								<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
-								<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
-								<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>
-								<FormButton error = { this.state.error } errorMessage="hm...try again" submitMessage="Sign Up" />
+			<Modal closeModal = {this.closeModal} closeError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
+			
+				<Slide beta = {100}>
+					<p><span><a className="signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
+					<p>Favorite shows, set show alerts, and particpate in all the conversation happening on here!</p>
+					<form id = "signin" action="" onSubmit={ this.userLogin }>
+						<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
+						<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
+						<span>
+							<FormButton submitMessage="Sign In" />
+							<b style={{margin:'5px'}}>or</b>
+							<a href = {window.user.facebook_login_url + '?next='+encodeURI(window.location.href) } className="button button-icon button-facebook"><svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-facebook"/>' }} /></a>
+						</span>
+					</form>
+					<p className="sub">Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a></p>
+				</Slide>
+				
 
-							</form>
-							<br/>
-							<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
-						</div>
-					</div>
-				</div>
-			</div>
+				<Slide beta = {100}>
+					<p>Sign up with your email and a password.</p>
+					<form id = "signup" action="" onSubmit={ this.userSignup }>
+						<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
+						<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
+						<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>
+						<FormButton submitMessage="Sign Up" />
+					</form>
+					<br/>
+					<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
+				</Slide>
+
+			</Modal>
 		)
-
 	}
 };
 

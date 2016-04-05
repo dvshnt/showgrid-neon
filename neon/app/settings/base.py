@@ -25,10 +25,44 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
 
+
+# social auth
+SOCIAL_AUTH_FACEBOOK_KEY = '868089599911045'
+SOCIAL_AUTH_FACEBOOK_SECRET = '02801ae29d77605a491125911a47e4b8'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'en_US',
+  'fields': 'name, email, age_range'
+}
+
+
+
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile'
+SOCIAL_AUTH_LOGIN_URL = '/user/login-error'
+
+SOCIAL_AUTH_USER_MODEL = 'user.NeonUser'
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.social_auth.associate_by_email',
+    'user.auth.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'user.auth.authenticate_user',
+)
+
+
 SPOTIFY_KEY = ''
 SPOTIFY_API = 'https://api.spotify.com/v1/'
 ECHONEST_API = 'http://developer.echonest.com/api/v4/'
 ECHONEST_KEY = 'ZOP6OTHBMGEZHVHTF'
+
 
 
 ECHONEST_MAX_BIO = 3 # (maximum amount of artist bios to pull)
@@ -91,12 +125,9 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'user.middleware.NeonUserMiddleware'
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 
@@ -112,7 +143,24 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
+    'django.core.context_processors.request'
+)
+
+
+
+# SOCIAL_AUTH_DISCONNECT_PIPELINE = (
+#     'social.pipeline.disconnect.allowed_to_disconnect',
+#     'social.pipeline.disconnect.get_entries',
+#     'social.pipeline.disconnect.revoke_tokens',
+#     'social.pipeline.disconnect.disconnect',
+# )
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookAppOAuth2',
+    'social.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
 )
 
 
@@ -128,7 +176,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-
+   
     'corsheaders',
  
     'colorful',
@@ -148,6 +196,7 @@ INSTALLED_APPS = (
     'rest_auth',
     'meta',
     'tinymce',
+    'social.apps.django_app.default',
 )
 
 

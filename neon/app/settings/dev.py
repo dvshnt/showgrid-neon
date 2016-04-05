@@ -12,38 +12,34 @@ DEBUG=True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sgdb',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'root',
-        'PASSWORD': 'showgrid',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'NAME': 'test',          # Or path to database file if using sqlite3.  
+        'USER': 'root',         # The following settings are not used with sqlite3:
+        'PASSWORD': '',
+        'HOST': 'localhost',    # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',             # Set to empty string for default.
     }
 }
 
-
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/media/'
-
-
+MEDIA_ROOT = '/Users/arxii/Documents/neon/neon/media/'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ( os.path.join('static'), )
-STATIC_ROOT = '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/temp/'
+STATIC_ROOT = '/Users/arxii/Documents/neon/neon/temp/'
 
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/cal/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/magazine/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/newsletter/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/show/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/user/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/venue/templates/',
+            '/Users/arxii/Documents/neon/neon/templates/',
+            '/Users/arxii/Documents/neon/neon/cal/templates/',
+            '/Users/arxii/Documents/neon/neon/magazine/templates/',
+            '/Users/arxii/Documents/neon/neon/newsletter/templates/',
+            '/Users/arxii/Documents/neon/neon/show/templates/',
+            '/Users/arxii/Documents/neon/neon/user/templates/',
+            '/Users/arxii/Documents/neon/neon/venue/templates/',
         ],
         'OPTIONS': { 
             'loaders': [
@@ -60,3 +56,29 @@ TEMPLATES = [
         },
     },
 ]
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
+

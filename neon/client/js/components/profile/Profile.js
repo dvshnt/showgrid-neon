@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import FormButton from './FormButton';
-import PhoneModal from './PhoneModal'
+import FormButton from '../FormButton';
+import PhoneModal from './PhoneModal';
 import $ from 'jquery';
-import DateManager from '../util/DateManager'
+import DateManager from '../../util/DateManager'
 import moment from 'moment'
 import SetAlert from './SetAlert'
-import r from '../render';
-var GridEngine = require('../util/GridEngine');
+import r from '../../render';
+var GridEngine = require('../../util/GridEngine');
 
 import '../util/csrf'
 

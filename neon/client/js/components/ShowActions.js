@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import moment from 'moment';
 
-import DateManager from '../util/DateManager';
 
+import DateManager from '../util/DateManager';
 import Share from './Share';
 import Ticket from './Ticket';
-import SetAlert from './SetAlert';
-import SetFavorite from './SetFavorite';
 
-import AuthModal from './AuthModal';
+
+import { AuthModal , SetAlert , SetFavorite } from './profile';
 
 
 export default class ShowActions extends Component {

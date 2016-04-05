@@ -15,6 +15,8 @@ import inspect, itertools, json
 from twiliohandle import MessageClient
 Sender = MessageClient()
 from alert import Alert
+# from python-social-auth import
+
 
 
 class AuthBackend(ModelBackend):
@@ -81,12 +83,14 @@ class NeonUser(AbstractBaseUser):
 	is_active = models.BooleanField(_('active'), default=False)
 	is_admin = models.BooleanField(_('admin'), default=False)
 	is_staff = models.BooleanField(_('staff'), default=False)
-
+	auth_code = models.CharField(_('auth code'), max_length=255, blank=True,null=True)
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
 	objects = NeonUserManager()
 	
 	USERNAME_FIELD = 'email'
+
+
 
 
 	# Favorites
