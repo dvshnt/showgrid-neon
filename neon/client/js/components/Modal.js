@@ -4,20 +4,9 @@ import FormButton from './FormButton';
 import windowScroll from '../util/windowScroll';
 import classNames from 'classnames';
 import $ from 'jquery';
-import {Slide,SlideMixin} from 'intui';
+import {Slide,SlideMixin} from 'intui/dist/intui';
 
 
-
-var ModalPage = react.createClass({
-	mixin: SlideMixin,
-	render: function(){
-		return (
-			<Slide beta = {100} className="modal-page">
-				{this.props.children}
-			</Slide>
-		)		
-	}
-});
 
 
 var Modal = react.createClass({
@@ -30,33 +19,24 @@ var Modal = react.createClass({
 	
 	getDefaultProps: function(){
 		return {
+			visible: false,
 			page_index: 0,
 		}
 	},
 	
 	componentWillReceiveProps: function(props,state){
-		if(props.visible != this.props.visible){
-			this.setState({
-				visible: props.visible
-			})
-		}
-	},
-	
-	toggle: function(){
-		this.setState({
-			visible: !this.state.visible
-		})
+		
 	},
 
 	render: function(){
 		return (
-			<div onClick={this.toggle} className={"overlay-"+(this.state.visible ? 'visible' : 'hidden')}>
-				<svg onClick={this.toggle} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
+			<div onClick={this.props.onClose} className={"overlay-"+(this.props.visible ? 'visible' : 'hidden')}>
+				<svg onClick={this.props.onClose} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
 				<Slide slide vertical index_pos = { this.props.error != null ? 0 : 1 } height = '90%' >
-					<Slide beta = {10} onClick = { this.props.closeError} outerClassName="modal-error" >
+					<Slide beta = {10} onClick = { this.props.onResetError} outerClassName="modal-error" >
 						<span>{this.state.error}</span>
 					</Slide>
-					<Slide slide beta = {100} index_pos = {this.props.index_pos}>
+					<Slide slide beta = {100} index_pos = {this.props.page_index}>
 						{this.props.children}
 					</Slide>
 				</Slide>
@@ -64,7 +44,7 @@ var Modal = react.createClass({
 		)
 	}
 
-});
+})
 
 
 export default Modal

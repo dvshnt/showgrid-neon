@@ -1,7 +1,5 @@
-import PhoneModal from './PhoneModal';
-import AuthModal from './AuthModal';
-import Profile from './Profile';
-import SetAlert from './SetAlert';
-import setFavorite from './SetFavorite';
-
-export {PhoneModal,AuthModal,Profile,SetAlert,setFavorite};
+module.exports = {
+	Profile : require('./Profile'),
+	PhoneModal : require('./PhoneModal'),
+	ProfilePage : require('./ProfilePage'),
+}

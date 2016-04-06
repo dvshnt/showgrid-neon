@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-var GridEngine = require('/util/GridEngine');
-import FormButton from '/components/FormButton';
-import windowScroll from '/util/windowScroll';
+var GridEngine = require('../../util/GridEngine');
+import FormButton from '../FormButton';
+import windowScroll from '../../util/windowScroll';
 import classNames from 'classnames';
 import $ from 'jquery';
-import {Slide} from 'intui';
-import Modal from '/components/Modal';
+import {Slide} from 'intui/dist/intui';
+import Modal from '../Modal';
 
 
 class AuthModal extends Component {
@@ -141,7 +141,7 @@ class AuthModal extends Component {
 	render() {
 
 		return (
-			<Modal closeModal = {this.closeModal} closeError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
+			<Modal onClose={this.closeModal} onResetError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
 			
 				<Slide beta = {100}>
 					<p><span><a className="signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>

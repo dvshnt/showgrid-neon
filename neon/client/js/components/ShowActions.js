@@ -5,7 +5,7 @@ import moment from 'moment';
 
 
 import DateManager from '../util/DateManager';
-import Share from './Share';
+import Share from './profile/Share';
 import Ticket from './Ticket';
 
 

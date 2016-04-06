@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import FormButton from '/util/FormButton';
-import windowScroll from '/util/windowScroll';
+import FormButton from '../FormButton';
+import windowScroll from '../../util/windowScroll';
 
 
 
@@ -27,7 +27,9 @@ export default class PhoneModal extends Component {
 
 
 	hidePhoneModal(){
-		React.render(<PhoneModal visible={false} />,document.getElementById('overlay-wrapper'));
+		this.setState({
+			visible: false
+		})
 	}
 
 
@@ -36,6 +38,7 @@ export default class PhoneModal extends Component {
 			error: false
 		});
 	}
+
 
 	componentWillUpdate(nextProps, nextState) {
 		if (nextProps.visible) {
@@ -48,14 +51,6 @@ export default class PhoneModal extends Component {
 
 
 
-
-
-	closeOnClick(e) {
-		if (e.target.id === "overlay") {
-			this.hidePhoneModal();
-		}
-		e.preventDefault()
-	}
 
 	handleKeydown(e) {
 		// ESC key
@@ -135,63 +130,37 @@ export default class PhoneModal extends Component {
 
 	userSubmitPhone(e) {
 		var phonenumber = React.findDOMNode(this.refs.phonenumber).value;
-
 		var _this = this;
-
 		var url = '/user/rest/phone_set';
+
 		window.fetch(url, {
-				method: 'post',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-					'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
-				},
-				body: JSON.stringify({
-					phone:phonenumber
-				})
+			method: 'post',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+			},
+			body: JSON.stringify({
+				phone:phonenumber
 			})
-			.then(function(response) {
-				return response.json();
-			})
-			.then(function(body) {
-				_this.setState({
-					verify: true,
-					error: false
-				});
+		})
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(body) {
+			_this.setState({
+				verify: true,
+				error: false
 			});
+		});
 
 		// e.preventDefault();
 	}
 
 	render() {
-		window.modal = this
-		console.log("RENDER",this.props.visible)
-		var active = (this.props.visible) ? "active" : "";
-		var form = null
-
-
-
-		
-		form = (
-			<div key = 'pin-form'>
-				<h3>Confirm your phone number</h3>
-				<p>
-					Enter the 4-digit PIN you receive to start getting alerts.
-				</p>
-				<form action="" >
-					<input maxLength="1" className="pin pin-1" type="text" ref="pinOne" size="1" onChange={ this.goToNextPinInput }/>
-					<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
-					<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
-					<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
-					<br></br>
-					<FormButton onClick={this.userSubmitPin} error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" />
-				</form>
-			</div>
-		)
-		
-		if (!this.state.verify) {
-			form = (
-				<div>
+		return (
+			<Modal onClose={this.hidePhoneModal} visible={this.props.visible} page_index = {page_index} >
+				<Slide vertical beta = {100} >
 					<h3>Sign Up to Receive Text Alerts</h3>
 					<p>
 						To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
@@ -204,29 +173,28 @@ export default class PhoneModal extends Component {
 						<br></br>
 						<FormButton onClick={this.userSubmitPhone} error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 					</form>
-				</div>
-			);
-		}
-
-		if (this.state.success) {
-			var _this = this;
-
-			form = (
-				<div>
-					<h3>Phone Number Verified!</h3>
-					<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
-				</div>
-			);
-
-			setTimeout(function() {
-				_this.hidePhoneModal();
-			}, 800);
-		}
-
-		return (
-			<div id="overlay" onClick={this.closeOnClick} className={ active } style = {{top: window.scrollY+'px'}}>
-				<div id="modal"><b id="close" className="icon-close" onClick={ this.hidePhoneModal }></b>{ form }</div>
-			</div>
-		)
+				</Slide>
+				<Slide vertical beta = {100} >
+					<h3>Confirm your phone number</h3>
+					<p>
+						Enter the 4-digit PIN you receive to start getting alerts.
+					</p>
+					<form action="" >
+						<input maxLength="1" className="pin pin-1" type="text" ref="pinOne" size="1" onChange={ this.goToNextPinInput }/>
+						<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
+						<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
+						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
+						<br></br>
+						<FormButton onClick={this.userSubmitPin} error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" />
+					</form>
+				</Slide>
+				<Slide beta = {100} vertical>
+					<div>
+						<h3>Phone Number Verified!</h3>
+						<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
+					</div>
+				</Slide>
+			</Modal>
+		)		
 	}
-};
+}
