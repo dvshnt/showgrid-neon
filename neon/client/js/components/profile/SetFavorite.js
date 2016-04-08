@@ -34,27 +34,19 @@ export default class SetFavorite extends Component {
 			return React.render(React.render(<AuthModal visible={true} />,document.getElementById('overlay-wrapper')));
 		}
 
-		var url = '/user/rest/favorite';
+		var url = '/user/rest/favorite?id='+this.props.show.id;
 
 		window.fetch(url, {
-				method: this.state.favorited ? 'delete' : 'post',
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-					'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
-				},
-				body: JSON.stringify({
-					show: _this.props.show.id
-				})
-			})
-			.then(function(response) {
-				return response.json();
-			})
-			.then(function(body) {
-				_this.setState({
-					favorited: _this.state.favorited ? false : true
-				});
-			});
+			method: this.state.favorited ? 'delete' : 'post',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+			},
+		})
+		.then(function(body) {
+			_this.setState({ favorited: _this.state.favorited ? false : true });
+		});
 	}
 
 	render() {

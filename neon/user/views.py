@@ -5,7 +5,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view
 
 from rest_framework import permissions, status
-from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from models import *
@@ -20,18 +19,103 @@ import dateutil
 import dateutil.parser
 
 
+from django.contrib.auth.decorators import login_required
 
-from serializer import UserSerializer, AlertSerializer
+from social.backends.oauth import BaseOAuth1, BaseOAuth2
+from social.backends.google import GooglePlusAuth
+from social.backends.utils import load_backends
+from social.apps.django_app.utils import psa
+
+
+from serializer import UserSerializer, AlertSerializer, ProfileSerializer
+
+
+
+# def home(request):
+#     """Home view, displays login mechanism"""
+#     if request.user.is_authenticated():
+#         return redirect('done')
+#     return context()
+
+
+#auth
+# def context(**extra):
+#     return dict({
+#         'plus_id': getattr(settings, 'SOCIAL_AUTH_GOOGLE_PLUS_KEY', None),
+#         'plus_scope': ' '.join(GooglePlusAuth.DEFAULT_SCOPE),
+#         'available_backends': load_backends(settings.AUTHENTICATION_BACKENDS)
+#     }, **extra)
+
+
+# def home(request):
+#     """Home view, displays login mechanism"""
+
+#     return context()
+def context(**extra):
+	return Response(dict({
+        'plus_id': getattr(settings, 'SOCIAL_AUTH_GOOGLE_PLUS_KEY', None),
+        'plus_scope': ' '.join(GooglePlusAuth.DEFAULT_SCOPE),
+        'available_backends': load_backends(settings.AUTHENTICATION_BACKENDS)
+    }, **extra),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+def require_email(request):
+    backend = request.session['partial_pipeline']['backend']
+    return context(email_required=True, backend=backend)
+
+# def validation_sent(request):
+#     return context(
+#         validation_sent=True,
+#         email=request.session.get('email_validation_address')
+#     )
+
+def done(request):
+    """Login complete view, displays user data"""
+    return context()
+
+@psa('social:complete')
+def ajax_auth(request, backend):
+    if isinstance(request.backend, BaseOAuth1):
+        token = {
+            'oauth_token': request.REQUEST.get('access_token'),
+            'oauth_token_secret': request.REQUEST.get('access_token_secret'),
+        }
+    elif isinstance(request.backend, BaseOAuth2):
+        token = request.REQUEST.get('access_token')
+    else:
+        raise HttpResponseBadRequest('Wrong backend type')
+    user = request.backend.do_auth(token, ajax=True)
+    login(request, user)
+    data = {'id': user.id, 'username': user.username}
+    return HttpResponse(json.dumps(data), mimetype='application/json')
+
+
+
 
 
 
 
 @api_view(['GET'])
-def Profile(request):
+@login_required()
+def private_profile(request):
 	if request.user.is_authenticated() == False:
-		return redirect('/')
+		return redirect('/?q=profile')
 	else:
 		return render(request, "profile.html")
+
+
+
+
+@api_view(['GET'])
+def public_profile(request,id):
+	user = NeonUser.objects.get(id=id)
+	return render(request, "profile-public.html",ProfileSerializer(user).data)
+
+
+
+
 
 
 @api_view(['GET'])
@@ -40,20 +124,14 @@ def Logout(request):
 	return redirect('/')
 
 
-@api_view(['POST'])
+
 def Login(request):
+	if request.user.is_authenticated():
+		return redirect('/user/profile')
 	try:
-		code = request.GET.get('code',False)
-		if code:
-			request.user.backend = 'django.contrib.auth.backends.ModelBackend'
-			user = NeonUser.objects.find(auth_code=code)
-			login(request.user)
-			return Response({"status":"good"},status=status.HTTP_200_OK)
 		body = json.loads(request.body)
 		email = request.GET.get('email',False) or body['email']
 		password = request.GET.get('password',False) or body['password']
-
-
 
 		user = authenticate(email=email, password=password)
 		if user is not None:
@@ -62,7 +140,7 @@ def Login(request):
 		else:
 			return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	except:
-		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		return redirect()
 
 
 @api_view(['POST'])
@@ -81,11 +159,11 @@ def Signup(request):
 		return Response({"status":"user_exists"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	user = NeonUser.objects.create_user(email, password)
 	user.is_active=True
- 	user.save()
+	user.save()
 
- 	user = authenticate(email=email, password=password)
- 	if user is not None:
- 		login(request,user)
+	user = authenticate(email=email, password=password)
+	if user is not None:
+		login(request,user)
 		return Response({"status":"good"},status=status.HTTP_200_OK)
 	else:
 		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -176,18 +254,15 @@ class UserActions(APIView):
 		user = request.user
 
 		if action == 'favorite':
-			body_unicode = request.body.decode('utf-8')
-			body = json.loads(body_unicode)
-			show = self.get_show(body['show'])
-			if show != None:
-				if show in user.favorites.all():
+			id = request.GET.get('id',False)
+			if id != None:
+				show = self.get_show(id)
+				try:
 					user.favorites.remove(show)
-					status = ""
+					return HttpResponse(status_code=200)
+				except:
+					return HttpResponse(status_code=500)
 
-				user.save()
-
-			 	return Response({ 'status': "success", 'show': show.id })
-			return Response({ 'status': "failure", 'show': show.id })
 
 
 		#clear user alert
@@ -218,21 +293,14 @@ class UserActions(APIView):
 		user = request.user
 
 		if action == 'favorite':
-			body_unicode = request.body.decode('utf-8')
-			body = json.loads(body_unicode)
-			show = body['show']
-
-			show = self.get_show(int(show))
-			if show != None:
-				if show not in user.favorites.all():
+			id = request.GET.get('id',False)
+			if id != None:
+				show = self.get_show(id)
+				try:
 					user.favorites.add(show)
-					status = "active"
-
-				user.save()
-
-			 	return Response({ 'status': "success", 'show': show.id })
-			return Response({ 'status': "failure", 'show': show.id })
-
+					return HttpResponse(status_code=200)
+				except:
+					return HttpResponse(status_code=500)
 
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import DateManager from '../util/DateManager';
+import DateManager from 'util/DateManager';
 
 
 export default class Ticket extends Component {

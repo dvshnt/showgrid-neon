@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-var GridEngine = require('../../util/GridEngine');
-import FormButton from '../FormButton';
-import windowScroll from '../../util/windowScroll';
+import dom from 'react-dom';
+var GridEngine = require('util/GridEngine');
+import FormButton from 'components/FormButton';
+import windowScroll from 'util/windowScroll';
 import classNames from 'classnames';
 import $ from 'jquery';
-import {Slide} from 'intui/dist/intui';
-import Modal from '../Modal';
+import I from 'intui/Slide';
+import SlideMixin from 'intui/Mixin';
+import Modal from 'components/Modal';
+import * as op from 'operator';
 
 
-class AuthModal extends Component {
+
+export default class AuthModal extends Component {
+	
+
+
 	constructor(props) {
 		super(props);
+
+		this.mixins = [SlideMixin]
 
 		this.userSignup = this.userSignup.bind(this);
 		this.userLogin = this.userLogin.bind(this);
@@ -20,7 +29,7 @@ class AuthModal extends Component {
 		this.state = {
 			hidden:false,
 			token: null,
-			error: false,
+			error: null,
 			isSignUp: false,
 			facebook_login: false,
 			animate: true,
@@ -63,47 +72,31 @@ class AuthModal extends Component {
 
 	toggleScreen(e){
 		this.setState({
-			error: false,
+			error: null,
 			isSignUp: !this.state.isSignUp
 		});
 		e.preventDefault()
 	}
 
-	closeModal(e) {
-		if(e.target.id != 'overlay') return;
-		React.render(<AuthModal visible={false} />,document.getElementById('overlay-wrapper'))
-		e.preventDefault()
-	}
-
-	closeModalButton(e) {
-		React.render(<AuthModal visible={false} />,document.getElementById('overlay-wrapper'))
-		e.preventDefault()
-	}
-
 	resetError(e) {
-		if (this.state.error) {
-			this.setState({
-				error: null,
-				display: false,
-			});
-		}
+		this.setState({
+			error: null,
+		});
 	}
 
 	isGood(err){
-		
-		if(err == false){
+		console.log("TEST",err)
+		if(err == null){
 			window.location.reload()
 		}else{
-		
 			return this.setState({
-				error: true
-
+				error: err
 			});
 		}
 	}
 
 	userSignup(e){
-		//console.log("SIGNUP")
+		
 		e.preventDefault();
 
 		var email = React.findDOMNode(this.refs.register_email).value;
@@ -116,13 +109,13 @@ class AuthModal extends Component {
 			type: 'POST',
 			data: JSON.stringify({email:email,password:password}),
 			dataType: 'json',
-			success: this.isGood.bind(this,false),
-			error: this.isGood.bind(this,true)
+			success: this.isGood.bind(this,null),
+			error: this.isGood.bind(this,"we couldnt log you in, try again.")
 		})
 	}
 
 	userLogin(e){
-		//console.log("SIGNIN")
+	
 		e.preventDefault();
 
 		var email = React.findDOMNode(this.refs.email).value;
@@ -133,48 +126,73 @@ class AuthModal extends Component {
 			type: 'POST',
 			data: JSON.stringify({email:email,password:password}),
 			dataType: 'json',
-			success: this.isGood.bind(this,false),
-			error: this.isGood.bind(this,true)
+			success: this.isGood.bind(this,null),
+			error: this.isGood.bind(this,"hmm something went wrong")
 		 })
 	}
 
 	render() {
 
 		return (
-			<Modal onClose={this.closeModal} onResetError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
-			
-				<Slide beta = {100}>
-					<p><span><a className="signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
-					<p>Favorite shows, set show alerts, and particpate in all the conversation happening on here!</p>
-					<form id = "signin" action="" onSubmit={ this.userLogin }>
+			<Modal className = {'auth-modal'} onClose={op.closeModal} onResetError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
+				<I innerClassName = "modal-page-container" vertical beta = {100}>
+					
+
+
+					<I beta={60}>
+						<div className = 'auth-banner'/>
+					</I>
+
+
+
+
+					<I beta = {120} vertical>
+						<p><span><a className="button-green signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
+						<p>Favorite shows, set show alerts, and particpate in all the conversation happening on here!</p>
+					</I>
+
+
+
+					<I cetner beta = {50} >
 						<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
 						<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
-						<span>
-							<FormButton submitMessage="Sign In" />
-							<b style={{margin:'5px'}}>or</b>
-							<a href = {window.user.facebook_login_url + '?next='+encodeURI(window.location.href) } className="button button-icon button-facebook"><svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-facebook"/>' }} /></a>
-						</span>
-					</form>
-					<p className="sub">Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a></p>
-				</Slide>
-				
+					</I>
 
-				<Slide beta = {100}>
-					<p>Sign up with your email and a password.</p>
-					<form id = "signup" action="" onSubmit={ this.userSignup }>
+
+
+					<I center innerClassName = "auth-input">
+						<input className = "button-blue" type="submit" value="Log In" onClick={ this.userLogin } />
+						<b style={{margin:'5px'}}>or</b>
+						<a href = {window.user.facebook_login_url + '?next='+encodeURI(window.location.href) } className="button-fb"><svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-facebook"/>' }} /></a>
+					</I>
+
+
+					<I center beta ={30}>
+						<p className="auth-forgot">Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a></p>
+					</I>
+
+				</I>
+				<I innerClassName = "modal-page-container" vertical beta = {100}>
+					
+					<I beta = {100} center >
+						<p>Sign up with your email and a password.</p>
+					</I>
+
+					<I beta = {110} vertical center >
 						<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
 						<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
 						<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>
-						<FormButton submitMessage="Sign Up" />
-					</form>
-					<br/>
-					<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
-				</Slide>
+						<input className = "button-blue" type="submit" value="Sign Up" onClick={ this.userSignup } />
+					</I>
 
+					<I beta = {60} center >
+						<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
+					</I>
+				</I>
 			</Modal>
 		)
 	}
 };
 
 
-export default AuthModal
+

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import moment from 'moment';
-import Pikaday from '../util/pikaday';
+import Pikaday from 'util/pikaday';
 
 import HeaderCalendarDay from './HeaderCalendarDay';
 
-var DateManager = require('../util/DateManager');
+var DateManager = require('util/DateManager');
 
 
 export default class HeaderCalendar extends Component {

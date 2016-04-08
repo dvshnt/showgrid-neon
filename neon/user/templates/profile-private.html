@@ -1,0 +1,44 @@
+<!--
+
+	a header is added to profile-base that has options for updating profile settings
+	options:
+		update 
+!-->
+
+{% extends "profile-base.html" %}
+
+{% block profile_private_actions %}
+	<a class = "profile-actions-private-settings" href="javascript:window.operator.showProfileSettings();">settings</a>
+	<a class = "profile-actions-private-alerts" href="javascript:window.operator.showAlerts();">
+		<svg><use xlink:href="#icon-alert"></use></svg>
+		<div class = "profile-actions-private-alerts-count">{{user.alert_count}}</div>
+	</a>
+	
+	<!-- profile profile_alerts  -->
+	<div class = "profile-actions-alerts {% if user.show_profile_alerts == False %}profile-actions-alerts-hidden{% endif %}">
+		
+		<!-- toggle -->
+		<div class = "profile-actions-alerts-toggle {% if user.show_profile_alerts == False %} profile-actions-alerts-toggle-off {% endif %} ">
+			<a href="javascript:window.operator.showProfileAlerts();" class="profile-actions-alerts-toggle-alert">
+				<svg><use xlink:href="#icon-more"></use></svg>
+			</a>
+			<a href="javascript:window.operator.hideProfileAlerts();" class="profile-actions-alerts-toggle-close">
+				<svg><use xlink:href="#icon-close"></use></svg>
+			</a>		
+		</div>
+		
+		<!-- alerts container -->
+		<div class = "profile-actions-alerts-container">
+			{% if !user.email_confirmed %}
+				<a href="javascript:window.operator.showProfileSettings();" class = "profile-alert profile-alert-email">confirm your email to enter email contests!</a>
+			{% endif %}
+			{% if !user.phone_verified and user.phone != None %}
+				<a href="javascript:window.operator.showProfileSettings();" class = "profile-alert profile-alert-email">please verify your phone!</a>
+			{% endif %}	
+			{% if user.phone == None %}
+				<a href="javascript:window.operator.showPhoneModal();" class = "profile-alert profile-alert-email">add your phone to recieve alerts!</a>
+			{% endif %}		
+		</div>
+
+	</div>
+{% endblock profile_private_actions %}

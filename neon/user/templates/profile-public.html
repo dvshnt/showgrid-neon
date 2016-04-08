@@ -1,0 +1,16 @@
+<!--
+	profile base is shared by both private and public profiles.
+
+	main difference is that private template has extra options to open the profile settings modal.
+
+	an option to edit alerts 
+
+!-->
+{% extends "profile-base.html" %}
+	
+{% block profile_public_actions %}
+	<a class="profile-actions-public-like" href="javascript:window.operator.likeProfile();">
+		<svg><use xlink:href="#icon-heart"></use></svg>
+	</a>
+	<a class="profile-actions-public-follow"  href="javascript:window.operator.followProfile();"> follow </a>
+{% endblock profile_public_actions %}

@@ -1,0 +1,27 @@
+.auth-banner {
+	width:100%;
+	height:50px;
+	margin-bottom: 20px; 
+	background-size:50%;
+	background-position: center;
+	background-image:url('/static/showgrid/img/wordmark-black.png');
+	background-repeat:no-repeat;
+}
+
+.modal-page-container{
+	padding: 20px;
+	@include center;
+	box-sizing: border-box;
+}
+
+.auth-modal{
+	// height: 500px; 
+}
+
+.auth-input{
+	@include center;
+}
+
+.auth-forgot{
+	height: 20%;
+}

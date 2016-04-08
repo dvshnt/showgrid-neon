@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-var DateManager = require('../util/DateManager');
+var DateManager = require('util/DateManager');
 
 
 export default class ListItemSm extends Component {

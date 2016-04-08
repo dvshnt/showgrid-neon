@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import ShowActions from './ShowActions';
 
-var DateManager = require('../util/DateManager');
+var DateManager = require('util/DateManager');
 
 
 export default class ListItemLg extends Component {

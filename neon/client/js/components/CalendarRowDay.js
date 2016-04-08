@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 	
 import CalendarRowDayShow from './CalendarRowDayShow';
 
-var DateManager = require('../util/DateManager');
+var DateManager = require('util/DateManager');
 
 
 export default class CalendarRowDay extends Component {

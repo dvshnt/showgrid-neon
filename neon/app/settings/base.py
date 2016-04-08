@@ -4,8 +4,35 @@ ADMINS = (
 )
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    }
+}
+
+
+
 #Show image min dimentions
 
+from auth import *
 
 # Twilio API keys and number
 TWILIO_ACCOUNT_SID = 'AC537898c0aaf67d677d93716130df421b'
@@ -23,39 +50,6 @@ EMAIL_HOST_USER = 'davis@showgrid.com'
 EMAIL_HOST_PASSWORD = '!woodle212'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
-
-
-
-# social auth
-SOCIAL_AUTH_FACEBOOK_KEY = '868089599911045'
-SOCIAL_AUTH_FACEBOOK_SECRET = '02801ae29d77605a491125911a47e4b8'
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-  'locale': 'en_US',
-  'fields': 'name, email, age_range'
-}
-
-
-
-
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile'
-SOCIAL_AUTH_LOGIN_URL = '/user/login-error'
-
-SOCIAL_AUTH_USER_MODEL = 'user.NeonUser'
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.social_auth.associate_by_email',
-    'user.auth.create_user',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details',
-    'user.auth.authenticate_user',
-)
 
 
 SPOTIFY_KEY = ''
@@ -122,12 +116,11 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'user.middleware.NeonUserMiddleware'
 )
 
 
@@ -143,42 +136,38 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
     'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
-    'django.core.context_processors.request'
 )
 
 
-
-# SOCIAL_AUTH_DISCONNECT_PIPELINE = (
-#     'social.pipeline.disconnect.allowed_to_disconnect',
-#     'social.pipeline.disconnect.get_entries',
-#     'social.pipeline.disconnect.revoke_tokens',
-#     'social.pipeline.disconnect.disconnect',
-# )
-
-AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.FacebookAppOAuth2',
-    'social.backends.facebook.FacebookOAuth2',
-    'django.contrib.auth.backends.ModelBackend'
-)
 
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    'suit',
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
+
    
+    'social.apps.django_app.default',
+
+    'suit',
+
     'corsheaders',
- 
+    'rest_framework',
+    'rest_auth',
+    'meta',
+    'tinymce',
+
     'colorful',
     'haystack',
 
@@ -191,12 +180,8 @@ INSTALLED_APPS = (
     'venue',
     'contest',
 
-    'rest_framework',
-
-    'rest_auth',
-    'meta',
-    'tinymce',
-    'social.apps.django_app.default',
+   
+   
 )
 
 
@@ -236,6 +221,4 @@ HAYSTACK_CONNECTIONS = {
 }
 
 
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
-
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

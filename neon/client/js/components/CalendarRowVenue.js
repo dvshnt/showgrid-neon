@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-var GridEngine = require('../util/GridEngine');
+var GridEngine = require('util/GridEngine');
 
 
 export default class CalendarRowVenue extends Component {

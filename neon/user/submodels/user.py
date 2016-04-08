@@ -19,22 +19,6 @@ from alert import Alert
 
 
 
-class AuthBackend(ModelBackend):
-    def authenticate(self, email=None, password=None):
-    	print 'get '+email
-    	user = NeonUser.objects.get(email=email)
-    	print user
-    	if user.check_password(password):
-    		return user
-    	else:
-    		print 'CHECK FAILED'
-    		return None
-    def get_user(self,id):
-    	try:
-    		return NeonUser.objects.get(id=id)
-    	except:
-    		return None
-
 
 class NeonUserManager(BaseUserManager):
 
@@ -76,6 +60,12 @@ class NeonUser(AbstractBaseUser):
 	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
 	phone = models.CharField(unique=True,validators=[phone_regex], blank=True, null=True,max_length=200) # validators should be a list
 	phone_verified = models.BooleanField(default=False,blank=False)
+	email_verified =  models.BooleanField(default=False,blank=False)
+
+	show_profile_alerts = models.BooleanField(default=True,blank=False)
+	show_profile_upcoming = models.BooleanField(default=True,blank=False)
+
+	link_facebook = models.BooleanField(default=True,blank=False)
 
 	pin_hash  = models.TextField(max_length=200,blank=True)
 	pin_sent =  models.BooleanField(default=False,blank=False)
@@ -163,7 +153,14 @@ class NeonUser(AbstractBaseUser):
 		msg = 'Your pin is ' + pin
 		Sender.send_message(msg,self.phone)
 
-
+	def send_validation(strategy, backend, code):
+	    url = '{0}?verification_code={1}'.format(
+	        reverse('social:complete', args=(backend.name,)),
+	        code.code
+	    )
+	    url = strategy.request.build_absolute_uri(url)
+	    send_mail('Validate your account', 'Validate your account {0}'.format(url),
+	              settings.EMAIL_FROM, [code.email], fail_silently=False)
 
 	class Meta:
 		verbose_name = _('user')

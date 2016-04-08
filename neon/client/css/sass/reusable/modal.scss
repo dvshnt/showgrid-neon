@@ -1,0 +1,103 @@
+
+.overlay-cover{
+	background:rgba(0,0,0,0.4);
+	width:100%; height:100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.overlay {
+	display:none;
+
+	position: absolute;
+	top:0; left:0;
+
+	width:100vw; height:100vh;
+	z-index:999999;
+	
+	@include transition(transform 0.3s ease);
+	@include center;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
+	-webkit-align-items:center;
+			align-items:center;
+}
+
+.overlay-visible{
+	display:-webkit-flex;
+	display:  flex;
+
+
+
+
+}
+
+
+
+
+
+
+
+.modal-visible{
+	-webkit-animation: animation 800ms linear both;
+	animation: animation 800ms linear both;
+}
+
+
+.modal{
+	width: 40%;
+	min-width: 450px;
+	height: 600px;
+	background:#ffffff;
+	border-radius:3px;
+	box-shadow:0 1px 4px rgba(0,0,0,0.3);
+	position: relative;
+	.icon-close {
+		@include icon;
+		z-index: 50;
+		fill:#222222;
+	}
+}
+
+
+
+
+.modal-error{
+	@include center;
+	background: #FF2E00;
+	color: #fff;
+}
+
+@media screen and (max-width: 800px ) { 
+	.modal {
+
+		height:100vh;
+
+		padding:0;
+
+		border-radius:0;
+
+		p {
+			width:90%;
+			font-size:14px;
+			text-align:center;
+		}
+
+		form {
+			width:95%;
+
+			input {
+				width:90%;
+				margin:0 auto;
+			}
+		}
+	}
+}
+
+
+
+
+

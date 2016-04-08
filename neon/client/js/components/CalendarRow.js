@@ -5,10 +5,10 @@ import CalendarRowDay from './CalendarRowDay';
 
 export default class CalendarRow extends Component {
 	render() {
+
+
 		var shows = [];
-
 		var { days, venue } = this.props;
-
 		var rowClass = (venue.shows.length > 0) ? "calendar__row" : "calendar__row mini";
 
 
@@ -18,7 +18,7 @@ export default class CalendarRow extends Component {
 
 
 		return (
-			<div className={ rowClass }>				
+			<div className={ rowClass }>
 				<CalendarRowVenue venue={ venue } />
 				{ shows }
 			</div>
