@@ -27,7 +27,7 @@ from social.backends.utils import load_backends
 from social.apps.django_app.utils import psa
 
 
-from serializer import UserSerializer, AlertSerializer, ProfileSerializer
+from serializer import UserSerializer, AlertSerializer
 
 
 
@@ -103,15 +103,19 @@ def private_profile(request):
 	if request.user.is_authenticated() == False:
 		return redirect('/?q=profile')
 	else:
-		return render(request, "profile.html")
+		return render(request, "profile-private.html")
 
 
 
 
 @api_view(['GET'])
 def public_profile(request,id):
-	user = NeonUser.objects.get(id=id)
-	return render(request, "profile-public.html",ProfileSerializer(user).data)
+	try:
+		user = NeonUser.objects.get(id=id)
+		return render(request, "profile-public.html",{'profile':UserSerializer(user).data})
+	except:
+		return redirect('/?q=profile')
+
 
 
 

@@ -101,11 +101,11 @@ class Alert(models.Model):
 
 
 
-class AlertSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Alert
-		fields = (
-			'id', 'date', 'sent', 'user', 'show', 'sale', 'which'
-		)
+# class AlertSerializer(serializers.ModelSerializer):
+# 	class Meta:
+# 		model = Alert
+# 		fields = (
+# 			'id', 'date', 'sent', 'user', 'show', 'sale', 'which'
+# 		)
 
 

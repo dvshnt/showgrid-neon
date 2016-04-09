@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import FormButton from '../FormButton';
 import windowScroll from '../../util/windowScroll';
-
+import I from 'intui/Slide'
 
 
 
@@ -158,9 +158,16 @@ export default class PhoneModal extends Component {
 	}
 
 	render() {
+		var page_index = 0;
+		if(verify == true){
+			page_index = 1
+		}else if{
+			
+		}
+
 		return (
 			<Modal onClose={this.hidePhoneModal} visible={this.props.visible} page_index = {page_index} >
-				<Slide vertical beta = {100} >
+				<I vertical beta = {100} >
 					<h3>Sign Up to Receive Text Alerts</h3>
 					<p>
 						To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
@@ -173,8 +180,8 @@ export default class PhoneModal extends Component {
 						<br></br>
 						<FormButton onClick={this.userSubmitPhone} error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 					</form>
-				</Slide>
-				<Slide vertical beta = {100} >
+				</I>
+				<I vertical beta = {100} >
 					<h3>Confirm your phone number</h3>
 					<p>
 						Enter the 4-digit PIN you receive to start getting alerts.
@@ -187,14 +194,14 @@ export default class PhoneModal extends Component {
 						<br></br>
 						<FormButton onClick={this.userSubmitPin} error={ this.state.error } errorMessage="Invalid PIN" submitMessage="Submit" />
 					</form>
-				</Slide>
-				<Slide beta = {100} vertical>
+				</I>
+				<I beta = {100} vertical>
 					<div>
 						<h3>Phone Number Verified!</h3>
 						<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
 					</div>
-				</Slide>
+				</I>
 			</Modal>
-		)		
+		)	
 	}
 }

@@ -142,6 +142,7 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.media',
     'django.contrib.messages.context_processors.messages',
     'social.apps.django_app.context_processors.backends',
+    'user.middleware.NeonUserMiddleware'
 )
 
 

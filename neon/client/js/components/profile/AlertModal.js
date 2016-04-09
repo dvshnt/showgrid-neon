@@ -1,4 +1,4 @@
-
+import I from 'intui/Slide';
 
 //global alert modal for setting an alert
 

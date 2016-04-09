@@ -44,7 +44,7 @@ export default class ShowActions extends Component {
 		if (mode === "") {
 			mode = this.state.selectShare ? "share-active" : "";
 		}
-		
+
 		return (
 			<div className={ mode }>
 				<SetFavorite show={ show } />

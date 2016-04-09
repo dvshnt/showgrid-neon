@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import ShowActions from '/components/ShowActions';
 
 var DateManager = require('util/DateManager');
 
@@ -11,7 +12,7 @@ export default class ListItemSm extends Component {
 		
 		var	headliner,
 			opener,
-			onsale;
+			onsale, actions;
 
 		var date = (
 			<div className="date">{ moment(show.date).format('M/D') }</div>
@@ -41,7 +42,6 @@ export default class ListItemSm extends Component {
 						{ onsale }
 					</a>
 				</div>
-
 			</div>
 		);
 	}

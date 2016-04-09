@@ -33,6 +33,10 @@ var setAlert = React.createClass({
 		}
 	},
 
+	componentDidMount: function(){
+		this.update()
+	}.
+
 	render: function(){
 		return (
 			<div onClick = {this.toggle} className = {"alert-button "+(this.state.sale_alert != null ? "alert-button-sale" : (this.state.show_alert != null ? "alert-button-show"))}>

@@ -63,7 +63,7 @@ class NeonUser(AbstractBaseUser):
 	email_verified =  models.BooleanField(default=False,blank=False)
 
 	show_profile_alerts = models.BooleanField(default=True,blank=False)
-	show_profile_upcoming = models.BooleanField(default=True,blank=False)
+	# show_profile_upcoming = models.BooleanField(default=True,blank=False)
 
 	link_facebook = models.BooleanField(default=True,blank=False)
 
