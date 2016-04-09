@@ -19,7 +19,7 @@ from twiliohandle import MessageClient
 Sender = MessageClient()
 
 
-
+dates = [0,30,60,60*2,60*24,60*24*2,60*24*7]
 
 
 class Alert(models.Model):
@@ -81,9 +81,10 @@ class Alert(models.Model):
 			return msg
 
 		now_time = timezone.now()
-		alert_time = self.date
 
+		alert_time = self.show.date - timedelta(miliseconds=1000*dates[self.which])
 		time_diff = alert_time - now_time
+
 
 		if time_diff.total_seconds() < alert_leeway and self.sent < 1:
 

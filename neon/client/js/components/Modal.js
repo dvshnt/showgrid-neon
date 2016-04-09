@@ -4,7 +4,8 @@ import FormButton from './FormButton';
 import windowScroll from 'util/windowScroll';
 import classNames from 'classnames';
 import $ from 'jquery';
-import {Slide,SlideMixin} from 'intui';
+import I from 'intui/Slide';
+import SlideMixin from 'intui/Mixin';
 
 
 
@@ -60,14 +61,19 @@ var Modal = React.createClass({
 				<div onClick={this.props.onClose}  className={"overlay-cover"} />
 				<div className = {"modal modal-"+(this.props.visible ? 'visible' : 'hidden')}>
 					<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
-					<Slide ref = "slide" slide vertical index_pos = { this.props.error != null ? 0 : 1 } >
-						<Slide center beta = {10} onClick = { this.props.onResetError} outerClassName="modal-error" >
-							<span>{this.props.error}</span>
-						</Slide>
-						<Slide slide beta = {100} index_pos = {this.props.page_index}>
+					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 0 : 1 } >
+						<I slide vertical beta = {10} onClick = { this.props.onResetError } >
+							<I center beta = {100} onClick = { this.props.onResetError } c="modal-error" >
+								<span>{this.props.error}</span>
+							</I>
+							<I cetner beta = {100} onClick = { this.props.onResetError } c="modal-message" >
+								<span>{this.props.message}</span>
+							</I>
+						</I>
+						<I slide beta = {100} index_pos = {this.props.page_index}>
 							{this.props.children}
-						</Slide>
-					</Slide>
+						</I>
+					</I>
 				</div>
 			</div>
 		)

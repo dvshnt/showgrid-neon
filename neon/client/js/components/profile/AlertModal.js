@@ -1,121 +1,117 @@
+
+
+//global alert modal for setting an alert
+
+
 var AlertModal = React.createClass({
 	getInitialState: function(){
 		return {
-			page_index: 0
+			error: null,
+			sale_tab: false,
+			sale_alert: null,
 		}
 	},
 	
 	getDefaultProps: function(){
 		return {
-			dates: [0,30,60,60*2,60*24,60*24*2,60*24*7],
-			sales: [0,30,60,60*2],
-			page_index: 0,
+			show: null,
+			times: [0,30,60,60*2,60*24,60*24*2,60*24*7],
+			date_str: ["30 minutes","one hour","two hours","a day","two days","a week"],
 		}
 	},
 
-	componentWillReceiveProps: function(props,state){
-		if(props.page_index != this.state.page_index){
+	setAlert: function(which,sale){
+		
+		if(sale){
 			this.setState({
-				page_index: props.page_index
+				sale_tab: false
 			})
 		}
+
+		op.setAlert({
+			show: this.props.show.id,
+			which: which
+			sale: sale
+		}).then((body)=>{
+			var err = null
+			if( body.status == 'phone_not_verified' )  err = "phone not verified"
+			else if(body.status == 'phone_not_verified') err = "alert already set"
+
+			if(err) return this.setState({ err: err })
+			if(body.sale){
+				this.setState({
+					sale_alert: body
+				})
+			}else{
+				op.closeModal()
+			}
+			if(this.props.onSet != null) this.props.onSet()
+		})
 	},
 
-	date_filter: function(date){
-
+	getDateString: function(time,sale){
+		return this.props.date_str[times.indexOf(time)] + " before "+(sale ? "sale" : "show")+" starts"
 	},
 
-	setAlert: function(date,sale){
-
-	},
-
-	getDateString: function(date,sale){
-		var str = null
-		switch(date){
-			case 30:
-				str = "30 minutes"; break;
-			case 60:
-				str = "one hour"; break;
-			case 60*2:
-				str = "two hours"; break;
-			case 60*24:
-				str = "a day"; break;
-			case 60*24*2:
-				str = "two days"; break;
-			case 60*24*7:
-				str = "a week"; break;
-		}
-		if(str == null) throw "alert modal bad date"
-		return str + " before "+(sale ? "sale" : "show")+" starts"
-	},
-
-	make_date: function(date){
+	makeOption: function(time,sale){
 		return (
-			<I center beta = {100} className="alert-modal-option">
-				<span onClick = {this.setAlert}>{this.getDateString(date,false)}</span>
+			<I center beta = {100} c="alert-modal-option">
+				<I beta = {20} center>
+					<svg className={sale ? "alert-modal-option-icon-alert-sale" : "alert-modal-option-icon-alert-show"} dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+				</I>
+				<I center c="alert-modal-option-name">
+					<span onClick = {this.setAlert.bind(this.times.indexOf(time))}>{this.getDateString(time,sale)}</span>
+				</I>
 			</I>
 		)
 	},
 
-	make_sale: function(date){
-		return (
-			<I center beta = {100} className="alert-modal-option">
-				<span onClick = {this.setAlert}>{this.getDateString(date,true)}</span>
-			</I>
-		)
+	timeFilter: function(time){
+		var current_time = new Date();
+		current_time.setUTCHours(GLOBAL_UTC);
+		if(Date.parse(this.props.show.date) - time*1000) < current_time) return null
+		return time
 	},
 
+	removeSaleAlert: function(){
+		this.setState({
+			sale_alert: null,
+		})
+		op.deleteAlert(this.state.sale_alert.id)
+	},
 
 	render: function(){
 
-		var date_options = this.props.dates.map(this.date_filter).map(this.make_date)
-		var sale_options = this.props.sales.map(this.sale_filter).map(this.make_sale)
-
-
-
+		var show_options = this.props.times.filter(this.timeFilter).map(this.makeOption)
+		var sale_options = this.props.times.splice(0,3).filter(this.timeFilter).map(this.makeOption)
+		
 		return (
-			<Modal page_index = {this.state.page_index} className = {"alert-modal"} >
-				<I vertical innerClassName = {"alert-modal-date"}>
-					<I center onClick = {this.setState.bind(this,{page_index: 1})} innerClassName = {"alert-modal-sale-tab"}>
-						<span> set an alert for show sale and get instantly notified when the price drops! </span>
+			<Modal onClose={op.closeModal} page_index = {this.state.sale_tab ? 1 : 0} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} >
+				<I vertical c = "alert-modal-options">
+					<I vertical c = "alert-modal-top" >
+						<I beta = {150} center c = "alert-modal-show" >
+							<ListItemSm data = {this.props.show} extra={{onsale_info:true}} />
+						</I>
+						<I slide vertical index_pos = {this.state.sale_alert ? 1 : 0} >
+							<I center c = 'alert-modal-saletoggle-set' onClick={this.setState.bind(this,{sale_tab:true})}>
+								<span>set sale alert</span>
+							</I>
+							<I center c = 'alert-modal-saletoggle-reset' onClick={this.removeSaleAlert}>
+								<span>reset sale alert</span>
+							</I>
+						</I>
 					</I>
-					<I innerClassName = {"alert-modal-date"}>
-						{date_options}
+					<I center c = {"alert-modal-directions"}>
+						<span> choose an option for the show alert </span>
+					</I>
+					<I beta = {200}  vertical c = "alert-modal-options-show">
+						{show_options}
 					</I>
 				</I>
-				<I vertical innerClassName = {"alert-modal-sale"}>
-					<I center onClick = {this.setState.bind(this,{page_index: 0})} innerClassName = {"alert-modal-alert-tab"}>
-						<span>set an alert for show date</span>
-					</I>
-					<I innerClassName = {"alert-modal-sale"}>
-						{sale_options}
-					</I>
+				<I vertical c = "alert-modal-options-sale">
+					{sale_options}
 				</I>
 			</Modal>
 		)
 	}
-
-
-			
-					if(show.onsale){
-			var sale_date = moment(show.onsale, 'YYYY-MM-DD HH:mm:ssZZ');
-			if (now.isBefore(sale_date)) {
-				options.push(<option value="7"  data-value='{"sale":true, "id":7, "unit":"days","num":0}' selected={ alert.which === 7 }>when ticket sale starts</option>);
-			}
-			if (now.isBefore(sale_date.clone().subtract(30, 'minutes'))) {
-				options.push(<option value="8" data-value='{"sale":true, "id":8, "unit":"minutes","num":30}' selected={ alert.which === 8 }>30 minutes before ticket sale</option>);
-			}
-			if (now.isBefore(sale_date.clone().subtract(1, 'hours'))) {
-				options.push(<option value="9" data-value='{"sale":true, "id":9, "unit":"hours","num":1}' selected={ alert.which === 9 }>1 hour before ticket sale</option>);
-			}
-			if (now.isBefore(sale_date.clone().subtract(2, 'hours'))) {
-				options.push(<option value="10" data-value='{"sale":true, "id":10, "unit":"hours","num":2}' selected={ alert.which === 10 }>2 hours before ticket sale starts</option>);
-			}
-		}
-
-		</Modal>
-	}
 })
-
-
-export AlertModal

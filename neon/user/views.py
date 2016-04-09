@@ -229,7 +229,7 @@ class UserActions(APIView):
 
 			try:
 				alert = Alert.objects.get(id=alert)
-				alert.date = date
+				# alert.date = date
 				alert.which = which
 				alert.save()
 			except:
@@ -269,15 +269,16 @@ class UserActions(APIView):
 		if action == 'alert':
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
-			alert = body['alert']
-
+			alert_id = request.GET.get('id',False)
 			try:
-				user_alert = Alert.objects.get(id=alert)
+				user_alert = Alert.objects.get(id=alert_id)
 				user_alert.delete()
+				return HttpResponse(status_code=200)
 			except:
-				return  Response({ 'status': 'failure', 'alert': alert })
-
-			return  Response({ 'status': 'success', 'alert': alert })
+				return HttpResponse(status_code=500)
+				
+	
+			
 
 
 		#clear all user alerts

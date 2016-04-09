@@ -2,17 +2,7 @@
 
 
 /* scroll wrapper */
-@mixin center {
-  align-items : center;
-  display   : flex;
-  align-content : center;
-  justify-content: center;  
-}
 
-
-._intui_slide_center{
-  @include center;
-}
 
 ._intui_scrollwrapper_inner{
   height: 900%;
@@ -44,6 +34,25 @@
 
 
 /* slide start */
+@mixin center {
+  align-items : center;
+  display   : flex;
+  align-content : center;
+  justify-content: center;  
+}
+
+
+._intui_slide_center{
+  @include center;
+}
+
+._intui_slide_static{
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  overflow: scroll;
+}
+
 ._intui_slide_outer{
   ::-webkit-scrollbar {
     display: none;

@@ -1,5 +1,4 @@
 @mixin icon{
-	cursor: pointer;
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -29,6 +28,7 @@
 
 @mixin icon-button{
 	@include input-base;
+	cursor: pointer;
 	padding: 0;
 	width: 45px;
 	height: 45px;

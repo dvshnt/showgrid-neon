@@ -21,6 +21,49 @@ var SettingsModal = React.createClass({
 		}
 	},
 
+
+	update: function(){
+		var user = {
+			name : this.refs.name.value,
+			email : this.refs.email.value,
+			current_pass : this.refs.current_pass.value,
+			new_pass : this.refs.new_pass.value,
+			new_pass_confirm =  this.refs.new_pass_confirm.value
+		}
+		
+
+
+		if( name == email == current_pass == new_pass == new_pass_confirm == ""){
+			return this.setState({
+				error: "nothing to save",
+			})
+		}else if(new_pass != new_pass_confirm){
+			return this.setState({
+				error: "passwords dont match",
+			})		
+		}
+
+
+		window.fetch('/user/rest/profile',{
+			method: 'put',
+			headers: {
+				'Accept': 'application/json','Content-Type': 'application/json','X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+			},
+			body: JSON.stringify()
+		}).then(function(user){
+			window.user = profile;
+			op.renderSettings();
+		}).catch(()=>{
+      	 	this.setState({
+      	 		error: 'update failed'
+      	 	})
+    	});
+
+
+
+
+	},
+
 	render: function(){
 
 
@@ -34,25 +77,25 @@ var SettingsModal = React.createClass({
 			profile alert options
 				change alerts
 		*/
+
 		return (
 			<Modal className = {'profile-settings'}  error = {this.state.error} page_index = {this.state.page_index}  />
-				
+				<I>
 
-				<I vertical innerClassName = {'profile-settings-main'}>
-					<I vertical beta = {100} innerClassName = {'profile-settings-main'}>
-						
+				</I>
+
+				<I vertical c = 'profile-settings-main'>
+					<I vertical beta = {100} c = 'profile-settings-main'>
+						<p>main settings</p>
 					</I>
 				</I>
 			
 
-				<I vertical innerClassName = {'profile-settings-main'}>
-					<I vertical beta = {100} innerClassName = {'profile-settings-main'}>
-						FUCK
+				<I vertical c = 'profile-settings-main'>
+					<I vertical beta = {100} c = 'profile-settings-main'>
+						<p>main settings</p>
 					</I>					
 				</I>
-
-
-			
 			</Modal>
 		)
 	}

@@ -27,9 +27,6 @@ export default class ShowActions extends Component {
 
 	selectAlert() {
 		var _this = this;
-		this.setState({
-			selectAlert: !_this.state.selectAlert
-		});
 	}
 
 	toggleShare() {
@@ -48,11 +45,10 @@ export default class ShowActions extends Component {
 			mode = this.state.selectShare ? "share-active" : "";
 		}
 		
-
 		return (
 			<div className={ mode }>
 				<SetFavorite show={ show } />
-				<SetAlert show={ show } selectAlert={ this.selectAlert }/>
+				<SetAlert show={ show } />
 				<Share show={ show } toggleShare={ this.toggleShare }/>
 				<Ticket show={ show } />
 			</div>
