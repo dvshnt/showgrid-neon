@@ -1,7 +1,11 @@
-import I from 'intui/Slide';
-
+import I from 'intui/source/Slide';
+import React from 'react'
+import Modal from 'components/Modal';
 //global alert modal for setting an alert
+import * as op from 'operator';
+import ListItemLg from 'components/ListItemLg'
 
+const GLOBAL_UTC = 5 * 60
 
 var AlertModal = React.createClass({
 	getInitialState: function(){
@@ -9,6 +13,7 @@ var AlertModal = React.createClass({
 			error: null,
 			sale_tab: false,
 			sale_alert: null,
+			done: false
 		}
 	},
 	
@@ -16,7 +21,7 @@ var AlertModal = React.createClass({
 		return {
 			show: null,
 			times: [0,30,60,60*2,60*24,60*24*2,60*24*7],
-			date_str: ["30 minutes","one hour","two hours","a day","two days","a week"],
+			date_str: ["at time of ","30 minutes","one hour","two hours","a day","two days","a week"],
 		}
 	},
 
@@ -30,47 +35,49 @@ var AlertModal = React.createClass({
 
 		op.setAlert({
 			show: this.props.show.id,
-			which: which
+			which: which,
 			sale: sale
 		}).then((body)=>{
-			var err = null
-			if( body.status == 'phone_not_verified' )  err = "phone not verified"
-			else if(body.status == 'phone_not_verified') err = "alert already set"
-
-			if(err) return this.setState({ err: err })
-			if(body.sale){
-				this.setState({
-					sale_alert: body
-				})
+			console.log(body);
+			if(body.status != null || body.detail != null){
+				this.setState({error:body.status||body.detail})
 			}else{
-				op.closeModal()
+				this.setState({
+					sale_alert: body,
+					done: true
+				})
 			}
-			if(this.props.onSet != null) this.props.onSet()
 		})
 	},
 
 	getDateString: function(time,sale){
-		return this.props.date_str[times.indexOf(time)] + " before "+(sale ? "sale" : "show")+" starts"
+
+		var i = this.props.times.indexOf(time);
+		console.log(time,i)
+		if(i == 0){
+			return this.props.date_str[i] + (sale == true ? "sale" : "show")
+		}else{
+			return this.props.date_str[i] + " before "+(sale == true ? "sale" : "show")+" starts"
+		}
+		
 	},
 
 	makeOption: function(time,sale){
 		return (
-			<I center beta = {100} c="alert-modal-option">
-				<I beta = {20} center>
-					<svg className={sale ? "alert-modal-option-icon-alert-sale" : "alert-modal-option-icon-alert-show"} dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-				</I>
-				<I center c="alert-modal-option-name">
-					<span onClick = {this.setAlert.bind(this.times.indexOf(time))}>{this.getDateString(time,sale)}</span>
-				</I>
-			</I>
+			<option key = {(sale == true ? 'sale_' : 'show_')+time}>
+				{this.getDateString(time,sale)}
+			</option>
 		)
 	},
 
 	timeFilter: function(time){
-		var current_time = new Date();
-		current_time.setUTCHours(GLOBAL_UTC);
-		if(Date.parse(this.props.show.date) - time*1000) < current_time) return null
-		return time
+		var d = new Date();
+		d.setTime(d.getTime() + (d.getTimezoneOffset() - (GLOBAL_UTC))*1000 );
+		var show_d = new Date(this.props.show.raw_date);
+		var diff = show_d.getTime() - d.getTime();
+		console.log(diff);
+		if( diff < time*1000) return false
+		return true
 	},
 
 	removeSaleAlert: function(){
@@ -80,38 +87,56 @@ var AlertModal = React.createClass({
 		op.deleteAlert(this.state.sale_alert.id)
 	},
 
+	choose: function(e){
+
+		
+		if(this.state.sale_tab){
+			var e = this.refs.sale_select;
+		}else{
+			var e = this.refs.show_select;
+		}
+
+		this.setAlert(e.selectedIndex,this.state.sale_tab);
+	},
+
 	render: function(){
 
 		var show_options = this.props.times.filter(this.timeFilter).map(this.makeOption)
-		var sale_options = this.props.times.splice(0,3).filter(this.timeFilter).map(this.makeOption)
+		var sale_options = [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.timeFilter).map((d)=>{return this.makeOption(d,true)})
 		
 		return (
-			<Modal onClose={op.closeModal} page_index = {this.state.sale_tab ? 1 : 0} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} >
-				<I vertical c = "alert-modal-options">
-					<I vertical c = "alert-modal-top" >
-						<I beta = {150} center c = "alert-modal-show" >
-							<ListItemSm data = {this.props.show} extra={{onsale_info:true}} />
+			<Modal onDone={this.choose} height = {'300px'} onClose={op.closeModal} page_index = {this.state.done ? 1 : 0} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} >
+				<I vertical >
+					<I vertical center c = "alert-modal-show">
+						<div>{new Date(this.props.show.raw_date).toString()}</div>
+						<div>{this.props.show.headliners}</div>
+						<div>{this.props.show.openers}</div>
+					</I>
+					<I height = {50}>
+						<I center onClick = {op.showProfileSettings.bind(null,2)} c='alert-modal-info-phone'>
+							<div > # {window.user.phone || '615-715-7754'}</div>
 						</I>
-						<I slide vertical index_pos = {this.state.sale_alert ? 1 : 0} >
-							<I center c = 'alert-modal-saletoggle-set' onClick={this.setState.bind(this,{sale_tab:true})}>
-								<span>set sale alert</span>
-							</I>
-							<I center c = 'alert-modal-saletoggle-reset' onClick={this.removeSaleAlert}>
-								<span>reset sale alert</span>
-							</I>
+						<I center onClick = {this.setState.bind(this,{sale_tab:!this.state.sale_tab})} c='alert-modal-info-saletab' >
+							<div>set a {this.state.sale_tab ? "show" : "sale"} alert</div>
 						</I>
 					</I>
-					<I center c = {"alert-modal-directions"}>
-						<span> choose an option for the show alert </span>
-					</I>
-					<I beta = {200}  vertical c = "alert-modal-options-show">
-						{show_options}
+					<I height = {50}>
+						<I slide vertical index_pos = {this.state.sale_tab ? 1 : 0} c={"alert-modal-options"}>
+							<I center>
+								<select ref = 'show_select'>{show_options}</select>
+							</I>
+							<I center>
+								<select ref = 'sale_select'>{sale_options}</select>
+							</I>
+						</I>
 					</I>
 				</I>
-				<I vertical c = "alert-modal-options-sale">
-					{sale_options}
+				<I center c = 'alert-section-done'>
+					<span>Alert Set!</span>
 				</I>
 			</Modal>
 		)
 	}
 })
+
+export default AlertModal

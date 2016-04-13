@@ -33,13 +33,13 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            '/Users/arxii/Documents/neon/neon/templates/',
-            '/Users/arxii/Documents/neon/neon/cal/templates/',
-            '/Users/arxii/Documents/neon/neon/magazine/templates/',
-            '/Users/arxii/Documents/neon/neon/newsletter/templates/',
-            '/Users/arxii/Documents/neon/neon/show/templates/',
-            '/Users/arxii/Documents/neon/neon/user/templates/',
-            '/Users/arxii/Documents/neon/neon/venue/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/cal/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/magazine/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/newsletter/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/show/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/user/templates/',
+            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/venue/templates/',
         ],
         'OPTIONS': { 
             'loaders': [
@@ -56,7 +56,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 LOGGING = {
     'version': 1,
@@ -81,4 +80,3 @@ LOGGING = {
         },
     }
 }
-

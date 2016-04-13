@@ -1,6 +1,7 @@
-const GLOBAL_UTC = -6
+const GLOBAL_UTC = -6;
+import React, { Component } from 'react';
 import * as op from 'operator';
-import ListItemSm from '/components/ListItemSm';
+import ListItemSm from 'components/ListItemSm';
 
 var setAlert = React.createClass({
 	getInitialState: function(){
@@ -22,6 +23,9 @@ var setAlert = React.createClass({
 
 	//toggle alert modal / delete all alerts
 	toggle: function(){
+		// if(!window.user.phone){
+		// 	return op.showProfileSettings(2)
+		// }
 		if(this.state.show_alert == null && this.state.sale_alert == null){
 			op.showAlertModal(this.props.show,this.update)
 		}else{
@@ -35,11 +39,11 @@ var setAlert = React.createClass({
 
 	componentDidMount: function(){
 		this.update()
-	}.
+	},
 
 	render: function(){
 		return (
-			<div onClick = {this.toggle} className = {"alert-button "+(this.state.sale_alert != null ? "alert-button-sale" : (this.state.show_alert != null ? "alert-button-show"))}>
+			<div onClick = {this.toggle} className = { (this.props.className || "")+" alert-button " + (this.state.sale_alert != null ? "alert-button-sale" : (this.state.show_alert != null ? "alert-button-show" : "")) }>
 				<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
 			</div>
 		)

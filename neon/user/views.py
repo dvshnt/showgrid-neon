@@ -26,37 +26,10 @@ from social.backends.google import GooglePlusAuth
 from social.backends.utils import load_backends
 from social.apps.django_app.utils import psa
 
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from serializer import UserSerializer, AlertSerializer
 
-
-
-# def home(request):
-#     """Home view, displays login mechanism"""
-#     if request.user.is_authenticated():
-#         return redirect('done')
-#     return context()
-
-
-#auth
-# def context(**extra):
-#     return dict({
-#         'plus_id': getattr(settings, 'SOCIAL_AUTH_GOOGLE_PLUS_KEY', None),
-#         'plus_scope': ' '.join(GooglePlusAuth.DEFAULT_SCOPE),
-#         'available_backends': load_backends(settings.AUTHENTICATION_BACKENDS)
-#     }, **extra)
-
-
-# def home(request):
-#     """Home view, displays login mechanism"""
-
-#     return context()
-def context(**extra):
-	return Response(dict({
-        'plus_id': getattr(settings, 'SOCIAL_AUTH_GOOGLE_PLUS_KEY', None),
-        'plus_scope': ' '.join(GooglePlusAuth.DEFAULT_SCOPE),
-        'available_backends': load_backends(settings.AUTHENTICATION_BACKENDS)
-    }, **extra),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
@@ -65,31 +38,8 @@ def require_email(request):
     backend = request.session['partial_pipeline']['backend']
     return context(email_required=True, backend=backend)
 
-# def validation_sent(request):
-#     return context(
-#         validation_sent=True,
-#         email=request.session.get('email_validation_address')
-#     )
 
-def done(request):
-    """Login complete view, displays user data"""
-    return context()
 
-@psa('social:complete')
-def ajax_auth(request, backend):
-    if isinstance(request.backend, BaseOAuth1):
-        token = {
-            'oauth_token': request.REQUEST.get('access_token'),
-            'oauth_token_secret': request.REQUEST.get('access_token_secret'),
-        }
-    elif isinstance(request.backend, BaseOAuth2):
-        token = request.REQUEST.get('access_token')
-    else:
-        raise HttpResponseBadRequest('Wrong backend type')
-    user = request.backend.do_auth(token, ajax=True)
-    login(request, user)
-    data = {'id': user.id, 'username': user.username}
-    return HttpResponse(json.dumps(data), mimetype='application/json')
 
 
 
@@ -99,6 +49,7 @@ def ajax_auth(request, backend):
 
 @api_view(['GET'])
 @login_required()
+@ensure_csrf_cookie
 def private_profile(request):
 	if request.user.is_authenticated() == False:
 		return redirect('/?q=profile')
@@ -132,19 +83,19 @@ def Logout(request):
 def Login(request):
 	if request.user.is_authenticated():
 		return redirect('/user/profile')
-	try:
-		body = json.loads(request.body)
-		email = request.GET.get('email',False) or body['email']
-		password = request.GET.get('password',False) or body['password']
 
-		user = authenticate(email=email, password=password)
-		if user is not None:
-			login(request,user)
-			return Response({"status":"good"},status=status.HTTP_200_OK)
-		else:
-			return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-	except:
-		return redirect()
+
+	email = request.GET.get('email',False) 
+	password = request.GET.get('password',False) 
+	user = authenticate(email=email, password=password)
+	if user is not None:
+		login(request,user)
+		return redirect('/')
+		# return Response({"status":"good"},status=status.HTTP_200_OK)
+	else:
+		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 
 @api_view(['POST'])
@@ -226,20 +177,19 @@ class UserActions(APIView):
 		# Edit alert
 		elif action == 'alert':
 			
-			body = json.loads(request.body.decode('utf-8'))
-			alert = body['alert']
-			date = body['date']
-			which = body['which']
 
 			try:
+				body = json.loads(request.body.decode('utf-8'))
+				alert = body['alert']
+				which = body['which']
+
 				alert = Alert.objects.get(id=alert)
 				# alert.date = date
 				alert.which = which
 				alert.save()
+				return Response({ 'status': 'alert_updated', 'id': alert.id, 'which': alert.which })
 			except:
-				return  Response({ 'status': '' })
-
-			return  Response({ 'status': 'alert_updated', 'id': alert.id, 'which': alert.which })
+				return  Response({ 'status': 'bad_params' })
 
 
 
@@ -394,9 +344,9 @@ class UserActions(APIView):
 			if user.phone_verified == False:
 				return  Response({ 'status': 'phone_not_verified' })
 
+	
 			body_unicode = request.body.decode('utf-8')
 			body = json.loads(body_unicode)
-			date = body['date']
 			show = body['show']
 			which = body['which']
 			sale = ( body['sale'] or False )
@@ -406,21 +356,16 @@ class UserActions(APIView):
 			if show == None:
 				return  Response({ 'status': 'no such show' })
 
-			user_show_alerts = Alert.objects.filter(user=user,show=show,sale=sale)
+			user_show_alerts = Alert.objects.filter( user=user,show=show,sale=sale )
 
 			if user_show_alerts:
-				return  Response({ 'status': 'alert_already_set' })
+				return  Response({ 'status':'alert_already_set' })
 			else:
-				if date == None:
-					return  Response({ 'status': 'bad date' })
-				
-
-				date = dateutil.parser.parse(date)
-				alert = Alert(is_active=True, show=show, date=date,user=user,which=which,sale=sale)
+				alert = Alert( is_active=True,show=show,user=user,which=which,sale=sale )
 				alert.save()
-				data = AlertSerializer(alert)
+				data = AlertSerializer( alert )
 				return  Response( data.data )
-
+			
 
 		#get user alert count
 		if action == 'alert_count':
@@ -428,7 +373,6 @@ class UserActions(APIView):
 			return  Response({ 'status': len(user_show_alerts) })
 
 		return  Response({ 'status': 'bad_query' })
-
 
 
 

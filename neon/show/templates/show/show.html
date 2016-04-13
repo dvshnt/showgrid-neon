@@ -88,8 +88,8 @@
 {% endblock %}
 
 
-{% block scripts %}
+{% block state %}
 	<script>
-		var show = {{ show|jsonify }};
+		window.state.show = {{ show|jsonify }};
 	</script>
-{% endblock scripts %}
+{% endblock state %}

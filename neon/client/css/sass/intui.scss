@@ -4,6 +4,7 @@
 /* scroll wrapper */
 
 
+
 ._intui_scrollwrapper_inner{
   height: 900%;
   width: 900%;
@@ -41,6 +42,9 @@
   justify-content: center;  
 }
 
+._intui_slide_fixed{
+  flex-shrink:0;
+}
 
 ._intui_slide_center{
   @include center;

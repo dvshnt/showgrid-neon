@@ -5,10 +5,10 @@ import FormButton from 'components/FormButton';
 import windowScroll from 'util/windowScroll';
 import classNames from 'classnames';
 import $ from 'jquery';
-import I from 'intui/Slide';
-import SlideMixin from 'intui/Mixin';
+import I from 'intui/source/Slide';
 import Modal from 'components/Modal';
 import * as op from 'operator';
+import AuthButton from './AuthButton';
 
 
 
@@ -18,8 +18,6 @@ export default class AuthModal extends Component {
 
 	constructor(props) {
 		super(props);
-
-		this.mixins = [SlideMixin]
 
 		this.userSignup = this.userSignup.bind(this);
 		this.userLogin = this.userLogin.bind(this);
@@ -78,7 +76,7 @@ export default class AuthModal extends Component {
 		e.preventDefault()
 	}
 
-	resetError(e) {
+	resetError(e){
 		this.setState({
 			error: null,
 		});
@@ -99,9 +97,9 @@ export default class AuthModal extends Component {
 		
 		e.preventDefault();
 
-		var email = React.findDOMNode(this.refs.register_email).value;
-		var password = React.findDOMNode(this.refs.register_password).value;
-		var password2 = React.findDOMNode(this.refs.register_password2).value;
+		var email = this.refs.register_email.value;
+		var password = this.refs.register_password.value;
+		var password2 = this.refs.register_password2.value;
 
 		if(password2 != password) return this.setState({ error:true })
 		$.ajax({
@@ -118,32 +116,28 @@ export default class AuthModal extends Component {
 	
 		e.preventDefault();
 
-		var email = React.findDOMNode(this.refs.email).value;
-		var password = React.findDOMNode(this.refs.password).value;
+		var email = this.refs.email.value;
+		var password = this.refs.password.value;
 
 		 $.ajax({
-		 	url: '/user/login',
+		 	url: '/user/login?email='+email+'&password='+password,
 			type: 'POST',
-			data: JSON.stringify({email:email,password:password}),
 			dataType: 'json',
 			success: this.isGood.bind(this,null),
 			error: this.isGood.bind(this,"hmm something went wrong")
 		 })
 	}
 
-	render() {
+	render(){
 
 		return (
 			<Modal className = {'auth-modal'} onClose={op.closeModal} onResetError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
 				<I innerClassName = "modal-page-container" vertical beta = {100}>
 					
 
-
 					<I beta={60}>
 						<div className = 'auth-banner'/>
 					</I>
-
-
 
 
 					<I beta = {120} vertical>
@@ -152,18 +146,16 @@ export default class AuthModal extends Component {
 					</I>
 
 
-
-					<I cetner beta = {50} >
+					<I center beta = {50} >
 						<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
 						<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
 					</I>
 
 
-
 					<I center innerClassName = "auth-input">
 						<input className = "button-blue" type="submit" value="Log In" onClick={ this.userLogin } />
 						<b style={{margin:'5px'}}>or</b>
-						<a href = {window.user.facebook_login_url + '?next='+encodeURI(window.location.href) } className="button-fb"><svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-facebook"/>' }} /></a>
+						<AuthButton type="facebook" />
 					</I>
 
 

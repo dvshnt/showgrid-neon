@@ -1,0 +1,154 @@
+
+@mixin section{
+	background: #ffffff;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    margin: 3px;
+}
+
+
+@mixin icon{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	cursor: pointer;
+	padding: 15px;
+	width:25px; height:25px;
+}
+
+@mixin button-base{
+	@include input-base;
+	cursor: pointer;
+	font-weight: 400;
+	line-height: 32px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.075);
+	font-family: 'Roboto Slab', serif;
+	&:hover {
+		opacity: 0.9;
+	}
+}
+
+
+@mixin input-base{
+	transition: background,opacity 0.3s ease;
+	display: inline-block;
+	padding: 8px 10px;
+	margin: 5px;
+	line-height: 30px;
+	text-decoration: none;
+	background: rgba(0, 0, 0, 0.075);
+	border: 1px solid #F1F1F1;
+	border-radius:2px;
+	font-weight: 100;
+	font-size:16px;
+	border-radius:4px;
+}
+
+@mixin icon-button{
+	@include input-base;
+	cursor: pointer;
+	padding: 0;
+	width: 45px;
+	height: 45px;
+	text-align: center;
+	@include center;
+	svg{
+		width: 60%;
+		height: 60%;
+	}
+}
+
+
+
+
+input{
+	@include input-base;
+}
+
+input:focus{
+	background: #AFFFE8;
+	outline: none;
+	box-shadow: none;
+}
+
+
+
+@mixin info{
+	@include input-base;
+	background: #F1F1F1;
+	border: none;
+	padding: 8px;
+	font-size: 11px;
+	height: auto;
+	font-weight: bold;
+	line-height: 11px;
+}
+
+
+
+
+
+
+
+
+
+.pin{
+	width: 10%;
+	padding: 5px 6px;
+	margin: 0 2px;
+	font-size: 24px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+
+
+
+
+
+
+.input-pin{
+	@include input-base
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.button-green{
+	@include input-base;
+	@include button-base;
+	background: #00FF62;
+	color: #181A1A;
+}
+
+.button-blue{
+	@include input-base;
+	@include button-base;
+	background: #00F2FF;
+	color: #181A1A;
+}
+
+.button-facebook{
+	@include icon-button;
+	background: #4E91BF;
+	fill: #EFFFF9;
+	border-radius: 50%;
+}
+
+
+
+
+
+
+

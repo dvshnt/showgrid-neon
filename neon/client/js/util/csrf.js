@@ -1,4 +1,3 @@
-import $ from 'jquery';
 $.ajaxSetup({ 
      beforeSend: function(xhr, settings) {
          function getCookie(name) {

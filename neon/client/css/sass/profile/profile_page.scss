@@ -1,24 +1,79 @@
 .profile{
-
-}
-
-.profile-actions{
-
+	
 }
 
 
-//action option
-.profile-actions-option{
+.profile-activity-option{
+	svg{
+		height: 20px;
+		width: auto;
+	}
+}
+
+.profile-activity-title{
+	background: #F8F5F2;
+	flex-shrink: 10;
+}
+
+
+.profile-actions-button{
+	@include button-base;
+	font-size: 15px;
+	color: #E0002F;
+	background: #fff;
+	line-height: 40px;	
+}
+
+
+
+
+//favorite and alert items
+.profile-alert{
+	
+}
+
+.profile-alert-icon{
+	color: #fff;
+	div{
+		@include center;
+		height: 100%;
+		width: 100%;
+	}
+	svg{
+		height: 30%;
+		width: auto;
+	}
+}
+
+.profile-alert-info{
+	
+}
+
+.profile-favorite{
+
+}
+
+
+
+
+.profile-actions-setup-phone{
+	
+}
+
+.profile-actions-option-logout{
 
 }
 
 
 .profile-actions-option-enable{
-	background: #01BF00;
+	div{
+		background: #C9FFEC;	
+	}
+
 }
 
 .profile-actions-option-disable{
-	background: #B17E63;
+	
 }
 
 
@@ -29,52 +84,94 @@
 
 
 
-
+/*profile info */
 .profile-info{
+	background:  #F8F5F2;
+	// @include section;
+}
 
+.profile-info-main{
+	padding: 30px;
+	box-sizing: border-box;	
 }
 
 .profile-info-pic{
-	
+	@include section;
+	height: 100%;
+	width: auto;
 }
 
 .profile-info-bio{
-
+	@include section;
+	position: relative;
+	height: 100%;
+	background: #fff;
 }
 
-.profile-info-bio-quote{
+.profile-info-bio-text{
+	padding: 15px;
+	background: #fff;
+	border-radius: 10px;
+}
 
+.profile-info-bio-quote-left{
+	position: absolute;
+	left: 10px;
+	top:10px;
+	font-size: 20px;
+	text-align: center;
+	line-height: 100%;
+	opacity: 0.6;
+}
+
+.profile-info-bio-quote-right{
+	position: absolute;
+	right: 10px;
+	bottom:6px;
+	font-size: 20px;
+	text-align: center;
+	line-height: 100%;
+	opacity: 0.6;
 }
 
 
 
 
-
-
-
+/*extra*/
 
 .profile-info-extra{
-
+	
 }
 
 .profile-info-extra-joined{
-
-}
+	@include info;
+}	
 
 .profile-info-extra-logged{
-	
+	@include info;
 }
 
 .profile-info-extra-counter{
-	
+	@include info;
 }
-
-
-
-
 
 
 
 .profile-activity{
-
+	background:  #F8F5F2;
 }
+
+
+
+@media screen and (max-width: 500px ) {
+	.profile-info-main{
+		padding: 10px;
+	}
+	.profile-actions-option{
+		padding: 15px;
+	}
+}
+
+
+
+

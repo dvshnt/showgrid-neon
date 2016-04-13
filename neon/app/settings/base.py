@@ -1,38 +1,13 @@
+from auth import *
+
 # Admins for bug reports
 ADMINS = ( 
     ('Davis Hunt', 'info@showgrid.com'),
 )
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
-}
-
-
-
 #Show image min dimentions
 
-from auth import *
 
 # Twilio API keys and number
 TWILIO_ACCOUNT_SID = 'AC537898c0aaf67d677d93716130df421b'
@@ -56,7 +31,6 @@ SPOTIFY_KEY = ''
 SPOTIFY_API = 'https://api.spotify.com/v1/'
 ECHONEST_API = 'http://developer.echonest.com/api/v4/'
 ECHONEST_KEY = 'ZOP6OTHBMGEZHVHTF'
-
 
 
 ECHONEST_MAX_BIO = 3 # (maximum amount of artist bios to pull)
@@ -116,11 +90,15 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'user.middleware.NeonUserMiddleware'
+    # Uncomment the next line for simple clickjacking protection:
+    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 
@@ -136,41 +114,29 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.contrib.messages.context_processors.messages',
-    'social.apps.django_app.context_processors.backends',
-    'user.middleware.NeonUserMiddleware'
+    'django.core.context_processors.request',
 )
-
-
 
 
 INSTALLED_APPS = (
     'django.contrib.auth',
-    'django.contrib.admin',
-    'django.contrib.admindocs',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-   
-    'social.apps.django_app.default',
-
+    # Uncomment the next line to enable the admin:
     'suit',
+    'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    'django.contrib.admindocs',
+
 
     'corsheaders',
-    'rest_framework',
-    'rest_auth',
-    'meta',
-    'tinymce',
-
+ 
     'colorful',
     'haystack',
+    'social.apps.django_app.default',
 
     'app',
     'cal',
@@ -181,8 +147,11 @@ INSTALLED_APPS = (
     'venue',
     'contest',
 
-   
-   
+    'rest_framework',
+
+    'rest_auth',
+    'meta',
+    'tinymce',
 )
 
 
@@ -195,9 +164,9 @@ AUTH_USER_MODEL = 'user.NeonUser'
 # AUTHENTICATION_BACKENDS = ( 'user.models.AuthBackend', )
 
 
-# REST_AUTH_SERIALIZERS = {
-#     'USER_DETAILS_SERIALIZER': 'app.serializers.ShowgridUserSerializer'
-# }
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'app.serializers.ShowgridUserSerializer'
+}
 
 
 REST_FRAMEWORK = {
@@ -205,8 +174,10 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
     )
 }
 
@@ -222,4 +193,5 @@ HAYSTACK_CONNECTIONS = {
 }
 
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

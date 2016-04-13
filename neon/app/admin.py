@@ -587,7 +587,7 @@ class ContestAdmin(admin.ModelAdmin):
 		return len(Show.objects.filter(venue=obj).filter(date__gte=date.today()))
 
 
-
+admin.site.register(Alert)
 admin.site.register(NeonUser)
 admin.site.register(Address)
 admin.site.register(Venue, VenueAdmin)

@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import ListItemSm from './ListItemSm';
 
-var DateManager = require('../util/DateManager');
+var DateManager = require('util/DateManager');
 
 
 export default class ListSm extends React.Component {
@@ -18,10 +18,10 @@ export default class ListSm extends React.Component {
         });
 
         if (extra.header_recent) {
-            markupItems.unshift(<h3>Recently Added</h3>);
+            markupItems.unshift(<h3 key = {'listsm-recent'}>Recently Added</h3>);
         }
         else if (extra.header_onsale) {
-            markupItems.unshift(<h3>On Sale Soon</h3>);
+            markupItems.unshift(<h3 key={'listsm-sale'}>On Sale Soon</h3>);
         }
 
         return markupItems;

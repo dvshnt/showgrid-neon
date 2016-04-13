@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-		
-		{% load static %}
 
+		
 		{% load jsonify %}
+		{% load static %}
+		{% csrf_token %}
+		
 
 		<title>Showgrid | Nashville's Live Music Source {% block title %}{% endblock %}</title>
 
@@ -104,19 +106,31 @@
 			{% endblock %}
 		</div>
 		<div id='overlay-wrapper'></div>
-
 	</body>
- 
+	
 
+	
 	<script>
+		window.state = {
+			featured_shows: [],		
+		}
 		window.user = {{ user.user_json|jsonify }}
-		window.user = window.user == "" ? {} : window.user 
-		window.user.facebook_login_url = "{% url 'social:begin' 'facebook'  %}"
-		window.user.is_authenticated = {% if user.is_authenticated == False %} false {% else %} true {% endif %}
-	</script>
+		window.user = window.user == "" ? {} : window.user
+		window.user.auth_links = {}
+		window.user.alerts = window.user.alerts || []
+		window.user.favorites = window.user.favorites || []
 
-	<script src="{% static 'showgrid/js/vendor.bundle.js' %}"></script>
- 	<script src="{% static 'showgrid/js/app.bundle.js' %}"></script>
+
+		window.user.auth_links["facebook"] = "{% url 'social:begin' 'facebook'  %}"
+		window.user.is_authenticated = {% if user.is_authenticated == False %} false {% else %} true {% endif %}
+	</script> 
+
+
+
+	{% block state %}
+	
+	{% endblock %}
+
 
   	<script>
 	 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -128,8 +142,12 @@
 	 	ga('send', 'pageview');
 	</script>
 
+	<script src="{% static 'showgrid/js/vendor.bundle.js' %}"></script>
+ 	<script src="{% static 'showgrid/js/app.bundle.js' %}"></script>
 
 	{% block scripts %}
+	
 	{% endblock %}
+
 
 </html>

@@ -1040,5 +1040,5 @@
     };
 
     return Pikaday;
-
+    
 }));

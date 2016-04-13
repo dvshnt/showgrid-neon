@@ -4,12 +4,12 @@ import $ from 'jquery';
 import moment from 'moment';
 
 
-import DateManager from '../util/DateManager';
-import Share from './profile/Share';
-import Ticket from './Ticket';
+import DateManager from 'util/DateManager';
+
+import Ticket from 'components/Ticket';
 
 
-import { AuthModal , SetAlert , SetFavorite } from './profile';
+import { AuthModal , AlertButton , FavoriteButton, ShareButton } from 'components/profile';
 
 
 export default class ShowActions extends Component {
@@ -45,11 +45,14 @@ export default class ShowActions extends Component {
 			mode = this.state.selectShare ? "share-active" : "";
 		}
 
+
 		return (
 			<div className={ mode }>
-				<SetFavorite show={ show } />
-				<SetAlert show={ show } />
-				<Share show={ show } toggleShare={ this.toggleShare }/>
+				<FavoriteButton show={ show } />
+				<AlertButton className={'col-3'} show={ show }>
+					<span>Alert</span>
+				</AlertButton>
+				<ShareButton show={ show } toggleShare={ this.toggleShare }/>
 				<Ticket show={ show } />
 			</div>
 		)

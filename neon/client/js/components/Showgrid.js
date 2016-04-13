@@ -5,7 +5,7 @@ import fetch from 'whatwg-fetch';
 import HeaderCalendar from './HeaderCalendar';
 import Calendar from './Calendar';
 
-import GridEngine from '../util/GridEngine';
+import GridEngine from 'util/GridEngine';
 
 
 export default class ShowGrid extends Component {

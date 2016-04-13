@@ -57,6 +57,6 @@
 
 {% block scripts %}
 <script>
-	var featuredShows = {{ featured|jsonify }};
+	window.state.featured_shows = {{ featured|jsonify }};
 </script>
 {% endblock %}

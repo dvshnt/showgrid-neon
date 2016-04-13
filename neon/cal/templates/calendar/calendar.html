@@ -17,11 +17,12 @@
 	</section>
 {% endblock content %}
 
-{% block footer %}{% endblock footer %}
 
-{% block scripts %}
+{% block state %}
 	<script>
-		var venues = {{ venues|jsonify }};
-		var days = {{ days|jsonify }};
+		window.state.venues = {{ venues|jsonify }};
+		window.state.days = {{ days|jsonify }};
 	</script>
-{% endblock scripts %}
+{% endblock state %}
+
+{% block footer %}{% endblock footer %}

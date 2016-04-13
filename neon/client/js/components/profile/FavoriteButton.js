@@ -4,7 +4,7 @@ import $ from 'jquery';
 import moment from 'moment';
 import fetch from 'whatwg-fetch';
 
-import DateManager from '/util/DateManager';
+import DateManager from 'util/DateManager';
 
 import AuthModal from './AuthModal';
 

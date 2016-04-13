@@ -25,7 +25,6 @@ dates = [0,30,60,60*2,60*24,60*24*2,60*24*7]
 class Alert(models.Model):
 	is_active = models.BooleanField(default=True)
 	user = models.ForeignKey('NeonUser',related_name='user_alerts')
-	date = models.DateTimeField(blank=False)
 	show = models.ForeignKey(Show,related_name='show_alerts')
 	sent = models.PositiveSmallIntegerField(default=0)
 	which = models.PositiveSmallIntegerField(default=0)
@@ -56,7 +55,7 @@ class Alert(models.Model):
 			else:
 				ticket = ""
 
-			when = get_show_time_from_now(alert.which, show.date)
+			when = get_show_time_from_now(alert.which, alert_time)
 
 			msg = "Tickets for %s at %s are on sale %s! %s" % (headliner, venue, when, ticket)
 

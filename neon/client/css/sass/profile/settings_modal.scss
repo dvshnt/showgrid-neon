@@ -1,0 +1,29 @@
+.profile-settings-cat{
+	font-size: 12px;
+    opacity: 0.5;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+
+.profile-settings-picture{
+	img{
+		height: 60%;
+		width: auto;
+	}
+}
+
+.profile-settings-title{
+	border-radius: 3px 3px 0px 0px;
+	background: #F8F5F2;
+	color: #3D3D3D;
+}
+.profile-settings-tabselect{
+	@include button-base;
+}
+
+.profile-settings-picture-upload{
+	@include button-base;
+}

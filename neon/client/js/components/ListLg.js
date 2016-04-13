@@ -54,6 +54,8 @@ export default class ListLg extends React.Component {
     render() {
         const items = this.props.items || [];
         const extra = this.props.extra || {};
+
+        
         
 
         if (extra.date_heading || extra.date_heading_front) {

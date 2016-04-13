@@ -13,7 +13,7 @@ from serializer import ShowSerializer
 class AlertSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Alert
-		fields = ( 'id' , 'date' , 'sale' , 'which', 'show')
+		fields = ( 'id' , 'sale' , 'which', 'show')
 	show = serializers.SerializerMethodField('get_alert_show') 
 
 	def get_alert_show(self,obj):

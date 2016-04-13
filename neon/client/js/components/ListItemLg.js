@@ -35,7 +35,7 @@ export default class ListItemLg extends Component {
 		var venue = show.venue;
 
 		var extra = this.props.extra;
-
+		
 		var website = show.website + (show.website.indexOf('?') > -1 ? '&' : '?') + 'utm_source=showgridnashville&utm_medium=web&utm_campaign=calendar';
 
 		var boxStyle = (extra.hideHeader) ? {'display': 'none'} : {'background': venue.primary_color || '#000000'};

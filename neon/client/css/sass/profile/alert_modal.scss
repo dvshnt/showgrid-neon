@@ -1,78 +1,63 @@
 
 
+//alert button
+.alert-button{
+	cursor: pointer;
+	fill: #5D5E5C;
+}
+
+.alert-button-show{
+	fill: #FF9600;
+}
+
+
+.alert-button-sale{
+	fill: #2ED048;
+}
+
+
 //alert modal
-.alert-modal-optons{
+.alert-modal-options{
+	background: #ECECEC;
+	font-size: 18px;
+}
+
+.alert-modal-done-button{
 
 }
 
-.alert-modal-top{
+.alert-modal-info-phone{
+	div{
+		@include button-base;
+		font-size: 14px;
+		line-height: 14px;
+		border: none;		
+	}
 
 }
 
-.alert-modal-show{
-
+.alert-modal-info-saletab{
+	background: #00CF91;
+	div{
+		@include button-base;
+		font-size: 14px;
+		line-height: 14px;
+		border: none;
+	}
 }
-
-.alert-modal-saletoggle-set{
-
-}
-
-.alert-modal-saletoggle-reset{
-
-}
-
-.alert-modal-directions{
-
-}
-
-.alert-modal-options-show{
-
-}
-
-.alert-modal-options-sale{
-
-}
-
-
-
 
 
 
 
 
 // alert option
-.alert-modal-option{
-
+.alert-modal-show{
+	background: #773800;
+	color:#FFB149;
+	font-size: 18px;
+	line-height: 25px;
 }
 
-.alert-modal-option-icon-alert-sale{
-
-}
-
-.alert-modal-option-icon-alert-show{
-
-}
-
-.alert-modal-option-name{
-
-}
-
-.alert-modal-saletoggle-set{
-
-}
-
-.alert-modal-saletoggle-reset{
-
-}
-
-.alert-button{
-
-}
-
-.alert-button-sale{
-
-}
-
-.alert-button-show{
+.alert-section-done{
 
 }

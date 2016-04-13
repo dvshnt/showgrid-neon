@@ -6,15 +6,10 @@
 
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.FacebookAppOAuth2',
-    'social.backends.facebook.FacebookOAuth2',
-    'social.backends.google.GoogleOAuth',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOpenId',
-    'social.backends.google.GooglePlusAuth',
-    'social.backends.google.GoogleOpenIdConnect',
-    'social.backends.twitter.TwitterOAuth',
-    'django.contrib.auth.backends.ModelBackend'
+   'social.backends.facebook.FacebookOAuth2',
+   'social.backends.google.GoogleOAuth2',
+   'social.backends.twitter.TwitterOAuth',
+   'django.contrib.auth.backends.ModelBackend',
 )
 
 
@@ -56,20 +51,18 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
 }
 
 
+
 LOGIN_URL = '/user/login/'
-LOGIN_REDIRECT_URL = '/user/done/'
+LOGIN_REDIRECT_URL = '/user/profile/'
 URL_PATH = ''
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
-SOCIAL_AUTH_GOOGLE_OAUTH_SCOPE = [
-    'https://www.googleapis.com/auth/drive',
-    'https://www.googleapis.com/auth/userinfo.profile'
-]
-SOCIAL_AUTH_EMAIL_FORM_URL = '/signup-email'
+
+SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
 # SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
 # SOCIAL_AUTH_EMAIL_VALIDATION_FUNCTION = 'example.app.mail.send_validation'
 # SOCIAL_AUTH_EMAIL_VALIDATION_URL = '/email-sent/'
-SOCIAL_AUTH_USERNAME_FORM_URL = '/signup-username'
+# SOCIAL_AUTH_USERNAME_FORM_URL = '/signup-username'
 SOCIAL_AUTH_USERNAME_FORM_HTML = 'username_signup.html'
 
 

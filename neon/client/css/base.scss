@@ -128,12 +128,14 @@
 
 
 //reusable css mixins and classes
-@import 'reusable/forms';
+@import 'reusable/gui';
 @import 'reusable/modal';
 	
 //profile and user related css classes
 @import 'profile/auth_modal';
-@import 'profile/phone_modal';
 @import 'profile/profile_page';
+@import 'profile/alert_modal';
+@import 'profile/settings_modal';
+
 
 

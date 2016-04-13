@@ -5,7 +5,7 @@ var path = require('path');
 var cfg = {
 	devtool: 'source-map',
 	entry: {
-		app: "./js/index.js",
+		app: "./js/main.js",
  		vendor: [
  			"./node_modules/jquery",
  	 		"./node_modules/react",
@@ -18,42 +18,21 @@ var cfg = {
 		publicPath: '../static/showgrid/js',
 		filename: "[name].bundle.js",
 		chunkFilename: "[id].chunk.js"
+
 	},
 	resolve: {
-		root: path.resolve(__dirname,'./js'),
-		extensions: ['', '.js', '.jsx']
+   		root: path.resolve('./js'),
+		extensions: ['', '.js']
 	},
 	module: {
 	  loaders: [
-
-	    {
+		{
 	      test: /\.js?$/,
-	      include: [
-		    path.resolve(__dirname, "node_modules/material-ui/src"),
-		  ],
-	      loader: 'babel', // 'babel-loader' is also a legal name to reference
-	    },
-	    {
-	      test: /\.js?$/,
-	      include: [
-		    path.resolve(__dirname, "node_modules/intui"),
-		  ],
+	      exclude: /(node_modules\/(?!intui).*|bower_components)/,
 	      loader: 'babel', // 'babel-loader' is also a legal name to reference
 	      query: {
-	        presets: ['react', 'es2015'],
-	        plugins: ['transform-runtime']
-	      }
-	    },
-	    {
-	      test: /\.js?$/,
-	      exclude: /(node_modules|bower_components)/,
-	      include: [
-		    path.resolve(__dirname, "js"),
-		  ],
-	      loader: 'babel', // 'babel-loader' is also a legal name to reference
-	      query: {
-	        presets: ['react', 'es2015'],
-	        plugins: ['transform-runtime']
+	        presets: ['es2015' , 'react'],
+			plugins: ['transform-runtime']
 	      }
 	    },
 	  ]

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import ShowActions from '/components/ShowActions';
+import ShowActions from 'components/ShowActions';
 
-var DateManager = require('util/DateManager');
+var DateManager = require('util/DateManager.js');
 
 
 export default class ListItemSm extends Component {
