@@ -9,6 +9,8 @@ urlpatterns = [
 	url(r'^profile/(?P<id>\d+)$$', views.public_profile, name='profile'),
 	url(r'^profile$', views.private_profile, name='profile'),
 	url(r'^update/?$',views.update_profile,name='update_profile'),
+	url(r'^update_pass/?$',views.update_profile_password,name='update_profile'),
+
 
 	
 	url(r'^rest/(?P<action>\w+)$', views.UserActions.as_view(), name='user actions'),

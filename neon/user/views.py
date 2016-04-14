@@ -68,6 +68,7 @@ def public_profile(request,id):
 
 
 @api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
 def update_profile(request):
 	user = request.user
 	bio = request.POST.get('bio',False)
@@ -90,6 +91,22 @@ def update_profile(request):
 		logout(request)
 	user.save()
 	return Response({"status":"good"},status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def update_profile_password(request):
+	old_pass = request.GET.get('current_pass',False)
+	new_pass = request.GET.get('new_pass',False)
+	print old_pass, new_pass
+	user = authenticate(email=request.user.email, password=old_pass)
+	if user is not None:
+		logout(request)
+		user.set_password(new_pass)
+		user.save()
+		return Response({"status":"good"},status=status.HTTP_200_OK)
+	else:
+		return Response({"status":"incorrect password"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
@@ -269,7 +286,7 @@ class UserActions(APIView):
 
 	def post(self, request, action=None):
 		user = request.user
-		
+
 		if action == 'newsletter':
 			user.newsletter = True;
 			user.save()

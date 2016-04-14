@@ -256,7 +256,7 @@ var SettingsModal = React.createClass({
 
 		$.ajax({
 		    url: '/user/update',
-		    type: 'POST',
+		    method: 'POST',
 		    data: data,
 		    headers: {
 				'X-CSRFToken': window.user.csrf
@@ -271,6 +271,36 @@ var SettingsModal = React.createClass({
 			window.location.reload()
 		}).fail((body)=>{
 			console.log(body)
+			this.setState({
+				saving:false,
+				error: body.responseJSON ? body.responseJSON.status : "oops something went wrong"
+			})			
+		})
+	},
+
+	updatePassword: function(){
+		
+
+
+
+		if(this.refs.new_pass.value != this.refs.new_pass_confirm.value){
+			return this.setState({
+				error: 'passwords dont match'
+			})
+		}else if(this.refs.current_pass.value == null){
+			return this.setState({
+				error: 'enter your password'
+			})
+		}
+
+
+		$.ajax({
+		    url: '/user/update_pass?current_pass='+this.refs.current_pass.value+'&new_pass='+this.refs.new_pass.value,
+		    method: 'POST',
+		    headers: {'X-CSRFToken': window.user.csrf},
+		}).done(()=>{
+			window.location.href = "/?q=profile"
+		}).fail((body)=>{
 			this.setState({
 				saving:false,
 				error: body.responseJSON ? body.responseJSON.status : "oops something went wrong"
@@ -355,7 +385,7 @@ var SettingsModal = React.createClass({
 						<I center>
 							<input onChange = {this.resetState} ref="new_pass_confirm" type="password" placeholder= {"Confirm New Password" } />
 						</I>
-						<I onClick = {this.update} center>
+						<I onClick = {this.updatePassword} center>
 							<div className="button-green">save</div>
 						</I>
 					</I>
