@@ -36,26 +36,26 @@ export default class SetFavorite extends Component {
 
 		var url = '/user/rest/favorite?id='+this.props.show.id;
 
-		window.fetch(url, {
+		$.ajax({
+			url:url,
 			method: this.state.favorited ? 'delete' : 'post',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 				'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
 			},
-		})
-		.then(function(body) {
+		}).done(function(body) {
 			_this.setState({ favorited: _this.state.favorited ? false : true });
 		});
 	}
 
 	render() {
-		var className = this.state.favorited ? "col-3 favorite active" : "col-3 favorite";
+		var className = this.state.favorited ? "col-3 button-favorite button-favorite-active" : "col-3 button-favorite ";
 
 		return (
 			<div className={ className } onClick={ this.setShowAsFavorite.bind(this) } >
-				<svg className="icon icon-heart" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-heart"/>' }} />
-				<span>Favorite</span>
+				<svg  dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-heart"/>' }} />
+				{this.props.children}
 			</div>
 		)
 	}

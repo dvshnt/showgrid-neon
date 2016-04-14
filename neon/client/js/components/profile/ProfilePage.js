@@ -5,10 +5,65 @@ import FavoriteButton from './FavoriteButton';
 import AlertButton from './AlertButton';
 import IButton from 'intui/source/Button';
 import * as op from 'operator';
-
+import ListItemSm from 'components/ListItemSm'
 
 
 var Profile = React.createClass({
+
+
+	alertDate: function(d){
+		var nd = moment(d);
+		return d.toString()
+	},
+	date_str: ["at time of ","30 minutes","one hour","two hours","a day","two days","a week"],
+	alertItem: function(alert,i){
+
+		var d = moment(alert.show.date);
+		var alert_time = (alert.which != 0) ? (this.date_str[alert.which] + ' before ') : null
+		
+	
+		return (
+			<I height = {120} c={'profile-alert'} key={"profile_alert_"+i} style={{'background': i%2 ? '#F1F1F1' : '#F9F9F9'}} >
+				<I onClick = {()=>{window.location.href='/show/'+alert.show.id}} c={'profile-alert-info'} >
+					<I c='profile-alert-info-extra' >
+						<ListItemSm data = {alert.show} extra = {{show_date:false,hideHeader:true}} />
+					</I>
+					<I width={200} vertical center c='profile-alert-info-date'>
+						<span className='profile-alert-info-date-which'>{alert_time}</span>
+						<span className='profile-alert-info-date-hour'>{d.format("h:mm a")}</span>
+						<span className='profile-alert-info-date-day'>{d.format("MMMM Do")}</span>
+					</I>
+				</I>
+				<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? '#515151' : '#3E3E3E'}}>
+					<AlertButton show={alert.show} />
+				</I>
+			</I>
+		)
+	},
+
+
+	favItem: function(show,i){
+		var d = moment(show.date);
+		return (
+			<I height = {120} c={'profile-alert'} key={"profile_alert_"+i} style={{'background': i%2 ? '#F1F1F1' : '#F9F9F9'}} >
+				<I c={'profile-alert-info'} >
+					<I c='profile-alert-info-extra' >
+						<ListItemSm data = {show} extra = {{show_date:false,hideHeader:true}} />
+					</I>
+					<I width={200} vertical center c='profile-alert-info-date'>
+						<span className='profile-alert-info-date-hour'>{d.format("h:mm a")}</span>
+						<span className='profile-alert-info-date-day'>{d.format("MMMM Do")}</span>
+					</I>
+				</I>
+				<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? '#515151' : '#3E3E3E'}}>
+					<FavoriteButton show={show} />
+				</I>
+			</I>
+		)
+	},
+
+
+
 
 	getDefaultProps: function(){
 		return {
@@ -64,24 +119,11 @@ var Profile = React.createClass({
 				</I>
 			)
 		}else{
-			alerts = profile.alerts.map((alert,i)=>{
-				return (
-					<I height = {120} c={'profile-alert'} key={"profile_alert_"+i} style={{'background': i%2 ? '#F1F1F1' : '#F9F9F9'}} >
-						<I c={'profile-alert-info'}>
-							<I c={'profile-alert-info'}>
-								<a href = {"/show/"+alert.show.id}> {alert.show.headliners} </a>
-								<a href = {"/show/"+alert.show.id}> {alert.show.openers} </a>
-							</I>
-						</I>
-						<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? '#515151' : '#3E3E3E'}}>
-							<AlertButton show={alert.show} />
-						</I>
-					</I>
-				)
-			})			
+			alerts = profile.alerts.map(this.alertItem)			
 		}
 
 		if(profile.favorites.length == 0){
+
 			favorites = (
 				<I vertical center height = {500}>
 	
@@ -91,41 +133,33 @@ var Profile = React.createClass({
 				</I>
 			)
 		}else{
-			 favorites = profile.favorites.map((show,i)=>{
-				return (
-					<div className={'profile-favorite'} height = {100} center key={"profile_fav_"+i}>
-						<a href = {"/show/"+show.id}>{show.headliners} with {show.openers}</a>
-						<AlertButton show={show} />
-						<FavoriteButton show={show} />
-					</div>
-				)
-			})
+			favorites = profile.favorites.map(this.favItem)
 		}
 		
 
 
 		return (
-			<I c="profile" vertical >
-				<I c="profile-info" vertical beta={20}>
-					<I height = {200}>
-						<I beta={100} vertical >
-							<I center beta = {200} c="profile-info-main">
-								<img className="profile-info-pic" src={this.props.profile.pic || '/static/showgrid/img/avatar.gif'} />
-								<div className="profile-info-bio">
-									<span className="profile-info-bio-quote-left">&#10077;</span><p className="profile-info-bio-text">{this.props.profile.bio || "this person prefers to have a sense of mystery about them"}</p><span className="profile-info-bio-quote-right">&#10078;</span>
-								</div>
-							</I>
-							<I beta = {50} center c="profile-info-extra" >
-								<span className="profile-info-extra-joined">joined : {moment(profile.joined_date).format("MMM Do YYYY")}</span>
-								<span className="profile-info-extra-logged">last seen : {moment(profile.last_login).calendar()}</span>
-								<span className="profile-info-extra-counter">{profile.alerts.length} alerts and {profile.favorites.length} favorites</span>
-							</I>
-						</I>
-					</I>
-					
-					{profile_actions}
-				</I>
-				<I c="profile-activity" beta={80} vertical>
+			< div className="profile" vertical >
+				{profile_actions}
+				
+				<div vertical c="profile-info">
+					<div className="profile-info-main">
+						<div className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.gif')+')' }} />
+						<div className="profile-info-bio">
+							<span className="profile-info-bio-quote-left">&#10077;</span><p className="profile-info-bio-text">{this.props.profile.bio || "this person prefers to have a sense of mystery about them"}</p><span className="profile-info-bio-quote-right">&#10078;</span>
+						</div>						
+					</div>
+
+					<div className="profile-info-extra">
+						<span className="profile-info-extra-joined">joined : {moment(profile.joined_date).format("MMM Do YYYY")}</span>
+						<span className="profile-info-extra-logged">last seen : {moment(profile.last_login).calendar()}</span>
+						<span className="profile-info-extra-counter">{profile.alerts.length} alerts and {profile.favorites.length} favorites</span>
+					</div>
+				</div>
+				<div>
+
+				</div>
+				<I c="profile-activity" beta={100} vertical>
 					<I center height = {50}>
 						<I slide index_pos={this.state.tab_pos} vertical beta = {200} c="profile-activity-title">
 							<I center>
@@ -151,9 +185,8 @@ var Profile = React.createClass({
 							{favorites}
 						</I>
 					</I>
-					
 				</I>
-			</I>
+			</div>
 		)
 	}
 })

@@ -124,6 +124,7 @@
 			box-shadow:0 2px 3px rgba(0,0,0,0.1);
 
 	z-index:10;
+	color: rgba(0,0,0,0.3);
 
 	& > div {
 		height:100%;
@@ -148,16 +149,9 @@
 			-webkit-flex:0 0 25%;
 					flex:0 0 25%;
 
-			color:rgba(0,0,0,1);
 			text-align:center;
 
-			&.alert {
-				.alert-box {
-					display:none;
-					width:100%;
-				}
-			}
-
+		
 			&:hover {
 				cursor:pointer;
 			}
@@ -169,7 +163,7 @@
 				top:0px;
 
 				font-size:12px;
-				color:rgba(0,0,0,0.3);
+				// color:rgba(0,0,0,0.3);
 			}
 
 			svg {
@@ -177,42 +171,14 @@
 
 				margin:10px auto 2px;
 
-				fill:rgba(0,0,0,0.3);
+				// fill:rgba(0,0,0,0.3);
 			}
 
 			svg.icon-ticket {
 				fill:rgb(0,222,144);
 			}
 
-			&.active.favorite {
-				& > span {
-					color:#fc3030;
-				}
-
-				svg {
-					fill:#fc3030;
-				}
-			}
-
-			&.active.alert {
-				& > span {
-					color:#ff9929;
-				}
-
-				svg {
-					fill:#ff9929;
-				}
-			}
-
-			&.active.alert.sale {
-				& > span {
-					color:rgb(0,222,144);
-				}
-
-				svg {
-					fill:rgb(0,222,144);
-				}
-			}
+			
 
 			&.share {
 				.share-box {

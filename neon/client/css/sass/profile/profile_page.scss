@@ -1,9 +1,13 @@
 .profile{
-	
+
+	position: absolute;
+	height: auto;
+	width: 100%;
 }
 
 
 .profile-activity-option{
+	@include center;
 	svg{
 		height: 20px;
 		width: auto;
@@ -15,7 +19,10 @@
 	flex-shrink: 10;
 }
 
-
+.profile-actions{
+	background: #fff;
+	flex-direction: row-reverse;
+}
 .profile-actions-button{
 	@include button-base;
 	font-size: 15px;
@@ -27,88 +34,56 @@
 
 
 
-//favorite and alert items
-.profile-alert{
-	
-}
-
-.profile-alert-icon{
-	color: #fff;
-	div{
-		@include center;
-		height: 100%;
-		width: 100%;
-	}
-	svg{
-		height: 30%;
-		width: auto;
-	}
-}
-
-.profile-alert-info{
-	
-}
-
-.profile-favorite{
-
-}
-
-
-
-
-.profile-actions-setup-phone{
-	
-}
-
-.profile-actions-option-logout{
-
-}
-
-
-.profile-actions-option-enable{
-	div{
-		background: #C9FFEC;	
-	}
-
-}
-
-.profile-actions-option-disable{
-	
-}
-
-
-
-
-
-
-
-
 
 /*profile info */
 .profile-info{
-	background:  #F8F5F2;
+	background:  #FEFDFA;
+	@include center;
+	height: auto;
 	// @include section;
 }
 
 .profile-info-main{
-	padding: 30px;
-	box-sizing: border-box;	
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
 }
 
 .profile-info-pic{
+	background-size: cover;
+	margin: 10px;
 	@include section;
-	height: 100%;
-	width: auto;
+	height: 150px;
+	width: 150px;
+	border-radius: 2px;
+	
 }
 
 .profile-info-bio{
+	margin: 10px;
 	@include section;
-	position: relative;
-	height: 100%;
+	@include center;
+	position: relative; 
+	height: auto;
+	width: 50%;
+	min-height: 150px;
+	text-align: center;
+	border-radius: 2px;
 	background: #fff;
 }
 
+
+.profile-info-extra{
+	@include center;
+}
+
 .profile-info-bio-text{
+	text-align: center;
 	padding: 15px;
 	background: #fff;
 	border-radius: 10px;
@@ -158,19 +133,122 @@
 
 
 .profile-activity{
+
 	background:  #F8F5F2;
 }
 
 
 
 @media screen and (max-width: 500px ) {
+	.profile-info-bio{
+		width: 95%;
+	}
 	.profile-info-main{
-		padding: 10px;
+		@include center;
+		flex-direction: column;
+		padding: 5px;
 	}
 	.profile-actions-option{
 		padding: 15px;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//favorite and alert items
+.profile-alert{
+	
+}
+
+.profile-alert-icon{
+	color: #fff;
+	div{
+		@include center;
+		height: 100%;
+		width: 100%;
+	}
+	svg{
+		height: 30%;
+		width: auto;
+	}
+}
+
+.profile-alert-info{
+	
+}
+
+.profile-alert-info-date{
+	font-size: 30px;
+	font-family: 'Roboto Slab', serif;
+	background: rgba(0,0,0,0.1);
+	color: #3F3F3F;
+}
+.profile-alert-info-date-day{
+	font-size: 15px;
+}
+
+.profile-alert-info-date-hour{
+	font-size: 30px
+}
+
+.profile-alert-info-date-which{
+	font-size: 15px;
+	color: #FFA700;
+}
+
+.profile-favorite{
+
+}
+
+
+
+
+.profile-actions-setup-phone{
+	
+}
+
+.profile-actions-option-logout{
+
+}
+
+
+.profile-actions-option-enable{
+	div{
+		background: #C9FFEC;	
+	}
+
+}
+
+.profile-actions-option-disable{
+	
+}
+
+
+
+
+
+
+
+
 
 
 

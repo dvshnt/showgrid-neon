@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseServerError
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -48,7 +48,7 @@ def require_email(request):
 
 
 @api_view(['GET'])
-@login_required()
+@permission_classes((IsAuthenticated, ))
 @ensure_csrf_cookie
 def private_profile(request):
 	if request.user.is_authenticated() == False:
@@ -79,7 +79,7 @@ def Logout(request):
 	return redirect('/')
 
 
-
+@api_view(['POST'])
 def Login(request):
 	if request.user.is_authenticated():
 		return redirect('/user/profile')
@@ -90,8 +90,8 @@ def Login(request):
 	user = authenticate(email=email, password=password)
 	if user is not None:
 		login(request,user)
-		return redirect('/')
-		# return Response({"status":"good"},status=status.HTTP_200_OK)
+		# return redirect('/')
+		return Response({"status":"good"},status=status.HTTP_200_OK)
 	else:
 		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -125,12 +125,8 @@ def Signup(request):
 
 
 
-
+@permission_classes((IsAuthenticated, ))
 class UserActions(APIView):
-	authentication_classes = (SessionAuthentication, BasicAuthentication)
-	permission_classes = (IsAuthenticated,)
-
-
 	def get_show(self, pk):
 		try:
 			return Show.objects.get(id=pk)
@@ -210,27 +206,26 @@ class UserActions(APIView):
 		if action == 'favorite':
 			id = request.GET.get('id',False)
 			if id != None:
-				show = self.get_show(id)
-				try:
-					user.favorites.remove(show)
-					return HttpResponse(status_code=200)
-				except:
-					return HttpResponse(status_code=500)
+				show = self.get_show(id)	
+				user.favorites.remove(show)
+				return Response({'status':'good'})
+			
 
 
 
 		#clear user alert
 		if action == 'alert':
-			body_unicode = request.body.decode('utf-8')
-			body = json.loads(body_unicode)
-			alert_id = request.GET.get('id',False)
+			
+			
 			try:
+				alert_id = request.GET.get('id',False) 
 				user_alert = Alert.objects.get(id=alert_id)
 				user_alert.delete()
-				return HttpResponse(status_code=200)
+				return Response({'status':'good'})
 			except:
-				return HttpResponse(status_code=500)
-				
+				return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	
+			
 	
 			
 
@@ -253,10 +248,9 @@ class UserActions(APIView):
 				show = self.get_show(id)
 				try:
 					user.favorites.add(show)
-					return HttpResponse(status_code=200)
+					return Response({'status':'good'})
 				except:
-					return HttpResponse(status_code=500)
-
+					return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 		#set user phone

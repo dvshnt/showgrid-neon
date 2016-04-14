@@ -14,9 +14,14 @@ export default class ListItemSm extends Component {
 			opener,
 			onsale, actions;
 
-		var date = (
-			<div className="date">{ moment(show.date).format('M/D') }</div>
-		);
+		if (extra.show_date == false) {
+			var date = null
+		}else{
+			var date = (
+				<div className="date">{ moment(show.date).format('M/D') }</div>
+			);			
+		}
+
 
 
 		if (show.headliners !== '') {

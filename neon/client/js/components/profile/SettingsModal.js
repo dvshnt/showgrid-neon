@@ -42,37 +42,32 @@ var PhoneTab = React.createClass({
 			pin += this.refs.pinThree.value;
 			pin += this.refs.pinFour.value;
 
-		var _this = this;
-		var url = '/user/rest/pin_check';
 
-		window.fetch(url, {
-			method: 'post',
+		$.ajax({
+			url:'/user/rest/pin_check',
+			method:'POST',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+				'X-CSRFToken': window.user.scrf
 			},
-			body: JSON.stringify({
+			dataType: 'json',	
+			data: JSON.stringify({
 				pin:pin
 			})
-		})
-		.then(function(response) {
-			return response.json();
-		})
-		.then((body)=>{
-			if(body.status == 'pin_verified'){
+		}).done((dat)=>{
+			if(dat.status == 'pin_verified'){
 				this.setState({
 					page_index: 2
 				})
-				
 			}else{
 				this.props.onError("invalid pin")
-			}
-		})
-		.catch((e)=>{
-			this.props.onError(e)
+			}			
+		}).fail(()=>{
+			this.props.onError("invalid pin")
 		})
 
+	
 		e.preventDefault();
 		return false
 	},
@@ -106,39 +101,39 @@ var PhoneTab = React.createClass({
 	},
 
 	userSubmitPhone: function(e) {
-		var phonenumber = React.findDOMNode(this.refs.phonenumber).value;
+		var phonenumber = this.refs.phonenumber.value;
 		var _this = this;
 		var url = '/user/rest/phone_set';
 
-		window.fetch(url, {
-			method: 'post',
+		$.ajax({
+			url:url,
+			method:'POST',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+				'X-CSRFToken': window.user.scrf
 			},
-			body: JSON.stringify({
-				phone:phonenumber
-			})
-		})
-		.then(function(response) {
-			return response.json();
-		})
-		.then((body)=>{
+			dataType: 'json',	
+			data: JSON.stringify({phone:phonenumber})		
+		}).done((dat)=>{
 			this.setState({
 				page_index: 1,
 			});
-		})
-		.catch((e)=>{
-			this.props.onError(e)
+		}).fail(()=>{
+			this.props.onError("oops, try again")
 		})
 	},
 
 	render: function(){
+		if(window.user.phone != null){
+			var current_phone = (<h3>change phone : {window.user.phone}</h3>)
+		}else{
+			var current_phone = <h3>set up a new phone</h3>
+		}
 		return (
 			<I slide index_pos = {this.state.page_index} >
-				<I center vertical beta = {100} >
-					<h3>Sign Up to Receive Text Alerts</h3>
+				<I center c= 'profile-settings-phonetab' vertical beta = {100} >
+					{current_phone}
 					<p>
 						To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
 					</p>
@@ -148,31 +143,31 @@ var PhoneTab = React.createClass({
 					<form action="" >
 						<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 10 Digit Phone #" title="" onChange={ this.resetState }/></span>
 						<br></br>
-						<div onClick={this.userSubmitPhone} error={ this.state.error } errorMessage="Invalid Phone Number" submitMessage="Submit"/>
 					</form>
+					<div onClick={this.userSubmitPhone}className="button-green">submit</div>
 				</I>
-				<I vertical beta = {100} >
-					<I center vertical>
+				<I vertical beta = {100} c= 'profile-settings-phonetab'>
+					<I center vertical height = {200} >
 						<h3>Confirm your phone number</h3>
 						<p>
 							Enter the 4-digit PIN you receive to start getting alerts.
 						</p>
 					</I>
-					<I center>
+					<I center  height = {150} >
 						<input maxLength="1" className="pin pin-1" type="text" ref="pinOne" size="1" onChange={ this.goToNextPinInput }/>
 						<input maxLength="1" className="pin pin-2" type="text" ref="pinTwo" size="1" onChange={ this.goToNextPinInput }/>
 						<input maxLength="1" className="pin pin-3" type="text" ref="pinThree" size="1" onChange={ this.goToNextPinInput }/>
 						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
 					</I>
-					<I onClick={this.userSubmitPin}>
-						<div className="button-green">submit</div>
+					<I center height = {150}>
+						<div className="button-green" onClick={this.userSubmitPin}>submit</div>
 					</I>
 				</I>
-				<I beta = {100} vertical>
-					<div>
-						<h3>Phone Number Verified!</h3>
-						<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
-					</div>
+				<I center beta = {100} vertical c= 'profile-settings-phonetab'>
+					
+					<h3>Phone Number Verified!</h3>
+					<p>Set all the alerts you need. We won&#39;t bother you otherwise.</p>
+
 				</I>
 			</I>
 		)
@@ -392,18 +387,24 @@ var SettingsModal = React.createClass({
 					</I>
 					
 
-					<I c="profile-settings-more">
-						<div onClick =  {this.setState.bind(this,{tab_pos:0})}>change password</div>
-						<div onClick =  {this.setState.bind(this,{tab_pos:2})}>change phone</div>
+					<I c="profile-settings-more" vertical>
 						<span className="profile-settings-cat" >more options</span>
+						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:0})}>change password</div>
+						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>change phone</div>
+						<div className = 'profile-settings-action'>delete account</div>
+						<div className = 'profile-settings-action'>disable all alerts</div>
+						<div className = 'profile-settings-action'>clear all alerts</div>
+						<I center>
+							
+						</I>						
 						<I center onClick = {this.deleteAccout}>
-							<div c = 'profile-settings-action'>delete account</div>
+							
 						</I>
 						<I center onClick = {this.disableAlerts}>
-							<div c = 'profile-settings-action'>disable all alerts</div>
+							
 						</I>
 						<I center onClick = {this.clearAlerts}>
-							<div c = 'profile-settings-action'>clear all alerts</div>
+							
 						</I>
 					</I>
 				</I>
@@ -421,5 +422,6 @@ var SettingsModal = React.createClass({
 		)
 	}
 });
+
 export default SettingsModal
 

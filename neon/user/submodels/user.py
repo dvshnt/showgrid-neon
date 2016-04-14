@@ -150,6 +150,7 @@ class NeonUser(AbstractBaseUser):
 			return False
 
 	def send_pin(self,pin):
+		print "SEND PIN to "+self.phone
 		msg = 'Your pin is ' + pin
 		Sender.send_message(msg,self.phone)
 

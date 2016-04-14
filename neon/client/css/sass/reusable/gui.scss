@@ -123,8 +123,7 @@ input:focus{
 
 
 
-
-
+/* BUTTONS */
 .button-green{
 	@include input-base;
 	@include button-base;
@@ -146,8 +145,30 @@ input:focus{
 	border-radius: 50%;
 }
 
+.button-favorite{
+	color: rgba(0, 0, 0, 0.3);
+	fill: rgba(0, 0, 0, 0.3);
+}
 
+.button-favorite-active{
+	color: #FF2A35;
+	fill: #FF2A35;
+}
 
+.button-alert{
+	color: rgba(0, 0, 0, 0.3);
+	fill: rgba(0, 0, 0, 0.3);
+}
+
+.button-alert-sale{
+	color: rgb(0,222,144);
+	fill: rgb(0,222,144);
+}
+
+.button-alert-show{
+	color: #FFA700;
+	fill: #FFA700;
+}
 
 
 

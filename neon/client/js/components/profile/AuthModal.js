@@ -124,7 +124,7 @@ export default class AuthModal extends Component {
 			type: 'POST',
 			dataType: 'json',
 			success: this.isGood.bind(this,null),
-			error: this.isGood.bind(this,"hmm something went wrong")
+			error: this.isGood.bind(this,"invalid username or password")
 		 })
 	}
 
@@ -147,8 +147,10 @@ export default class AuthModal extends Component {
 
 
 					<I center beta = {50} >
-						<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
-						<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
+						<form>
+							<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
+							<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
+						</form>
 					</I>
 
 

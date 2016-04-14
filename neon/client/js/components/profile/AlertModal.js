@@ -37,25 +37,25 @@ var AlertModal = React.createClass({
 			show: this.props.show.id,
 			which: which,
 			sale: sale
-		}).then((body)=>{
-			console.log(body);
+		}).done((body)=>{
 			if(body.status != null || body.detail != null){
 				this.setState({error:body.status||body.detail})
 			}else{
-				this.setState({
-					sale_alert: body,
-					done: true
-				})
+				window.user.alerts.push(body)
+				op.closeModal();
+				this.props.onSet();
 			}
+		}).error((body)=>{
+			this.setState({error:body})
 		})
 	},
 
 	getDateString: function(time,sale){
 
 		var i = this.props.times.indexOf(time);
-		console.log(time,i)
+	
 		if(i == 0){
-			return this.props.date_str[i] + (sale == true ? "sale" : "show")
+			return ( this.props.date_str[i] + (sale == true ? "sale" : "show") )
 		}else{
 			return this.props.date_str[i] + " before "+(sale == true ? "sale" : "show")+" starts"
 		}
@@ -96,16 +96,46 @@ var AlertModal = React.createClass({
 			var e = this.refs.show_select;
 		}
 
-		this.setAlert(e.selectedIndex,this.state.sale_tab);
+		this.setAlert(e.selectedIndex-1,this.state.sale_tab);
+	},
+
+	componentDidMount: function(){
+		if(this.state.sale_tab){
+			setTimeout(()=>{
+				this.refs.sale_select.focus()
+			}, 500);
+			
+		}else{
+			setTimeout(()=>{
+				this.refs.show_select.focus()
+			}, 500);
+			
+		}
+	},
+
+	setAlertType: function(){
+		var type = !this.state.sale_tab;
+
+		setTimeout(()=>{
+			if(type){
+				this.refs.sale_select.focus()
+			}else{
+				this.refs.show_select.focus()
+			}
+		},500)
+		this.setState({
+			sale_tab: type,
+		})
 	},
 
 	render: function(){
 
-		var show_options = this.props.times.filter(this.timeFilter).map(this.makeOption)
+		var show_options = this.props.times.filter(this.timeFilter).map((d)=>{return this.makeOption(d,false)})
 		var sale_options = [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.timeFilter).map((d)=>{return this.makeOption(d,true)})
-		
+		sale_options.unshift(<option key ='option_blank'>-----</option>)
+		show_options.unshift(<option key ='option_blank'>-----</option>)
 		return (
-			<Modal onDone={this.choose} height = {'300px'} onClose={op.closeModal} page_index = {this.state.done ? 1 : 0} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} >
+			<Modal height = {'300px'} onClose={op.closeModal} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} >
 				<I vertical >
 					<I vertical center c = "alert-modal-show">
 						<div>{new Date(this.props.show.raw_date).toString()}</div>
@@ -116,23 +146,20 @@ var AlertModal = React.createClass({
 						<I center onClick = {op.showProfileSettings.bind(null,2)} c='alert-modal-info-phone'>
 							<div > # {window.user.phone || '615-715-7754'}</div>
 						</I>
-						<I center onClick = {this.setState.bind(this,{sale_tab:!this.state.sale_tab})} c='alert-modal-info-saletab' >
-							<div>set a {this.state.sale_tab ? "show" : "sale"} alert</div>
+						<I center onClick = {this.setAlertType} c='alert-modal-info-saletab' >
+							<div>set a {this.state.sale_tab ? "show" : "sale"} alert </div>
 						</I>
 					</I>
 					<I height = {50}>
 						<I slide vertical index_pos = {this.state.sale_tab ? 1 : 0} c={"alert-modal-options"}>
 							<I center>
-								<select ref = 'show_select'>{show_options}</select>
+								<select onChange = {this.choose} ref = 'show_select'>{show_options}</select>
 							</I>
 							<I center>
-								<select ref = 'sale_select'>{sale_options}</select>
+								<select onChange = {this.choose} ref = 'sale_select'>{sale_options}</select>
 							</I>
 						</I>
 					</I>
-				</I>
-				<I center c = 'alert-section-done'>
-					<span>Alert Set!</span>
 				</I>
 			</Modal>
 		)

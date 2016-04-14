@@ -48,7 +48,9 @@ export default class ShowActions extends Component {
 
 		return (
 			<div className={ mode }>
-				<FavoriteButton show={ show } />
+				<FavoriteButton show={ show } >
+					<span>Favorite</span>
+				</FavoriteButton>
 				<AlertButton className={'col-3'} show={ show }>
 					<span>Alert</span>
 				</AlertButton>

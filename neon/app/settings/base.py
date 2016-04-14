@@ -1,11 +1,9 @@
-from auth import *
-
 # Admins for bug reports
 ADMINS = ( 
     ('Davis Hunt', 'info@showgrid.com'),
 )
 
-
+from auth import *;
 #Show image min dimentions
 
 
@@ -130,13 +128,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-
-
+    'social.apps.django_app.default',
     'corsheaders',
  
     'colorful',
     'haystack',
-    'social.apps.django_app.default',
 
     'app',
     'cal',
@@ -164,23 +160,23 @@ AUTH_USER_MODEL = 'user.NeonUser'
 # AUTHENTICATION_BACKENDS = ( 'user.models.AuthBackend', )
 
 
-REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'app.serializers.ShowgridUserSerializer'
-}
+# REST_AUTH_SERIALIZERS = {
+#     'USER_DETAILS_SERIALIZER': 'app.serializers.ShowgridUserSerializer'
+# }
 
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
     )
 }
-
 
 
 
