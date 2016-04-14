@@ -10,7 +10,9 @@ import ListItemSm from 'components/ListItemSm'
 
 var Profile = React.createClass({
 
-
+	toShow: function(id){
+		window.location.href='/show/'+id
+	},
 	alertDate: function(d){
 		var nd = moment(d);
 		return d.toString()
@@ -24,7 +26,7 @@ var Profile = React.createClass({
 	
 		return (
 			<I height = {120} c={'profile-alert'} key={"profile_alert_"+i} style={{'background': i%2 ? '#F1F1F1' : '#F9F9F9'}} >
-				<I onClick = {()=>{window.location.href='/show/'+alert.show.id}} c={'profile-alert-info'} >
+				<I onClick = {this.toShow.bind(this,alert.show.id)} c={'profile-alert-info'} >
 					<I c='profile-alert-info-extra' >
 						<ListItemSm data = {alert.show} extra = {{show_date:false,hideHeader:true}} />
 					</I>
@@ -83,8 +85,11 @@ var Profile = React.createClass({
 		window.location.href = '/user/logout'
 	},
 
-	newsletter: function(toggle){
-		op.toggleNewsLetter(toggle)
+	enableNewsLetter: function(){
+		op.toggleNewsLetter(true).done(()=>{
+			window.user.newsletter = true
+			op.renderPrivateProfile();
+		})
 	},
 
 	settings: function(){
@@ -96,14 +101,18 @@ var Profile = React.createClass({
 		var profile = this.props.profile
 		var alerts,favorites,profile_actions;
 
+		var newsletter = null;
 
 
 		if(self){
+			if(!profile.newsletter){
+				newsletter = (<div onClick={this.enableNewsLetter} className={"profile-actions-newsletter button-blue"}>signup for the newsletter</div>)
+			}
 			profile_actions = (
-				<I height = {70} c="profile-actions">
-					<div onClick={this.settings} className={"profile-actions-button"}>settings</div>
+				<I height = {40} c="profile-actions">
 					<div onClick={this.logout} className={"profile-actions-button"}>logout</div>
-					<div className={"profile-actions-button"}>signup for the newsletter</div>
+					<div onClick={this.settings} className={"profile-actions-button"}>settings</div>
+					{newsletter}
 				</I>				
 			)
 		}
@@ -136,56 +145,53 @@ var Profile = React.createClass({
 			favorites = profile.favorites.map(this.favItem)
 		}
 		
-
+		var name = null;
+		if(user.name != null){
+			var name = (<span className="profile-info-name">{user.name}</span>)
+		}
+		
 
 		return (
-			< div className="profile" vertical >
+			< div className="profile">
 				{profile_actions}
-				
-				<div vertical c="profile-info">
+				<div vertical className="profile-info">
 					<div className="profile-info-main">
-						<div className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.gif')+')' }} />
+						<div className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
 						<div className="profile-info-bio">
+							{name}
 							<span className="profile-info-bio-quote-left">&#10077;</span><p className="profile-info-bio-text">{this.props.profile.bio || "this person prefers to have a sense of mystery about them"}</p><span className="profile-info-bio-quote-right">&#10078;</span>
+							<span className="profile-info-extra">joined {moment(profile.joined_date).format("MMM Do YYYY")} and was last seen {moment(profile.last_login).calendar()}</span>
 						</div>						
 					</div>
-
-					<div className="profile-info-extra">
-						<span className="profile-info-extra-joined">joined : {moment(profile.joined_date).format("MMM Do YYYY")}</span>
-						<span className="profile-info-extra-logged">last seen : {moment(profile.last_login).calendar()}</span>
-						<span className="profile-info-extra-counter">{profile.alerts.length} alerts and {profile.favorites.length} favorites</span>
-					</div>
 				</div>
-				<div>
-
+				<div className="profile-activity">
+					<I beta={100} vertical>
+						<I center height = {50}>
+							<I slide index_pos={this.state.tab_pos} vertical beta = {200} c="profile-activity-title">
+								<I center>
+									<h3>{user.alerts.length} Alert{user.alerts.length != 1 ? 's' : ''} </h3>
+								</I>
+								<I center>
+									<h3>{user.favorites.length} Favorite{user.favorites.length != 1 ? 's' : ''}</h3>
+								</I>
+							</I>
+							<IButton onClick = {this.setState.bind(this,{tab_pos:0})} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+							</IButton>
+							<IButton onClick = {this.setState.bind(this,{tab_pos:1})} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
+							</IButton>
+						</I>
+						<I slide index_pos = {this.state.tab_pos}>
+							<I vertical>
+								{alerts}
+							</I>
+							<I vertical>
+								{favorites}
+							</I>
+						</I>
+					</I>				
 				</div>
-				<I c="profile-activity" beta={100} vertical>
-					<I center height = {50}>
-						<I slide index_pos={this.state.tab_pos} vertical beta = {200} c="profile-activity-title">
-							<I center>
-								<h3>Alerts</h3>
-							</I>
-							<I center>
-								<h3>Favorites</h3>
-							</I>
-						</I>
-						<IButton onClick = {this.setState.bind(this,{tab_pos:0})} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
-							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-						</IButton>
-						<IButton onClick = {this.setState.bind(this,{tab_pos:1})} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
-							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
-						</IButton>
-						
-					</I>
-					<I slide index_pos = {this.state.tab_pos}>
-						<I vertical>
-							{alerts}
-						</I>
-						<I vertical>
-							{favorites}
-						</I>
-					</I>
-				</I>
 			</div>
 		)
 	}

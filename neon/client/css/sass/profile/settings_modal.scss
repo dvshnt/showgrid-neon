@@ -7,12 +7,65 @@
     position: absolute;
 }
 
+.profile-settings-action{
+	@include input-base;
+	@include center;
+	padding: 10px;
+	cursor: pointer;
+	font-weight: 300;
 
-.profile-settings-picture{
+}
+
+.profile-settings-newsletter{
+	background: #00F8BB;
+}
+
+.profile-settings-action-bad{
+	background: #FE4A00;
+	color: #fff;
+}
+
+
+.profile-settings-pic{
+	@include input-base;
+	@include center;
 	img{
-		height: 60%;
-		width: auto;
+		height: 100%;
+		width: 100%;
 	}
+	height: 50px;
+	width: 50px;
+	box-sizing: border-box;
+	padding: 5px;
+}
+
+.profile-settings-form{
+	@include center;
+	flex-direction: column;
+}
+
+
+.profile-settings-input-bio{
+	@include input-base;
+	width: 90%;
+	min-height: 100px;
+	padding: 10px;
+}
+
+.profile-settings-input-pic{
+	@include input-base;
+	height: 32px;
+	font-size: small;
+    line-height: 24px;
+    font-family: monospace;
+}
+
+.profile-settings-input-name{
+	@include input-base;
+	height: 20px;
+    width: auto;
+    text-align: center;
+    align-self: baseline;
 }
 
 .profile-settings-phonetab{
@@ -28,6 +81,3 @@
 	@include button-base;
 }
 
-.profile-settings-picture-upload{
-	@include button-base;
-}

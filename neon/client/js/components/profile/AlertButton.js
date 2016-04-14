@@ -14,7 +14,6 @@ var setAlert = React.createClass({
 	//update the state of the button and what the toggler will do.
 	update: function(){
 		window.user.alerts.filter((alert)=>{
-			console.log(alert.show.id);
 			return alert.show.id == this.props.show.id
 		}).forEach((a)=>{
 			if(a.sale == true) this.setState({ sale_alert : a })

@@ -1,46 +1,76 @@
 .profile{
-
 	position: absolute;
 	height: auto;
 	width: 100%;
-}
-
-
-.profile-activity-option{
 	@include center;
-	svg{
-		height: 20px;
-		width: auto;
-	}
+	flex-direction: column;
 }
 
-.profile-activity-title{
-	background: #F8F5F2;
-	flex-shrink: 10;
-}
 
+
+
+
+
+/*top profile actions bar*/
 .profile-actions{
-	background: #fff;
+	background: #FCFCFC;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 	flex-direction: row-reverse;
 }
+
 .profile-actions-button{
 	@include button-base;
 	font-size: 15px;
-	color: #E0002F;
-	background: #fff;
-	line-height: 40px;	
+	color: #333434;
+	border:none;
+	padding: 3px;
+	background: none;
+	border-left: 1px solid black; 
+	border: none;
+	line-height: 20px;	
+	padding-right: 5px;
 }
 
 
 
 
 
-/*profile info */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PROFILE INFO (TOP SECTION BIO / PIC / STATS )*/
+
 .profile-info{
-	background:  #FEFDFA;
 	@include center;
 	height: auto;
+	width: 65%;
 	// @include section;
+}
+.profile-info-name{
+	@include input-base;
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	background: rgba(0,0,0,0.05)
+}
+
+.profile-info-extra{
+	position: absolute;
+	bottom: 10px;
+	left: 50%;
+	transform: translate(-50%,0%);
+	font-size: 10px;
+	color: rgba(0,0,0,0.5);
 }
 
 .profile-info-main{
@@ -48,10 +78,10 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     box-sizing: border-box;
     width: 100%;
-    padding: 20px;
+    padding: 10px;
 }
 
 .profile-info-pic{
@@ -61,6 +91,7 @@
 	height: 150px;
 	width: 150px;
 	border-radius: 2px;
+	flex-shrink: 0;
 	
 }
 
@@ -70,16 +101,11 @@
 	@include center;
 	position: relative; 
 	height: auto;
-	width: 50%;
+	width: 100%;
 	min-height: 150px;
 	text-align: center;
 	border-radius: 2px;
 	background: #fff;
-}
-
-
-.profile-info-extra{
-	@include center;
 }
 
 .profile-info-bio-text{
@@ -112,72 +138,37 @@
 
 
 
-/*extra*/
 
-.profile-info-extra{
-	
+
+/* PROFILE ACTIVITY (BOT SECTION ALERTS / FAVS) */
+
+
+.profile-activity-option{
+	@include center;
+	svg{
+		height: 20px;
+		width: auto;
+	}
 }
 
-.profile-info-extra-joined{
-	@include info;
-}	
-
-.profile-info-extra-logged{
-	@include info;
+.profile-activity-title{
+	background: #F8F5F2;
+	flex-shrink: 10;
 }
-
-.profile-info-extra-counter{
-	@include info;
-}
-
 
 
 .profile-activity{
-
-	background:  #F8F5F2;
-}
-
-
-
-@media screen and (max-width: 500px ) {
-	.profile-info-bio{
-		width: 95%;
+	box-sizing: border-box;
+	width: 65%;
+	padding: 10px;
+	> div{
+		min-height: 400px;
+		@include section;
+		background: #fff;
 	}
-	.profile-info-main{
-		@include center;
-		flex-direction: column;
-		padding: 5px;
-	}
-	.profile-actions-option{
-		padding: 15px;
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//favorite and alert items
-.profile-alert{
 	
 }
+
 
 .profile-alert-icon{
 	color: #fff;
@@ -192,9 +183,7 @@
 	}
 }
 
-.profile-alert-info{
-	
-}
+
 
 .profile-alert-info-date{
 	font-size: 30px;
@@ -215,36 +204,35 @@
 	color: #FFA700;
 }
 
-.profile-favorite{
-
-}
 
 
 
 
-.profile-actions-setup-phone{
-	
-}
-
-.profile-actions-option-logout{
-
-}
 
 
-.profile-actions-option-enable{
-	div{
-		background: #C9FFEC;	
+
+
+
+
+/* PROFILE MOBILE */
+
+@media screen and (max-width: 500px ) {
+	.profile-activity{
+		width: 100%;
+		padding: 5px;
 	}
-
+	.profile-info{
+		width: 100%;
+	}
+	.profile-info-main{
+		@include center;
+		flex-direction: column;
+		padding: 5px;
+	}
+	.profile-actions-option{
+		padding: 15px;
+	}
 }
-
-.profile-actions-option-disable{
-	
-}
-
-
-
-
 
 
 

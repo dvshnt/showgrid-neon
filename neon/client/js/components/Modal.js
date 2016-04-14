@@ -63,7 +63,6 @@ var Modal = React.createClass({
 	},
 
 	render: function(){
-		console.log("RENDER")
 		return (
 			<div ref = 'overlay' className={"overlay "+(this.props.visible ? 'overlay-visible' : '')}>
 				<div onClick={op.closeModal}  className={"overlay-cover"} />

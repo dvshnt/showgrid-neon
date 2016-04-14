@@ -30,8 +30,9 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from serializer import UserSerializer, AlertSerializer
 
-
-
+from  django.core.files.images import ImageFile
+from django.core.files import File
+from django.core.files.base import ContentFile
 
 
 def require_email(request):
@@ -48,8 +49,6 @@ def require_email(request):
 
 
 @api_view(['GET'])
-@permission_classes((IsAuthenticated, ))
-@ensure_csrf_cookie
 def private_profile(request):
 	if request.user.is_authenticated() == False:
 		return redirect('/?q=profile')
@@ -68,8 +67,29 @@ def public_profile(request,id):
 		return redirect('/?q=profile')
 
 
-
-
+@api_view(['POST'])
+def update_profile(request):
+	user = request.user
+	bio = request.POST.get('bio',False)
+	pic = request.FILES.get('pic',False)
+	name = request.POST.get('name',False)
+	email = request.POST.get('email',False)
+	if pic:
+		img = ImageFile(pic)
+		if img.size > 500000:
+			return Response({"status":"image is too big"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		request.user.pic.save('user_'+str(user.id)+'_pic',img, save=False)
+	
+	if ( bio == "" or request.user.bio == bio ) and pic == False and (user.name == name or name == "") and (user.email == email or email == ""):
+		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	user.bio = bio or user.bio
+	user.name = name or user.name
+	
+	user.email = email or user.email
+	if email:
+		logout(request)
+	user.save()
+	return Response({"status":"good"},status=status.HTTP_200_OK)
 
 
 
@@ -203,6 +223,10 @@ class UserActions(APIView):
 	def delete(self, request, action=None):
 		user = request.user
 
+		if action == 'newsletter':
+			user.newsletter = False;
+			user.save()
+			return Response({'status':'good'})
 		if action == 'favorite':
 			id = request.GET.get('id',False)
 			if id != None:
@@ -211,7 +235,11 @@ class UserActions(APIView):
 				return Response({'status':'good'})
 			
 
-
+		if action == 'alerts':
+			alerts_q = Alert.objects.filter(user=user)
+			for alert in alerts_q:
+				alert.delete()
+			return Response({'status':'good'})
 
 		#clear user alert
 		if action == 'alert':
@@ -241,6 +269,11 @@ class UserActions(APIView):
 
 	def post(self, request, action=None):
 		user = request.user
+		
+		if action == 'newsletter':
+			user.newsletter = True;
+			user.save()
+			return Response({'status':'good'})
 
 		if action == 'favorite':
 			id = request.GET.get('id',False)
@@ -252,6 +285,7 @@ class UserActions(APIView):
 				except:
 					return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+		
 
 		#set user phone
 		if action == 'phone_set':

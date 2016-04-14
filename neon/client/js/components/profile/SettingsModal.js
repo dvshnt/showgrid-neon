@@ -49,7 +49,7 @@ var PhoneTab = React.createClass({
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'X-CSRFToken': window.user.scrf
+				'X-CSRFToken': window.user.csrf
 			},
 			dataType: 'json',	
 			data: JSON.stringify({
@@ -111,7 +111,7 @@ var PhoneTab = React.createClass({
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'X-CSRFToken': window.user.scrf
+				'X-CSRFToken': window.user.csrf
 			},
 			dataType: 'json',	
 			data: JSON.stringify({phone:phonenumber})		
@@ -224,7 +224,7 @@ var SettingsModal = React.createClass({
 
 	getInitialState: function(){
 		return {
-			loading: false,
+			saving: false,
 			tab_pos: this.props.tab_pos,
 		}
 	},
@@ -243,73 +243,59 @@ var SettingsModal = React.createClass({
 		}
 	},
 
-	update_pic: function(){
-
-
-
+	updateProfile: function(){
+		var data = new FormData();
+		data.append('pic', this.refs.input_pic.files[0]);
+		data.append('bio', this.refs.input_bio.value);
+		data.append('name', this.refs.input_name.value);
+		data.append('email', this.refs.input_email.value);
+		
 		this.setState({
-			loading: true,
+			saving:true,
 		})
 
-
-
-		window.fetch('/user/rest/profile-pic',{
-			method: 'put',
-			headers: {
-				'Accept': 'application/json','Content-Type': 'application/json','X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+		$.ajax({
+		    url: '/user/update',
+		    type: 'POST',
+		    data: data,
+		    headers: {
+				'X-CSRFToken': window.user.csrf
 			},
-		})
-		.then((res)=>{
-			window.user = profile;
-			op.showSettingsModal();
-		})
-		.catch((e)=>{
+		    enctype: "multipart/form-data",
+		    cache: false,
+		    dataType: 'json',
+		    contentType: false,
+		    processData: false,
+		    
+		}).done((body)=>{
+			window.location.reload()
+		}).fail((body)=>{
+			console.log(body)
 			this.setState({
-				loading: false,
-				error: 'update failed'
-			})
-    	})
-
+				saving:false,
+				error: body.responseJSON ? body.responseJSON.status : "oops something went wrong"
+			})			
+		})
 	},
 
-	update: function(){
 
-		var user = {
-			name : this.refs.name.value,
-			email : this.refs.email.value,
-			bio: this.refs.bio.value,
-		}
-		
-
-		if( user.name == user.email){
-			return this.setState({
-				error: "nothing to save",
-			})
-		}else if(user.new_pass != user.new_pass_confirm){
-			return this.setState({
-				error: "passwords dont match",
-			})		
+	clearAlerts: function(){
+		if(window.user.alerts == null || window.user.alerts.length == 0){
+			return op.closeModal()
 		}
 
-		this.setState({
-			loading: true,
+		$.ajax({
+			url: '/user/rest/alerts',
+			type: 'DELETE',
+			headers: {'X-CSRFToken': window.user.csrf},
+			dataType: 'json',
+		}).done(()=>{
+			window.user.alerts = [];
+			if(window.location.pathname == '/user/profile'){
+				op.renderPrivateProfile();
+			}
+			op.closeModal()
 		})
-
-		window.fetch('/user/rest/profile',{
-			method: 'put',
-			headers: {
-				'Accept': 'application/json','Content-Type': 'application/json','X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
-			},
-			body: JSON.stringify(user)
-		}).then(function(user){
-			window.user = profile;
-			op.closeModal();
-		}).catch(()=>{
-      	 	this.setState({
-      	 		loading: false,
-      	 		error: 'update failed'
-      	 	})
-    	});
 	},
 
 
@@ -334,6 +320,14 @@ var SettingsModal = React.createClass({
 		})
 	},
 
+	toggleNewsletter: function(){
+		op.toggleNewsLetter(!window.user.newsletter)
+		.done((dat)=>{
+			window.user.newsletter = !window.user.newsletter
+			this.forceUpdate();
+		})
+	},
+
 	render: function(){
 
 		var user = window.user;
@@ -341,7 +335,7 @@ var SettingsModal = React.createClass({
 
 
 		return (
-			<Modal onClose = {this.tryClose} className = {'profile-settings'}  error = {this.state.error} page_index = {this.state.tab_pos} >			
+			<Modal onResetError = {this.setState.bind(this,{error:null})} onClose = {this.tryClose} className = {'profile-settings'}  error = {this.state.error} page_index = {this.state.tab_pos} >			
 				
 
 				<I vertical>
@@ -368,44 +362,37 @@ var SettingsModal = React.createClass({
 				</I>
 
 
-				<I vertical beta = {100} c = 'profile-settings-main'>
+				<I vertical beta = {100}>
 
 					<I height = {60} center c='profile-settings-title'>
 						<h3>settings</h3>
 					</I>
 
 
-					<I center c="profile-settings-picture">
-						<span className="profile-settings-cat" >profile picture</span>
-						<img src={user.pic || '/static/showgrid/img/avatar.gif'} />
-						<div className="profile-settings-picture-upload">upload</div>
-					</I>
-					
-					<I center c="profile-settings-bio">
-						<span className="profile-settings-cat" >profile bio</span>
-						<textarea maxLength="200" ref="bio" onChange={this.resetState} placeholder="Tell us about yourself...">{ user.bio }</textarea>
-					</I>
-					
+					<I beta = {130} center vertical c="profile-settings-main">
+						<form  action = "/user/update" className='profile-settings-form' method="post">
+							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
+							<I center>
+								<div className="profile-settings-pic">
+									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.gif')+')' }} />
+								</div>
+								<input className="profile-settings-input-pic" name = "pic" ref = "input_pic" type="file" accept="image/*" />
+								
+							</I>
 
+							<textarea name = "bio" className="profile-settings-input-bio" maxLength="200" ref="input_bio" onChange={this.resetState} placeholder="Tell us about yourself..." defaultValue={ user.bio }></textarea>
+							<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
+						</form>
+					</I>
+					
+				
 					<I c="profile-settings-more" vertical>
-						<span className="profile-settings-cat" >more options</span>
 						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:0})}>change password</div>
 						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>change phone</div>
-						<div className = 'profile-settings-action'>delete account</div>
-						<div className = 'profile-settings-action'>disable all alerts</div>
-						<div className = 'profile-settings-action'>clear all alerts</div>
-						<I center>
-							
-						</I>						
-						<I center onClick = {this.deleteAccout}>
-							
-						</I>
-						<I center onClick = {this.disableAlerts}>
-							
-						</I>
-						<I center onClick = {this.clearAlerts}>
-							
-						</I>
+						<div className = 'profile-settings-action' onClick =  {this.setState.bind(this,{tab_pos:3})}>change email</div>
+						<div className = {'profile-settings-action profile-settings-newsletter ' + (user.newsletter ? 'profile-settings-action-bad' : '')} onClick = {this.toggleNewsletter}>{user.newsletter ? "cancel newsletter" : "recieve newsletter"}</div>
+						<div className = 'profile-settings-action profile-settings-action-bad' onClick =  {this.clearAlerts}>clear all alerts</div>
+
 					</I>
 				</I>
 
@@ -416,6 +403,17 @@ var SettingsModal = React.createClass({
 					</I>
 					<PhoneTab onResetError={this.setState.bind(this,{error:null})} onError={(e)=>{this.setState({error:e})}} />
 				</I>
+
+				<I vertical>
+					<I height = {60} center c='profile-settings-title'>
+						<h3>Change Email</h3>
+					</I>
+					<I vertical center>
+						<input className="profile-settings-input-email" ref = "input_email" placeholder={user.email}/>
+						<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "set new email"}</div>
+					</I>
+
+				</I>
 				
 				
 			</Modal>
@@ -423,5 +421,5 @@ var SettingsModal = React.createClass({
 	}
 });
 
-export default SettingsModal
+export default SettingsModal;
 

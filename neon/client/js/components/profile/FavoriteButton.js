@@ -42,7 +42,7 @@ export default class SetFavorite extends Component {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'X-CSRFToken': $("input[name=csrfmiddlewaretoken]").val()
+				'X-CSRFToken': window.user.csrf
 			},
 		}).done(function(body) {
 			_this.setState({ favorited: _this.state.favorited ? false : true });
