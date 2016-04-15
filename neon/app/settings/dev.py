@@ -33,13 +33,13 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/cal/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/magazine/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/newsletter/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/show/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/user/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/venue/templates/',
+            '/home/ubuntu/showgrid/neon/templates/',
+            '/home/ubuntu/showgrid/neon/cal/templates/',
+            '/home/ubuntu/showgrid/neon/magazine/templates/',
+            '/home/ubuntu/showgrid/neon/newsletter/templates/',
+            '/home/ubuntu/showgrid/neon/show/templates/',
+            '/home/ubuntu/showgrid/neon/user/templates/',
+            '/home/ubuntu/showgrid/neon/venue/templates/',
         ],
         'OPTIONS': { 
             'loaders': [
@@ -56,6 +56,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 LOGGING = {
     'version': 1,

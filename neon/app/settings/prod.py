@@ -54,6 +54,33 @@ STATICFILES_DIRS = (
     '/home/ubuntu/showgrid/app/static/',
 )
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            '/home/ubuntu/showgrid/neon/templates/',
+            '/home/ubuntu/showgrid/neon/cal/templates/',
+            '/home/ubuntu/showgrid/neon/magazine/templates/',
+            '/home/ubuntu/showgrid/neon/newsletter/templates/',
+            '/home/ubuntu/showgrid/neon/show/templates/',
+            '/home/ubuntu/showgrid/neon/user/templates/',
+            '/home/ubuntu/showgrid/neon/venue/templates/',
+        ],
+        'OPTIONS': { 
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+            'debug': True,
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
