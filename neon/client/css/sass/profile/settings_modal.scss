@@ -12,6 +12,12 @@
 
 
 
+
+.profile-settings-newsletter{
+	background: #00F8BB;
+}
+
+
 .profile-settings-action{
 	@include input-base;
 	@include center;
@@ -42,11 +48,6 @@
 
 
 
-
-
-.profile-settings-newsletter{
-	background: #00F8BB;
-}
 
 
 

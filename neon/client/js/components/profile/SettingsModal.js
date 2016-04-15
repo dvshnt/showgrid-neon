@@ -404,7 +404,7 @@ var SettingsModal = React.createClass({
 							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
 							<I center>
 								<div className="profile-settings-pic">
-									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.gif')+')' }} />
+									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
 								</div>
 								<input className="profile-settings-input-pic" name = "pic" ref = "input_pic" type="file" accept="image/*" />
 								
