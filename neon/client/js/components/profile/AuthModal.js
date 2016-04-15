@@ -148,8 +148,8 @@ export default class AuthModal extends Component {
 
 					<I center beta = {80} vertical>
 						<form className = "auth-input-form">
-							<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
-							<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
+							<input required type="text" ref="email" placeholder="Enter email" />
+							<input required type="password" ref="password" placeholder="Enter password" />
 						</form>
 					</I>
 
@@ -173,9 +173,9 @@ export default class AuthModal extends Component {
 					</I>
 
 					<I beta = {110} vertical center >
-						<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" onChange={ this.resetError }/>
-						<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" onChange={ this.resetError }/>
-						<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" onChange={ this.resetError }/>
+						<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" />
+						<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" />
+						<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" />
 						<input className = "button-blue" type="submit" value="Sign Up" onClick={ this.userSignup } />
 					</I>
 
