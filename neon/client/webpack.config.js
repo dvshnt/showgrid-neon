@@ -44,10 +44,14 @@ var cfg = {
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-
+var autoprefixer = require('gulp-autoprefixer');
 function runsass() {
   return gulp.src('./css/base.scss')
     .pipe(sass({includePaths: ['./css/sass']}).on('error', sass.logError))
+    .pipe(autoprefixer({
+		browsers: ['last 2 versions'],
+		cascade: false
+	}))
     .pipe(gulp.dest('../static/showgrid/css'))
     .on('done',function(){
     	console.log("CSS DONE")

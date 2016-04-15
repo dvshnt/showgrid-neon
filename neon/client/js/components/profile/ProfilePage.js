@@ -106,7 +106,7 @@ var Profile = React.createClass({
 
 		if(self){
 			if(!profile.newsletter){
-				newsletter = (<div onClick={this.enableNewsLetter} className={"profile-actions-newsletter button-blue"}>signup for the newsletter</div>)
+				newsletter = (<div onClick={this.enableNewsLetter} className={"button-blue profile-actions-newsletter"}>signup for the newsletter</div>)
 			}
 			profile_actions = (
 				<I height = {40} c="profile-actions">

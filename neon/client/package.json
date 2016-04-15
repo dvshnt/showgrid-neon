@@ -5,7 +5,7 @@
   "description": "Nashville Journal",
   "author": "Davis Hunt",
   "dependencies": {
-    "gsap":"https://github.com/arxii/GreenSock-JS.git",
+    "gsap": "https://github.com/arxii/GreenSock-JS.git",
     "classnames": "^2.2.3",
     "intui": "git+https://github.com/arxii/intui.git#0.1.2",
     "jquery": "^2.1.3",
@@ -25,6 +25,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-runtime": "^6.6.1",
     "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
     "gulp-sass": "^2.2.0",
     "material-ui": "git+https://github.com/callemall/material-ui.git",
     "react-tap-event-plugin": "^0.2.2"
