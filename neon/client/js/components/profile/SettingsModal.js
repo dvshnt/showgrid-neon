@@ -311,7 +311,7 @@ var SettingsModal = React.createClass({
 
 	clearAlerts: function(){
 		if(window.user.alerts == null || window.user.alerts.length == 0){
-			return op.closeModal()
+			return 
 		}
 
 		$.ajax({
@@ -421,7 +421,7 @@ var SettingsModal = React.createClass({
 						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>change phone</div>
 						<div className = 'profile-settings-action' onClick =  {this.setState.bind(this,{tab_pos:3})}>change email</div>
 						<div className = {'profile-settings-action profile-settings-newsletter ' + (user.newsletter ? 'profile-settings-action-bad' : '')} onClick = {this.toggleNewsletter}>{user.newsletter ? "cancel newsletter" : "recieve newsletter"}</div>
-						<div className = 'profile-settings-action profile-settings-action-bad' onClick =  {this.clearAlerts}>clear all alerts</div>
+						<div className = {'profile-settings-action profile-settings-action-bad ' + (user.alerts.length == 0 ? 'profile-settings-action-disabled' : '') } onClick =  {this.clearAlerts}>clear all alerts</div>
 
 					</I>
 				</I>

@@ -146,8 +146,8 @@ export default class AuthModal extends Component {
 					</I>
 
 
-					<I center beta = {50} >
-						<form>
+					<I center beta = {80} vertical>
+						<form className = "auth-input-form">
 							<input required type="text" ref="email" placeholder="Enter email" onChange={ this.resetError }/>
 							<input required type="password" ref="password" placeholder="Enter password" onChange={ this.resetError }/>
 						</form>

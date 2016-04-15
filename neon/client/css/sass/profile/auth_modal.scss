@@ -8,13 +8,29 @@
 	background-repeat:no-repeat;
 }
 
+.auth-input-form{
+	@include center;
+	flex-direction: row;
+	width: 100%;
+	input{
+		width: 50%;
+	}
+}
+
 .modal-page-container{
 	padding: 20px;
 	@include center;
 	box-sizing: border-box;
 }
 
-
+@media screen and (max-width: 500px ) {
+	.auth-input-form{
+		flex-direction: column;
+	}
+	.modal-page-container{
+		padding: 10px;
+	}
+}
 
 .auth-modal{
 

@@ -7,6 +7,11 @@
     position: absolute;
 }
 
+
+
+
+
+
 .profile-settings-action{
 	@include input-base;
 	@include center;
@@ -16,14 +21,33 @@
 
 }
 
-.profile-settings-newsletter{
-	background: #00F8BB;
-}
 
 .profile-settings-action-bad{
 	background: #FE4A00;
 	color: #fff;
 }
+
+
+.profile-settings-action-disabled{
+	cursor: initial;
+	background: #C0C0C0;
+	color: #7F7F7F;
+}
+
+
+
+
+
+
+
+
+
+
+
+.profile-settings-newsletter{
+	background: #00F8BB;
+}
+
 
 
 .profile-settings-pic{
