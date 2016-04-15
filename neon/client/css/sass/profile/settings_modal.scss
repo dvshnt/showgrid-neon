@@ -66,9 +66,9 @@
 
 .profile-settings-form{
 	@include center;
+	width: 95%;
 	flex-direction: column;
 }
-
 
 .profile-settings-input-bio{
 	@include input-base;

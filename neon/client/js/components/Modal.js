@@ -28,8 +28,8 @@ var Modal = React.createClass({
 	},
 	
 	componentWillReceiveProps: function(props,state){
-		if(props.visible) windowScroll.disable();
-		else if(!props.visible) windowScroll.enable();
+		// if(props.visible) windowScroll.disable();
+		// else if(!props.visible) windowScroll.enable();
 
 	},
 
@@ -41,11 +41,11 @@ var Modal = React.createClass({
 
 	componentDidMount: function(){
 		window.modal = this;
-		if(this.props.visible) windowScroll.disable();
+		// if(this.props.visible) windowScroll.disable();
 	},
 
 	componentWillUnmount: function(){
-		windowScroll.enable();
+		// windowScroll.enable();
 	},
 
 	set: function(){
@@ -64,9 +64,8 @@ var Modal = React.createClass({
 
 	render: function(){
 		return (
-			<div ref = 'overlay' className={"overlay "+(this.props.visible ? 'overlay-visible' : '')}>
-				<div onClick={op.closeModal}  className={"overlay-cover"} />
-				<div className = {"modal modal-"+(this.props.visible ? 'visible' : 'hidden')} style ={{height:this.props.height}}>
+			<div onClick={op.closeModal} ref = 'overlay' className={"overlay "+(this.props.visible ? 'overlay-visible' : '')}>
+				<div onClick = {this.preventClose} className = {"modal modal-"+(this.props.visible ? 'visible' : 'hidden')} style ={{height:this.props.height}}>
 					<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
 					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 0 : 1 } >
 						<I slide vertical height = {60} onClick = { this.props.onResetError } >
@@ -81,9 +80,6 @@ var Modal = React.createClass({
 							{this.props.children}
 						</I>
 					</I>
-				</div>
-				<div onClick={this.props.onDone} className={'modal-confirm '+(this.props.onDone ? '':'modal-confirm-hidden')}>
-					<div>&#10003;</div>
 				</div>
 			</div>
 		)
