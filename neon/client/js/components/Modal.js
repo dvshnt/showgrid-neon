@@ -67,17 +67,13 @@ var Modal = React.createClass({
 			<div onClick={op.closeModal} ref = 'overlay' className={"overlay "+(this.props.visible ? 'overlay-visible' : '')}>
 				<div onClick = {this.preventClose} className = {"modal modal-"+(this.props.visible ? 'visible' : 'hidden')} style ={{height:this.props.height}}>
 					<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
-					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 0 : 1 } >
-						<I slide vertical height = {60} onClick = { this.props.onResetError } >
-							<I center beta = {100} onClick = { this.props.onResetError } c="modal-error" >
-								<span>{this.props.error}</span>
-							</I>
-							<I cetner beta = {100} onClick = { this.props.onResetError } c="modal-message" >
-								<span>{this.props.message}</span>
-							</I>
-						</I>
+					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 1 : 0 } >
 						<I slide beta = {100} index_pos = {this.props.page_index}>
 							{this.props.children}
+						</I>
+						<I slide vertical height = {60} onClick = { this.props.onResetError } c="modal-error">
+							<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
+							<span>{this.props.error}</span>
 						</I>
 					</I>
 				</div>

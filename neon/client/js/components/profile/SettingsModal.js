@@ -429,7 +429,7 @@ var SettingsModal = React.createClass({
 
 				<I vertical>
 					<I height = {60} center c='profile-settings-title'>
-						<h3>Sign Up to Receive Text Alerts</h3>
+						<h3>Receive Text Alerts</h3>
 					</I>
 					<PhoneTab onResetError={this.setState.bind(this,{error:null})} onError={(e)=>{this.setState({error:e})}} />
 				</I>

@@ -23,6 +23,9 @@ var setAlert = React.createClass({
 
 	//toggle alert modal / delete all alerts
 	toggle: function(){
+		if(!window.user.is_authenticated){
+			return op.renderAuthModal();
+		}
 		if(!window.user.phone){
 			return op.showProfileSettings(2)
 		}

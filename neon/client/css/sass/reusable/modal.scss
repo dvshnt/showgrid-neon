@@ -53,6 +53,9 @@
 	box-shadow:0 1px 4px rgba(0,0,0,0.3);
 	position: relative;
 	.icon-close {
+		position: absolute;
+		left: 0;
+		top: 0;
 		@include icon;
 		z-index: 50;
 		fill:#222222;
@@ -114,9 +117,10 @@
 		left:0;
 		top:0;
 		width: 100vw;
-		height: 150vh;
+		height: 100vh;
 		min-width: 0px;
-		padding-bottom: 100px;
+		margin-bottom: 100px;
+		margin-top: 0px;
 	}
 
 } 
