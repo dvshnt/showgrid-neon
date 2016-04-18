@@ -156,7 +156,9 @@ var Profile = React.createClass({
 				{profile_actions}
 				<div vertical className="profile-info">
 					<div className="profile-info-main">
-						<div className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
+						<div className="profile-info-pic-wrap" >
+							<div className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
+						</div>
 						<div className="profile-info-bio">
 							{name}
 							<span className="profile-info-bio-quote-left">&#10077;</span><p className="profile-info-bio-text">{this.props.profile.bio || "this person prefers to have a sense of mystery about them"}</p><span className="profile-info-bio-quote-right">&#10078;</span>

@@ -86,15 +86,20 @@
     padding: 10px;
 }
 
-.profile-info-pic{
-	background-size: cover;
-	margin: 10px;
+.profile-info-pic-wrap{
 	@include section;
+	margin: 10px;
+	box-sizing: border-box;
+	padding: 5px;
 	height: 150px;
 	width: 150px;
-	border-radius: 2px;
 	flex-shrink: 0;
-	
+}
+
+.profile-info-pic{
+	background-size: cover;
+	width: 100%;
+	height: 100%;
 }
 
 .profile-info-bio{
@@ -111,10 +116,15 @@
 }
 
 .profile-info-bio-text{
-	text-align: center;
-	padding: 15px;
-	background: #fff;
-	border-radius: 10px;
+	text-align: initial;
+    /* position: absolute; */
+    /* top: 0px; */
+    width: 100%;
+    padding: 15px;
+    /* background: #fff; */
+    padding-bottom: 50px;
+    padding-top: 50px;
+    border-radius: 10px;
 }
 
 .profile-info-bio-quote-left{
@@ -213,7 +223,14 @@
 
 
 
-
+@media screen and (max-width: 700px ) {
+	.profile-info{
+		width: 100%;
+	}	
+	.profile-activity{
+		width: 100%;
+	}
+}
 
 
 /* PROFILE MOBILE */
@@ -223,9 +240,7 @@
 		width: 100%;
 		padding: 5px;
 	}
-	.profile-info{
-		width: 100%;
-	}
+
 	.profile-info-main{
 		@include center;
 		flex-direction: column;
