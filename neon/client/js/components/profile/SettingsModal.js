@@ -116,6 +116,7 @@ var PhoneTab = React.createClass({
 			dataType: 'json',	
 			data: JSON.stringify({phone:phonenumber})		
 		}).done((dat)=>{
+			window.user.phone = phonenumber;
 			this.setState({
 				page_index: 1,
 			});
