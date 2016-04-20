@@ -13,12 +13,22 @@ neon/media/**
 
 neon/client/node_modules
 
-neon/client/.sass-cache
-neon/client/js/*.js
-neon/client/css/base.css
-neon/client/css/*.css.map
 
-neon/static/**/*
+
+
+neon/static/showgrid/js/app.bundle.js
+neon/static/showgrid/js/app.bundle.js.map
+neon/static/showgrid/js/app.bundle.js.gz
+
+neon/static/showgrid/js/vendor.bundle.js
+neon/static/showgrid/js/vendor.bundle.js.map
+neon/static/showgrid/js/vendor.bundle.js.gz
+
+neon/static/showgrid/css/base.css
+neon/static/showgrid/css/base.css.map
+
+
+
 
 neon/venue/migrations/**
 neon/show/migrations/**
@@ -27,15 +37,7 @@ neon/contest/migrations/**
 
 
 
-neon/static/css/*.css
-neon/static/js/*.css
-neon/client/css/*.css
-neon/client/css/*.css.map
-
-neon/client/js/bundle.js
-neon/static/showgrid/css/base.css
-neon/static/showgrid/css/base.css.map
-neon/static/showgrid/js/bundle.js
 neon/app/settings/whoosh_index/**
 
 
+**/**/.DS_Store
