@@ -396,11 +396,10 @@ var SettingsModal = React.createClass({
 						<h3>settings</h3>
 					</I>
 
-
 					<I beta = {130} center vertical c="profile-settings-main">
 						<form  action = "/user/update" className='profile-settings-form' method="post">
 							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
-							<I center>
+							<I center height = {60} >
 								<div className="profile-settings-pic">
 									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
 								</div>
@@ -413,14 +412,12 @@ var SettingsModal = React.createClass({
 						</form>
 					</I>
 					
-				
 					<I c="profile-settings-more" vertical>
 						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:0})}>change password</div>
 						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>change phone</div>
 						<div className = 'profile-settings-action' onClick =  {this.setState.bind(this,{tab_pos:3})}>change email</div>
-						<div className = {'profile-settings-action profile-settings-newsletter ' + (user.newsletter ? 'profile-settings-action-bad' : '')} onClick = {this.toggleNewsletter}>{user.newsletter ? "cancel newsletter" : "recieve newsletter"}</div>
+						<div className = {'profile-settings-action profile-settings-newsletter ' + (user.newsletter ? 'profile-settings-action-bad' : '')} onClick = {this.toggleNewsletter}>{ user.newsletter ? "cancel newsletter" : "recieve newsletter" }</div>
 						<div className = {'profile-settings-action profile-settings-action-bad ' + (user.alerts.length == 0 ? 'profile-settings-action-disabled' : '') } onClick =  {this.clearAlerts}>clear all alerts</div>
-
 					</I>
 				</I>
 
