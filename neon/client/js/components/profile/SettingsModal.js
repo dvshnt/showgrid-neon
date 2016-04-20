@@ -368,14 +368,11 @@ var SettingsModal = React.createClass({
 			<Modal onResetError = {this.setState.bind(this,{error:null})} onClose = {this.tryClose} className = {'profile-settings'}  error = {this.state.error} page_index = {this.state.tab_pos} >			
 				
 
-				<I vertical>
+				<I  vertical>
 					<I height = {60} center c='profile-settings-title'>
 						<h3>change password</h3>
 					</I>
-					<I vertical>
-						<I center>
-							<span className="profile-settings-cat">change password</span>
-						</I>
+					<I vertical c = 'profile-settings-passwordtab'>
 						<I center>
 							<input onChange = {this.resetState} ref="current_pass" type="password" placeholder= {"Old Password" } />
 						</I>
@@ -434,7 +431,7 @@ var SettingsModal = React.createClass({
 					<PhoneTab onResetError={this.setState.bind(this,{error:null})} onError={(e)=>{this.setState({error:e})}} />
 				</I>
 
-				<I vertical>
+				<I  vertical>
 					<I height = {60} center c='profile-settings-title'>
 						<h3>Change Email</h3>
 					</I>

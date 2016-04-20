@@ -98,7 +98,6 @@ def update_profile(request):
 def update_profile_password(request):
 	old_pass = request.GET.get('current_pass',False)
 	new_pass = request.GET.get('new_pass',False)
-	print old_pass, new_pass
 	user = authenticate(email=request.user.email, password=old_pass)
 	if user is not None:
 		logout(request)

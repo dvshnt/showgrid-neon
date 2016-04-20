@@ -93,8 +93,17 @@
     align-self: baseline;
 }
 
+.profile-settings-passwordtab{
+	justify-content: flex-start;
+	padding: 30px;
+	padding-top: 60px;
+}
+
 .profile-settings-phonetab{
-	padding: 20px;
+
+	justify-content: flex-start;
+	padding: 30px;
+	padding-top: 60px;
 }
 
 .profile-settings-title{
