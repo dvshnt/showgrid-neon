@@ -34,7 +34,7 @@ var Modal = React.createClass({
 	},
 
 	preventClose: function(e){
-		console.log("DONT CLOSE")
+		
 		e.preventDefault()
 		e.stopPropagation()
 	},
