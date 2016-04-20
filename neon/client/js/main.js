@@ -1,3 +1,9 @@
+function getCookie(name){
+	var re = new RegExp(name + "=([^;]+)");
+	var value = re.exec(document.cookie);
+	return (value != null) ? unescape(value[1]) : null;
+}
+
 import React, { Component } from 'react';
 import dom from 'react-dom';
 
@@ -200,7 +206,7 @@ $("#profile-button").on('click',function(e){
 
 
 
-window.user.csrf = cookie.get('csrftoken');
+window.user.csrf = getCookie('csrftoken');
 
 
 
