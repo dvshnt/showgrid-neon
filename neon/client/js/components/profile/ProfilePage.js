@@ -96,6 +96,14 @@ var Profile = React.createClass({
 		op.showProfileSettings()
 	},
 
+	showAlerts: function(){
+		this.setState({tab_pos:0})
+	},
+
+	showFaves: function(){
+		this.setState({tab_pos:1})
+	},	
+
 	render: function(){
 		var self = this.props.profile.is_authenticated != null
 		var profile = this.props.profile
@@ -177,14 +185,14 @@ var Profile = React.createClass({
 									<h3>{user.favorites.length} Favorite{user.favorites.length != 1 ? 's' : ''}</h3>
 								</I>
 							</I>
-							<IButton onClick = {this.setState.bind(this,{tab_pos:0})} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+							<IButton onClick = {this.showAlerts} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
 								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
 							</IButton>
-							<IButton onClick = {this.setState.bind(this,{tab_pos:1})} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+							<IButton onClick = {this.showFaves} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
 								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
 							</IButton>
 						</I>
-						<I slide index_pos = {this.state.tab_pos}>
+						<I slide index_pos = {this.state.tab_pos} outerClassName = "profile-activity-container" >
 							<I vertical>
 								{alerts}
 							</I>
