@@ -1,20 +1,20 @@
+.DS_STORE
+
 neon/app/wsgi.py
 neon/app/settings/prod.py
 neon/app/settings/dev.py
 
 *.pyc
 
-
-
+.DS_Store
+venv/**
 neon/temp/**
 neon/media/**
 
-
-
-
-
-
 neon/client/node_modules
+neon/client/.sass-cache
+
+
 
 neon/static/showgrid/js/app.bundle.js
 neon/static/showgrid/js/app.bundle.js.map
@@ -32,9 +32,10 @@ neon/static/showgrid/css/base.css.map
 
 neon/venue/migrations
 neon/show/migrations
-neon/newsletter/migrations
 neon/contest/migrations
+neon/newsletter/migrations
 neon/user/migrations
+
 
 
 
