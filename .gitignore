@@ -30,9 +30,11 @@ neon/static/showgrid/css/base.css.map
 
 
 
-neon/venue/migrations/**
-neon/show/migrations/**
-neon/contest/migrations/**
+neon/venue/migrations
+neon/show/migrations
+neon/newsletter/migrations
+neon/contest/migrations
+neon/user/migrations
 
 
 
