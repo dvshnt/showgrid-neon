@@ -33,7 +33,18 @@
 
 
 .profile-actions-newsletter{
+	@include center;
+	height: 100%;
+	padding-left: 6px;
+	padding-right: 6px;
+	box-sizing: border-box;
+	width: auto;
+	cursor: pointer;
+	border-left: 1px solid  #00E68E;
+	border-right: 1px solid  #00E68E;
+	flex-direction: row;
 	line-height: 10px;
+	background: rgba(0, 230, 142, 0.47);
 }
 
 
@@ -53,7 +64,6 @@
 /* PROFILE INFO (TOP SECTION BIO / PIC / STATS )*/
 
 .profile-info{
-	@include center;
 	height: auto;
 	width: 65%;
 	// @include section;
@@ -97,10 +107,37 @@
 }
 
 .profile-info-pic{
+	position: relative;
+	cursor: pointer;
 	background-size: cover;
 	width: 100%;
 	height: 100%;
+	.profile-info-pic-overlay{
+		transition: background,opacity 1s ease;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		@include center;
+		background: rgba(0,0,0,0);
+		svg{
+			width: 30px;
+			height: 30px;
+			opacity: 0;
+		}
+	}
 }
+.profile-info-pic:hover{
+	.profile-info-pic-overlay{
+		transition: background 0.3s ease;
+		background: rgba(0,0,0,0.3);
+		fill: #fff;
+		svg{
+			transition: opacity 0.3s ease;
+			opacity: 1;
+		}
+	}
+}
+
 
 .profile-info-bio{
 	margin: 10px;
@@ -181,7 +218,8 @@
 	
 }
 .profile-activity-container{
-	overflow: visible;
+	// overflow: visible;
+	height: auto !important;
 }
 
 
@@ -201,6 +239,7 @@
 
 
 .profile-alert-info-date{
+	cursor: pointer;
 	font-size: 30px;
 	font-family: 'Roboto Slab', serif;
 	background: rgba(0,0,0,0.1);

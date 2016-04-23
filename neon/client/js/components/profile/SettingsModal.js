@@ -28,13 +28,20 @@ var PhoneTab = React.createClass({
 		}
 	},
 
+
 	handleKeydown: function(e) {
-		// ESC key
-		if (e.keyCode == 27){
-			e.preventDefault();
-			this.hidePhoneModal();
+		if (e.keyCode == 13){
+			switch(this.state.page_index){
+				case 0:
+					this.userSubmitPhone(e);
+					break;
+				case 1:
+					this.userSubmitPin(e);
+					break;
+			}
 		}
 	},
+
 
 	userSubmitPin: function(e){
 		var pin = this.refs.pinOne.value;
@@ -161,7 +168,9 @@ var PhoneTab = React.createClass({
 						<input maxLength="1" className="pin pin-4" type="text" ref="pinFour" size="1" onChange={ this.goToNextPinInput }/>
 					</I>
 					<I center height = {150}>
+					
 						<div className="button-green" onClick={this.userSubmitPin}>submit</div>
+						
 					</I>
 				</I>
 				<I center beta = {100} vertical c= 'profile-settings-phonetab'>
@@ -234,6 +243,30 @@ var SettingsModal = React.createClass({
 		return {
 			tab_pos: 1,
 		}
+	},
+
+	onKeyPress: function(e){
+		if(e.keyCode == 13){
+			switch(this.state.tab_pos){
+				case 2:
+					this.refs.phone_tab.handleKeydown(e)
+					break
+				case 0:
+					this.updatePassword(e)
+				case 1:
+				case 3:
+					this.updateProfile(e)
+					break
+			}
+		}
+	},
+
+	componentDidMount: function(){
+		document.addEventListener("keydown", this.onKeyPress, false);
+	},
+
+	componentWillUnmount: function(){
+		document.removeEventListener("keydown", this.onKeyPress, false);
 	},
 
 	componentWillReceiveProps: function(props,state){
@@ -396,7 +429,7 @@ var SettingsModal = React.createClass({
 						<h3>settings</h3>
 					</I>
 
-					<I beta = {130} center vertical c="profile-settings-main">
+					<I center vertical c="profile-settings-main">
 						<form  action = "/user/update" className='profile-settings-form' method="post">
 							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
 							<I center height = {60} >
@@ -412,11 +445,16 @@ var SettingsModal = React.createClass({
 						</form>
 					</I>
 					
-					<I c="profile-settings-more" vertical>
-						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:0})}>change password</div>
-						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>change phone</div>
-						<div className = 'profile-settings-action' onClick =  {this.setState.bind(this,{tab_pos:3})}>change email</div>
-						<div className = {'profile-settings-action profile-settings-newsletter ' + (user.newsletter ? 'profile-settings-action-bad' : '')} onClick = {this.toggleNewsletter}>{ user.newsletter ? "cancel newsletter" : "recieve newsletter" }</div>
+					<I c="profile-settings-more" height = {200} center>
+						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:0})}>
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
+						</div>
+						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
+						</div>
+						<div className = 'profile-settings-action' onClick =  {this.setState.bind(this,{tab_pos:3})}>
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-mail"/>' }} />
+						</div>
 						<div className = {'profile-settings-action profile-settings-action-bad ' + (user.alerts.length == 0 ? 'profile-settings-action-disabled' : '') } onClick =  {this.clearAlerts}>clear all alerts</div>
 					</I>
 				</I>
@@ -426,7 +464,7 @@ var SettingsModal = React.createClass({
 					<I height = {60} center c='profile-settings-title'>
 						<h3>Receive Text Alerts</h3>
 					</I>
-					<PhoneTab onResetError={this.setState.bind(this,{error:null})} onError={(e)=>{this.setState({error:e})}} />
+					<PhoneTab ref = 'phone_tab' onResetError={this.setState.bind(this,{error:null})} onError={(e)=>{this.setState({error:e})}} />
 				</I>
 
 				<I  vertical>

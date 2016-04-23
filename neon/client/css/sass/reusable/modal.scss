@@ -1,3 +1,6 @@
+#overlay-wrapper{
+
+}
 .overlay-cover{
 	
 	width:100%; height:100%;
@@ -7,17 +10,21 @@
 }
 
 .overlay {
-	background:rgba(0,0,0,0.4);
-	display:none;
 
-	position: absolute;
+	font-family: 'Helvetica', sans-serif;
+	font-weight: 300;
+	
+	background: rgba(0,0,0,0);
+
+	position: fixed;
 	top:0; left:0;
 
-	width:100vw; height:100vh;
+	width:100vw; height:100%;
 	z-index:999999;
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 	@include transition(transform 0.3s ease);
+	transition: background 0.3s ease;
 	// @include center;
 	// flex-direction: column;
 	// justify-content:center;
@@ -25,8 +32,7 @@
 }
 
 .overlay-visible{
-	display:-webkit-flex;
-	display:  flex;
+	background:rgba(0,0,0,0.5);
 }
 
 
@@ -119,8 +125,8 @@
 		width: 100vw;
 		height: 100vh;
 		min-width: 0px;
-		margin-bottom: 100px;
-		margin-top: 50px;
+		
+		
 	}
 
 } 

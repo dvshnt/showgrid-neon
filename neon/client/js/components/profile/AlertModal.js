@@ -1,9 +1,9 @@
 import I from 'intui/source/Slide';
 import React from 'react'
 import Modal from 'components/Modal';
-//global alert modal for setting an alert
 import * as op from 'operator';
-import ListItemLg from 'components/ListItemLg'
+import moment from 'moment';
+
 
 const GLOBAL_UTC = 5 * 60
 
@@ -72,11 +72,10 @@ var AlertModal = React.createClass({
 
 	timeFilter: function(time){
 		var d = new Date();
-		d.setTime(d.getTime() + (d.getTimezoneOffset() - (GLOBAL_UTC))*1000 );
+		d.setTime(d.getTime() + (d.getTimezoneOffset() - (GLOBAL_UTC))*60000 );
 		var show_d = new Date(this.props.show.raw_date);
 		var diff = show_d.getTime() - d.getTime();
-		console.log(diff);
-		if( diff < time*1000) return false
+		if( diff < (time*60000)) return false
 		return true
 	},
 
@@ -87,7 +86,7 @@ var AlertModal = React.createClass({
 		op.deleteAlert(this.state.sale_alert.id)
 	},
 
-	choose: function(e){
+	choose: function(){
 
 		
 		if(this.state.sale_tab){
@@ -96,67 +95,122 @@ var AlertModal = React.createClass({
 			var e = this.refs.show_select;
 		}
 
-		this.setAlert(e.selectedIndex-1,this.state.sale_tab);
+		this.setAlert(e.selectedIndex,this.state.sale_tab);
 	},
 
 	componentDidMount: function(){
-		if(this.state.sale_tab){
-			setTimeout(()=>{
-				this.refs.sale_select.focus()
-			}, 500);
+		// if(this.state.sale_tab){
+		// 	setTimeout(()=>{
+		// 		this.refs.sale_select.focus()
+		// 	}, 500);
 			
-		}else{
-			setTimeout(()=>{
-				this.refs.show_select.focus()
-			}, 500);
+		// }else{
+		// 	setTimeout(()=>{
+		// 		this.refs.show_select.focus()
+		// 	}, 500);
 			
-		}
+		// }
 	},
 
 	setAlertType: function(){
 		var type = !this.state.sale_tab;
 
-		setTimeout(()=>{
-			if(type){
-				this.refs.sale_select.focus()
-			}else{
-				this.refs.show_select.focus()
-			}
-		},500)
+		// setTimeout(()=>{
+		// 	if(type){
+		// 		this.refs.sale_select.focus()
+		// 	}else{
+		// 		this.refs.show_select.focus()
+		// 	}
+		// },500)
 		this.setState({
 			sale_tab: type,
 		})
 	},
 
 	render: function(){
+		var show = this.props.show
 
 		var show_options = this.props.times.filter(this.timeFilter).map((d)=>{return this.makeOption(d,false)})
 		var sale_options = [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.timeFilter).map((d)=>{return this.makeOption(d,true)})
-		sale_options.unshift(<option key ='option_blank'>-----</option>)
-		show_options.unshift(<option key ='option_blank'>-----</option>)
+		// sale_options.unshift(<option key ='option_blank'>------------</option>)
+		// show_options.unshift(<option key ='option_blank'>------------</option>)
+
+		
+		var d = moment(show.raw_date);
+		var sd = moment(show.onsale);
+		var sale_alert = null
+
+		if(show.onsale != null && d < sd ) {
+			sale_alert = (
+				<I beta = {50} center c="alert-modal-submit-sale alert-modal-submit-option" onClick={this.setAlertType}>
+					<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
+					<span>set a sale alert instead</span>
+				</I>
+			)
+		}else if( show.onsale != null){
+			
+			sale_alert = (
+				<I beta = {50} center c="alert-modal-submit-sale alert-modal-submit-option">
+					<span>on sale</span>
+				</I>
+			)			
+		}
+
+		if ( !this.timeFilter(0) ){
+			return (
+				<Modal height = {'300px'} onClose={op.closeModal} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} className = {'alert-modal'} >
+					<I vertical center >
+						<span>show started</span>
+					</I>
+				</Modal>
+			)
+		} 
+
+	
 		return (
-			<Modal height = {'300px'} onClose={op.closeModal} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} >
+			<Modal height = {'300px'} onClose={op.closeModal} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} className = {'alert-modal'} >
 				<I vertical >
-					<I vertical center c = "alert-modal-show">
-						<div>{new Date(this.props.show.raw_date).toString()}</div>
-						<div>{this.props.show.headliners}</div>
-						<div>{this.props.show.openers}</div>
-					</I>
-					<I height = {50}>
-						<I center onClick = {op.showProfileSettings.bind(null,2)} c='alert-modal-info-phone'>
-							<div > # {window.user.phone || '615-715-7754'}</div>
+					<I c = 'alert-modal-show' vertical>
+						<I height={70} vertical center c='alert-modal-show-info-date' style = {{background:show.venue.secondary_color,color:show.venue.primary_color}}>
+							<span className='alert-modal-show-info-date-hour'>{d.format("h:mm a")}</span>
+							<span className='alert-modal-show-info-date-day'>{d.format("MMMM Do")}</span>
 						</I>
-						<I center onClick = {this.setAlertType} c='alert-modal-info-saletab' >
-							<div>set a {this.state.sale_tab ? "show" : "sale"} alert </div>
+						<I c = 'alert-modal-show-info' center vertical>
+							<span  onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-title'>{ show.title } </span>
+							<span onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-headliners'>{ show.headliners }</span>
+							<span  onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-openers'>{ show.openers }</span>
+							<div className = 'alert-modal-venue'>
+								<span  onClick = {()=>{ window.location.href = '/venue/'+show.venue.id  }} className='alert-modal-venue-name' style={{color:show.venue.primary_color}}>{ show.venue.name }</span>
+							</div>
+							
 						</I>
 					</I>
-					<I height = {50}>
-						<I slide vertical index_pos = {this.state.sale_tab ? 1 : 0} c={"alert-modal-options"}>
+					<I height = {100} slide index_pos = {this.state.sale_tab ? 1 : 0}>
+						<I vertical c={"alert-modal-tab-show"} >
+							{sale_alert}
 							<I center>
-								<select onChange = {this.choose} ref = 'show_select'>{show_options}</select>
+								<form onSubmit = {this.choose}>
+									<select className = 'alert-modal-select' /*onChange = {this.choose}*/ ref = 'show_select'>{show_options}</select>
+								</form>
+								<div onClick = {this.choose} className='alert-modal-submit-show'>
+									<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+									<span>set</span>
+								</div>
 							</I>
+						</I>
+						<I vertical c={"alert-modal-select-sale"} >
+							<I beta = {50} center c="alert-modal-submit-show alert-modal-submit-option" onClick={this.setAlertType}>
+								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+								<span >set a show alert instead</span>
+							</I>							
 							<I center>
-								<select onChange = {this.choose} ref = 'sale_select'>{sale_options}</select>
+								<form onSubmit = {this.choose}>
+									<select className = 'alert-modal-select' /*onChange = {this.choose}*/ ref = 'sale_select'>{sale_options}</select>
+								</form>
+								<div onClick = {this.choose} className='alert-modal-submit-sale'>
+									<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
+									<span>set</span>
+								</div>
 							</I>
 						</I>
 					</I>

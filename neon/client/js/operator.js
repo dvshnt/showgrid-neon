@@ -29,11 +29,19 @@ export function renderAuthModal(){
 		return
 	}
 	closeModal();
-	console.log(AuthModal);
-	dom.render(<AuthModal  />,document.getElementById('overlay-wrapper'));
+	
+
+	try{
+		dom.render(<AuthModal  />,document.getElementById('overlay-wrapper'));
+	}
+	catch(e){
+
+	}
+	
 }
 
 export function closeModal(){
+	if($('#overlay-wrapper').children().length == 0) return;
 	dom.unmountComponentAtNode($('#overlay-wrapper')[0])
 }
 
@@ -47,7 +55,7 @@ export function closeModal(){
 //profile settings modal
 export function showProfileSettings(tab){
 	closeModal();
-	dom.render(<SettingsModal tab_pos = {tab} visible={true} />,document.getElementById('overlay-wrapper'));
+	dom.render(<SettingsModal tab_pos = {tab}  />,document.getElementById('overlay-wrapper'));
 }
 
 export function toggleNewsLetter(toggle){
@@ -101,7 +109,7 @@ export function deleteAlert(id){
 }
 
 export function setAlert(body){
-	console.log(body)
+	
 
 	return $.ajax({
 		url: '/user/rest/alert',

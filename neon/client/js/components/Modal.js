@@ -15,6 +15,7 @@ var Modal = React.createClass({
 	
 	getInitialState: function(){
 		return {
+			visible: false,
 			pos :1
 		}
 	},
@@ -22,7 +23,7 @@ var Modal = React.createClass({
 	getDefaultProps: function(){
 		return {
 			error: null,
-			visible: true,
+			
 			page_index: 0,
 		}
 	},
@@ -34,17 +35,25 @@ var Modal = React.createClass({
 	},
 
 	preventClose: function(e){
-		
 		e.preventDefault()
 		e.stopPropagation()
 	},
 
+	onKeyPress: function(e){
+		if(e.keyCode == 27){
+			this.close();
+		}
+	},
+
 	componentDidMount: function(){
 		window.modal = this;
+		document.addEventListener("keydown", this.onKeyPress, false);
+		setTimeout(()=>{this.setState({visible:true})}, 10);
 		// if(this.props.visible) windowScroll.disable();
 	},
 
 	componentWillUnmount: function(){
+		document.removeEventListener("keydown", this.onKeyPress, false);
 		// windowScroll.enable();
 	},
 
@@ -64,8 +73,8 @@ var Modal = React.createClass({
 
 	render: function(){
 		return (
-			<div onClick={op.closeModal} ref = 'overlay' className={"overlay "+(this.props.visible ? 'overlay-visible' : '')}>
-				<div onClick = {this.preventClose} className = {"modal modal-"+(this.props.visible ? 'visible' : 'hidden')} style ={{height:this.props.height}}>
+			<div onClick={op.closeModal} ref = 'overlay' className={"overlay "+(this.state.visible ? 'overlay-visible' : '') }>
+				<div onClick = {this.preventClose} className = {"modal modal-visible" + ' ' + (this.props.className || '')} style ={{height:this.props.height}}>
 					<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
 					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 1 : 0 } >
 						<I slide beta = {100} index_pos = {this.props.page_index}>

@@ -1,48 +1,158 @@
 
-
-
-
-
-
-
-
-
-
-
-/* ALERT MODAL*/
-.alert-modal-options{
-	background: #ECECEC;
-	font-size: 18px;
+.alert-modal{
+	top: 30%;
 }
 
-.alert-modal-done-button{
-
-}
-
-.alert-modal-info-phone{
-	div{
-		@include button-base;
-		font-size: 14px;
-		line-height: 14px;
-		border: none;		
+@media screen and (max-width: 800px ) {
+	.alert-modal{
+		margin: 0;
+		padding-top: 0;
+		width: 100%;
+		left: 0;
+		top: calc( 100% - 300px);
 	}
-
+	
 }
 
-.alert-modal-info-saletab{
-	background: #00CF91;
-	div{
-		@include button-base;
-		font-size: 14px;
-		line-height: 14px;
-		border: none;
+@media screen and (max-width: 500px ) {
+	.alert-modal{
+		margin: 0;
+		width: 100%;
+		left: 0;
+		top: calc( 100% - 300px);
 	}
 }
 
 .alert-modal-show{
-	background: #773800;
-	color:#FFB149;
-	font-size: 18px;
-	line-height: 25px;
+	font-family: "Roboto Slab";
+	color: #000;
 }
 
+
+.alert-modal-select{
+	@include input-base;
+	-webkit-appearance: none;
+	height: 40px;
+}
+
+.alert-modal-select:focus{
+	outline: none;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.5);
+}
+
+
+.alert-modal-show-info{
+	padding: 10px;
+
+}
+
+
+
+
+.alert-modal-show-info-date{
+	background: #ECECEC;
+	border-radius: 3px 3px 0px 0px;
+}
+
+.alert-modal-show-info-date-hour{
+	font-size: 30px;
+}
+
+.alert-modal-show-info-date-day{
+	font-size: 15px;
+	opacity: 0.8;
+}
+
+
+
+
+
+.alert-modal-title{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	cursor: pointer;
+}
+
+.alert-modal-headliners{
+	font-weight: 500;
+	font-size: 26px;
+	cursor: pointer;
+}
+
+.alert-modal-openers{
+	font-size: 16px;
+	opacity: 0.9;
+	cursor: pointer;
+}
+
+.alert-modal-venue{
+	font-size: 13px;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+
+}
+
+.alert-modal-venue-name{
+	cursor: pointer;
+	font-size: 17px;
+	font-weight: 500;
+	float:left
+}
+
+.alert-modal-venue-address{
+	float:left;
+	cursor: pointer;
+}
+
+
+
+
+
+.alert-modal-submit-show{
+	@include center;
+	@include input-base;
+	height: 40px;
+	flex-direction: row;
+	color: #FFAA00;
+	fill: #FFAA00;
+	font-size: 12px;
+	cursor: pointer;
+	width: auto;
+	svg{
+		width: 20px;
+		height: 20px;
+	}
+	span{
+		padding-left: 5px;
+	}
+}
+
+.alert-modal-submit-sale{
+	@include center;
+	@include input-base;
+	height: 40px;
+	flex-direction: row;
+	color: #03A212;
+	fill: #03A212;
+	font-size: 12px;
+	cursor: pointer;
+	width: auto;
+	svg{
+		width: 20px;
+		height: 20px;
+	}
+	span{
+		padding-left: 5px;
+	}
+}
+
+.alert-modal-submit-option{
+	border: none;
+	border-radius: 0;
+	margin: 0;
+	background: none;
+	font-size: 15px;
+	
+}

@@ -34,6 +34,21 @@ export default class AuthModal extends Component {
 		}
 	}
 
+	onKeyPress(e){
+		if(e.keyCode == 13){
+			if(this.state.isSignUp) this.userSignup(e);
+			else this.userLogin(e);
+		}
+	}
+
+	componentDidMount(){
+		document.addEventListener("keydown", this.onKeyPress, false);
+	}
+
+	componentWillUnmount(){
+		document.removeEventListener("keydown", this.onKeyPress, false);
+	}
+
 	componentWillReceiveProps(nextProps) {
 		//console.log("GOT NEW PROPS",nextProps)
 
@@ -140,7 +155,7 @@ export default class AuthModal extends Component {
 					</I>
 
 
-					<I beta = {120} vertical>
+					<I beta = {120} vertical center>
 						<p><span><a className="button-green signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
 						<p>Favorite shows, set show alerts, and particpate in all the conversation happening on here!</p>
 					</I>

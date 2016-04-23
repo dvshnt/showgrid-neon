@@ -32,10 +32,11 @@
 
 @mixin input-base{
 	transition: background,opacity 0.3s ease;
-	display: inline-block;
+	box-sizing: border-box;
+	cursor: pointer;
 	padding: 8px 10px;
 	margin: 5px;
-	line-height: 30px;
+	line-height: 25px;
 	text-decoration: none;
 	background: rgba(0, 0, 0, 0.075);
 	border: 1px solid #F1F1F1;

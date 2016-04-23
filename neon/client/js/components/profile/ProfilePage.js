@@ -30,13 +30,13 @@ var Profile = React.createClass({
 					<I c='profile-alert-info-extra' >
 						<ListItemSm data = {alert.show} extra = {{show_date:false,hideHeader:true}} />
 					</I>
-					<I width={200} vertical center c='profile-alert-info-date'>
+					<I onClick = {()=>{window.location.href = '/show/'+alert.show.id}} width={200} vertical center c='profile-alert-info-date'>
 						<span className='profile-alert-info-date-which'>{alert_time}</span>
 						<span className='profile-alert-info-date-hour'>{d.format("h:mm a")}</span>
 						<span className='profile-alert-info-date-day'>{d.format("MMMM Do")}</span>
 					</I>
 				</I>
-				<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? '#515151' : '#3E3E3E'}}>
+				<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? 'rgb(241, 241, 241)' : 'rgb(251, 251, 251)'}}>
 					<AlertButton show={alert.show} />
 				</I>
 			</I>
@@ -52,12 +52,12 @@ var Profile = React.createClass({
 					<I c='profile-alert-info-extra' >
 						<ListItemSm data = {show} extra = {{show_date:false,hideHeader:true}} />
 					</I>
-					<I width={200} vertical center c='profile-alert-info-date'>
+					<I onClick = {()=>{window.location.href = '/show/'+show.id}} width={200} vertical center c='profile-alert-info-date'>
 						<span className='profile-alert-info-date-hour'>{d.format("h:mm a")}</span>
 						<span className='profile-alert-info-date-day'>{d.format("MMMM Do")}</span>
 					</I>
 				</I>
-				<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? '#515151' : '#3E3E3E'}}>
+				<I center width = {120} c={'profile-alert-icon'} style={{'background': i%2 ? 'rgb(241, 241, 241)' : 'rgb(251, 251, 251)'}}>
 					<FavoriteButton show={show} />
 				</I>
 			</I>
@@ -85,9 +85,9 @@ var Profile = React.createClass({
 		window.location.href = '/user/logout'
 	},
 
-	enableNewsLetter: function(){
-		op.toggleNewsLetter(true).done(()=>{
-			window.user.newsletter = true
+	toggleNewsLetter: function(){
+		op.toggleNewsLetter(!window.user.newsletter).done(()=>{
+			window.user.newsletter = !window.user.newsletter
 			op.renderPrivateProfile();
 		})
 	},
@@ -113,9 +113,14 @@ var Profile = React.createClass({
 
 
 		if(self){
-			if(!profile.newsletter){
-				newsletter = (<div onClick={this.enableNewsLetter} className={"button-blue profile-actions-newsletter"}>signup for the newsletter</div>)
-			}
+			
+			newsletter = (
+				<div className='profile-actions-newsletter' style = {{background:window.user.newsletter ? '#B2FFE3' : '#59FFAB'}} onClick={this.toggleNewsLetter} >
+					<input type="checkbox" onChange = {()=>{}} checked = {window.user.newsletter}/>
+					<div>recieve newsletter</div>
+				</div>
+			)
+			
 			profile_actions = (
 				<I height = {40} c="profile-actions">
 					<div onClick={this.logout} className={"profile-actions-button"}>logout</div>
@@ -132,7 +137,7 @@ var Profile = React.createClass({
 			alerts = (
 				<I vertical center height = {500} >
 					<h2>No Alerts</h2>
-					{ self ? (<div onClick = {op.showProfileSettings.bind(null,2)} className="button-green">Set up phone alerts</div>) : null }
+					{ (self && user.phone == null) ? (<div onClick = {op.showProfileSettings.bind(null,2)} className="button-green">Set up phone alerts</div>) : null }
 				</I>
 			)
 		}else{
@@ -165,7 +170,12 @@ var Profile = React.createClass({
 				<div vertical className="profile-info">
 					<div className="profile-info-main">
 						<div className="profile-info-pic-wrap" >
-							<div className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
+							<div onClick={this.settings} className="profile-info-pic" style={{backgroundSize:'cover',backgroundImage: 'url('+(this.props.profile.pic || '/static/showgrid/img/avatar.jpg')+')' }} >
+								<div className="profile-info-pic-overlay">
+									<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-settings"/>' }} />
+								</div>
+							</div>
+						
 						</div>
 						<div className="profile-info-bio">
 							{name}
@@ -185,14 +195,14 @@ var Profile = React.createClass({
 									<h3>{user.favorites.length} Favorite{user.favorites.length != 1 ? 's' : ''}</h3>
 								</I>
 							</I>
-							<IButton onClick = {this.showAlerts} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+							<IButton c1 = '#F8F5F2' onClick = {this.showAlerts} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
 								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
 							</IButton>
-							<IButton onClick = {this.showFaves} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+							<IButton c1 = '#F8F5F2' onClick = {this.showFaves} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
 								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
 							</IButton>
 						</I>
-						<I slide index_pos = {this.state.tab_pos} outerClassName = "profile-activity-container" >
+						<I slide index_pos = {this.state.tab_pos} outerClassName = "profile-activity-container">
 							<I vertical>
 								{alerts}
 							</I>

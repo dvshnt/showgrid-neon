@@ -68,6 +68,9 @@
 		{% block style %}{% endblock style %}
 	</head>
 	<body>
+		
+		<div class ='body-background'>
+		</div>
 		{% if user.is_authenticated == True %}
 		<div style="display:none">
 			<input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
@@ -78,33 +81,33 @@
 			{% include "svg_icons.html" %}
 		{% endblock svg %}
 
-		<div id="container">
-			{% block head %}
-				{% include 'header.html' %}
-			{% endblock head %}
-			
-			{% block subhead %}
-				{% include 'subheader-search.html' %}
-			{% endblock subhead %}
 
-			{% block content %}
-			{% endblock content %}
-
-			<menu id="mobile-menu">
+		{% block head %}
+			{% include 'header.html' %}
+		{% endblock head %}
+		
+		{% block subhead %}
+			{% include 'subheader-search.html' %}
+		{% endblock subhead %}	
+		<div id ='container'>
+			<div id="mobile-menu" class='mobile-menu-show'>
 				{% block mobilemenu %}
 					{% include 'mobile_menu.html' %}
 				{% endblock mobilemenu %}
-			</menu>
-
-			{% block footer %}
-			<!-- <footer>
-				<span>&copy;MMXVI Showgrid, Nashville, TN</span>
-				<span>
-					<a href="mailto:info@showgrid.com">Contact</a>
-				</span>
-			</footer> -->
-			{% endblock %}
+			</div>
+			{% block content %}
+			{% endblock content %}
 		</div>
+		{% block footer %}
+		<!-- <footer>
+			<span>&copy;MMXVI Showgrid, Nashville, TN</span>
+			<span>
+				<a href="mailto:info@showgrid.com">Contact</a>
+			</span>
+		</footer> -->
+		{% endblock %}		
+
+
 		<div id='overlay-wrapper'></div>
 	</body>
 	

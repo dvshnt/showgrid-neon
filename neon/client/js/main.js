@@ -20,6 +20,11 @@ import * as op from 'operator.js';
 window.operator = op;
 
 
+
+
+
+
+
 import ShowActions from 'components/ShowActions.js';
 
 function getParameterByName(name, url) {
@@ -223,4 +228,6 @@ window.addEventListener('resize',(e)=>{
 		window.compact = false;
 	}
 })
+
+
 

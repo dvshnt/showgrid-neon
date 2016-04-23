@@ -5,7 +5,7 @@ import moment from 'moment';
 import fetch from 'whatwg-fetch';
 
 import DateManager from 'util/DateManager';
-
+import * as op from 'operator';
 import AuthModal from './AuthModal';
 
 
@@ -31,7 +31,7 @@ export default class SetFavorite extends Component {
 		var _this = this;
 
 		if (window.user.is_authenticated == false) {
-			return React.render(React.render(<AuthModal visible={true} />,document.getElementById('overlay-wrapper')));
+			return op.renderAuthModal()
 		}
 
 		var url = '/user/rest/favorite?id='+this.props.show.id;

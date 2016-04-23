@@ -22,8 +22,14 @@
 	@include input-base;
 	@include center;
 	padding: 10px;
+	height: 50px;
 	cursor: pointer;
 	font-weight: 300;
+	svg{
+		fill: #000;
+		width: 30px;
+		height: auto; 
+	}
 
 }
 
@@ -67,6 +73,7 @@
 .profile-settings-form{
 	@include center;
 	width: 95%;
+	height: 100%;
 	flex-direction: column;
 }
 
@@ -87,7 +94,7 @@
 
 .profile-settings-input-name{
 	@include input-base;
-	height: 20px;
+	height: 50px;
     width: auto;
     text-align: center;
     align-self: auto;
