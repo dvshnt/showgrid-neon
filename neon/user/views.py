@@ -275,7 +275,13 @@ class UserActions(APIView):
 			except:
 				return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	
-			
+		if action == 'phone_set':
+			try:
+				user.phone = None
+				user.save()
+				return Response({'status':'good'})
+			except:
+				return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)				
 	
 			
 

@@ -132,12 +132,36 @@ var PhoneTab = React.createClass({
 		})
 	},
 
+	removePhone: function(e){
+	
+		var _this = this;
+		var url = '/user/rest/phone_set';
+
+		$.ajax({
+			url:url,
+			method:'DELETE',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'X-CSRFToken': window.user.csrf
+			},
+		}).done((dat)=>{
+			window.user.phone = null;
+			this.forceUpdate();
+		}).fail(()=>{
+			this.props.onError("oops, try again")
+		})
+	},
+
 	render: function(){
 		if(window.user.phone != null){
 			var current_phone = (<h3>change phone : {window.user.phone}</h3>)
+			var delete_phone = <div className="button-red" onClick ={this.removePhone} >remove phone</div>
 		}else{
 			var current_phone = <h3>set up a new phone</h3>
+			var delete_phone = null
 		}
+
 		return (
 			<I slide index_pos = {this.state.page_index} >
 				<I center c= 'profile-settings-phonetab' vertical beta = {100} >
@@ -153,6 +177,7 @@ var PhoneTab = React.createClass({
 						<br></br>
 					</form>
 					<div onClick={this.userSubmitPhone}className="button-green">submit</div>
+					{delete_phone}
 				</I>
 				<I vertical beta = {100} c= 'profile-settings-phonetab'>
 					<I center vertical height = {200} >
