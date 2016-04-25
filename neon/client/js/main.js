@@ -177,9 +177,9 @@ if (!!frontRecent) {
 
 
 
-var showActions = document.getElementById('show-actions') || document.getElementById('show-actions-wide')
+var showActions = document.getElementById('show-actions-mobile') || document.getElementById('show-actions-wide')
 if (!!showActions) {
-	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions'));
+	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions-mobile'));
 	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions-wide'));
 }
 

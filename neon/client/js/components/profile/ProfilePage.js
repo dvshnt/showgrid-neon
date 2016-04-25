@@ -116,7 +116,7 @@ var Profile = React.createClass({
 			
 			newsletter = (
 				<div className='profile-actions-newsletter' style = {{background:window.user.newsletter ? '#B2FFE3' : '#59FFAB'}} onClick={this.toggleNewsLetter} >
-					<input type="checkbox" onChange = {()=>{}} checked = {window.user.newsletter}/>
+					<input className = 'profile-actions-newsletter-radio' type="checkbox" onChange = {()=>{}} checked = {window.user.newsletter}/>
 					<div>recieve newsletter</div>
 				</div>
 			)

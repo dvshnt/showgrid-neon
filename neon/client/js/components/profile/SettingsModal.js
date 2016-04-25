@@ -495,7 +495,7 @@ var SettingsModal = React.createClass({
 						</I>
 						
 					</I>
-					<I center>
+					<I center height = {120}>
 						<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
 					</I>
 				</I>

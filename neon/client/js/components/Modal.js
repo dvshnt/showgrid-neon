@@ -76,13 +76,13 @@ var Modal = React.createClass({
 				
 				<div className = {"modal modal-visible" + ' ' + (this.props.className || '')} style ={{height:this.props.height}}>
 					<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#'+(this.props.page_index == 0 ? "icon-close":"icon-back")+'"/>' }} />
-					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 1 : 0 } >
-						<I slide beta = {100} index_pos = {this.props.page_index}>
-							{this.props.children}
-						</I>
+					<I ref = "slide" slide vertical index_pos = { this.props.error != null ? 0 : 1 } >
 						<I slide vertical height = {60} onClick = { this.props.onResetError } c="modal-error">
 							<svg onClick={this.close} className="icon icon-close" dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-close"/>' }} />
 							<span>{this.props.error}</span>
+						</I>
+						<I slide beta = {100} index_pos = {this.props.page_index}>
+							{this.props.children}
 						</I>
 					</I>
 				</div>

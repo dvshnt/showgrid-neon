@@ -31,6 +31,9 @@
 
 
 @mixin input-base{
+	-webkit-appearance: none;
+	-moz-appearance:    none;
+	appearance:         none;
 	transition: background,opacity 0.3s ease;
 	box-sizing: border-box;
 	cursor: pointer;

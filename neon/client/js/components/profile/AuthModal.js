@@ -143,25 +143,35 @@ export default class AuthModal extends Component {
 		 })
 	}
 
+	tryClose(){
+		if(this.state.isSignUp == true){
+			this.setState({
+				isSignUp: false
+			})
+		}else{
+			op.closeModal();
+		}
+	}
+
 	render(){
 
 		return (
-			<Modal className = {'auth-modal'} onClose={op.closeModal} onResetError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
+			<Modal className = {'auth-modal'} onClose={this.tryClose.bind(this)} onResetError={this.resetError} error={ this.state.error } visible = {this.props.visible}  page_index = {this.state.isSignUp ? 1 : 0} >
 				<I innerClassName = "modal-page-container" vertical beta = {100}>
 					
 
-					<I beta={60}>
+					<I beta={30}>
 						<div className = 'auth-banner'/>
 					</I>
 
 
-					<I beta = {120} vertical center>
+					<I height = {150} vertical center>
 						<p><span><a className="button-green signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
 						<p>Favorite shows, set show alerts, and particpate in all the conversation happening on here!</p>
 					</I>
 
 
-					<I center beta = {80} vertical>
+					<I center height = {100} vertical>
 						<form className = "auth-input-form">
 							<input required type="text" ref="email" placeholder="Enter email" />
 							<input required type="password" ref="password" placeholder="Enter password" />
@@ -169,14 +179,14 @@ export default class AuthModal extends Component {
 					</I>
 
 
-					<I center innerClassName = "auth-input">
+					<I center innerClassName = "auth-input" height = {100}>
 						<input className = "button-blue" type="submit" value="Log In" onClick={ this.userLogin } />
 						<b style={{margin:'5px'}}>or</b>
 						<AuthButton type="facebook" />
 					</I>
 
 
-					<I center beta ={30}>
+					<I center beta ={100}>
 						<p className="auth-forgot">Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a></p>
 					</I>
 
@@ -194,7 +204,7 @@ export default class AuthModal extends Component {
 						<input className = "button-blue" type="submit" value="Sign Up" onClick={ this.userSignup } />
 					</I>
 
-					<I beta = {60} center >
+					<I beta = {40} center >
 						<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
 					</I>
 				</I>

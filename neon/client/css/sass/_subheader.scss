@@ -20,9 +20,9 @@
 	line-height:41px;
 
 	&.front {
-		top:-60px;
+		transform: translate(0px,-60px);
 
-		background:none;
+
 		border-bottom:none;
 	}
 
