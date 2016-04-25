@@ -84,11 +84,12 @@ def update_profile(request):
 	if ( bio == "" or request.user.bio == bio ) and pic == False and (user.name == name or name == "") and (user.email == email or email == ""):
 		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	
-	if bio is not False and bio is not None and bio != "":
+	if bio != False and bio != None and bio != "":
 		user.bio = bio
-	if name is not False and name is not None and name != "":
+	if name != False and name != None and name != "":
 		user.name = name
-	if email is not False and email is not None and email != "":
+	if email != False and email != None and email != "":
+		print "EMAIL IS "+email
 		user.email = email or user.email
 		logout(request)
 

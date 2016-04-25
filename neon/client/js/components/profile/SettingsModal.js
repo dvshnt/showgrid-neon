@@ -264,6 +264,11 @@ var SettingsModal = React.createClass({
 
 	componentDidMount: function(){
 		document.addEventListener("keydown", this.onKeyPress.bind(this), false);
+		if(this.props.tab_pos != 0){
+			this.setState({
+				home:false
+			})
+		}
 	},
 
 	componentWillUnmount: function(){
@@ -303,7 +308,12 @@ var SettingsModal = React.createClass({
 		    processData: false,
 		    
 		}).done((body)=>{
-			window.location.reload()
+			if(this.refs.input_email == null){
+				return
+			}else{
+				window.location.reload()
+			}
+			
 		}).fail((body)=>{
 			console.log(body)
 			this.setState({
