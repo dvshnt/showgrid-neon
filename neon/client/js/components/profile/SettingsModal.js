@@ -457,24 +457,24 @@ var SettingsModal = React.createClass({
 				<I vertical beta = {100}>
 
 					<I height = {60} center c='profile-settings-title'>
-						<I beta = {40} center><h3>settings</h3></I>
-						<I beta = {60} c = 'profile-settings-actions'>
-							<div className= "profile-settings-action" onClick =  {this.showTab.bind(this,1)}>
-								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
-								<span>set pass</span>
-							</div>
-							<div className= "profile-settings-action" onClick =  {this.showTab.bind(this,2)}>
-								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
-								<span>set phone</span>
-							</div>
-							<div className = 'profile-settings-action' onClick =  {this.showTab.bind(this,3)}>
-								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-mail"/>' }} />
-								<span>set email</span>
-							</div>
-						</I>
+						<h3>settings</h3>
 					</I>
+					<div className='profile-settings-tab-options'>
+						<div className='profile-settings-tab-option' onClick = {this.showTab.bind(this,3)} >
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-mail"/>' }} />
+							<span>{user.email}</span>
+						</div>
+						<div className='profile-settings-tab-option' onClick = {this.showTab.bind(this,2)} >
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
+							<span>{user.phone ? "set up phone" : user.phone}</span>
+						</div>
+						<div onClick = {this.showTab.bind(this,3)} className='profile-settings-tab-option' >
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
+							<span>change password</span>
+						</div>
+					</div>
 
-					<I c="profile-settings-main">
+					<I c="profile-settings-main" beta = {80}>
 						<I vertical beta = {20} c="profile-settings-input-types">
 							<span>name</span>
 							<span>picture</span>
@@ -490,10 +490,13 @@ var SettingsModal = React.createClass({
 							</I>
 
 							<textarea name = "bio" className="profile-settings-input-bio" maxLength="200" ref="input_bio" onChange={this.resetState} placeholder="Tell us about yourself..." defaultValue={ user.bio }></textarea>
-							<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
+							
+							
 						</I>
 						
-					
+					</I>
+					<I center>
+						<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
 					</I>
 				</I>
 				<I>

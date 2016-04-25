@@ -38,8 +38,9 @@
 	margin: 5px;
 	line-height: 25px;
 	text-decoration: none;
-	background: rgba(0, 0, 0, 0.075);
-	border: 1px solid #F1F1F1;
+	background:  #F0F0F0;
+	transition: background 0.3s ease;
+	border: 1px solid rgba(0,0,0,0.1);
 	border-radius:2px;
 	font-weight: 100;
 	font-size:16px;
@@ -69,13 +70,13 @@ input{
 }
 
 input:focus{
-	background: #AFFFE8;
+	background: #A8FFFF;
 	outline: none;
 	box-shadow: none;
 }
 
 textarea:focus{
-	background: #AFFFE8;
+	background: #C7FFFC;
 	outline: none;
 	box-shadow: none;	
 }
