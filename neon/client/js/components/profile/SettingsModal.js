@@ -236,12 +236,13 @@ var SettingsModal = React.createClass({
 		return {
 			saving: false,
 			tab_pos: this.props.tab_pos,
+			home: true,
 		}
 	},
 	
 	getDefaultProps: function(){
 		return {
-			tab_pos: 1,
+			tab_pos: 0,
 		}
 	},
 
@@ -251,9 +252,9 @@ var SettingsModal = React.createClass({
 				case 2:
 					this.refs.phone_tab.handleKeydown(e)
 					break
-				case 0:
-					this.updatePassword(e)
 				case 1:
+					this.updatePassword(e)
+				case 0:
 				case 3:
 					this.updateProfile(e)
 					break
@@ -369,13 +370,20 @@ var SettingsModal = React.createClass({
 			this.setState({
 				error:null
 			})
-		}else if(this.state.tab_pos != 1){
+		}else if(this.state.home == false){
 			this.setState({
-				tab_pos:1
+				home:true
 			})
 		}else{
 			op.closeModal()
 		}
+	},
+
+	showTab: function(pos){
+		this.setState({
+			home: false,
+			tab_pos: pos
+		})
 	},
 
 	resetState: function(){
@@ -397,12 +405,9 @@ var SettingsModal = React.createClass({
 		var user = window.user;
 
 
-
-		return (
-			<Modal onResetError = {this.setState.bind(this,{error:null})} onClose = {this.tryClose} className = {'profile-settings'}  error = {this.state.error} page_index = {this.state.tab_pos} >			
-				
-
-				<I  vertical>
+		if(this.state.tab_pos == 1){
+			var page =  (
+				<I vertical>
 					<I height = {60} center c='profile-settings-title'>
 						<h3>change password</h3>
 					</I>
@@ -421,52 +426,18 @@ var SettingsModal = React.createClass({
 						</I>
 					</I>
 				</I>
-
-
-				<I vertical beta = {100}>
-
-					<I height = {60} center c='profile-settings-title'>
-						<h3>settings</h3>
-					</I>
-
-					<I center vertical c="profile-settings-main">
-						<form  action = "/user/update" className='profile-settings-form' method="post">
-							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
-							<I center height = {60} >
-								<div className="profile-settings-pic">
-									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
-								</div>
-								<input className="profile-settings-input-pic" name = "pic" ref = "input_pic" type="file" accept="image/*" />
-								
-							</I>
-
-							<textarea name = "bio" className="profile-settings-input-bio" maxLength="200" ref="input_bio" onChange={this.resetState} placeholder="Tell us about yourself..." defaultValue={ user.bio }></textarea>
-							<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
-						</form>
-					</I>
-					
-					<I c="profile-settings-more" height = {200} center>
-						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:0})}>
-							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
-						</div>
-						<div className= "profile-settings-action" onClick =  {this.setState.bind(this,{tab_pos:2})}>
-							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
-						</div>
-						<div className = 'profile-settings-action' onClick =  {this.setState.bind(this,{tab_pos:3})}>
-							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-mail"/>' }} />
-						</div>
-						<div className = {'profile-settings-action profile-settings-action-bad ' + (user.alerts.length == 0 ? 'profile-settings-action-disabled' : '') } onClick =  {this.clearAlerts}>clear all alerts</div>
-					</I>
-				</I>
-
-
+			)
+		}else if(this.state.tab_pos == 2){
+			var page = (
 				<I vertical>
 					<I height = {60} center c='profile-settings-title'>
 						<h3>Receive Text Alerts</h3>
 					</I>
 					<PhoneTab ref = 'phone_tab' onResetError={this.setState.bind(this,{error:null})} onError={(e)=>{this.setState({error:e})}} />
 				</I>
-
+			)
+		}else if(this.state.tab_pos == 3){
+			var page = (
 				<I  vertical>
 					<I height = {60} center c='profile-settings-title'>
 						<h3>Change Email</h3>
@@ -477,8 +448,57 @@ var SettingsModal = React.createClass({
 					</I>
 
 				</I>
-				
-				
+			)
+		}
+		
+
+		return (
+			<Modal onResetError = {this.setState.bind(this,{error:null})} onClose = {this.tryClose} className = {'profile-settings'}  error = {this.state.error} page_index = {this.state.home ? 0 : 1} >			
+				<I vertical beta = {100}>
+
+					<I height = {60} center c='profile-settings-title'>
+						<I beta = {40} center><h3>settings</h3></I>
+						<I beta = {60} c = 'profile-settings-actions'>
+							<div className= "profile-settings-action" onClick =  {this.showTab.bind(this,1)}>
+								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
+								<span>set pass</span>
+							</div>
+							<div className= "profile-settings-action" onClick =  {this.showTab.bind(this,2)}>
+								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
+								<span>set phone</span>
+							</div>
+							<div className = 'profile-settings-action' onClick =  {this.showTab.bind(this,3)}>
+								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-mail"/>' }} />
+								<span>set email</span>
+							</div>
+						</I>
+					</I>
+
+					<I c="profile-settings-main">
+						<I vertical beta = {20} c="profile-settings-input-types">
+							<span>name</span>
+							<span>picture</span>
+							<span>bio</span>
+						</I>
+						<I vertical beta = {80} c="profile-settings-input-form">
+							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
+							<I height = {60} >
+								<div className="profile-settings-pic">
+									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
+								</div>
+								<input onChange={this.onDrop} className="profile-settings-input-pic" ref = "input_pic" type="file" accept="image/*" />
+							</I>
+
+							<textarea name = "bio" className="profile-settings-input-bio" maxLength="200" ref="input_bio" onChange={this.resetState} placeholder="Tell us about yourself..." defaultValue={ user.bio }></textarea>
+							<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
+						</I>
+						
+					
+					</I>
+				</I>
+				<I>
+					{page}
+				</I>
 			</Modal>
 		)
 	}

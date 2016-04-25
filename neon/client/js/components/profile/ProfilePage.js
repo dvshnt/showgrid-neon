@@ -165,7 +165,7 @@ var Profile = React.createClass({
 		
 
 		return (
-			< div className="profile">
+			<div className="profile">
 				{profile_actions}
 				<div vertical className="profile-info">
 					<div className="profile-info-main">
@@ -210,7 +210,7 @@ var Profile = React.createClass({
 								{favorites}
 							</I>
 						</I>
-					</I>				
+					</I>
 				</div>
 			</div>
 		)
