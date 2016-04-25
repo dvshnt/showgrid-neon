@@ -84,15 +84,17 @@ def update_profile(request):
 	if ( bio == "" or request.user.bio == bio ) and pic == False and (user.name == name or name == "") and (user.email == email or email == ""):
 		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	
-	if bio != False and bio != None and bio != "":
+	if bio != False and bio != None and bio != "" and bio != "null":
 		user.bio = bio
-	if name != False and name != None and name != "":
+	if name != False and name != None and name != "" and name != "null":
 		user.name = name
-	if email != False and email != None and email != "":
+	if email != False and email != None and email != "" and email != "null":
 		print "EMAIL IS "+email
 		user.email = email or user.email
 		logout(request)
-
+	else:
+		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+	
 	user.save()
 	return Response({"status":"good"},status=status.HTTP_200_OK)
 
@@ -103,7 +105,7 @@ def update_profile_password(request):
 	old_pass = request.GET.get('current_pass',False)
 	new_pass = request.GET.get('new_pass',False)
 	user = authenticate(email=request.user.email, password=old_pass)
-	if user is not None:
+	if user is not None and new_pas != False and new_pass != "null" and new_pass != None:
 		logout(request)
 		user.set_password(new_pass)
 		user.save()
@@ -303,7 +305,7 @@ class UserActions(APIView):
 					user.favorites.add(show)
 					return Response({'status':'good'})
 				except:
-					return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+					return Response({"status":"bad params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 		
 
@@ -313,8 +315,8 @@ class UserActions(APIView):
 			body = json.loads(body_unicode)
 			phone = body['phone']
 			
-			if phone == None or phone == "":
-				return Response({'status':'bad_query'})
+			if phone == None or phone == "" or phone == "null" or phone == False:
+				return Response({'status':'bad phone number'},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 			
 			if user.phone == None:
 				user.phone_verified = False
