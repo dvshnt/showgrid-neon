@@ -83,12 +83,15 @@ def update_profile(request):
 	
 	if ( bio == "" or request.user.bio == bio ) and pic == False and (user.name == name or name == "") and (user.email == email or email == ""):
 		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-	user.bio = bio or user.bio
-	user.name = name or user.name
 	
-	user.email = email or user.email
-	if email:
+	if bio is not False and bio is not None and bio != "":
+		user.bio = bio
+	if name is not False and name is not None and name != "":
+		user.name = name
+	if email is not False and email is not None and email != "":
+		user.email = email or user.email
 		logout(request)
+
 	user.save()
 	return Response({"status":"good"},status=status.HTTP_200_OK)
 
@@ -309,7 +312,7 @@ class UserActions(APIView):
 			body = json.loads(body_unicode)
 			phone = body['phone']
 			
-			if phone == None:
+			if phone == None or phone == "":
 				return Response({'status':'bad_query'})
 			
 			if user.phone == None:

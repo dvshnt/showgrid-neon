@@ -35,6 +35,7 @@ export default class AuthModal extends Component {
 	}
 
 	onKeyPress(e){
+		console.log(e.keyCode)
 		if(e.keyCode == 13){
 			if(this.state.isSignUp) this.userSignup(e);
 			else this.userLogin(e);
@@ -42,11 +43,11 @@ export default class AuthModal extends Component {
 	}
 
 	componentDidMount(){
-		document.addEventListener("keydown", this.onKeyPress, false);
+		document.addEventListener("keydown", this.onKeyPress.bind(this), false);
 	}
 
 	componentWillUnmount(){
-		document.removeEventListener("keydown", this.onKeyPress, false);
+		document.removeEventListener("keydown", this.onKeyPress.bind(this), false);
 	}
 
 	componentWillReceiveProps(nextProps) {

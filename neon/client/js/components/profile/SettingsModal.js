@@ -263,11 +263,11 @@ var SettingsModal = React.createClass({
 	},
 
 	componentDidMount: function(){
-		document.addEventListener("keydown", this.onKeyPress, false);
+		document.addEventListener("keydown", this.onKeyPress.bind(this), false);
 	},
 
 	componentWillUnmount: function(){
-		document.removeEventListener("keydown", this.onKeyPress, false);
+		document.removeEventListener("keydown", this.onKeyPress.bind(this), false);
 	},
 
 	componentWillReceiveProps: function(props,state){
@@ -280,10 +280,10 @@ var SettingsModal = React.createClass({
 
 	updateProfile: function(){
 		var data = new FormData();
-		data.append('pic', this.refs.input_pic.files[0]);
-		data.append('bio', this.refs.input_bio.value);
-		data.append('name', this.refs.input_name.value);
-		data.append('email', this.refs.input_email.value);
+		data.append('pic', this.refs.input_pic ? this.refs.input_pic.files[0] : null);
+		data.append('bio', this.refs.input_bio ? this.refs.input_bio.value : null);
+		data.append('name', this.refs.input_name ? this.refs.input_name.value : null);
+		data.append('email', this.refs.input_email ? this.refs.input_email.value : null);
 		
 		this.setState({
 			saving:true,
@@ -466,9 +466,9 @@ var SettingsModal = React.createClass({
 						</div>
 						<div className='profile-settings-tab-option' onClick = {this.showTab.bind(this,2)} >
 							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
-							<span>{user.phone ? "set up phone" : user.phone}</span>
+							<span>{user.phone == null ? "set up phone" : user.phone}</span>
 						</div>
-						<div onClick = {this.showTab.bind(this,3)} className='profile-settings-tab-option' >
+						<div onClick = {this.showTab.bind(this,1)} className='profile-settings-tab-option' >
 							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
 							<span>change password</span>
 						</div>
