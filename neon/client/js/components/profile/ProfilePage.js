@@ -158,10 +158,10 @@ var Profile = React.createClass({
 			favorites = profile.favorites.map(this.favItem)
 		}
 		
-		var name = null;
-		if(user.name != null){
-			var name = (<span className="profile-info-name">{user.name}</span>)
-		}
+		
+	
+		var name = (<span className="profile-info-name">{user.name || 'Anonymous'}</span>)
+		
 		
 
 		return (
@@ -185,21 +185,15 @@ var Profile = React.createClass({
 					</div>
 				</div>
 				<div className="profile-activity">
-					<I beta={100} vertical>
-						<I center height = {50}>
-							<I slide index_pos={this.state.tab_pos} vertical beta = {200} c="profile-activity-title">
-								<I center>
-									<h3>{user.alerts.length} Alert{user.alerts.length != 1 ? 's' : ''} </h3>
-								</I>
-								<I center>
-									<h3>{user.favorites.length} Favorite{user.favorites.length != 1 ? 's' : ''}</h3>
-								</I>
-							</I>
-							<IButton c1 = '#F8F5F2' onClick = {this.showAlerts} active={!this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+					<I beta={100} vertical >
+						<I center height = {50} c="profile-activity-title">
+							<IButton c1 = '#38383A' c2 = '#F8F8F8' onClick = {this.showAlerts} active={!this.state.tab_pos}  inverse down bClassName='profile-activity-option'>
 								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+								<h3>{user.alerts.length} Alert{user.alerts.length != 1 ? 's' : ''} </h3>
 							</IButton>
-							<IButton c1 = '#F8F5F2' onClick = {this.showFaves} active={this.state.tab_pos} width = {60} inverse down bClassName='profile-activity-option'>
+							<IButton  c1 = '#38383A' c2= '#F8F8F8' onClick = {this.showFaves} active={this.state.tab_pos} inverse down bClassName='profile-activity-option'>
 								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-heart"/>' }} />
+								<h3>{user.favorites.length} Favorite{user.favorites.length != 1 ? 's' : ''}</h3>
 							</IButton>
 						</I>
 						<I slide index_pos = {this.state.tab_pos} outerClassName = "profile-activity-container">

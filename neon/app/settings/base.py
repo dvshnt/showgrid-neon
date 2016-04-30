@@ -7,28 +7,6 @@ from auth import *;
 #Show image min dimentions
 
 
-# Twilio API keys and number
-TWILIO_ACCOUNT_SID = 'AC537898c0aaf67d677d93716130df421b'
-TWILIO_AUTH_TOKEN = '262857a0147e5f5a85719b47cf1a5edc'
-TWILIO_NUMBER = '+1 931-444-6735'
-
-IMAGE_MIN_WIDTH = 100
-IMAGE_MIN_HEIGHT = 100
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-ACCOUNT_ACTIVATION_DAYS = 3
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'davis@showgrid.com'
-EMAIL_HOST_PASSWORD = '!woodle212'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-
-
-SPOTIFY_KEY = ''
-SPOTIFY_API = 'https://api.spotify.com/v1/'
-ECHONEST_API = 'http://developer.echonest.com/api/v4/'
-ECHONEST_KEY = 'ZOP6OTHBMGEZHVHTF'
 
 
 ECHONEST_MAX_BIO = 3 # (maximum amount of artist bios to pull)
@@ -88,16 +66,18 @@ TEMPLATE_LOADERS = (
 
 
 MIDDLEWARE_CLASSES = (
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'user.middleware.NeonUserMiddleware'
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'user.middleware.NeonUserMiddleware',
 )
+
+
 
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -110,10 +90,6 @@ ROOT_URLCONF = 'app.urls'
 WSGI_APPLICATION = 'app.wsgi.application'
 
 
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-    'django.core.context_processors.request',
-)
 
 
 INSTALLED_APPS = (
@@ -128,7 +104,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-    'social.apps.django_app.default',
+    
     'corsheaders',
  
     'colorful',
@@ -142,13 +118,13 @@ INSTALLED_APPS = (
     'user',
     'venue',
     'contest',
-
     'rest_framework',
-
-    'rest_auth',
     'meta',
     'tinymce',
+    'social.apps.django_app.default',
 )
+
+
 
 
 TINYMCE_DEFAULT_CONFIG = {
@@ -156,26 +132,11 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 
-AUTH_USER_MODEL = 'user.NeonUser'
-# AUTHENTICATION_BACKENDS = ( 'user.models.AuthBackend', )
-
-
-# REST_AUTH_SERIALIZERS = {
-#     'USER_DETAILS_SERIALIZER': 'app.serializers.ShowgridUserSerializer'
-# }
-
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    )
 }
 
 

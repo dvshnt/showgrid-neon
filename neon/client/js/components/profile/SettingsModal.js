@@ -333,11 +333,10 @@ var SettingsModal = React.createClass({
 		    processData: false,
 		    
 		}).done((body)=>{
-			if(this.refs.input_email == null){
-				return
-			}else{
-				window.location.reload()
-			}
+			
+
+			window.location.reload()
+			
 			
 		}).fail((body)=>{
 			console.log(body)

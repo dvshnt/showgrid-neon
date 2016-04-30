@@ -10,8 +10,8 @@ from rest_framework.response import Response
 from models import *
 
 import inspect, itertools, json
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.shortcuts import redirect, render, render_to_response
 from show.models import Show
 
 
@@ -35,6 +35,7 @@ from django.core.files import File
 from django.core.files.base import ContentFile
 
 
+
 def require_email(request):
     backend = request.session['partial_pipeline']['backend']
     return context(email_required=True, backend=backend)
@@ -49,10 +50,9 @@ def require_email(request):
 
 
 @api_view(['GET'])
+@login_required(login_url='/?q=profile')
 def private_profile(request):
-	if request.user.is_authenticated() == False:
-		return redirect('/?q=profile')
-	else:
+
 		return render(request, "profile-private.html")
 
 
@@ -68,7 +68,7 @@ def public_profile(request,id):
 
 
 @api_view(['POST'])
-@permission_classes((IsAuthenticated, ))
+@login_required(login_url='/?q=profile')
 def update_profile(request):
 	user = request.user
 	bio = request.POST.get('bio',False)
@@ -80,19 +80,32 @@ def update_profile(request):
 		if img.size > 500000:
 			return Response({"status":"image is too big"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		request.user.pic.save('user_'+str(user.id)+'_pic',img, save=False)
-	
+	else:
+		pic = None
+
 	if ( bio == "" or request.user.bio == bio ) and pic == False and (user.name == name or name == "") and (user.email == email or email == ""):
 		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	
+	print bio,pic,name,email
+
 	if bio != False and bio != None and bio != "" and bio != "null":
 		user.bio = bio
+	else:
+		bio = None
+	
 	if name != False and name != None and name != "" and name != "null":
 		user.name = name
+	else:
+		name = None
+
 	if email != False and email != None and email != "" and email != "null":
 		print "EMAIL IS "+email
 		user.email = email or user.email
-		logout(request)
+		auth_logout(request)
 	else:
+		email = None
+
+	if email == None and name == None and bio == None and pic == None:
 		return Response({"status":"nothing to save"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 	
 	user.save()
@@ -105,8 +118,8 @@ def update_profile_password(request):
 	old_pass = request.GET.get('current_pass',False)
 	new_pass = request.GET.get('new_pass',False)
 	user = authenticate(email=request.user.email, password=old_pass)
-	if user is not None and new_pas != False and new_pass != "null" and new_pass != None:
-		logout(request)
+	if user is not None and new_pass != False and new_pass != "null" and new_pass != None:
+		auth_logout(request)
 		user.set_password(new_pass)
 		user.save()
 		return Response({"status":"good"},status=status.HTTP_200_OK)
@@ -114,34 +127,61 @@ def update_profile_password(request):
 		return Response({"status":"incorrect password"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-
-@api_view(['GET'])
-def Logout(request):
-	logout(request)
-	return redirect('/')
+from django.template.context import RequestContext
 
 
-@api_view(['POST'])
-def Login(request):
+
+@api_view(['POST','GET'])
+def login(request):
+	print request.user
 	if request.user.is_authenticated():
-		return redirect('/user/profile')
-
-
-	email = request.GET.get('email',False) 
-	password = request.GET.get('password',False) 
-	user = authenticate(email=email, password=password)
-	if user is not None:
-		login(request,user)
-		# return redirect('/')
 		return Response({"status":"good"},status=status.HTTP_200_OK)
 	else:
-		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		email = request.GET.get('email',False) 
+		password = request.GET.get('password',False)
+		user = authenticate(email=email, password=password)
+		if user is not None:
+			auth_login(request,user)
+			return Response({"status":"good"},status=status.HTTP_200_OK)
+		else:
+			return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
+
+
+# @api_view(['GET'])
+# def Logout(request):
+# 	logout(request)
+# 	return redirect('/')
+
+
+# @api_view(['POST','GET'])
+# def Login(request):
+# 	if request.user.is_authenticated():
+# 		return redirect('/user/profile')
+
+
+# 	email = request.GET.get('email',False) 
+# 	password = request.GET.get('password',False) 
+# 	user = authenticate(email=email, password=password)
+# 	if user is not None:
+# 		login(request,user)
+# 		print "GOOD"
+# 		return Response({"status":"good"},status=status.HTTP_200_OK)
+# 	else:
+# 		print "BAD"
+# 		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
 
 @api_view(['POST'])
-def Signup(request):
+def signup(request):
 	body = json.loads(request.body)
 	email = body['email']
 	password = body['password']
