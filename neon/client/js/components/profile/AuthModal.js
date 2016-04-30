@@ -194,7 +194,7 @@ export default class AuthModal extends Component {
 				</I>
 				<I innerClassName = "modal-page-container" vertical beta = {100}>
 					
-					<I beta = {100} center >
+					<I beta = {50} center >
 						<p>Sign up with your email and a password.</p>
 					</I>
 

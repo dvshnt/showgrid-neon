@@ -142,15 +142,17 @@ textarea{
 .button-green{
 	@include input-base;
 	@include button-base;
-	background: #00FF62;
-	color: #181A1A;
+    background: #3AD07F;
+    text-shadow: 0px 0px 2px rgba(0,0,0,0.3);
+    color: #FFF;
 }
 
 .button-blue{
 	@include input-base;
 	@include button-base;
-	background: #00F2FF;
-	color: #181A1A;
+    background: #4AB7D0;
+    text-shadow: 0px 0px 2px rgba(0,0,0,0.3);
+    color: #FFF;
 }
 
 .button-red{
@@ -163,8 +165,9 @@ textarea{
 
 .button-facebook{
 	@include icon-button;
+
 	background: #4E91BF;
-	fill: #EFFFF9;
+	fill: #FFF;
 	border-radius: 50%;
 }
 
