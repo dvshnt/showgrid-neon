@@ -50,7 +50,7 @@ class ShowListSerializer(serializers.ModelSerializer):
 		fields = (
 			'id', 'created_at', 'title', 'headliners', 'openers', 'website', 
 			'featured', 'review', 'date', 'ticket', 'price', 'soldout', 
-			'onsale', 'venue', 'banner', 'raw_date'
+			'onsale', 'venue', 'banner', 'raw_date', 'cancelled'
 		)
 
 	raw_date = serializers.SerializerMethodField('get_show_date')
