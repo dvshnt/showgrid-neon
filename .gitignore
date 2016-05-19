@@ -11,6 +11,9 @@ venv/**
 neon/temp/**
 neon/media/**
 
+neon/client/js/*.js
+neon/client/css/*.css
+neon/client/css/*.map
 neon/client/node_modules
 neon/client/.sass-cache
 
@@ -27,18 +30,11 @@ neon/static/showgrid/js/vendor.bundle.js.gz
 neon/static/showgrid/css/base.css
 neon/static/showgrid/css/base.css.map
 
-
-
-
 neon/venue/migrations
 neon/show/migrations
 neon/contest/migrations
 neon/newsletter/migrations
 neon/user/migrations
-
-
-
-
 
 neon/app/settings/whoosh_index/**
 
