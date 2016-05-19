@@ -229,7 +229,7 @@ var DateManager = {
 		case 10:
 			return "2 Hours before tickets go on sale";
 		default:
-			return "Sometime before the show";
+			return "Set Alert";
 		}
 	},
 };
