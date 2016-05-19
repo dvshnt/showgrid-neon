@@ -37,6 +37,10 @@ export default class Ticket extends Component {
 			ticket = <div className="soldout">Sold Out</div>;
 		}
 
+		if (show.cancelled) {
+			ticket = <div className="cancelled">Cancelled</div>;
+		}
+
 		return (
 			<div className="col-3 ticket">
 				{ ticket }
