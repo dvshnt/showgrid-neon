@@ -35,16 +35,24 @@
 
 		border-bottom:none;
 
+		position:relative;
+		left:-2.6%;
+
 		margin:0;
-		width:auto;
+		width:100vw;
+
+		a:first-of-type {
+			margin-right:auto;
+		}
+
+		a:last-of-type {
+			margin-left:auto;
+		}
 
 		a {
 			display:inline;
 
-			-webkit-flex:0 0 60px;
-					flex:0 0 60px;
-
-			height:60px;
+			width:60px; height:60px;
 
 			.icon-back,
 			.icon-more {
@@ -57,9 +65,6 @@
 		}
 
 		.title {
-			-webkit-flex:1 1 200px;
-					flex:1 1 200px;
-
 			h2 {
 				font-size:18px;
 			}

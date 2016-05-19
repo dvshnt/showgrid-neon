@@ -2,24 +2,26 @@
 	padding:0; margin:0;
 
 	list-style:none;
-
-	.list-item:first-of-type {
-		h3.heading {
-			margin-top:20px;
-		}
+		
+	h3 {
+		width: 92.5%;
+		margin: 0 auto 4px;
+		font-size: 16px;
+		text-align: left;
 	}
 }
 
 
 @media screen and (max-width: 740px) {
 	.list {
-		padding:0; margin:0;
-
-		list-style:none;
 
 		.list-item {
 			h3.heading {
-				font-size:14px !important;
+				width:100%;
+
+				margin:25px auto 4px;
+
+				font-size:16px !important;
 			}
 		}
 	}

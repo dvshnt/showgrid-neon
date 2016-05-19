@@ -1,36 +1,11 @@
-#venue-recent {
-	width:350px;
-
-	margin:-6px auto 20px;
-
-	padding:15px 0;
-}
-
-.list {
-
-	padding:15px 0;
-
-	background:#ffffff;
-	-webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);
-			box-shadow:0 2px 3px rgba(0,0,0,0.1);
-
-	h3 {
-		display:block;
-		width:92.5%;
-
-		margin:0 auto 4px;
-
-		font-size:16px;
-	}
-
-}
 .show.small {
 	width: 100%;
+
 	display:-webkit-flex;
 	display:		flex;
 
-	-webkit-justify-content:center;
-			justify-content:center;
+	-webkit-justify-content:flex-start;
+			justify-content:flex-start;
 
 	-webkit-align-items:center;
 			align-items:center;
@@ -49,27 +24,21 @@
 	}
 
 	.date {
-		-webkit-flex:0 0 70px;
-				flex:0 0 70px;
-
-		color:#000000;
-		font-size:16px;
 		font-weight:300;
-		text-align:center;
+
+		margin:0 15px 0 20px;
 	}
 
 	.artists {
-		-webkit-flex:1 1 200px;
-				flex:1 1 200px;
-
 		padding:0 8px;
+
+		text-align:left;
 
 		a {
 			color:#000000;
 			text-decoration:none;
 
 			&:hover {
-
 				text-decoration:none;
 			}
 		}
@@ -91,23 +60,7 @@
 		i {
 			color:rgba(0,0,0,0.65);
 			font-size:10px;
+			line-height:12px !important;
 		}
-	}
-}
-
-
-
-#featured-shows, #venue-shows {
-	.list {
-		padding:0;
-
-		background:none;
-		box-shadow:none;
-	}
-}
-
-@media screen and (max-width: 740px) {
-	#venue-recent {
-		width:95%;
 	}
 }

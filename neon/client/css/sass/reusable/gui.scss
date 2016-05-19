@@ -173,27 +173,42 @@ textarea{
 
 .button-favorite{
 	color: rgba(0, 0, 0, 0.3);
-	fill: rgba(0, 0, 0, 0.3);
+
+	svg {
+		fill: rgba(0, 0, 0, 0.3);
+	}
 }
 
-.button-favorite-active{
-	color: #FF2A35;
-	fill: #FF2A35;
+.button-favorite-active {
+	color: #FF2A35 !important;
+
+	svg {
+		fill: #FF2A35 !important;
+	}
 }
 
 .button-alert{
 	color: rgba(0, 0, 0, 0.3);
-	fill: rgba(0, 0, 0, 0.3);
+
+	svg {
+		fill: rgba(0, 0, 0, 0.3);
+	}
 }
 
 .button-alert-sale{
-	color: rgb(0,222,144);
-	fill: rgb(0,222,144);
+	color: rgb(0,222,144) !important;
+
+	svg {
+		fill: rgb(0,222,144) !important;
+	}
 }
 
 .button-alert-show{
-	color: #FFA700;
-	fill: #FFA700;
+	color: #FFA700 !important;
+
+	svg {
+		fill: #FFA700 !important;
+	}
 }
 
 

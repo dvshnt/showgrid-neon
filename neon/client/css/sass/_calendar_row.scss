@@ -19,10 +19,6 @@
 }
 
 @media screen and (max-width: 740px ) {
-	.calendar__row {
-		border-bottom:none;
-	}
-
 	.calendar__row:nth-child(even) {
 		background-color:#fcfcfc;
 	}

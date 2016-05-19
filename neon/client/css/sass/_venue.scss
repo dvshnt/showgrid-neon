@@ -1,84 +1,12 @@
-#venue {
-	display:-webkit-flex;
-	display:		flex;
-
-	-webkit-align-items:flex-start;
-			align-items:flex-start;
-
-	-webkit-justify-content:center;
-			justify-content:center;
-
-	-webkit-flex-flow:row wrap;
-			flex-flow:row wrap;
-
-	width:80%;
-	max-width:1200px;
-
-	margin:10px auto;
-}
-
-#venue-sidebar {
-	-webkit-flex:0 0 350px;
-			flex:0 0 350px;
-
-	margin-right:15px;
-
-	section {
-		min-height:160px;
-
-		padding:20px 0;
-		margin:20px auto;
-
-		text-align:center;
-
-		background:#ffffff;
-		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-
-		p {
-			width:85%;
-		
-			margin:0px auto 15px;
-		
-			font-size:16px;
-			font-weight:200;
-			line-height:1.5;
-			text-align:justify;
-		}
-	}
-}
-
-#venue-main {
-	-webkit-flex:1 1 500px;
-			flex:1 1 500px;
-}
-
-#venue-script {
-	width:310px;
-
-	padding:20px;
-	margin:16px auto 8px;
-
-	font-size:12px;
-	font-weight:300;
-	line-height:1.42;
-
-	background:#ffffff;
-	-webkit-box-shadow:0 2px 3px rgba(0,0,0,0.1);
-			box-shadow:0 2px 3px rgba(0,0,0,0.1);
-
-
-	h4 {
-		margin:0 0 8px 0;
-
-		font-size:16px;
-	}
+#venue-head {
+	margin-top:0;
 }
 
 #venue-banner {
 	position:relative;
-	width:350px; height:302px;
+	width:100%; height:302px;
 
-	margin:0 auto;
+	margin:0 auto 10px;
 
 	.image{
 		position:absolute;
@@ -140,51 +68,13 @@
 
 
 @media screen and (max-width: 740px) {
-	#venue {
-		position:absolute;
-
-		width:100%;
-
-
-		margin:0 auto;
-		margin-top:0;
-
-		z-index:100;
-	}
-
-	#venue-sidebar {
-		-webkit-flex:0 0 100%;
-				flex:0 0 100%;
-
-		margin-right:0;
-
-		section {
-			width:95%;
-
-			margin:30px auto;
-			padding:10px 0;
-
-			p {
-				font-size:14px;
-			}
-		}
-	}
-
-	#venue-main {
-		-webkit-flex:0 0 100%;
-				flex:0 0 100%;
-
-		margin-left:0;
-	}
-
-	#venue-script {
-		width:calc(95% - 40px);
-	}
-
 	#venue-banner {
 		position:relative;
-		width:100%; height:220px;
+		left:-2.6%;
 
+		width:100vw; height:220px;
+
+		z-index:101;
 
 		.image{
 			position:absolute;

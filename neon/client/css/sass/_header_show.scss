@@ -22,9 +22,6 @@
 	.title {
 		padding:8px 15px;
 
-		-webkit-flex:1 1 150px;
-				flex:1 1 150px;
-
 		h2 {
 			margin:0;
 
@@ -46,10 +43,8 @@
 	}
 
 	.date {
-		padding:0 15px;
-
-		-webkit-flex:1 1 150px;
-				flex:1 1 150px;
+		margin-left:auto;
+		margin-right:0px;
 
 		color:#ffffff;
 		font-size:14px;
@@ -62,13 +57,24 @@
 	#show-head {
 		margin:0;
 
+		width:100vw;
+
+		position:relative;
+		left:-2.6%;
+
+		a:first-of-type {
+			margin-right:auto;
+		}
+
+		a:last-of-type {
+			margin-left:auto;
+		}
+
 		a {
 			display:inline;
 
-			-webkit-flex:0 0 60px;
-					flex:0 0 60px;
+			width:60px; height:60px;
 
-			height:60px;
 
 			.icon-back,
 			.icon-more {
@@ -81,9 +87,6 @@
 		}
 
 		.title {
-			-webkit-flex:1 1 100px;
-					flex:1 1 100px;
-
 			h2 {
 				font-size:18px;
 				text-align:center;

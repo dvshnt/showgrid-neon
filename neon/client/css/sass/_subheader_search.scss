@@ -34,9 +34,11 @@
 }
 
 @media screen and (max-width: 740px) {
-	#search-form {
-		margin-top:10px;
+	#subhead.hide {
+		display:none;
+	}
 
+	#search-form {
 		input[type=text] {
 			width:55%;
 		}

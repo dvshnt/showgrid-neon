@@ -7,14 +7,14 @@
 		display:		flex;
 
 		-webkit-flex-direction: column;
-					flex-direction: column;
+				flex-direction: column;
 
 		-webkit-justify-content: baseline;
 				justify-content: baseline;
 	}
 
 	.day:nth-child(odd) {
-		background-color:#fcfcfc;
+		background-color:#fbfbfb;
 	}
 
 }

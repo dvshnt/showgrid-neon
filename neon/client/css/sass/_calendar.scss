@@ -1,26 +1,19 @@
 #calendar {
-	position:absolute;
-	top:59px; left:0; right:0; bottom:0;
+    width:100vw;
 
-	overflow:hidden;
+    z-index:97;
 
-    z-index:100;
+    margin-top:61px;
 }
 
 #calendar-content {
-	position:absolute;
-	top:41px; right:0; bottom:0; left:0;
-
-	overflow:scroll;
+	padding-top:50px;
 }
 
-@media screen and (max-width: 740px) {
-	#calendar {
-		top:60px; bottom:0;
-	}
 
+@media screen and (max-width: 740px) {
 	#calendar-content {
-		top:61px;
+		padding-top:60px;
 	}
 }
 

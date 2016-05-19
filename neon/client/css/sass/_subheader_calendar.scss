@@ -1,25 +1,32 @@
 #header_calendar {
+	position:fixed;
+
 	display:-webkit-flex;
 	display:		flex;
 
 	-webkit-align-items: center;
 			align-items: center;
 
+	width:100vw;
+
 	background:#ffffff;
 	border-bottom:1px solid #e8e8e8;
 
+	z-index:97;
+
 	#back-to-today {
 		position:absolute;
-		top:108px; right:0px;
+		top:40px; right:0px;
 
 		height:0px;
 
 		padding:0px;
 
-	    background:#222222;
-	    border:none;
+	    background:#ffffff;
+	    border-left:1px solid #e8e8e8;
+	    border-bottom:1px solid #e8e8e8;
 
-		color:#ffffff;
+		color:#000000;
 		font-family:'Helvetica', sans-serif;
 		font-size:12px;
 		text-transform:uppercase;
@@ -46,7 +53,7 @@
 		padding:0;
 
 		border:5px solid transparent;
-		border-right:7px solid #ffffff;
+		border-right:7px solid #000000;
 
 		opacity:0;
 	}
