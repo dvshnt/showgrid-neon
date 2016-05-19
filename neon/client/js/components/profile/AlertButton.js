@@ -2,6 +2,7 @@ const GLOBAL_UTC = -6;
 import React, { Component } from 'react';
 import * as op from 'operator';
 import ListItemSm from 'components/ListItemSm';
+import DateManager from '../../util/DateManager';
 
 var setAlert = React.createClass({
 	getInitialState: function(){
@@ -45,10 +46,18 @@ var setAlert = React.createClass({
 	},
 
 	render: function(){
+		var text = "Set Alert";
+		if (this.state.sale_alert !== null) {
+			text = DateManager.convertAlertDate(this.state.sale_alert.which);
+		}
+		else if (this.state.show_alert !== null) {
+			text = DateManager.convertAlertDate(this.state.show_alert.which);
+		}
+
 		return (
-			<div onClick = {this.toggle} className = { (this.props.className || "")+" button-alert " + (this.state.sale_alert != null ? "button-alert-sale" : (this.state.show_alert != null ? "button-alert-show" : "")) }>
+			<div onClick={ this.toggle } className ={ (this.props.className || "") + " button-alert " + (this.state.sale_alert != null ? "button-alert-sale" : (this.state.show_alert != null ? "button-alert-show" : "")) }>
 				<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-				{this.props.children}
+				<span>{ text }</span>
 			</div>
 		)
 	}

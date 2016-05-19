@@ -55,7 +55,7 @@ export default class SetFavorite extends Component {
 		return (
 			<div className={ className } onClick={ this.setShowAsFavorite.bind(this) } >
 				<svg  dangerouslySetInnerHTML={{ __html: '<use class="svg" xlink:href="#icon-heart"/>' }} />
-				{this.props.children}
+				<span>Favorite</span>
 			</div>
 		)
 	}

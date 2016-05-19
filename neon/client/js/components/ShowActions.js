@@ -48,12 +48,8 @@ export default class ShowActions extends Component {
 
 		return (
 			<div className={ mode }>
-				<FavoriteButton show={ show } >
-					<span>Favorite</span>
-				</FavoriteButton>
-				<AlertButton className={'col-3'} show={ show }>
-					<span>Alert</span>
-				</AlertButton>
+				<FavoriteButton show={ show } />
+				<AlertButton className={'col-3'} show={ show } />
 				<ShareButton show={ show } toggleShare={ this.toggleShare }/>
 				<Ticket show={ show } />
 			</div>
