@@ -25,10 +25,10 @@
 </section>
 {% endblock content %}
 
-{% block scripts %}
+{% block state %}
 <script>
-	var shows = {{ shows|jsonify }};
+	window.state['shows'] = {{ shows|jsonify }};
 </script>
-{% endblock scripts %}
+{% endblock state %}
 
 {% block footer %}{% endblock footer %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load jsonify %}
+
+{% block head %}
+	{% include 'header.html' with page="newsletter" %}
+{% endblock head %}
+
+
+{% block mobilemenu %}
+	{% include 'mobile_menu.html' with page="newsletter" %}
+{% endblock mobilemenu %}
+
+
+{% block aside %}
+	<section>
+		<h3>Sign Up for Newsletter</h3>
+		<p>
+			Sign up to receive the Showgrid Weekly Digest in your inbox each week. 
+		</p>
+
+		<form class="form" method="post" action="/v1/signup">
+			
+			<input type="email" name="email" placeholder="Email address" required/><input type="submit" value="Submit"/>
+			<div class="msg">
+				There is something here that once wasn't.
+			</div>
+		</form>
+	</section>
+{% endblock aside %}
+
+
+{% block main %}
+	{% for issue in issues %}
+	<a class="issue" href="/newsletter/{{ issue.id }}">
+		<section class="issue list" style="background-image:url('/media/{{ issue.banner }}');">
+			<h4>Weekly Digest | {{ issue.tag }}</h4>
+			<span>
+				Week of {{ issue.start_date|date:"F jS" }}
+			</span>
+		</section>
+	</a>
+	{% endfor %}
+{% endblock main %}

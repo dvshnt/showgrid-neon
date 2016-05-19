@@ -6,6 +6,10 @@
 	{% include 'header.html' with page="calendar" %}
 {% endblock head %}
 
+{% block subhead %}
+	{% include 'subheader-search.html'  with page="calendar" %}
+{% endblock subhead %}	
+
 
 {% block mobilemenu %}
 	{% include 'mobile_menu.html' with page="calendar" %}

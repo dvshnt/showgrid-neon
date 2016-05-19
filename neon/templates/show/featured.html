@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load jsonify %}
+
+
+{% block head %}
+	{% include 'header.html' with page="featured" %}
+{% endblock head %}
+
+
+{% block mobilemenu %}
+	{% include 'mobile_menu.html' with page="featured" %}
+{% endblock mobilemenu %}
+
+
+{% block aside %}
+	<section>
+		<h3>Featured Shows</h3>
+		<p>
+			Here, we gather together the best that Nashville has to offer. Curated by hand with the help of the music God Apollo, these shows will fill you with awe and wonder.
+		</p>
+	</section>
+{% endblock aside %}
+
+{% block main %}
+	<section id="featured-shows" class="transparent">
+	</section>
+{% endblock main %}
+
+
+{% block state %}
+<script>
+	window.state['shows'] = {{ shows|jsonify }};
+</script>
+{% endblock state %}

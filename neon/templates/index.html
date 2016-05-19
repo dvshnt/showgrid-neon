@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load static %}
-
 {% load jsonify %}
 
 {% block head %}
@@ -12,9 +10,8 @@
 	{% include 'subheader-search.html' with page="front" %}
 {% endblock subhead %}
 
-{% block content %}
-<div id="front">
-	<div id="front-blurb">
+{% block full %}
+	<section>
 		<h2>Welcome to the New Showgrid!</h2>
 		<p>
 			We're back with a better calendar, better design and a flash of divine inspiration. You will notice the newsletter that we send out every Sunday. This has been included in the new site, emphasizing the playlist that is included in the newsletter.
@@ -32,27 +29,29 @@
 			<br>
 			<i>Thanks, Davis.</i>
 		</p>
-	</div>
-	<section id="front-block">
-		<div id="front-info">
-			<div id="front-playlist">
-				<h3>This Weeks Playlist</h3>
-				<p>Every Sunday, we pull together tracks from all of the best artists playing in town for the week and put them in a playlist. What you see below is this playlist.</p>
-				<iframe class="playlist" src="https://embed.spotify.com/?uri={{ playlist }}&theme=white" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>
-			</div>
-			<div id="front-recent">
-
-			</div>
-			<div id="front-onsale">
-
-			</div>
-		</div>
-		<div id="front-featured">
-
-		</div>
 	</section>
-</div>
-{% endblock content %}
+{% endblock full %}
+
+{% block aside %}
+	<section id="front-playlist">
+		<h3>This Weeks Playlist</h3>
+		<p>Every Sunday, we pull together tracks from all of the best artists playing in town for the week and put them in a playlist. What you see below is this playlist.</p>
+		<iframe class="playlist" src="https://embed.spotify.com/?uri={{ playlist }}&theme=white" width="300" height="400" frameborder="0" allowtransparency="true"></iframe>
+	</section>
+	<section id="front-recent">
+
+	</section>
+	<section id="front-onsale">
+
+	</section>
+{% endblock aside %}
+
+
+{% block main %}
+	<section id="front-featured" class="transparent">
+
+	</section>
+{% endblock main %}
 
 
 {% block scripts %}

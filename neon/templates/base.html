@@ -2,13 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 
-		
 		{% load jsonify %}
-		{% load static %}
-		{% csrf_token %}
-		
+		{% load static %}	
 
-		<title>Showgrid | Nashville's Live Music Source {% block title %}{% endblock %}</title>
+		<title>Showgrid Nashville {% block title %}{% endblock %}</title>
 
 
 		<meta charset="utf-8">
@@ -41,13 +38,14 @@
 
 		{% block og %}
 		<!-- Start Facebook Open Graph -->
+		<meta property="og:site_name" content="Showgrid Nashville">
 		<meta property="og:title" content="Showgrid {% block ogtitle %}| Nashville's Live Music Source{% endblock %}"/>
 		<meta property="og:type" content="website"/>
 		<meta property="og:image" content="{% block ogimg %}http://showgrid.com/{% static 'showgrid/img/facebook-ogimg.jpg' %}{% endblock %}"/>
 		<meta property="og:url" content="http://showgrid.com"/>
 		<meta property="og:description" content="{% block ogdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}"/>
 		<!-- End Facebook Open Graph -->
-		{% endblock %}
+		{% endblock og %}
 
 
 		{% block twitter %}
@@ -57,9 +55,9 @@
 		<meta name="twitter:creator" content="@dvshnt">
 		<meta name="twitter:title" content="Showgrid {% block twittertitle %}| Nashville's Live Music Source{% endblock %}">
 		<meta name="twitter:description" content="{% block twitterdesc %}Showgrid is Nashville's premiere place to learn about live music in town.{% endblock %}">
-		<meta name="twitter:image" content="{% block twitterimg %}http://showgrid.com/{% static 'showgrid/img/sg--fb.jpg' %}{% endblock %}">
+		<meta name="twitter:image" content="{% block twitterimg %}http://showgrid.com/{% static 'showgrid/img/facebook-ogimg.jpg' %}{% endblock %}">
 		<!-- End Twitter Card -->
-		{% endblock %}
+		{% endblock twitter %}
 
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
 		<link href="{% static 'showgrid/css/base.css' %}" rel="stylesheet" type="text/css">
@@ -68,36 +66,51 @@
 		{% block style %}{% endblock style %}
 	</head>
 	<body>
+		{% csrf_token %}	
 		
-		<div class ='body-background'>
-		</div>
-		{% if user.is_authenticated == True %}
-		<div style="display:none">
-			<input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-		</div>
-		{% endif %}
+		<div id='overlay-wrapper'></div>
+		<div class ='body-background'></div>
 
 		{% block svg %}
 			{% include "svg_icons.html" %}
 		{% endblock svg %}
 
+		{% if user.is_authenticated == True %}
+			<div style="display:none">
+				<input type="hidden" id="csrfmiddlewaretoken" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+			</div>
+		{% endif %}
 
 		{% block head %}
 			{% include 'header.html' %}
 		{% endblock head %}
-		
+
 		{% block subhead %}
 			{% include 'subheader-search.html' %}
 		{% endblock subhead %}	
+
+		{% block content %}
+		{% endblock content %}
+		
 		<div id ='container'>
-			<div id="mobile-menu" class='mobile-menu-show'>
-				{% block mobilemenu %}
-					{% include 'mobile_menu.html' %}
-				{% endblock mobilemenu %}
-			</div>
-			{% block content %}
-			{% endblock content %}
+			<article>
+				{% block full %}{% endblock full %}
+			</article>
+			<aside>
+				{% block aside %}{% endblock aside %}
+			</aside>
+			<main>
+				{% block main %}{% endblock main %}
+			</main>
 		</div>
+
+		
+		<div id="mobile-menu" class='mobile-menu-show'>
+			{% block mobilemenu %}
+				{% include 'mobile_menu.html' %}
+			{% endblock mobilemenu %}
+		</div>
+
 		{% block footer %}
 		<!-- <footer>
 			<span>&copy;MMXVI Showgrid, Nashville, TN</span>
@@ -106,34 +119,25 @@
 			</span>
 		</footer> -->
 		{% endblock %}		
-
-
-		<div id='overlay-wrapper'></div>
 	</body>
 	
 
-	
 	<script>
 		window.state = {
 			featured_shows: [],		
-		}
+		};
+		
 		window.user = {{ user.user_json|jsonify }}
 		window.user = window.user == "" ? {} : window.user
 		window.user.auth_links = {}
 		window.user.alerts = window.user.alerts || []
 		window.user.favorites = window.user.favorites || []
 
-
 		window.user.auth_links["facebook"] = "{% url 'social:begin' 'facebook'  %}"
 		window.user.is_authenticated = {% if user.is_authenticated == False %} false {% else %} true {% endif %}
 	</script> 
 
-
-
-	{% block state %}
-	
-	{% endblock %}
-
+	{% block state %}{% endblock state %}
 
   	<script>
 	 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -148,9 +152,6 @@
 	<script src="{% static 'showgrid/js/vendor.bundle.js' %}"></script>
  	<script src="{% static 'showgrid/js/app.bundle.js' %}"></script>
 
-	{% block scripts %}
-	
-	{% endblock %}
-
+	{% block scripts %}{% endblock scripts %}
 
 </html>

@@ -1,0 +1,58 @@
+<!--
+	profile base is shared by both private and public profiles.
+
+	main difference is that private template has extra options to open the profile settings modal.
+
+	an option to edit alerts 
+
+!-->
+{% load jsonify %}
+{% extends "base.html" %}
+
+{% block header %}
+	<title>{{ profile.name|default:"No Name" }} at Nashville Neon</title>
+	<meta name="user" content="{{profile.name}}">
+	<meta name="description" content="{{profile.bio}}">
+	<meta name="keywords" content="follow showgrid user profiles">
+{% endblock header %}
+
+{% block content %}
+	<div id="profile"></div>
+	<div style="display:none;">
+		<div itemtype="http://schema.org/Person">
+			<span itemprop="description">{{profile.name}} loved a live show presenting {{show.headliners}} together with {{show.openers}} in Nashville-Tennessee performing at {{show.venue.name}}</span>
+			<span itemprop="memberOf">
+				<span itemscope itemtype="http://schema.org/Organization">
+					<span itemtype="legalName">Showgrid</span>
+					<span itemtype="address">Nashville, TN</span>
+					<a itemprop="sameAs" href="http://www.showgrid.com/profile/{{profile.id}}">
+				</span>
+			</span>
+			<span itemprop="name">{{profile.name|default:profile.username}}</span>
+			<span itemprop="attendee">
+				{% for show in profile.favorites %}
+					<div itemtype="http://schema.org/Event">
+						<span itemprop="location" itemscope itemtype="http://schema.org/Place">
+							<span itemprop="name">{{show.venue.name}}</span>
+							<span itemprop="address">Nashville, Tennessee</span>
+						</span>
+						<span itemprop="attendee">{{profile.name|"showgrid"}}</span>
+						<span itemprop="performer">{{show.headliners}} {{show.openers}} </span>
+						<a itemprop="sameAs" href="http://www.showgrid.com/show/{{show.id}}">
+					</div>
+				{% endfor %}
+			</span>
+		</div>
+	</div>
+{% endblock content %}
+
+{% block scripts %}
+	<script>
+		window.profile = {{ profile|jsonify }}
+		window.operator.renderPublicProfile();
+	</script>
+{% endblock scripts %}
+
+
+
+
