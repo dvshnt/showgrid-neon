@@ -14,7 +14,7 @@ var AuthButton = React.createClass({
 			throw new Error("bad auth button type")
 		}
 		return (
-			<a href = { link+'?next='+window.encodeURI(window.location.href) } className={"button-"+this.props.type} >
+			<a href={ link+'?next='+window.encodeURI(window.location.href) } className={"button-"+this.props.type} >
 				<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-'+this.props.type+'"/>' }} />
 			</a>
 		)
