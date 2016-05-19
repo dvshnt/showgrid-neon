@@ -920,7 +920,7 @@
                 top = 120;
             }
             else {
-                top = 109;
+                top = 100;
             }
 
             this.el.style.cssText = [
