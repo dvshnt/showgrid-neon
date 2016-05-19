@@ -58,17 +58,13 @@ export default class ListItemLg extends Component {
 	   	};
 
 
-		if (show.star && this.props.extra.showStar) {
+		if (show.featured && extra.showStar) {
 			star = <div className="featured"><svg className="icon icon-star" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-star"/>' }} />&nbsp;<span>Featured Show</span></div>;
 		}
 
 
 		if (show.review && show.review !== "") {
 			review = <article dangerouslySetInnerHTML={{__html: show.review}}></article>;
-		}
-
-		if (show.star && this.props.showStar) {
-			star = <b className="rec icon-star"></b>;
 		}
 
 
@@ -106,36 +102,6 @@ export default class ListItemLg extends Component {
 		if (show.openers !== '') {
 			opener =  <h5>{ show.openers }</h5>;
 		}
-
-		// Actions
-		var onsale = DateManager.areTicketsOnSale(show.onsale);
-		var ticket = "";
-
-		if (!onsale) {
-			var saleDate = 
-			ticket = (
-				<div className="onsale">
-					On Sale 
-					<span className="date">
-						{ DateManager.formatSaleDate(show.onsale) }
-					</span>
-				</div>
-			)
-		} else if (show.ticket !== '') {
-			ticket = (
-				<a className="ticket" href={ show.ticket } target="_blank" onClick={ this.registerTicketEvent }>
-					<svg className="icon icon-ticket" dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
-					<span>Tickets</span>
-				</a>
-			);
-		}
-
-		if (show.soldout) {
-			ticket = <div className="soldout">Sold Out</div>;
-		}
-
-
-		if(this.props.ticket_price) price = null;
 
 
 		var gradient = this.convertHex(venue.primary_color);
