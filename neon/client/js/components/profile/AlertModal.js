@@ -136,11 +136,12 @@ var AlertModal = React.createClass({
 		// show_options.unshift(<option key ='option_blank'>------------</option>)
 
 		
+		var today = moment();
 		var d = moment(show.raw_date);
 		var sd = moment(show.onsale);
 		var sale_alert = null
 
-		if(show.onsale != null && d < sd ) {
+		if(show.onsale != null && today < sd ) {
 			sale_alert = (
 				<I beta = {50} center c="alert-modal-submit-sale alert-modal-submit-option" onClick={this.setAlertType}>
 					<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
@@ -168,7 +169,7 @@ var AlertModal = React.createClass({
 
 	
 		return (
-			<Modal height = {'300px'} onClose={op.closeModal} onResetError = {this.setState.bind(this,{error:null})} error = {this.state.error} className = {'alert-modal'} >
+			<Modal height={ '300px' } onClose={ op.closeModal } onResetError={this.setState.bind(this,{error:null})} error = {this.state.error} className = {'alert-modal'} >
 				<I vertical >
 					<I c = 'alert-modal-show' vertical>
 						<I height={70} vertical center c='alert-modal-show-info-date' style = {{background:show.venue.secondary_color,color:show.venue.primary_color}}>
@@ -180,7 +181,7 @@ var AlertModal = React.createClass({
 							<span onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-headliners'>{ show.headliners }</span>
 							<span  onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-openers'>{ show.openers }</span>
 							<div className = 'alert-modal-venue'>
-								<span  onClick = {()=>{ window.location.href = '/venue/'+show.venue.id  }} className='alert-modal-venue-name' style={{color:show.venue.primary_color}}>{ show.venue.name }</span>
+								<span  onClick={()=>{ window.location.href = '/venue/'+show.venue.id  }} className='alert-modal-venue-name' style={{color:show.venue.primary_color}}>{ show.venue.name }</span>
 							</div>
 							
 						</I>
