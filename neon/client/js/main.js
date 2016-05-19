@@ -57,7 +57,7 @@ if (!!featured) {
 	};
 
 	console.log("START - Featured Render");
-	dom.render(<ListLg items={ shows } extra={ extra }/>, featured);
+	dom.render(<ListLg items={ window.state.shows } extra={ extra }/>, featured);
 	console.log("END - Featured Render");
 }
 
@@ -86,20 +86,21 @@ if (!!search) {
 	};
 
 	console.log("START - Search Results Render");
-	dom.render(<ListLg items={ shows } extra={ extra }/>, search);
+	dom.render(<ListLg items={ window.state.shows } extra={ extra }/>, search);
 	console.log("END - Search Results Render");
 }
 
 
 var venueShows = document.getElementById("venue-shows");
 if (!!venueShows) {
-	var url = '/api/v1/shows?orderby=date&venue=' + venue.id;
+	var url = '/api/v1/shows?orderby=date&venue=' + window.state.venue.id;
 
 	window.fetch(url)
 		.then(function(response) {
 			return response.json();
 		}).then(function(body) {
 			var extra = {
+				showStar: true,
 				hideHeader: true,
 				date_heading: true
 			};
@@ -112,7 +113,7 @@ if (!!venueShows) {
 
 var venueRecent = document.getElementById("venue-recent");
 if (!!venueRecent) {
-	var url = '/api/v1/shows?orderby=created_at&limit=5&venue=' + venue.id;
+	var url = '/api/v1/shows?orderby=created_at&limit=5&venue=' + window.state.venue.id;
 
 	window.fetch(url)
 		.then(function(response) {
@@ -177,9 +178,9 @@ if (!!frontRecent) {
 
 
 
-var showActions = document.getElementById('show-actions-mobile') || document.getElementById('show-actions-wide')
+var showActions = document.getElementById('show-actions-wide')
 if (!!showActions) {
-	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions-mobile'));
+	dom.render(<ShowActions show={window.state.show} />, document.getElementById('mobile-menu'));
 	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions-wide'));
 }
 
