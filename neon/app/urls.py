@@ -19,13 +19,13 @@ urlpatterns = [
     ## Standard Django admin endpoints for a crude CMS
     url(r'^admin/', include(admin.site.urls)),
     
-    url(r'^$', views.Index.as_view(), name='index'),
+    url(r'^dashboard/$', views.Index.as_view(), name='index'),
 
     url(r'^api/v1/', include('api.urls'), name='api'),
     
     url(r'^search/', views.Search.as_view(), name='search'),
 
-    url(r'^calendar/', include('cal.urls'), name='calendar'),
+    url(r'^$', include('cal.urls'), name='calendar'),
     url(r'^newsletter/', include('newsletter.urls'), name='newsletter'),
     url(r'^contest/', include('contest.urls'), name='newsletter'),
     url(r'^venue/', include('venue.urls'), name='venue'),

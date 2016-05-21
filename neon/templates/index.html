@@ -3,32 +3,16 @@
 {% load jsonify %}
 
 {% block head %}
-	{% include 'header.html' with page="front"%}
+	{% include 'header.html' with page="dash"%}
 {% endblock head %}
 
 {% block subhead %}
-	{% include 'subheader-search.html' with page="front" %}
+	{% include 'subheader-search.html' with page="dash" %}
 {% endblock subhead %}
 
 {% block full %}
 	<section>
-		<h2>Welcome to the New Showgrid!</h2>
-		<p>
-			We're back with a better calendar, better design and a flash of divine inspiration. You will notice the newsletter that we send out every Sunday. This has been included in the new site, emphasizing the playlist that is included in the newsletter.
-		</p>
-		<p>
-			Other interesting updates include a more readable calendar, a compact list of shows recently added to the calendar, and a list of shows with tickets going on sale soon. These are visible from the front page.
-		</p>
-		<p>
-			Returning is the ability to favorite and set alerts on shows. You'll find the site easier to navigate through and better optimized for your phone.
-		</p>
-		<p>
-			Until then, tell all of your friends. Every single one. And... Enjoy the site!
-		</p>
-		<p>
-			<br>
-			<i>Thanks, Davis.</i>
-		</p>
+		<h2>Welcome to the New Showgrid.</h2>
 	</section>
 {% endblock full %}
 
