@@ -1,6 +1,6 @@
 import React from 'react';
 import dom from 'react-dom';
-import { SettingsModal, ProfilePage, AuthModal , AlertModal } from 'components/profile';
+import { SettingsModal, ProfileActivity, AuthModal , AlertModal } from './components/profile';
 import $ from 'jquery';
 import fetch from 'whatwg-fetch';
 
@@ -11,10 +11,11 @@ export function renderPublicProfile(p){
 
 
 export function renderPrivateProfile(){
+	console.log(ProfileActivity)
 	if(!window.user.is_authenticated){
 		Modal()
 	}else{
-		dom.render(<ProfilePage profile={window.user} />,document.getElementById('profile'));
+		dom.render(<ProfileActivity profile={window.user} />,$('#profile-activity')[0]);
 	}
 }
 

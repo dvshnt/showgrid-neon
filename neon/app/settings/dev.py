@@ -33,13 +33,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            '/home/ubuntu/showgrid/neon/templates/',
-            '/home/ubuntu/showgrid/neon/cal/templates/',
-            '/home/ubuntu/showgrid/neon/magazine/templates/',
-            '/home/ubuntu/showgrid/neon/newsletter/templates/',
-            '/home/ubuntu/showgrid/neon/show/templates/',
-            '/home/ubuntu/showgrid/neon/user/templates/',
-            '/home/ubuntu/showgrid/neon/venue/templates/',
+            './templates/',
         ],
         'OPTIONS': { 
             'loaders': [

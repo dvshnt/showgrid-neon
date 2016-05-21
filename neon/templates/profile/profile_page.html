@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+
+{% block full %}
+	<section id="profile-about">
+		{% if profile.pic %}
+		<div class = "profile-pic" style="background:url('{{profile.pic}}')" >
+			<div class='profile-pic-overlay' ></div>
+		</div>
+		{% else %}
+		<div class = "profile-pic profile-pic-default" style="background:url('/static/showgrid/img/avatar.jpg')" >
+
+			<div class='profile-pic-overlay'></div>
+			<svg>
+				<use xlink:href="#icon-settings"/>
+			</svg>
+		</div>
+		{% endif %}
+		<div class = "profile-bio">
+			
+			<div class = "profile-bio-item profile-bio-name">
+				{% if profile.name %}
+				<span>{{profile.name}}</span>
+				{% else %}
+					<span>{{profile.email}}</span>
+				{% endif %}					
+			</div>
+			<div class = "profile-bio-item profile-bio-text">
+				{% if profile.bio %}
+				<p>{{profile.bio}}</p>
+				{% else %}
+				<p>You have no bio</p>
+				{% endif %}
+			</div>
+			
+		</div>
+	</section>
+{% endblock full %}
+
+{% block main %}
+	<section id="profile-activity">
+	</section>
+{% endblock main %}
+
+
+
+{% block aside %}
+	<section id="profile-actions">
+
+		<div class='profile-actions-option'><span>recieve newsletter</span></div>
+		<div class='profile-actions-option'><span><a href = '/user/logout'>logout</a></span></div>
+	</section>
+{% endblock aside %}

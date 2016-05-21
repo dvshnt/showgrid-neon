@@ -184,6 +184,10 @@ if (!!showActions) {
 	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions-wide'));
 }
 
+var profile = document.getElementById('profile-activity')
+if (!!profile) {
+	op.renderPrivateProfile();
+}
 
 
 

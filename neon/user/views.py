@@ -52,8 +52,7 @@ def require_email(request):
 @api_view(['GET'])
 @login_required(login_url='/?q=profile')
 def private_profile(request):
-
-		return render(request, "profile-private.html")
+	return render(request, "profile/profile_page.html",{'profile': request.user})
 
 
 
@@ -62,7 +61,7 @@ def private_profile(request):
 def public_profile(request,id):
 	try:
 		user = NeonUser.objects.get(id=id)
-		return render(request, "profile-public.html",{'profile':UserSerializer(user).data})
+		return render(request, "profile/profile_page.html",{'profile':UserSerializer(user).data})
 	except:
 		return redirect('/?q=profile')
 
