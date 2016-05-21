@@ -40,7 +40,7 @@
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 
-	@include transition(all 0.3s ease);
+	@include transition(background 0.3s ease);
 }
 
 .overlay-visible{

@@ -83,7 +83,7 @@ var ProfileActivity = React.createClass({
 			var items = this.props.profile.alerts.map(this.makeAlert)
 			if(!items.length){
 				if(!this.props.profile.phone_verified){
-					items = <div className='profile-activity-overlay'><div className = 'button-green'>set up phone to recieve alerts</div></div>
+					items = <div onClick = {op.showProfileSettings.bind(null,2)} className='profile-activity-overlay'><div className = 'button-green'>set up phone to recieve alerts</div></div>
 				}else{
 					items = <div className='profile-activity-overlay'><h3 className = 'profile-'>no alerts</h3></div>
 				}
