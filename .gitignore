@@ -23,6 +23,7 @@ neon/static/**/*
 neon/venue/migrations/**
 neon/show/migrations/**
 neon/contest/migrations/**
+neon/user/migrations/**
 
 
 
