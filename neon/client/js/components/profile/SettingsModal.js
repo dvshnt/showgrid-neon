@@ -443,7 +443,7 @@ var SettingsModal = React.createClass({
 			var page =  (
 				<I vertical>
 					<I height = {60} center c='profile-settings-title'>
-						<h3>change password</h3>
+						<h3>Change Password</h3>
 					</I>
 					<I vertical c = 'profile-settings-passwordtab'>
 						<I center>
@@ -491,7 +491,7 @@ var SettingsModal = React.createClass({
 				<I vertical beta = {100}>
 
 					<I height = {60} center c='profile-settings-title'>
-						<h3>settings</h3>
+						<h3>Edit Profile</h3>
 					</I>
 					<div className='profile-settings-tab-options'>
 						<div className='profile-settings-tab-option' onClick = {this.showTab.bind(this,3)} >
@@ -500,37 +500,34 @@ var SettingsModal = React.createClass({
 						</div>
 						<div className='profile-settings-tab-option' onClick = {this.showTab.bind(this,2)} >
 							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-phone"/>' }} />
-							<span>{user.phone == null ? "set up phone" : user.phone}</span>
+							<span>{user.phone == null ? "Set Up Phone" : user.phone}</span>
 						</div>
 						<div onClick = {this.showTab.bind(this,1)} className='profile-settings-tab-option' >
 							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-lock"/>' }} />
-							<span>change password</span>
+							<span>Change Password</span>
 						</div>
 					</div>
 
 					<I c="profile-settings-main" beta = {80}>
-						<I vertical beta = {20} c="profile-settings-input-types">
-							<span>name</span>
-							<span>picture</span>
-							<span>bio</span>
-						</I>
-						<I vertical beta = {80} c="profile-settings-input-form">
+						<I vertical beta = {100} c="profile-settings-input-form">
+							<b>&nbsp;Name</b>
 							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
+							<br/>
+							<b>&nbsp;Picture</b>
 							<I height = {60} >
 								<div className="profile-settings-pic">
 									<img style={{backgroundSize:'cover',backgroundImage: 'url('+(user.pic || '/static/showgrid/img/avatar.jpg')+')' }} />
 								</div>
 								<input onChange={this.onDrop} className="profile-settings-input-pic" ref = "input_pic" type="file" accept="image/*" />
 							</I>
-
+							<br/>
+							<b>&nbsp;Bio</b>
 							<textarea name = "bio" className="profile-settings-input-bio" maxLength="200" ref="input_bio" onChange={this.resetState} placeholder="Tell us about yourself..." defaultValue={ user.bio }></textarea>
-							
-							
 						</I>
 						
 					</I>
-					<I center height = {120}>
-						<div onClick = {this.updateProfile} className="button-green profile-settings-save">{this.state.saving ? "uploading..." : "save profile info"}</div>
+					<I center height = {100}>
+						<div onClick = {this.updateProfile} className="button-green profile-settings-save" style={{ "width":"auto" }}>{this.state.saving ? "Saving..." : "Save Profile Info"}</div>
 					</I>
 				</I>
 				<I>

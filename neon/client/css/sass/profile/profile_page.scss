@@ -92,20 +92,22 @@
 .profile-bio{
 	align-self: stretch;
     width: 100%;
+    text-align:center;
 }
 
 .profile-bio-item{
 	padding: 5px;
 	width: 100%;
 	min-height: 30px;
-	align-self: flex-start;
+	align-self:center;
 }
 .profile-bio-name{
 	font-size: 20px;
 }
 
-.profile-bio-text{
+.profile-bio-text p {
 	font-size: 14px;
+    text-align:center !important;
 }
 
 

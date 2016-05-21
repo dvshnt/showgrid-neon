@@ -40,9 +40,9 @@
 				<li>
 					{%if user.is_authenticated == True %}
 						{%if user.pic %}
-							<div class = 'icon-profile-pic' style = "background:url('{user.pic}')"></div>
+							<div class = 'icon-profile-pic' style = "background:url('/media/{{ user.pic }}'); background-size:cover; background-position:center;"></div>
 						{%else%}
-							<div class = 'icon-profile-pic' style = "background:url('/static/showgrid/img/avatar.jpg')"></div>
+							<div class = 'icon-profile-pic' style = "background:url('/static/showgrid/img/avatar.jpg');  background-size:cover; background-position:center;"></div>
 						{%endif%}
 						
 					{% else %}

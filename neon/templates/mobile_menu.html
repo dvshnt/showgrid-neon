@@ -21,8 +21,17 @@
 	</li>
 	<li class="contest">
 		<a href="/user">
-			<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
-			<span>Profile</span>
+			{%if user.is_authenticated == True %}
+				{%if user.pic %}
+					<div class = 'icon-profile-pic' style = "background:url('/media/{{ user.pic }}'); background-size:cover; background-position:center;"></div>
+				{%else%}
+					<div class = 'icon-profile-pic' style = "background:url('/static/showgrid/img/avatar.jpg'); background-size:cover; background-position:center;"></div>
+				{%endif%}
+				<span>{{ request.user.name }}</span>
+			{% else %}
+				<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
+				<span>Profile</span>
+			{% endif %}
 		</a>
 	</li>
 </ul>
