@@ -37,7 +37,8 @@ class Show(models.Model):
 	openers = models.CharField(max_length=400, blank=True)
 
 	## Artists playing in show
-	artists = models.ManyToManyField(Artist, related_name='shows_artists', blank=True)
+	related_artists = models.ManyToManyField(Artist, related_name='artist_related_show', blank=True)
+	artists = models.ManyToManyField(Artist, related_name='artist_shows', blank=True)
 
 	date = models.DateTimeField(blank=False)
 	venue = models.ForeignKey(Venue, related_name='shows')
@@ -126,12 +127,12 @@ class Show(models.Model):
 
 				#if we already have an artist like that.
 				try:
-					new_artist = self.artists.get(echonest_id=artist['id'])
+					new_artist = self.related_artists.get(echonest_id=artist['id'])
 				except:
 					#is the artist in the database?
 					try:
 						new_artist = Artist.objects.get(echonest_id=artist['id'])
-						self.artists.add(new_artist)
+						self.related_artists.add(new_artist)
 
 
 					#create new artist and sync later
@@ -141,7 +142,7 @@ class Show(models.Model):
 						new_artist.save()
 
 						artists.append(new_artist)
-						self.artists.add(new_artist)
+						self.related_artists.add(new_artist)
 						self.save()
 
 
@@ -149,6 +150,8 @@ class Show(models.Model):
 		# update artists data and link artist images to show images.
 		for a in artists:
 			a.update_all()
+
+		self.artists = self.related_artists
 
 		self.extract_queued = False
 		self.save()

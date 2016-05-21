@@ -157,44 +157,8 @@ from django.forms.utils import flatatt
 from django.contrib import admin
 from django.forms import ModelForm
 # from django.contrib.admin.widgets import AdminFileWidget
-from django.forms.widgets import RadioSelect
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 
-# class AdminImageWidget(RadioSelect):
-# 	__init__(self,*args,**kwargs):
-# 		super(RadioSelect, self).__init__(*args, **kwargs)
-# 		self
-
-# 	def render(self, name, value, attrs=None, choices=()):
-# 		output = []
-# 		self.choices = []
-# 		images = self.form_instance.instance.images.all()
-# 		for img in images:
-# 			# append image to selection.
-			
-		
-
-			
-# 			if getattr(img,"local",None):
-# 				image_url = img.local.url
-# 				file_name = img.local
-# 				img_info = u'<p><b>width : </b>%s<br/> <b>height : </b> %s<br/><b>path : </b>%s<br/><b>name : </b>%s</p>' % (img.width,img.height,file_name,img.name)
-# 				output.append(u' <div style = "background:#E9E9E9; margin: 5px;"><a href="%s" target="_blank"><img style="height:150px; width:auto;" src="%s"/></a><div style="float:right;background:#fff;border-radius:2px;margin: 10px; padding: 10px;">%s</div></div>' % \
-# 					(image_url, image_url,img_info))
-# 				output.append(options)
-# 				self.choices.append((img.id,))
-
-# 			else:
-# 				output.append(u'<span>image not downloaded</span>')
-# 		final_attrs = self.build_attrs(attrs, name=name)
-
-
-# 		output.append(u'<select%s>' % flatatt(final_attrs))
-# 		options = self.render_options(choices, [value])
-
-# 		if len(images) == 0:
-# 			output.append(u'<span>show has no images, have you extracted the artists ?</span>')
-		
-# 		return mark_safe(u'\n'.join(output))
 
 
 class ShowForm(ModelForm):
@@ -261,12 +225,35 @@ class ShowForm(ModelForm):
 		self.fields['custom_banner'].queryset = Image.objects.filter(is_banner=True)
 
 
+		artist_choices = []
+		print Artist
+		for artist in self.instance.related_artists.all():
+			# output = []
+			# a_info = u'<div>%s</div>' % \
+			# (artist.name)
+
+			# output.append(a_info)
+
+			artist_choices.append((artist.id,u' %s'%(artist.name)))
+
+
+
+		self.fields['artists'].choices = artist_choices
+
+
 
 	banner = forms.ModelChoiceField(Image.objects,
 		label="Show Banner", 
 		widget = RadioSelect,
 		required=False
 	)
+
+	artists = forms.ModelMultipleChoiceField(Artist.objects,
+		label="Show Artists", 
+		widget = CheckboxSelectMultiple,
+		required=False
+	)
+
 
 
 
@@ -334,7 +321,7 @@ class ShowAdmin(admin.ModelAdmin):
 	form = ShowForm
 	fieldsets = (
 		('Artist Info', {
-			'fields': ('title', 'headliners','openers','artists','website')
+			'fields': ('title', 'headliners','openers','artists','related_artists','website')
 		}),
 		('Time and Place', {
 			'fields': ('date','venue')
