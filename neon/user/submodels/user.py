@@ -34,8 +34,8 @@ class NeonUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, username=None, email=None, password=None, **extra_fields):
-        return self._create_user(username, email, password, False, False,
+    def create_user(self, email=None, password=None, **extra_fields):
+        return self._create_user(None, email, password, False, False,
                                  **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):

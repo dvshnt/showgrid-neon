@@ -181,9 +181,8 @@ def logout(request):
 
 @api_view(['POST'])
 def signup(request):
-	body = json.loads(request.body)
-	email = body['email']
-	password = body['password']
+	email = request.POST['email']
+	password = request.POST['password']
 	
 	#500 invalid parameters
 	if email == None or password == None:
@@ -199,7 +198,7 @@ def signup(request):
 
 	user = authenticate(email=email, password=password)
 	if user is not None:
-		login(request,user)
+		login(request)
 		return Response({"status":"good"},status=status.HTTP_200_OK)
 	else:
 		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)

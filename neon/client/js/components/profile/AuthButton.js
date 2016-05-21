@@ -13,9 +13,16 @@ var AuthButton = React.createClass({
 		if(link == null){
 			throw new Error("bad auth button type")
 		}
+
+		var text = "";
+		if (this.props.type === "facebook") {
+			text = <span>Sign In with Facebook</span>;
+		}
+
 		return (
 			<a href={ link+'?next='+window.encodeURI(window.location.href) } className={"button-"+this.props.type} >
 				<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-'+this.props.type+'"/>' }} />
+				{ text }
 			</a>
 		)
 	}

@@ -156,9 +156,9 @@ var PhoneTab = React.createClass({
 	render: function(){
 		if(window.user.phone != null){
 			var current_phone = (<h3>change phone : {window.user.phone}</h3>)
-			var delete_phone = <div className="button-red" onClick ={this.removePhone} >remove phone</div>
+			var delete_phone = <div className="button-red" onClick ={this.removePhone} >Remove Phone</div>
 		}else{
-			var current_phone = <h3>set up a new phone</h3>
+			var current_phone = <h3>Set up a New Phone</h3>
 			var delete_phone = null
 		}
 
@@ -176,7 +176,7 @@ var PhoneTab = React.createClass({
 						<span> <span><b>+1</b></span> <input className="phone" type="tel" pattern="[0-9]{10}" ref="phonenumber" placeholder="Your 10 Digit Phone #" title="" onChange={ this.resetState }/></span>
 						<br></br>
 					</form>
-					<div onClick={this.userSubmitPhone}className="button-green">submit</div>
+					<div onClick={this.userSubmitPhone}className="button-green">Submit</div>
 					{delete_phone}
 				</I>
 				<I vertical beta = {100} c= 'profile-settings-phonetab'>
@@ -194,7 +194,7 @@ var PhoneTab = React.createClass({
 					</I>
 					<I center height = {150}>
 					
-						<div className="button-green" onClick={this.userSubmitPin}>submit</div>
+						<div className="button-green" onClick={this.userSubmitPin}>Submit</div>
 						
 					</I>
 				</I>

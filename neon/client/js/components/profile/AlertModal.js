@@ -51,7 +51,6 @@ var AlertModal = React.createClass({
 	},
 
 	getDateString: function(time,sale){
-
 		var i = this.props.times.indexOf(time);
 	
 		if(i == 0){
@@ -59,7 +58,6 @@ var AlertModal = React.createClass({
 		}else{
 			return this.props.date_str[i] + " before "+(sale == true ? "sale" : "show")+" starts"
 		}
-		
 	},
 
 	makeOption: function(time,sale){
@@ -130,8 +128,8 @@ var AlertModal = React.createClass({
 	render: function(){
 		var show = this.props.show
 
-		var show_options = this.props.times.filter(this.timeFilter).map((d)=>{return this.makeOption(d,false)})
-		var sale_options = [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.timeFilter).map((d)=>{return this.makeOption(d,true)})
+		var show_options = <optgroup label="Before Show Starts">{ this.props.times.filter(this.timeFilter).map((d)=>{return this.makeOption(d,false)}) }</optgroup>
+		var sale_options = <optgroup label="Before Tickets Go on Sale">{ [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.timeFilter).map((d)=>{return this.makeOption(d,true)}) }</optgroup>
 		// sale_options.unshift(<option key ='option_blank'>------------</option>)
 		// show_options.unshift(<option key ='option_blank'>------------</option>)
 
@@ -140,22 +138,6 @@ var AlertModal = React.createClass({
 		var d = moment(show.raw_date);
 		var sd = moment(show.onsale);
 		var sale_alert = null
-
-		if(show.onsale != null && today < sd ) {
-			sale_alert = (
-				<I beta = {50} center c="alert-modal-submit-sale alert-modal-submit-option" onClick={this.setAlertType}>
-					<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
-					<span>set a sale alert instead</span>
-				</I>
-			)
-		}else if( show.onsale != null){
-			
-			sale_alert = (
-				<I beta = {50} center c="alert-modal-submit-sale alert-modal-submit-option">
-					<span>on sale</span>
-				</I>
-			)			
-		}
 
 		if ( !this.timeFilter(0) ){
 			return (
@@ -171,49 +153,27 @@ var AlertModal = React.createClass({
 		return (
 			<Modal height={ '300px' } onClose={ op.closeModal } onResetError={this.setState.bind(this,{error:null})} error = {this.state.error} className = {'alert-modal'} >
 				<I vertical >
-					<I c = 'alert-modal-show' vertical>
-						<I height={70} vertical center c='alert-modal-show-info-date' style = {{background:show.venue.secondary_color,color:show.venue.primary_color}}>
-							<span className='alert-modal-show-info-date-hour'>{d.format("h:mm a")}</span>
-							<span className='alert-modal-show-info-date-day'>{d.format("MMMM Do")}</span>
-						</I>
-						<I c = 'alert-modal-show-info' center vertical>
-							<span  onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-title'>{ show.title } </span>
-							<span onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-headliners'>{ show.headliners }</span>
-							<span  onClick = {()=>{window.location.href = show.ticket}} className='alert-modal-openers'>{ show.openers }</span>
-							<div className = 'alert-modal-venue'>
-								<span  onClick={()=>{ window.location.href = '/venue/'+show.venue.id  }} className='alert-modal-venue-name' style={{color:show.venue.primary_color}}>{ show.venue.name }</span>
-							</div>
-							
-						</I>
+					<I height={55} vertical center c='alert-modal-show-info-date'>
+						<span className='alert-modal-show-info-datetime'>{d.format("MMMM Do h:mm a")}</span>
 					</I>
-					<I height = {100} slide index_pos = {this.state.sale_tab ? 1 : 0}>
-						<I vertical c={"alert-modal-tab-show"} >
-							{sale_alert}
-							<I center>
-								<form onSubmit = {this.choose}>
-									<select className = 'alert-modal-select' /*onChange = {this.choose}*/ ref = 'show_select'>{show_options}</select>
-								</form>
-								<div onClick = {this.choose} className='alert-modal-submit-show'>
-									<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-									<span>set</span>
-								</div>
-							</I>
-						</I>
-						<I vertical c={"alert-modal-select-sale"} >
-							<I beta = {50} center c="alert-modal-submit-show alert-modal-submit-option" onClick={this.setAlertType}>
-								<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
-								<span >set a show alert instead</span>
-							</I>							
-							<I center>
-								<form onSubmit = {this.choose}>
-									<select className = 'alert-modal-select' /*onChange = {this.choose}*/ ref = 'sale_select'>{sale_options}</select>
-								</form>
-								<div onClick = {this.choose} className='alert-modal-submit-sale'>
-									<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-ticket"/>' }} />
-									<span>set</span>
-								</div>
-							</I>
-						</I>
+					<I beta={ 70 } c= 'alert-modal-show-info' center vertical>
+						<span className='alert-modal-venue-name' style={{color:show.venue.primary_color}}>{ show.venue.name }</span>
+						<span className='alert-modal-title'>{ show.title } </span>
+						<span className='alert-modal-headliners'>{ show.headliners }</span>
+						<span className='alert-modal-openers'>{ show.openers }</span>
+					</I>
+					<I beta={40} center vertical>
+						<form className="alert-form" onSubmit = {this.choose}>
+							<span>&#9660;</span>
+							<select width="300" className='alert-modal-select' /*onChange = {this.choose}*/ ref = 'show_select'>
+								{show_options}
+								{sale_options}
+							</select>
+						</form>
+						<div onClick = {this.choose} className='alert-modal-submit-alert'>
+							<svg dangerouslySetInnerHTML={{ __html: '<use xlink:href="#icon-alert"/>' }} />
+							<span>Set Alert</span>
+						</div>
 					</I>
 				</I>
 			</Modal>

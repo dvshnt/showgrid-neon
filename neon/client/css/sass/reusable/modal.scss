@@ -1,40 +1,46 @@
 #overlay-wrapper{
 	position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    height: auto;
-    width: 100vw;
+    top:0; left:0;
 
+    width:100vw; height:auto;
+
+    z-index: 9999;
 }
 
 .modal-wrapper{
+	display:-webkit-flex;
+	display:		flex;
+
+	-webkit-align-items:center;
+			align-items:center;
+
+	-webkit-justify-content:center;
+			justify-content:center;
+
 	position: relative;
-	top: 0;
-	left: 0;
-	height: 100vh;
+	top:0; left:0;
+
+	height:100vh;
 }
 
 .modal-overlay {
-
-	font-family: 'Helvetica', sans-serif;
-	font-weight: 300;
-	
-	background: rgba(0,0,0,0);
-
 	position: fixed;
 	top:0; left:0;
 
-	width:100vw; height:100%;
+	width:100vw; height:100vh;
+
+
+	font-family:'Helvetica', sans-serif;
+	font-weight:300;
+	
+	background: rgba(0,0,0,0);
+
 	z-index: 9998;
+
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
-	@include transition(transform 0.3s ease);
-	transition: background 0.3s ease;
-	// @include center;
-	// flex-direction: column;
-	// justify-content:center;
-	// align-items:center;
+
+	@include transition(all 0.3s ease);
 }
 
 .overlay-visible{
@@ -42,77 +48,55 @@
 }
 
 
-
-
-
-
-
-.modal-visible{
-	-webkit-animation: animation 800ms linear both;
-	animation: animation 800ms linear both;
-}
-
-
 .modal{
-	z-index: 9999;
-	// transform: translate(-50%,0%);
-	top: 50px;
-	left: 25%;
-	width: 50%;
-	min-width: 400px;
-	height: 600px;
+	position:relative;
+
+	width:600px; height:500px;
+
+	-webkit-box-sizing: border-box;
+  	-moz-box-sizing: border-box;
+
 	background:#ffffff;
-	border-radius:3px;
-	box-shadow:0 1px 4px rgba(0,0,0,0.3);
-	position: relative;
+	box-shadow:0 1px 3px rgba(0,0,0,0.3);
+	border-width:10px;
+	border-style:solid;
+	border-color:black;
+
+	z-index:9999;
+	
+	-webkit-animation: animation 800ms linear both;
+			animation: animation 800ms linear both;
+
 	.icon-close {
 		position: absolute;
-		left: 0;
-		top: 0;
-		@include icon;
-		z-index: 50;
+		left:0; top:0;
+
 		fill:#222222;
+
+		z-index:50;
+
+		@include icon;
 	}
 }
 
 
-// .modal-confirm{
-// 	@include center;
-// 	-webkit-animation: animation 800ms linear both;
-// 	animation: animation 800ms linear both;
-// 	margin: 15px;
-// 	div{
-// 		cursor: pointer;
-// 		text-align: center;
-// 		line-height: 50px;
-// 		@include section;
-// 		height: 50px;
-// 		width: 50px;
-// 		border-radius: 25px;
-// 		background: #0BBE00;
-// 		color: #fff;
-// 	}
-// }
-
-// .modal-confirm-hidden{
-// 	display: none;
-// }
-
-
-
 .modal-error{
 	@include center;
-	background: #FF2E00;
-	color: #fff;
+	background:#FF2A35;
+	color:#fff;
+
+	.icon-close {
+		fill:#ffffff;
+	}
 }
 
 @media screen and (max-width: 800px ) { 
 	.modal {
-		left:10%;
-		top:0;
-		width: 80%;
-		height: 100vh;
-		min-width: 0px;
+		left:0; top:0;
+		
+		width:100vw; height:100vh;
+
+		min-width:0px;
 
 		padding:0;
 
@@ -130,18 +114,11 @@
 
 @media screen and (max-width: 500px ) {
 	.modal {
-		left:0;
-		top:0;
-		width: 100vw;
-		height: 100vh;
+		left:0; top:0;
+		
+		width:100vw; height:100vh;
+		
 		min-width: 0px;
-		
-		
 	}
 
 } 
-
-
-
-
-

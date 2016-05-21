@@ -121,10 +121,10 @@ export default class AuthModal extends Component {
 		$.ajax({
 			url: '/user/signup',
 			type: 'POST',
-			data: JSON.stringify({email:email,password:password}),
+			data: {email:email,password:password},
 			dataType: 'json',
 			success: this.isGood.bind(this,null),
-			error: this.isGood.bind(this,"we couldnt log you in, try again.")
+			error: this.isGood.bind(this,"We couldnt log you in, try again.")
 		})
 	}
 
@@ -161,52 +161,48 @@ export default class AuthModal extends Component {
 				<I innerClassName = "modal-page-container" vertical beta = {100}>
 					
 
-					<I beta={30}>
+					<I height={80}>
 						<div className = 'auth-banner'/>
 					</I>
 
 
-					<I height = {150} vertical center>
-						<p><span><a className="button-green signup-button" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
-						<p>Favorite shows, set show alerts, and particpate in all the conversation happening on here!</p>
-					</I>
-
-
-					<I center height = {100} vertical>
+					<I center beta= {50} vertical>
 						<form className = "auth-input-form">
 							<input required type="text" ref="email" placeholder="Enter email" />
 							<input required type="password" ref="password" placeholder="Enter password" />
+							<input className = "button-green" type="submit" value="Log In" onClick={ this.userLogin } />
+							<AuthButton type="facebook" />
 						</form>
 					</I>
 
 
-					<I center innerClassName = "auth-input" height = {100}>
-						<input className = "button-blue" type="submit" value="Log In" onClick={ this.userLogin } />
-						<b style={{margin:'5px'}}>or</b>
-						<AuthButton type="facebook" />
+					<I height = {50} vertical center>
+						<p><span><a className="link" href="#" onClick={ this.toggleScreen }>Sign up</a> for Showgrid</span></p>
 					</I>
 
 
-					<I center beta ={100}>
-						<p className="auth-forgot">Forgot your password? email <a href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a></p>
+					<I center height ={80}>
+						<p className="auth-forgot">Forgot your password? Email <a className="link" href="mailto:info@showgrid.com?Subject=Password%20RESET" target="_top" ><b>info@showgrid.com</b></a></p>
 					</I>
 
 				</I>
 				<I innerClassName = "modal-page-container" vertical beta = {100}>
 					
-					<I beta = {50} center >
+					<I height = {50} center >
 						<p>Sign up with your email and a password.</p>
 					</I>
 
-					<I beta = {110} vertical center >
-						<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" />
-						<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" />
-						<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" />
-						<input className = "button-blue" type="submit" value="Sign Up" onClick={ this.userSignup } />
+					<I height = {220} vertical center >
+						<div className="signup">
+							<input required type="email" autoComplete="off" ref="register_email" placeholder="Enter Email" />
+							<input required type="password" autoComplete="off" ref="register_password" placeholder="Enter password" />
+							<input required type="password" autoComplete="off" ref="register_password2" placeholder="Confirm password" />
+							<input className = "button-green" type="submit" value="Sign Up" onClick={ this.userSignup } />
+						</div>
 					</I>
 
-					<I beta = {40} center >
-						<span><b><a href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
+					<I height = {40} center >
+						<span><b><a className="link" href="#" onClick={ this.toggleScreen }>Log In</a></b></span>
 					</I>
 				</I>
 			</Modal>
