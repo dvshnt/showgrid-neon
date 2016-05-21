@@ -14,16 +14,20 @@
 
 {% block aside %}
 	<section>
-		<h3>Sign Up for Newsletter</h3>
-		<p>
-			Sign up to receive the Showgrid Weekly Digest in your inbox each week. 
-		</p>
+		{% if user.is_authenticated %}
+			<div id = 'newsletter-toggle'></div>
+		{% else %}
+			<h3>Sign Up for Newsletter</h3>
+			<p>
+				Sign up to receive the Showgrid Weekly Digest in your inbox each week. 
+			</p>
 
-		<form class="form" method="post" action="/v1/signup">
-			
-			<input type="email" name="email" placeholder="Email address" required/>
-			<input type="submit" class="button-green" value="Submit"/>
-		</form>
+			<form class="form" method="post" action="/v1/signup">
+				
+				<input type="email" name="email" placeholder="Email address" required/>
+				<input type="submit" class="button-green" value="Submit"/>
+			</form>			
+		{% endif %}
 	</section>
 {% endblock aside %}
 

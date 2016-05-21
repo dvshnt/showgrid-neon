@@ -3,7 +3,7 @@ import dom from 'react-dom';
 import { SettingsModal, ProfileActivity, AuthModal , AlertModal } from './components/profile';
 import $ from 'jquery';
 import fetch from 'whatwg-fetch';
-
+import NewsletterToggle from './components/NewsletterToggle';
 
 export function renderPublicProfile(p){
 	dom.render(<ProfilePage profile={window.profile} />,document.getElementById('profile'));
@@ -79,7 +79,9 @@ export function toggleNewsLetter(toggle){
 
 
 
-
+export function renderNewsLetterToggle(){
+	dom.render(<NewsletterToggle profile = {window.user} />,document.getElementById('newsletter-toggle'));
+}
 
 
 

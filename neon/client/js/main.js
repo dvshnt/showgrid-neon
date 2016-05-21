@@ -184,10 +184,24 @@ if (!!showActions) {
 	dom.render(<ShowActions show={window.state.show} />, document.getElementById('show-actions-wide'));
 }
 
+
+
+/* PROFILE FAVORITES AND ALERTS */
 var profile = document.getElementById('profile-activity')
 if (!!profile) {
 	op.renderPrivateProfile();
 }
+
+
+
+/* PROFILE AND NEWSLETTER TAB NEWSLETTER TOGGLE */
+var newsletter_toggle = document.getElementById('newsletter-toggle')
+if (!!newsletter_toggle) {
+	op.renderNewsLetterToggle();
+}
+
+
+
 
 
 
