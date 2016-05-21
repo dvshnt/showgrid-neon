@@ -68,13 +68,22 @@ var AlertModal = React.createClass({
 		)
 	},
 
-	timeFilter: function(time){
+	timeFilter: function(time,sale){
 		var d = new Date();
 		d.setTime(d.getTime() + (d.getTimezoneOffset() - (GLOBAL_UTC))*60000 );
-		var show_d = new Date(this.props.show.raw_date);
+		var show_d = new Date(sale ? this.props.show.onsale : this.props.show.raw_date);
 		var diff = show_d.getTime() - d.getTime();
 		if( diff < (time*60000)) return false
 		return true
+	},
+
+	showtimeFilter: function(time){
+		return this.timeFilter(time)
+	},
+
+	saletimeFilter: function(time){
+		if( !this.props.show.onsale ) return false
+		return this.timeFilter(time,true)
 	},
 
 	removeSaleAlert: function(){
@@ -128,8 +137,14 @@ var AlertModal = React.createClass({
 	render: function(){
 		var show = this.props.show
 
-		var show_options = <optgroup label="Before Show Starts">{ this.props.times.filter(this.timeFilter).map((d)=>{return this.makeOption(d,false)}) }</optgroup>
-		var sale_options = <optgroup label="Before Tickets Go on Sale">{ [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.timeFilter).map((d)=>{return this.makeOption(d,true)}) }</optgroup>
+		var show_options = <optgroup label="Before Show Starts">{ this.props.times.filter(this.showtimeFilter).map((d)=>{return this.makeOption(d,false)}) }</optgroup>
+		var sale_choices = [this.props.times[0],this.props.times[1],this.props.times[2]].filter(this.saletimeFilter).map((d)=>{return this.makeOption(d,true)})
+		if(sale_choices.length != 0){
+			var sale_options = <optgroup label="Before Tickets Go on Sale">{sale_choices}</optgroup>
+		}else{
+			var sale_options = null
+		}
+		
 		// sale_options.unshift(<option key ='option_blank'>------------</option>)
 		// show_options.unshift(<option key ='option_blank'>------------</option>)
 
