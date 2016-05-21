@@ -180,7 +180,7 @@ var PhoneTab = React.createClass({
 					{delete_phone}
 				</I>
 				<I vertical beta = {100} c= 'profile-settings-phonetab'>
-					<I center vertical height = {200} >
+					<I center vertical height = {100} >
 						<h3>Confirm your phone number</h3>
 						<p>
 							Enter the 4-digit PIN you receive to start getting alerts.
