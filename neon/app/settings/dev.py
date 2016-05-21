@@ -12,12 +12,11 @@ DEBUG=True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sgdb',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'root',
+        'NAME': 'sgdb',
+        'USER': 'root',         # The following settings are not used with sqlite3:
         'PASSWORD': 'showgrid',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'HOST': 'localhost',    # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',             # Set to empty string for default.
     }
 }
 
@@ -25,7 +24,6 @@ DATABASES = {
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/media/'
-
 
 STATIC_URL = '/static/'
 
@@ -38,12 +36,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/cal/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/magazine/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/newsletter/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/show/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/user/templates/',
-            '/Users/vdh3/Documents/Showgrid/nashvilleneon/neon/venue/templates/',
         ],
         'OPTIONS': { 
             'loaders': [
