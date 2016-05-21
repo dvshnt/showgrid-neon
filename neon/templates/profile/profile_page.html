@@ -4,11 +4,11 @@
 {% block full %}
 	<section id="profile-about">
 		{% if profile.pic %}
-		<div class = "profile-pic" style="background:url('/media/{{profile.pic}}')" >
+		<div class = "profile-pic" style="background:url('/media/{{profile.pic}}'); background-size:cover; background-position:center;" >
 			<div class='profile-pic-overlay' ></div>
 		</div>
 		{% else %}
-		<div class = "profile-pic profile-pic-default" style="background:url('/static/showgrid/img/avatar.jpg')" >
+		<div class = "profile-pic profile-pic-default" style="background:url('/static/showgrid/img/avatar.jpg'); background-size:cover; background-position:center;" >
 
 			<div class='profile-pic-overlay'></div>
 			<svg>
