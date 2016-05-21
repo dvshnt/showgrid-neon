@@ -36,7 +36,7 @@ class UserSerializer(serializers.ModelSerializer):
 	def get_user_alerts(self, obj):
 		def make(a):
 			return AlertSerializer(a).data
-		return map(make,Alert.objects.filter(user=obj))
+		return map(make, Alert.objects.filter(user=obj, show__date__gte=date.today()))
 		
 
 	def get_user_favorites(self,obj):
