@@ -100,7 +100,7 @@ export default class AuthModal extends Component {
 
 	isGood(err){
 		if(err == null){
-			window.location.reload(true)
+			window.location.reload()
 		}else{
 			return this.setState({
 				error: err

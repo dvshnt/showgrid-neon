@@ -198,7 +198,7 @@ def signup(request):
 
 	user = authenticate(email=email, password=password)
 	if user is not None:
-		login(request)
+		auth_login(request,user)
 		return Response({"status":"good"},status=status.HTTP_200_OK)
 	else:
 		return Response({"status":"bad_params"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
