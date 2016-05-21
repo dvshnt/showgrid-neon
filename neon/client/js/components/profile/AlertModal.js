@@ -177,7 +177,7 @@ var AlertModal = React.createClass({
 						<span className='alert-modal-headliners'>{ show.headliners }</span>
 						<span className='alert-modal-openers'>{ show.openers }</span>
 					</I>
-					<I beta={40} center vertical>
+					<I beta={50} center vertical>
 						<form className="alert-form" onSubmit = {this.choose}>
 							<span>&#9660;</span>
 							<select width="300" className='alert-modal-select' /*onChange = {this.choose}*/ ref = 'show_select'>
