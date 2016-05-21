@@ -41,6 +41,31 @@ IMAGE_MIN_WIDTH = 100
 IMAGE_MIN_HEIGHT = 100
 
 
+SOCIAL_AUTH_FACEBOOK_KEY = '1706363622984455'
+SOCIAL_AUTH_FACEBOOK_SECRET = '03c8fd04db44476741874280419cb455'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'en_US',
+  'fields': 'name, email, age_range'
+}
+
+
+
+LOGIN_URL = '/user/login/'
+LOGIN_REDIRECT_URL = '/user/profile/'
+URL_PATH = ''
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
+SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
+# SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
+# SOCIAL_AUTH_EMAIL_VALIDATION_FUNCTION = 'example.app.mail.send_validation'
+# SOCIAL_AUTH_EMAIL_VALIDATION_URL = '/email-sent/'
+# SOCIAL_AUTH_USERNAME_FORM_URL = '/signup-username'
+SOCIAL_AUTH_USERNAME_FORM_HTML = 'username_signup.html'
+
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 ACCOUNT_ACTIVATION_DAYS = 3
 EMAIL_HOST = 'smtp.gmail.com'

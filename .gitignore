@@ -1,8 +1,11 @@
 .DS_STORE
 
 neon/app/wsgi.py
+neon/app/settings/auth.py
 neon/app/settings/prod.py
 neon/app/settings/dev.py
+neon/app/settings/base.py
+
 
 *.pyc
 
@@ -16,6 +19,12 @@ neon/client/css/*.css
 neon/client/css/*.map
 neon/client/node_modules
 neon/client/.sass-cache
+
+
+neon/venue/migrations/**
+neon/show/migrations/**
+neon/contest/migrations/**
+neon/user/migrations/**
 
 
 
