@@ -73,7 +73,7 @@ var ProfileActivity = React.createClass({
 
 	componentDidMount: function(){
 		$('.profile-pic').on('click',function(){
-			op.showProfileSettings()
+			op.showProfileSettings(0)
 		}.bind(this))
 	},
 

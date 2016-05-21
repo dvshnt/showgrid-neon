@@ -261,7 +261,7 @@ var SettingsModal = React.createClass({
 		return {
 			saving: false,
 			tab_pos: this.props.tab_pos,
-			home: true,
+			home: this.props.tab_pos != 0 ? false : true,
 		}
 	},
 	
