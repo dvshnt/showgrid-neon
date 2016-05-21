@@ -36,8 +36,18 @@
 	<aside class="actions">
 		<ul>
 			<a id = "profile-button" href="#">
+
 				<li>
-					<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
+					{%if user.is_authenticated == True %}
+						{%if user.pic %}
+							<div class = 'icon-profile-pic' style = "background:url('{user.pic}')"></div>
+						{%else%}
+							<div class = 'icon-profile-pic' style = "background:url('/static/showgrid/img/avatar.jpg')"></div>
+						{%endif%}
+						
+					{% else %}
+						<svg class="icon icon-profile"><use xlink:href="#icon-profile"></use></svg>
+					{% endif %}
 				</li>
 			</a>
 			<a id="search-toggle" href="#">

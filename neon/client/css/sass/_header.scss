@@ -1,3 +1,13 @@
+.icon-profile-pic{
+	height: 30px;
+	width: 30px;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+
+
+
 .nav-user-status{
 	position: absolute;
 	top:0;
@@ -110,6 +120,7 @@
 		width:22.5px; height:22.5px;
 
 		margin:20px 17.5px 0;
+		margin-bottom: 2px;
 	}
 }
 
