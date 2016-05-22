@@ -164,7 +164,7 @@ var PhoneTab = React.createClass({
 
 		return (
 			<I slide index_pos = {this.state.page_index} >
-				<I center c= 'profile-settings-phonetab' vertical beta = {100} >
+				<I center c= 'profile-settings-phonetab' vertical height = {500} >
 					{current_phone}
 					<p>
 						To complete the process, you will receive a 4-digit pin at the number you provide. Enter the PIN when prompted to get started receiveing alerts!
@@ -445,7 +445,7 @@ var SettingsModal = React.createClass({
 					<I height = {60} center c='profile-settings-title'>
 						<h3>Change Password</h3>
 					</I>
-					<I vertical c = 'profile-settings-passwordtab'>
+					<I height = {300} vertical c = 'profile-settings-passwordtab'>
 						<I center>
 							<input onChange = {this.resetState} ref="current_pass" type="password" placeholder= {"Old Password" } />
 						</I>
@@ -508,7 +508,7 @@ var SettingsModal = React.createClass({
 						</div>
 					</div>
 
-					<I c="profile-settings-main" beta = {80}>
+					<I c="profile-settings-main" height = {300}>
 						<I vertical beta = {100} c="profile-settings-input-form">
 							<b>&nbsp;Name</b>
 							<input className="profile-settings-input-name" type="text" name="name" ref = "input_name" placeholder = {user.name || "Your Name"}  />
@@ -526,7 +526,7 @@ var SettingsModal = React.createClass({
 						</I>
 						
 					</I>
-					<I center height = {100}>
+					<I center c = 'profile-settings-save' height = {100}>
 						<div onClick = {this.updateProfile} className="button-green profile-settings-save" style={{ "width":"auto" }}>{this.state.saving ? "Saving..." : "Save Profile Info"}</div>
 					</I>
 				</I>

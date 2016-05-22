@@ -3,9 +3,11 @@
     top:0; left:0;
 
     width:100vw; height:auto;
-
+	overflow: scroll;
     z-index: 9999;
 }
+
+
 
 .modal-wrapper{
 	display:-webkit-flex;
@@ -91,6 +93,10 @@
 }
 
 @media screen and (max-width: 800px ) { 
+	.modal-wrapper{
+		-webkit-align-items:flex-start;
+		align-items:flex-start;
+	}
 	.modal {
 		left:0; top:0;
 		
