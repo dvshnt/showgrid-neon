@@ -33,6 +33,7 @@
 
 
 .profile-pic{
+	cursor: pointer;
 	position: relative;
 	overflow: hidden;
 	margin: 15px;
@@ -47,25 +48,32 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
 	.profile-pic-overlay{
+		transition: background 0.3s ease;
 		left: 0;
 		top: 0;
-		display: none;
+		opacity: 0;
 		position: absolute;
 		width: 100%;
 		height: 100%;
 	}
-}
-
-.profile-pic-default{
 	svg{
+		transition: opacity 0.3s ease;
+		opacity: 0;
 		z-index: 1;
 		fill: #fff;
 		width: 50px;
 		height: 50px;
+	}		
+}
+
+.profile-pic-default{
+	svg{
+		opacity: 1;
 	}
 	.profile-pic-overlay{
-		display: block;
+		opacity: 1;
 		position: absolute;
 		background: rgba(0,0,0,0.5);
 	}
@@ -73,13 +81,10 @@
 
 .profile-pic:hover{
 	svg{
-		z-index: 1;
-		fill: #fff;
-		width: 50px;
-		height: 50px;
+		opacity: 1;
 	}		
 	.profile-pic-overlay{
-		display: block;
+		opacity: 1;
 		position: absolute;
 		background: rgba(0,0,0,0.5);
 

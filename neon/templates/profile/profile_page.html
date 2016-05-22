@@ -6,6 +6,9 @@
 		{% if profile.pic %}
 		<div class = "profile-pic" style="background:url('/media/{{profile.pic}}'); background-size:cover; background-position:center;" >
 			<div class='profile-pic-overlay' ></div>
+			<svg>
+				<use xlink:href="#icon-settings"/>
+			</svg>
 		</div>
 		{% else %}
 		<div class = "profile-pic profile-pic-default" style="background:url('/static/showgrid/img/avatar.jpg'); background-size:cover; background-position:center;" >

@@ -9,6 +9,8 @@ neon/app/settings/base.py
 
 *.pyc
 
+**/**/*.gzip
+
 .DS_Store
 venv/**
 neon/temp/**
