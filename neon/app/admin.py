@@ -178,7 +178,7 @@ class ShowForm(ModelForm):
 
 		#image query.
 		image_query = Image.objects.none()
-		artists = self.instance.artists.all()
+		artists = self.instance.related_artists.all()
 		for artist in artists:
 			if artist.images != None:
 				image_query = image_query | artist.images.all()

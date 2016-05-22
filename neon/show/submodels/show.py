@@ -151,7 +151,7 @@ class Show(models.Model):
 		for a in artists:
 			a.update_all()
 
-		self.artists = self.related_artists
+		self.artists = self.related_artists.all()
 
 		self.extract_queued = False
 		self.save()
