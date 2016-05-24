@@ -3,7 +3,7 @@ import requests
 
 from datetime import date
 
-from user.models import *
+from userprofile.models import *
 from show.models import *
 from venue.models import *
 from contest.models import *

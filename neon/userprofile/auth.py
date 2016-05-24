@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 
 from social.pipeline.partial import partial
-from user.models import NeonUser
+from userprofile.models import NeonUser
 
 
 @partial

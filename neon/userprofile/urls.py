@@ -1,5 +1,5 @@
 from django.conf.urls import include, url
-from user import views, auth
+from userprofile import views, auth
 from django.contrib import admin
 from social.apps.django_app.utils import psa
 

@@ -1,5 +1,5 @@
 
-from user.models import Alert, NeonUser
+from userprofile.models import Alert, NeonUser
 from show.models import Show
 
 from rest_framework import serializers
