@@ -14,10 +14,10 @@
 
 	z-index:98;
 
-	border-bottom:1px solid #e8e8e8;
-
 	text-align:center;
 	line-height:41px;
+
+	border-bottom:0px solid #e8e8e8;
 
 	overflow:hidden;
 
@@ -29,6 +29,8 @@
 
 	&.active {
 		height:60px;
+
+		border-bottom:1px solid #e8e8e8;
 	}
 
 	&.active.calendar {
